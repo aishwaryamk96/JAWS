@@ -1,0 +1,30 @@
+<div class="page-title">
+	<section class="d-flex flex-column">
+		<label class="page-title-name">Mobile</label>
+		<label class="text-muted mb-0">{{stats.total}} App Installs</label>
+	</section>
+	<div class="container">
+		<table class="table mb-0">
+			<thead>
+				<th class="text-center w-33">Android (old)</th>
+				<th class="text-center w-33">Android (new)</th>
+				<th class="text-center w-33">iOS</th>
+			</thead>
+			<tbody>
+				<td class="text-center w-33">{{stats.gcm_id}}</td>
+				<td class="text-center w-33">{{stats.android}}</td>
+				<td class="text-center w-33">{{stats.ios}}</td>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="container mt-3">
+	<form class="d-flex flex-column" name="mobileNotification">
+		<div class="d-flex justify-content-center mb-3 border-bottom" ng-repeat="form in forms">
+			<div class="form-group bmd-form-group">
+				<label class="bmd-floating-label">{{form.name}}</label>
+				<select class="form-control px-5" ng-if="form.type=='select'" ng-model="form.value" ng-options="opt as opt.name for opt in form.options track by opt.id"></select>
+			</div>
+		</div>
+	</form>
+</div>

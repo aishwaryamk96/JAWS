@@ -1,0 +1,115 @@
+<div class="modal-container" ng-class="{hidden: !processing}">
+	<div class="modal-box">
+		<div class="lds-hourglass"></div>
+	</div>
+</div>
+<div class="notifications-parent">
+	<div class="notification-heading regular-font">
+		<label>Mobile Notifications</label>
+		<div class="app-mode">
+			<label class="app-mode-title">Live</label>
+			<label class="switch" title="Toggle lab">
+				<input type="checkbox" ng-if="liveMode == 1" checked ng-click="toggleMode()">
+				<input type="checkbox" ng-if="liveMode != 1" ng-click="toggleMode()">
+				<span class="slider round"></span>
+			</label>
+		</div>
+	</div>
+	<div class="separator"></div>
+	<div class="notification-body">
+		<div class="element-row" ng-repeat="row in formRows">
+			<div class="row-select" ng-if="row.type=='select'">
+				<div class="cell element-name">
+					<label>{{row.name}}</label>
+				</div>
+				<div class="cell element-content">
+					<select ng-if="row.type=='select'" ng-model="row.value" ng-options="opt as opt.name for opt in row.options track by opt.id" ng-change="selectChange(formRows.indexOf(row))"></select>
+				</div>
+			</div>
+			<div class="row-form" ng-if="row.type=='form'">
+				<div class="form-title">
+					<label>{{row.name}}</label>
+				</div>
+				<div ng-if="row.type=='form'" class="element-form">
+					<div class="element-row" ng-repeat="element in forms[row.id]" ng-if="!row.nr || row.nr.indexOf(element.id) < 0">
+						<div class="cell element-name">
+							<label>{{element.name}}</label>
+						</div>
+						<div class="cell element-name">
+							<textarea ng-model="data[element.id]" id="{{element.id}}" ng-if="element.type=='textarea'"></textarea>
+							<input type="{{element.type}}" id="{{element.id}}" ng-if="element.type!='select'&&element.type!='textarea'" ng-model="data[element.id]">
+							<select ng-model="element.value" ng-options="v as v.name for v in element.values track by v.id" ng-if="element.type=='select'"></select>
+						</div>
+					</div>
+				</div>
+				<div class="form-control">
+					<div class="cell">
+						<button ng-click="showSettingsModal(true, row)">Save</button>
+					</div>
+					<div class="cell">
+						<button ng-click="clear()">Clear</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-container" ng-show="showSettings==true">
+	<div class="modal-box">
+		<div class="notification-modal">
+			<div class="modal-title modal-row">
+				<label>Final Settings</label>
+			</div>
+			<div class="modal-body modal-row">
+				<div class="row">
+					<div class="cell">
+						<label>Notification Title</label>
+					</div>
+					<div class="cell">
+						<input ng-model="notificationTitle" placeholder="{{formTitle}}">
+					</div>
+				</div>
+				<div class="row">
+					<div class="cell">
+						<label>Send when?</label>
+					</div>
+					<div class="cell">
+						<input ng-model="sendAt" type="datetime-local">
+						<div class="desc">
+							<label>(Leave empty to send now)</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-control modal-row">
+				<div class="cell">
+					<button ng-click="saveNotification()">Send</button>
+				</div>
+				<div class="cell">
+					<button ng-click="showSettingsModal(false)">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-container" ng-show="showResponse==true">
+	<div class="modal-box">
+		<div class="notification-modal">
+			<div class="modal-title modal-row">
+				<label>Response</label>
+			</div>
+			<div class="modal-body modal-row">
+				<div class="row">
+					<div class="cell single">
+						<pre class="regular-font" ng-bind-html="response | prettify"></pre>
+					</div>
+				</div>
+			</div>
+			<div class="modal-control modal-row">
+				<div class="cell">
+					<button ng-click="showResponseModal(false)">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

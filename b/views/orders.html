@@ -1,0 +1,52 @@
+<div class="page-title">
+	<section class="d-flex flex-column">
+		<label class="page-title-name">Orders</label>
+		<div>
+			<label>{{orders.length}}</label> <label class="text-muted text-uppercase">total</label>
+		</div>
+	</section>
+	<section class="d-flex flex-column justify-content-center">
+		<a class="btn btn-primary mb-0 d-flex flex-column justify-content-center" href="/orders/new">new</a>
+	</section>
+</div>
+<div class="container-fluid mt-3">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>User</th>
+				<th>Creator</th>
+				<th>Status</th>
+				<th>Installments</th>
+				<th class="text-center">Options</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="order in orders">
+				<th>{{$index+1}}</th>
+				<td>
+					<div class="d-flex flex-column">
+						<a href="/users/{{order.user_id}}">{{order.user.name}}</a>
+						<small>{{order.description}}</small>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column">
+						<a href="/users/{{order.created_by}}">{{order.creator.name}}</a>
+						<small>{{order.created_at}}</small>
+					</div>
+				</td>
+				<td class="text-capitalize {{statusClass[order.payment.status]}}">{{order.payment.status}}</td>
+				<td>{{order.payment.installments.length}}</td>
+				<td>
+					<div class="d-flex justify-content-between">
+						<div class="d-flex flex-column justify-content-center">
+							<i class="far fa-copy cursor-pointer text-info" title="Copy payment link" ng-click="copyLink(order.payment.token)"></i>
+						</div>
+						<a class="btn btn-primary" href="/orders/{{order.id}}">view</a>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

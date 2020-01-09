@@ -1,0 +1,24 @@
+<!-- START PAGE COVER -->
+<div class="container-fluid container-fixed-lg ">
+    <ul class="breadcrumb">
+        <li>
+            <a ui-sref='app.home'>JAWS</a>
+        </li>
+        <li><a class="active" ui-sref='app.home'>Dashboard</a>
+        </li>
+    </ul>
+    <!-- END BREADCRUMB -->
+    <h3 class="page-title">Hello, <b>{{fname}}</b></h3>
+    <div class=" hidden-lg  mobile-link-view">
+        <a ui-sref="app.payment.edit">New Payment</a>
+        <br/>
+        <br/>
+        <a ui-sref="app.payment.track">Track Payments</a>
+        <br/>
+        <br/>
+        <a href="{{app.jawsPath}}logout">Logout</a>
+    </div>
+</div>
+<div class="container-fluid container-fixed-lg">
+
+</div>

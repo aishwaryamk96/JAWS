@@ -1,0 +1,555 @@
+<div class="profile-container">
+	<div class="left-pane">
+		<div class="profile-pic">
+			<img src="{{user.photo_url}}" width="200" height="200">
+		</div>
+		<div class="location regular-font" ng-show="!!user.city || !!user.state || !!user.country" title="User's home location">
+			<center>
+				<i class="fa fa-map-marker addr-icon" aria-hidden="true"></i> <span id="city" ng-show="!!user.city">{{user.city}}</span><span id="state" ng-show="!!user.state">, {{user.state}}</span><span id="country" ng-show="!!user.country">, {{user.country}}</span>
+			</center>
+		</div>
+		<div class="reg-date regular-font" ng-show="!!user.reg_date" title="User since {{user.reg_date}}">
+			<center>
+				<i class="fa fa-user-plus" aria-hidden="true"></i> {{user.reg_date}}
+			</center>
+		</div>
+		<div class="survey-date regular-font" ng-show="!!user.survey_date" title="Access setup on {{user.survey_date}}">
+			<center>
+				<i class="fa fa-universal-access" aria-hidden="true"></i> {{user.survey_date}}
+			</center>
+		</div>
+	</div>
+	<div class="main-pane" ng-class="{'custom-width': logs.length > 0}">
+		<div class="primary-info">
+			<div class="first-half">
+				<span id="user-name" class="regular-font">{{user.name}}</span>
+				<span id="jig-id" ng-show="!!jigId" class="regular-font"><a class="jlc-link" href="https://jigsawacademy.net/accounts/1/users?utf8=%E2%9C%93&focus=user_name&user%5Bname%5D={{jigId}}" target="_blank" title="Go to JLC">{{jigId}} <i class="fa fa-external-link" aria-hidden="true"></i></a></span>
+			</div>
+			<div class="second-half">
+				<i id="edit-profile" class="fa fa-edit" title="Edit Profile" ng-click="showProfileEdit()" ng-show="editAccess"></i>
+				<span class="report">
+					<label ng-click="showReport()" style="color: blue; cursor: pointer; font-style: italics; text-decoration: underline;">Report an issue</label>
+					<!-- <a href="https://app.smartsheet.com/b/form/7e37403e2e3a45c1af5769fd99c83897" target="_blank">Report an issue</a> -->
+				</span>
+			</div>
+		</div>
+		<div class="comm">
+			<div href="#" class="comm-link comm-link-phone regular-font" ng-disabled="!user.phone" title="Phone Number">
+				<i class="fa fa-phone" aria-hidden="true"></i>
+				<span id="comm-phone" class="comm-link-text" ng-show="!!user.phone">{{user.phone}}</span>
+				<span id="comm-phone-na" class="comm-link-text-na" ng-show="!user.phone">N/A</span>
+				<div class="phone-popup" ng-show="canCall && !!user.phone">
+					<span class="popup-row" ng-click="call()">
+						<i class="fa fa-phone" style="padding-left: 4px;"></i>
+						<span class="row-text">Call</span>
+					</span>
+					<span class="popup-row copy-phone" ng-click="toggleCopyText()">
+						<i class="fa fa-copy"></i>
+						<span class="row-text">Copy</span>
+						<div class="copy-tooltip" ng-class="{'tooltip-visible': !noCopied}">Copied!</div>
+					</span>
+				</div>
+			</div>
+			<a href="mailto:{{user.email}}" class="comm-link comm-link-email regular-font" title="Comunication Email ID">
+				<i class="fa fa-envelope" aria-hidden="true"></i>
+				<span id="comm-email" class="comm-link-text">{{user.email}}</span>
+			</a>
+			<a href="mailto:{{user.email_2}}" class="comm-link comm-link-email regular-font" title="Alternate Comunication Email ID" ng-show="!!user.email_2">
+				<i class="fa fa-envelope" aria-hidden="true"></i>
+				<span id="comm-email" class="comm-link-text">{{user.email_2}}</span>
+			</a>
+		</div>
+		<div class="divider"></div>
+		<div class="socials">
+			<div class="fb regular-font social-email" ng-show="!!user.soc_fb">
+				<span class="fb-icon-container"><i class="fa fa-facebook-square fb-icon"></i></span>
+				<span id="fb-email">{{user.soc_fb}}</span>
+				<span class="jlc-login" ng-show="user.lms_soc == 'fb'"><img src="https://www.jigsawacademy.com/jaws/media/jaws/frontend/images/favicon.png" height="16" width="16" title="JLC Social Account"></span>
+			</div>
+			<div class="gp regular-font social-email" ng-show="!!user.soc_gp">
+				<span class="gp-icon-container"><i class="fa fa-google-plus-square gp-icon"></i></span>
+				<span id="gp-email">{{user.soc_gp}}</span>
+				<span class="jlc-login" ng-show="user.lms_soc == 'gp'"><img src="https://www.jigsawacademy.com/jaws/media/jaws/frontend/images/favicon.png" height="16" width="16" title="JLC Social Account"></span>
+			</div>
+			<div class="li regular-font social-email" ng-show="!!user.soc_li">
+				<span class="li-icon-container"><i class="fa fa-linkedin li-icon"></i></span>
+				<span id="li-email">{{user.soc_li}}</span>
+				<span class="jlc-login" ng-show="user.lms_soc == 'li'"><img src="https://www.jigsawacademy.com/jaws/media/jaws/frontend/images/favicon.png" height="16" width="16" title="JLC Social Account"></span>
+			</div>
+			<div class="corp regular-font corp-pass" ng-show="user.lms_soc == 'corp'">
+				<span class="corp-pass-container"><i class="fa fa-key"></i></span>
+				<span id="corp-password"><span ng-show="!!lmsPass">{{lmsPass}}</span><span ng-show="!lmsPass">Corporate Login</span></span>
+				<span class="jlc-login"><img src="https://www.jigsawacademy.com/jaws/media/jaws/frontend/images/favicon.png" height="16" width="16" title="JLC Social Account"></span>
+			</div>
+			<div class="no-social regular-font" ng-show="!user.soc_fb && !user.soc_gp && !user.soc_li && user.lms_soc != 'corp'">
+				<span style="color: red">No social login available</span>
+			</div>
+		</div>
+		<div class="divider"></div>
+		<div class="no-access" ng-show="!!user.lms_soc_link">
+			<span class="regular-font">
+				Access setup is pending. <span id="copy-sa-link" ng-click="textCopy(user.lms_soc_link)">Please click here to copy the setup access link <i class="fa fa-clipboard" aria-hidden="true"></i></span>
+			</span>
+		</div>
+		<div class="divider" ng-show="!!user.lms_soc_link"></div>
+		<div class="freeze" ng-show="!!user.freeze && user.freeze.length > 0">
+			<div class="regular-font" ng-show="!!user.frozen" style="color: red">
+				<center>User's account is currently frozen.</center>
+			</div>
+			<div class="regular-font freeze-header">Freeze Information</div>
+			<ul class="regular-font freeze-info">
+				<li ng-repeat="freeze in user.freeze">{{freeze.start_date}} to {{freeze.end_date}} <span class="freeze-pay">({{freeze.is_free ? "Free" : "Paid"}})</span></li>
+			</ul>
+		</div>
+		<div class="divider" ng-show="!!user.freeze && user.freeze.length > 0"></div>
+		<div class="subs-container">
+			<div ng-show="hasSubs" class="mobapp-access">
+				<div class="ma-header regular-font">
+					<span>Mobile App Access</span>
+				</div>
+				<div class="ma-body regular-font flex-column">
+					<div class="d-flex">
+						<button ng-click="mobileAccess()" class="btn-mobapp">Check</button>
+					</div>
+					<div class="mobapp-details mobapp-{{mobAccessStatus}} d-flex flex-column" ng-show="mobAccess.length>0">
+						<span ng-repeat="msg in mobAccess">{{msg}}</span>
+					</div>
+					<button ng-click="grantCompleteAccess()" class="btn-complete-access" ng-show="editAccess && mobBlocked">Grant Access</button>
+				</div>
+				<div class="divider" ng-show="!!user.subs"></div>
+			</div>
+			<table class="subs-tbl-status-each regular-font" ng-repeat="(status, subs_by_status) in user.subs">
+				<thead>
+					<tr>
+						<th class="subs-status" ng-click="subsStatusToggle(status)">
+							<i id="arrow-{{status}}" class="fa subs-toggle" aria-hidden="true" ng-class="{'fa-chevron-down': $index == 0, 'fa-chevron-right': $index > 0}"></i><span style="margin-left: 10px;">{{status}}</span>
+						</th>
+					</tr>
+				</thead>
+				<tbody ng-show="$index == 0" id="subs-{{status}}">
+					<tr>
+						<td>
+							<table class="subs-each" cellspacing="0" ng-repeat="subs in subs_by_status">
+								<thead>
+									<tr>
+										<th class="subs-bundle" title="{{subs.bundle}}">
+											<span>{{elipsiseText(subs.bundle, 50)}}
+												<span class="bootcamp-batch" ng-show="!!subs.bootcamp_batch_id"><br>({{subs.bootcamp_batch_meta.name}})</span>
+											</span>
+											<span>
+												<i class="fa fa-pencil subs-ctrl edit-subs" ng-class="{hidden: !!subs.enr && !editAccess}" ng-click="editSubs(subs.subs_id)" id="edit-subs-{{subs.subs_id}}" title="Edit this subscription"></i>
+												<i class="fa fa-times subs-ctrl cancel-subs hidden" id="cancel-subs-{{subs.subs_id}}" ng-click="cancelSubs(subs.subs_id)" title="Cancel editing"></i>
+												<i class="fa fa-save save-subs hidden subs-ctrl" id="save-subs-{{subs.subs_id}}" ng-click="saveSubs(subs.subs_id)" title="Save changes"></i>
+												<span class="hidden refund-subs" id="refund-subs-{{subs.subs_id}}" ng-click="saveSubs(subs.subs_id)" title="Refund this subscription">Refund</span>
+											</span>
+										</th>
+										<th class="subs-duration" ng-show="!!subs.start_date">
+											<span class="subs-duration-text" ng-click="editAccessDuration(subs.subs_id, subs.start_date, subs.end_date)">{{subs.start_date}} to {{subs.end_date}} <span class="subs-duration-len">({{subs.duration}} months)</span>
+												<i class="fa fa-info-circle durations-dropdown" ng-class="{hidden: subs.durations.length <= 1}"></i>
+												<div id="sd-{{subs.subs_id}}" class="regular-font subs-durations" ng-class="{hidden: subs.durations.length <= 1}">
+													<ul>
+														<li style="font-weight: bold">Access Extensions</li>
+														<li ng-repeat="duration in subs.durations" ng-if="$index>0">
+															<span>{{duration[0]}} to {{duration[1]}}</span>
+															<span ng-show="duration[2] == '0'" style="margin-left: 5px; color: green;"><i class="fa fa-money" title="Paid extension"></i></span>
+														</li>
+													</ul>
+												</div>
+											</span>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="subs-enrs" colspan="2" ng-class="{'no-enr': !subs.enr}">
+											<table class="subs-enr-each" cellspacing="0">
+												<tr ng-repeat="enr in subs.enr" ng-if="subs.status=='active' && enr.status=='active'" class="enr-row">
+													<td class="subs-enr-row-{{subs.subs_id}} enr-row-{{enr.enr_id}}">
+														<i class="fa fa-minus-circle remove remove-course remove-course-{{subs.subs_id}} hidden subs-ctrl" id="enr-r-{{enr.enr_id}}" ng-click="removeCourse(subs.subs_id,enr.enr_id)"></i>
+														<i class="fa fa-plus-circle addback addback-course addback-course-{{subs.subs_id}} hidden subs-ctrl" id="enr-ab-{{enr.enr_id}}" ng-click="addBackCourse(subs.subs_id,enr.enr_id)"></i>
+														<a class="enr-link" href="https://www.jigsawacademy.com/jaws/batcave#!/enrollment/{{enr.enr_id}}" target="_blank">
+															<span class="subs-enr-name">{{enr.name}}</span>
+															<span class="complimentary subs-enr-name" ng-show="!!enr.complimentary"><br>(Complimentary)</span>
+														</a>
+													</td>
+													<td ng-show="hasProgress" class="enr-progress center subs-enr-row-{{subs.subs_id}} enr-row-{{enr.enr_id}} {{progressInt(enr.course_code) == 0 ? 'red' : ''}}">
+														{{progress(enr.course_code)}}
+														<span class="enr-certificate" ng-class="{hidden: certificate(enr.course_code) == '0'}">
+															<i class="fa fa-certificate" title="Generated on {{certificate(enr.course_code)}}"></i>
+														</span>
+														<i class="fa fa-tasks" title="View Assignments" ng-show="user.assignments.hasOwnProperty(enr.course_code)" ng-click="showAssignments(enr.course_code, enr.name)"></i>
+													</td>
+													<td class="enr-section center subs-enr-row-{{subs.subs_id}} enr-row-{{enr.enr_id}}">{{enr.section_name}}</td>
+													<td class="lab-details subs-enr-row-{{subs.subs_id}} enr-row-{{enr.enr_id}}">
+														<span class="lab-container" ng-show="!!enr.lab_ip">
+															<span title="Click to copy" ng-click="textCopy(enr.lab_ip)" style="cursor: pointer">{{enr.lab_ip}}<i class="fa fa-pencil lab-edit lab-{{subs.subs_id}} lab-enr-{{enr.enr_id}} hidden" ng-click="editLabInfo(subs.subs_id, enr.enr_id)"></i></span>
+															<span class="lab-login">{{enr.lab_user}}, {{enr.lab_pass}}</span>
+														</span>
+													</td>
+												</tr>
+												<tr class="hidden add-course-{{subs.subs_id}}">
+													<td class="subs-add-course" colspan="4" ng-show="!!subs.enr && editAccess" ng-click="newCourses(subs.subs_id)">Add a new course</td>
+												</tr>
+											</table>
+											<span ng-show="!subs.enr">No enrolments</span>
+										</td>
+									</tr>
+									<tr>
+										<td class="subs-pay" colspan="2">
+											<table class="subs-pay-tbl" cellspacing="0">
+												<thead>
+													<tr>
+														<th class="pay-info-hdr" colspan="3">
+															<span ng-show="!subs.pay">No payment info available for the subscription</span>
+															<span ng-show="!!subs.pay">Payment Details</span>
+															<span ng-class="{hidden: !!subs.pay && !editPayment}"><i class="fa fa-pencil subs-ctrl edit-pay" ng-click="editPayInfo(subs.subs_id)" id="edit-pay-{{subs.subs_id}}"></i><i class="fa fa-times subs-ctrl cancel-pay hidden" id="cancel-pay-{{subs.subs_id}}" ng-click="cancelPayInfo(subs.subs_id)"></i><i class="fa fa-save save-pay hidden subs-ctrl" id="save-pay-{{subs.subs_id}}" ng-click="savePayInfo(subs.subs_id)"></i></span>
+														</th>
+													</tr>
+												</thead>
+												<tbody ng-show="!!subs.pay" style="color: #999">
+													<tr>
+														<td class="pay-info-amt">Total: {{subs.pay.currency=='inr' ? "&#8377;" : "$"}}{{subs.pay.sum_total | number:0}} <span class="pay-basic-amt">({{subs.pay.currency=='inr' ? "&#8377;" : "$"}}{{subs.pay.sum_basic | number:0}} + taxes)</span></td>
+														<td class="pay-info-date">
+															<span title="Paid On {{subs.pay.instl[0].pay_date}}" ng-show="subs.pay.status=='paid'"><i class="fa fa-money"></i> {{subs.pay.instl[0].pay_date}}</span>
+															<span ng-show="subs.pay.status!='paid'" style="color: red">Not paid</span>
+														</td>
+														<td class="pay-info-agent">{{subs.pay.instl[0].agent_name}}</td>
+													</tr>
+													<tr>
+														<td colspan="3" class="instl-hdr" ng-show="subs.pay.instl.length > 1">Instalment Details</td>
+													</tr>
+													<tr>
+														<td colspan="3" class="instl-container" ng-show="subs.pay.instl.length > 1">
+															<table class="pay-instl-each" cellspacing="0" ng-repeat="instl in subs.pay.instl">
+																<tr ng-class="{'instl-due': !instl.pay_date}">
+																	<td class="instl-idx">{{$index + 1}}.</td>
+																	<td>{{subs.pay.currency=='inr' ? "&#8377;" : "$"}}{{instl.sum | number:0}}</td>
+																	<td class="instl-pay-date">
+																		<span ng-show="subs.pay.status!='paid'" style="color: red">Not paid</span>
+																		<span title="Paid on {{instl.pay_date}}" ng-show="!!instl.pay_date"><i class="fa fa-money"></i> {{instl.pay_date}}</span>
+																		<span title="Due on {{instl.due_date}}" ng-show="!instl.pay_date"><i class="fa fa-calendar" aria-hidden="true"></i> {{instl.due_date}}</span>
+																		<span ng-show="!instl.pay_date && editPayment" style="margin-left: 10px">
+																			<select>
+																				<option>Edit</option>
+																				<option value="1">Mark as paid</option>
+																				<option value="2">Mark as disabled</option>
+																			</select>
+																		</span>
+																	</td>
+																</tr>
+															</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2" class="welcome-email-info" ng-show="!!subs.support[0].email_sent_at"><span class="welcome-email-title">Welcome email:</span> {{subs.support[0].email_sent_at}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="right-panel regular-font" ng-show="logs.length > 0">
+		<div class="top">Logs</div>
+		<ul>
+			<li ng-repeat="log in logs">
+				<div class="log-header">
+					<span class="cat cat-{{log.category_id}}">{{log.category}}</span>
+					<div class="second-line">
+						<span class="text">Added by</span>
+						<span class="added-by">{{log.name}}</span>
+					</div>
+				</div>
+				<div class="log-body">{{log.description}}</div>
+				<div class="log-footer">{{log.created_at}}</div>
+			</li>
+		</ul>
+	</div>
+</div>
+<input type="text" id="txt-copy" hidden>
+<div id="modal-container" ng-show="dialogVisible" ng-click="modalClick($event)" class="modal-container">
+	<div id="modal-box" class="modal-box">
+		<div id="modal" class="regular-font modal">
+			<div class="dialog-header">
+				<span class="dialog-title">Modify Access</span>
+				<i id="btn-close-2" class="fa fa-times btn-close" aria-hidden="true"></i>
+			</div>
+			<div class="dialog-body">
+				<label class="section-header-first">Freeze</label>
+				<div class="first-container layout-row">
+					<input type="text" id="freeze-date" class="freeze-dates" placeholder="Freeze Date" ng-model="freezeDate" readonly="true" ng-change="dateChange($event)">
+					<span style="margin: 4px;"> to </span>
+					<input type="text" id="unfreeze-date" class="freeze-dates" placeholder="Unfreeze Date" ng-model="unfreezeDate" readonly="true" ng-change="dateChange($event)" ng-disabled="unfreezeDisabled">
+				</div>
+				<label class="section-header-next">Extension</label>
+				<div class="next-container">
+					<div class="ext-inner">
+						<span class="ext-text" style="margin-right: 8px">Extend till</span>
+						<input type="text" id="extend-date" class="freeze-dates" placeholder="New End Date" style="width: 40%" ng-model="endDateExt" readonly="true">
+						<span class="ext-text" style="margin: 0px 8px">or for</span>
+						<input type="number" class="freeze-dates" style="width: 21%" min="15" max="90" ng-model="extendRange" placeholder="15 - 90" ng-change="ext_range_change()">
+						<span class="ext-text" style="margin-left: 8px">days</span>
+					</div>
+					<div class="ext-inner" style="margin-top: 10px">
+						<span class="ext-text" style="margin-right: 8px">for</span>
+						<span class="ext-text">
+							<select class="ext-subs-select" ng-model="extCombo" ng-options="subs.bundle for (x, subs) in user.subs.active track by subs.subs_id">
+								<option value="" selected>SELECT</option>
+							</select>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="dialog-ctrl">
+				<span id="btn-cancel" class="dialog-ctrl-btn btn-cancel">Cancel</span>
+				<span id="btn-save" class="dialog-ctrl-btn btn-ok" ng-class="{enabled: (freezeDate.length > 0 && unfreezeDate.length > 0) || ((endDateExt.length > 0 || extendRange != null || extendRange != undefined) && extCombo != null)}" ng-click="saveAccessEdit()">Save</span>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-container-2" ng-click="modalClick2($event)" class="modal-container hidden">
+	<div id="modal-box-2" class="modal-box">
+		<div id="modal-2" class="regular-font modal">
+			<div class="dialog-header">
+				<span class="dialog-title">Add a new course</span>
+				<i id="btn-close-2" class="fa fa-times btn-close" aria-hidden="true"></i>
+			</div>
+			<div class="dialog-body">
+				<label class="section-header-first">Course</label>
+				<div class="parent-container" id="courses-container">
+					<div class="first-container static-min-height" ng-repeat="newCourse in range(0, 10)" id="new-course-{{$index}}" ng-class="{hidden: $index > 0}">
+						<div class="first-panel">
+							<div class="inner-container course-selector">
+								<select class="course-select" ng-model="selectCourse[$index]" ng-change="selectCourseChange($index)">
+									<option value="">Select</option>
+									<optgroup label="Electives">
+										<option ng-repeat="course in electives" value="{{course.course_id}}">{{course.sis_id}} ({{course.name}})</option>
+									</optgroup>
+									<optgroup label="Other courses">
+										<option ng-repeat="course in courses" value="{{course.course_id}}" ng-if="course.sis_id!=''">{{course.sis_id}} ({{course.name}})</option>
+									</optgroup>
+								</select>
+							</div>
+							<div class="inner-container batch-selector">
+								<div class="batch-auto" ng-class="{hidden: !batchAuto[$index]}">
+									<span class="checkbox-label">Auto-pick batch? <input type="checkbox" name="batch_auto" ng-model="batchAuto[$index]"></span>
+								</div>
+								<div class="batch-select-container" ng-class="{hidden: batchAuto[$index]}">
+									<select name="batch_month" ng-model="batchMonth[$index]">
+										<option value="">Month</option>
+										<option ng-repeat="month in months" value="{{$index}}">{{month}}</option>
+									</select>
+									<select name="batch_year" ng-model="batchYear[$index]">
+										<option value="">Year</option>
+										<option ng-repeat="n in range(2017, 2026)" value="{{n}}">{{n}}</option>
+									</select>
+									<i class="fa fa-times-circle subs-ctrl" ng-click="batchAuto[$index]=true"></i>
+								</div>
+							</div>
+						</div>
+						<div class="second-panel" style="padding: 0px 5px;">
+							<div class="inner-container">
+								<span class="checkbox-label">Complimentary course? <input type="checkbox" name="is_complimentary" ng-model="isComplimentary[$index]"></span>
+							</div>
+							<div class="inner-container">
+								<span class="checkbox-label">SIS import? <input type="checkbox" name="sis" ng-model="sisDo[$index]"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="next-container">
+					<span style="cursor: pointer;color: blue;" ng-click="addCourseRow()">Add another course</span>
+				</div>
+			</div>
+			<div class="dialog-ctrl">
+				<span id="btn-cancel-2" class="dialog-ctrl-btn btn-cancel">Cancel</span>
+				<span id="btn-save-2" class="dialog-ctrl-btn btn-ok" ng-click="addNewCourses()" ng-class="{enabled: newCourseSelected > 0}">Done</span>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-container" ng-class="{hidden: !processing}">
+	<div class="modal-box">
+		<div class="lds-hourglass"></div>
+	</div>
+</div>
+<div id="modal-container-ad" ng-click="modalClickAD($event)" class="modal-container hidden">
+	<div id="modal-box-ad" class="modal-box">
+		<div id="modal-ad1" class="regular-font modal">
+			<div class="dialog-header">
+				<span class="dialog-title">Modify Access Duration</span>
+				<i id="btn-close-ad" class="fa fa-times btn-close" aria-hidden="true"></i>
+			</div>
+			<div class="dialog-body">
+				<label class="section-header-first">Start Date</label>
+				<div class="first-container">
+					<input type="text" ng-model="subsStartDate" id="subs-start-date" readonly="true">
+					<span style="margin-top: 10px">Access extension? <input type="checkbox" ng-model="accessExtnStartDate"> <span style="font-size: 12px;">(Uncheck to overwrite the start date)</span></span>
+				</div>
+				<label class="section-header-next">End Date</label>
+				<div class="next-container">
+					<input type="text" ng-model="subsEndDate" id="subs-end-date" readonly="true">
+					<span style="margin-top: 10px">Access extension? <input type="checkbox" ng-model="accessExtnEndDate"> <span style="font-size: 12px;">(Uncheck to overwrite the end date)</span></span>
+				</div>
+				<label class="section-header-next" ng-show="accessExtnEndDate">Payment</label>
+				<div class="next-container" ng-show="accessExtnEndDate">
+					<span>Paid extension? <input type="checkbox" ng-model="extnPaid" style="margin-right: 5px"></span>
+				</div>
+			</div>
+			<div class="dialog-ctrl">
+				<input type="hidden" name="subs_id" id="inp-subs-id">
+				<span id="btn-cancel-ad" class="dialog-ctrl-btn btn-cancel">Cancel</span>
+				<span id="btn-save-ad" class="dialog-ctrl-btn btn-ok enabled" ng-click="updateAccessDuration()">Save</span>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-container-sp" ng-click="modalClickSP($event)" class="modal-container hidden">
+	<div id="modal-box-sp" class="modal-box">
+		<form id="modal-sp" class="regular-font modal">
+			<div class="dialog-header">
+				<span class="dialog-title">Edit Profile</span>
+				<i id="btn-close-sp" class="fa fa-times btn-close" aria-hidden="true"></i>
+			</div>
+			<div class="dialog-body">
+				<label class="section-header-first">Name</label>
+				<div class="first-container layout-row">
+					<input type="text" ng-model="userName" style="width: 100%;">
+				</div>
+				<label class="section-header-next">Communication</label>
+				<div class="next-container communication-edits">
+					<div class="inner-container full">
+						<i class="fa fa-phone sp-comm-icons" aria-hidden="true"></i>
+						<input type="text" ng-model="userPhone" style="width: 95%;">
+					</div>
+					<div class="inner-container full" style="margin-top: 5px!important;">
+						<i class="fa fa-envelope sp-comm-icons" aria-hidden="true" style="margin-right: 2px;"></i>
+						<input type="email" ng-model="userEmail">
+					</div>
+					<div class="inner-container full" style="margin-top: 5px!important;" ng-show="userEmail2 || addAltEmail">
+						<i class="fa fa-envelope sp-comm-icons" aria-hidden="true" style="margin-right: 2px;"></i>
+						<input type="email" ng-model="userEmail2" style="width: 91%;">
+						<i class="fa fa-minus-circle remove" ng-click="userEmail2 = ''; addAltEmail = false"></i>
+					</div>
+					<div class="inner-container full" style="margin-top: 10px!important;" ng-show="!userEmail2">
+						<span class="regular-font" style="color: blue;cursor: pointer;font-size: 15px;" ng-click="addAltEmail = true">Add communication email</span>
+					</div>
+				</div>
+				<label class="section-header-next">JLC Login</label>
+				<div class="next-container">
+					<div style="margin-bottom: 5px;font-size: 14px">
+						Login Channel
+						<select ng-model="userLmsSoc">
+							<option value="fb">Facebook</option>
+							<option value="gp">Google+</option>
+							<option value="li">LinkedIn</option>
+							<option value="corp">Corporate Login</option>
+						</select>
+					</div>
+					<span class="profile-edit-soc">
+						<i class="fa fa-facebook-square fb-icon"></i>
+						<input type="email" ng-model="userSocFb" placeholder="Not available">
+						<i class="fa fa-minus-circle remove" ng-click="removeSoc('fb')" ng-show="!removedSoc.fb"></i>
+						<i class="fa fa-plus-circle addback" ng-click="removeSoc('fb', false)" ng-show="removedSoc.fb"></i>
+					</span>
+					<span class="profile-edit-soc">
+						<i class="fa fa-google-plus-square gp-icon"></i>
+						<input type="email" ng-model="userSocGp" placeholder="Not available">
+						<i class="fa fa-minus-circle remove" ng-click="removeSoc('gp')" ng-show="!removedSoc.gp"></i>
+						<i class="fa fa-plus-circle addback" ng-click="removeSoc('gp', false)" ng-show="removedSoc.gp"></i>
+					</span>
+					<span class="profile-edit-soc">
+						<i class="fa fa-linkedin li-icon"></i>
+						<input type="email" ng-model="userSocLi" placeholder="Not available">
+						<i class="fa fa-minus-circle remove" ng-click="removeSoc('li')" ng-show="!removedSoc.li"></i>
+						<i class="fa fa-plus-circle addback" ng-click="removeSoc('li', false)" ng-show="removedSoc.li"></i>
+					</span>
+					<div style="width: 100%; display: flex; margin-top: 5px">
+						<div style="width: 50%;font-size: 14px">Jig ID <input type="text" ng-model="userJigId" style="width: 82%;"></div>
+						<div style="width: 50%;">
+							<span style="padding-left: 10px;font-size: 12px;">Update lab username as well? <input type="checkbox" ng-model="userLabUserUpdate"></span>
+						</div>
+					</div>
+				</div>
+				<label class="section-header-next">Freeze</label>
+				<div class="next-container layout-row">
+					<input type="text" id="freeze-date-sp" class="freeze-dates" placeholder="Freeze Date" ng-model="freezeDate" readonly="true" ng-change="dateChange($event)">
+					<span style="margin: 4px;"> to </span>
+					<input type="text" id="unfreeze-date-sp" class="freeze-dates" placeholder="Unfreeze Date" ng-model="unfreezeDate" readonly="true" ng-change="dateChange($event)" ng-disabled="unfreezeDisabled">
+				</div>
+			</div>
+			<div class="dialog-ctrl">
+				<input type="hidden" name="subs_id" id="inp-subs-id">
+				<span id="btn-cancel-ad" class="dialog-ctrl-btn btn-cancel">Cancel</span>
+				<span id="btn-save-ad" class="dialog-ctrl-btn btn-ok enabled" ng-click="saveProfile()">Save</span>
+			</div>
+		</form>
+	</div>
+</div>
+<div id="modal-container-issue" ng-click="modalClickIssue($event)" class="modal-container hidden">
+	<div id="modal-box-issue" class="modal-box">
+		<form id="modal-issue" class="regular-font modal">
+			<div class="dialog-header">
+				<span class="dialog-title">Report an Issue</span>
+				<i id="btn-close-issue" class="fa fa-times btn-close" aria-hidden="true"></i>
+			</div>
+			<div class="dialog-body">
+				<label class="section-header-first">Category</label>
+				<div class="first-container layout-row">
+					<select ng-model="reportCategory">
+						<option value="">Select</option>
+						<option value="1">Enrollment information not available</option>
+						<option value="2">Enrolment information incomplete</option>
+						<option value="3">Batch information incorrect</option>
+						<option value="4">Communication information incorrect</option>
+						<option value="5">Login information incorrect</option>
+						<option value="6">Payment information missing</option>
+						<option value="7">Payment information incorrect</option>
+						<option value="8">Lab login information missing</option>
+						<option value="9">Lab login information incorrect</option>
+						<option value="0">Other issue</option>
+					</select>
+				</div>
+				<label class="section-header-next">Description</label>
+				<div class="next-container">
+					<textarea placeholder="Please describe the problem here..." ng-model="reportDesc" style="max-width: 454px; min-width: 454px;"></textarea>
+				</div>
+			</div>
+			<div class="dialog-ctrl">
+				<input type="hidden" name="subs_id" id="inp-subs-id">
+				<span id="btn-cancel-issue" class="dialog-ctrl-btn btn-cancel">Cancel</span>
+				<span id="btn-save-issue" class="dialog-ctrl-btn btn-ok enabled" ng-click="report()">Save</span>
+			</div>
+		</form>
+	</div>
+</div>
+<div id="modal-container-assignments" ng-click="modalClickAssignments($event)" class="modal-container hidden">
+	<div id="modal-box-assignments" class="modal-box">
+		<div id="modal-assignments" class="regular-font modal">
+			<div class="dialog-header">
+				<span class="dialog-title">Assignments &amp; Progress</span>
+				<i id="btn-close-assignments" class="fa fa-times btn-close" aria-hidden="true"></i>
+			</div>
+			<div class="dialog-body">
+				<label class="section-header-first">{{courseName}}</label>
+				<label class="section-header-next" ng-show="courseName == ''">No Assignments</label>
+				<div class="first-container" style="margin: 20px 0px 0px;">
+					<div ng-repeat="assignment in assignments" class="assignment-row" ng-class="{'last-row': $index >= assignments.length - 1}" title="{{assignment.title}}">
+						<div class="assignment-title">{{elipsiseText(assignment.title, 45)}}</div>
+						<div class="assignment-grade">{{assignment.published_score ? assignment.published_score + "/" + assignment.points_possible : "Not submitted"}}</div>
+					</div>
+				</div>
+			</div>
+			<div class="dialog-ctrl">
+				<input type="hidden" name="subs_id" id="inp-subs-id">
+				<span id="btn-cancel-assignments" class="dialog-ctrl-btn btn-cancel">Close</span>
+			</div>
+		</div>
+	</div>
+</div>

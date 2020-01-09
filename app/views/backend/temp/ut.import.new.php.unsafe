@@ -1,0 +1,167 @@
+<?php
+
+/* 
+           8 8888       .8. `8.`888b                 ,8' d888888o.   
+           8 8888      .888. `8.`888b               ,8'.`8888:' `88. 
+           8 8888     :88888. `8.`888b             ,8' 8.`8888.   Y8 
+           8 8888    . `88888. `8.`888b     .b    ,8'  `8.`8888.     
+           8 8888   .8. `88888. `8.`888b    88b  ,8'    `8.`8888.    
+           8 8888  .8`8. `88888. `8.`888b .`888b,8'      `8.`8888.   
+88.        8 8888 .8' `8. `88888. `8.`888b8.`8888'        `8.`8888.  
+`88.       8 888'.8'   `8. `88888. `8.`888`8.`88'     8b   `8.`8888. 
+  `88o.    8 88'.888888888. `88888. `8.`8' `8,`'      `8b.  ;8.`8888 
+    `Y888888 ' .8'       `8. `88888. `8.`   `8'        `Y8888P ,88P' 
+
+    JIGSAW ACADEMY WORKFLOW SYSTEM v1					
+    ---------------------------------
+*/
+
+    // Prevent exclusive access
+  	if (!defined("JAWS")) {
+    	header('Location: ../index.php');
+    	die();
+  	}
+
+  	// Load stuff
+  	load_module("user");
+  	load_module("subs");
+  	load_module("activity");
+
+  	// Read the input file
+  	$input = file("external/temp/students.csv");
+
+  	// Start processing each student's record
+  	// email,name,phone,gender,city,soc_email,soc_prov,created_at,jig_id,count,course,section_id,learn_mode
+  	//  0      1    2     3     4      5          6         7        8     9     10     11       12        
+  	$date = new DateTime("now");
+  	$stud_count = 0;
+  	$subs_count = 0;
+  	$enr_count = 0;
+  	foreach ($input as $line)
+  	{
+  		$info = explode(",", $line);
+		$email = trim($info[0]);
+        $user = user_get_by_email($email);
+        // If the user is not present, create
+        if (!$user)
+        {
+        	$name = trim($info[1]);
+        	$phone = trim($info[2]);
+        	$user = user_create($email, substr(str_shuffle($name.str_replace("@", "0", str_replace(".", "", $email))), 0, 10), $name, $phone, true);
+        	// Check for creation fail
+			if ($user === false)
+			{
+				echo "Failed to create user: ".$email."<br />";
+				continue;
+			}
+
+			$soc_email = trim($info[5]);
+			$soc = trim($info[6]);
+			$user_soc = array();
+			// If the soc_provider is not set, set soc to "corp", otherwise set the soc_<soc_prov> to soc_email
+			if (strlen($soc) == 0)
+				$soc = "corp";
+			else
+				$user_soc["soc_".$soc] = $soc_email;
+			$user_soc["lms_soc"] = $soc;
+
+			// Update the user with the info
+			user_update($user["user_id"], $user_soc);
+
+			// Only update user_meta if city or gender or both are set
+			$update = false;
+			$city = trim($info[4]);
+			$user_meta = array();
+			if (strlen($city) > 0)
+			{
+				$user_meta["city"] = $city;
+				$update = true;
+			}
+			if ($update)
+				$query .= ", ";
+			$gender = trim($info[3]);
+			if (strlen($gender) > 0)
+			{
+				if (strcasecmp($gender, "m") == 0) $gender = "male";
+				else $gender = "female";
+				$user_meta["gender"] = $gender;
+				$update = true;
+			}
+			if ($update)
+				user_update_meta($user["user_id"], $user_meta);
+
+			$stud_count++;
+        }
+
+        // The user already has some subscription, do not play with his enrollments, just report and skip
+        if (subs_get_info_by_user_id($user["user_id"]))
+        {
+        	echo "Subscriptions already present for user: ".$email."<br />";
+        	continue;
+        }
+
+        // Subscription start_date
+        $created_at = trim($info[7]);
+        $start_date = DateTime::createFromFormat("d-m-Y H:i:s", $created_at);
+        // Because, I am not so sure if $end_date will not be a reference to the same object as $start_date if I assign $start_date to $end_date
+        $end_date = DateTime::createFromFormat("d-m-Y H:i:s", $created_at);
+        // enroll_count specifies the number of courses the student is enrolled in
+        $enroll_count = trim($info[9]);
+        // Calculate the end_date of the subscription by multiplying 180 by number of courses enrolled into
+        $interval = 180*$enroll_count;
+        $end_date->add(new DateInterval("P".$interval."D"));
+        // Each enrollment info covers 3 columns
+        $combo = "";
+        $enroll_arr = array();
+        for ($i=0; $i < $enroll_count; $i++)
+        {
+        	$course_id = trim($info[$i*3 + 10]);
+        	$learn_mode = strtoupper(trim($info[$i*3 + 12]));
+        	// If the learn_mode is not set, set it to SP
+        	if (strlen($learn_mode) == 0)
+        		$learn_mode = "SP";
+        	// For subs combo array
+        	$learn_code = 2;
+        	if (strcmp($learn_mode, "IL") == 0) $learn_code = 1;
+
+        	// Build the combo string
+        	$combo .= $course_id.",".$learn_code.";";
+
+        	// Build the section_id <course_sis_id>[Mar]<IL/SP><16>
+        	$section_id = trim($info[$i*3 + 11]);
+        	// user_enrollment record info
+        	$enrollment = array("course_id" => $course_id, "learn_mode" => $learn_mode, "section_id" => $section_id, "sis_id" => trim($info[8]));
+        	
+        	$enroll_arr[] = $enrollment;
+        }
+
+        // Remove the last ';' from combo string
+        $combo = substr($combo, 0, -1);
+        // Insert into subs
+        db_exec("INSERT INTO subs (user_id,combo,start_date,end_date,status) VALUES (".$user["user_id"].",".db_sanitize($combo).",".db_sanitize($start_date->format("Y-m-d H:i:s")).",".db_sanitize($end_date->format("Y-m-d H:i:s")).",'active');");
+        // Get the subs_id
+        $subs_id = db_get_last_insert_id();
+        // Insert into subs_meta
+        db_exec("INSERT INTO subs_meta (subs_id,create_date,agent_id) VALUES (".$subs_id.",".db_sanitize($date->format("Y-m-d H:i:s")).",0);");
+        $subs_count++;
+
+        // Create user_enrollment records
+        $enr_ids = array();
+        foreach ($enroll_arr as $enroll)
+        {
+        	$query = "INSERT INTO user_enrollment (user_id,subs_id,course_id,learn_mode,sis_id,section_id,sis_status,lab_status) VALUES (".$user["user_id"].",".$subs_id.",".$enroll["course_id"].",".db_sanitize($enroll["learn_mode"]).",".db_sanitize($enroll["sis_id"]).",".db_sanitize($enroll["section_id"]).",'ul','ul');";
+
+        	db_exec($query);
+        	$enr_ids[] = db_get_last_insert_id();
+        	$enr_count++;
+        }
+
+        $content = json_encode(array("ut_enr_count" => $enroll_count, "enr_ids" => implode(",", $enr_ids)));
+        activity_create("ignore", "ut.import.old", "ut.enrollment.import", "user", $user["user_id"], "subs", $subs_id, $content);
+  	}
+
+  	echo "<br /><br />";
+  	echo count($input)." lines processed, ".$stud_count." student records created, ".$subs_count." subscription records created, ".$enr_count." enrollment records created.<br /><br />";
+  	echo "If this looks good, then throw your hands up in the air, wave them around like you just don't care :P";
+
+ ?>

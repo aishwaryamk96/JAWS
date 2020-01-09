@@ -1,0 +1,336 @@
+<style scoped>
+
+	li > div.luke {
+		display: block;
+		position: absolute;
+		bottom: 0px;
+		right: 5px;
+		font-size: 9px;
+		color: rgba(0,0,0,0.5);
+	}
+
+	li.bkg-danger {
+		background-color: bisque;
+	}
+
+	li.bkg-success {
+		background-color: azure;
+	}
+
+	li.bkg-highlight {
+		border: 1px solid rgba(0,0,0,0.5);
+	}
+
+	.feed-animate {
+		position: relative;
+	}
+
+	.feed-animate.ng-enter, .feed-animate.ng-move {
+		transition: opacity 0.5s ease-in;
+		opacity: 0;
+	}
+
+	.feed-animate.ng-enter.ng-enter-active, .feed-animate.ng-move.ng-move-active {
+		opacity: 1;
+	}
+
+	.feed-animate > div.darth-fader {
+		display: block;
+		position: absolute;
+
+		width: 3px;
+		height: 100%;
+		top: 0px;
+		left: 0px;
+
+		opacity: 0;
+
+		-webkit-animation: 30s ease-in 0s 1 darth-fader-keyframes;
+		-moz-animation: 30s ease-in 0s 1 darth-fader-keyframes;
+		-o-animation: 30s ease-in 0s 1 darth-fader-keyframes;
+		animation: 30s ease-in 0s 1 darth-fader-keyframes;
+	}
+
+	@keyframes darth-fader-keyframes {
+	    0% {
+	        opacity: 1;
+	    }
+	    100% {
+	        opacity: 0;
+	    }
+	}
+
+	.feed-animate > div.darth-sideous {
+		display: block;
+		position: absolute;
+
+		width: 3px;
+		height: 100%;
+		top: 0px;
+		left: 0px;
+
+		opacity: 0;
+		z-index: 99999;
+	}
+
+	li.opened > div.darth-sideous, li.feed-animate.opened > div.darth-sideous {
+		opacity: 1!important;
+	}
+
+	.feed-animate > a > p:last-child {
+		opacity: 1;
+		transition: opacity 0.35s linear;
+	}
+
+	.feed-animate > a > p:last-child.ng-hide {
+		opacity: 0;
+		transition: none;
+	}
+
+	::-webkit-scrollbar-track {
+		display: none;
+	}
+
+	::-webkit-scrollbar {
+		display: none;
+	}
+
+	::-webkit-scrollbar-thumb {
+		display: none;
+	}
+
+</style>
+
+<div id="quickview" class="quickview-wrapper" ng-class="{'open' : quickview}" data-pages="quickview" style='top: 60px; z-index: auto;'>
+
+	<ul class="nav nav-tabs" style="padding: 0px">
+        <li class='active'>
+            <a href="#quickview-activity" data-toggle="tab" pg-tab>Global</a>
+        </li>
+       <!--  <li class="">
+            <a href="#quickview-chat" data-toggle="tab" pg-tab>Chat</a>
+        </li> -->
+    </ul>
+
+    <!--<a class="btn-link quickview-toggle" ng-click="quickview_toggle()"><i class="pg-close"></i></a>-->
+
+    <div class="tab-content">
+
+        <div class="tab-pane fade in active no-padding" id="quickview-activity">
+            <div class="view-port clearfix" id="activity">
+                <div class="view bg-white" style="position: relative;">
+                    <div data-init-list-view="ioslist" class="list-view boreded no-top-border" style="position: relative; height: 100%;">
+                        <div class="list-view-group-container" style='padding: 0px; position: relative; height: 100%; overflow-y: auto;'>
+							<div ng-if="!feed_status" class="text-info" style="position: absolute; z-index: 99999; top: 5%; width: 100%; text-align: center;">
+								<i style="font-size: 18px; line-height: 18px; vertical-align: middle;" class="fa fa-fw fa-exclamation-circle text-danger"></i>&nbsp;<span style="font-size: 14px; line-height: 18px; vertical-align: middle;">Live feed is <b>{{feed_message}}</b>.</span>
+							</div>
+                            <ul style="{{feed_status ? '' : 'opacity: 0.25; pointer-events: none; filter: blur(3px);'}}">
+                                <li ng-model="collapsed" class="alert-list live-feeds feed-animate bkg-{{act.cls}} {{collapsed ? 'opened' : ''}}" style="padding:0 !important; position: relative;" ng-repeat="act in activities | orderBy:'-epoch'">
+									<div class="darth-fader bg-{{act.cls}}"></div>
+									<div class="darth-sideous bg-{{act.cls}}"></div>
+									<div class="luke">{{ act.epoch | date:'shortTime'}}</div>
+
+                                    <a href="javascript:;" ng-click="collapsed=!collapsed" class="" pg-navigate data-view-port="#chat" data-view-animation="push-parrallax" style="padding: 18px !important;">
+                                    	<p class="p-l-10  col-middle col-xs-12 fs-12" style="padding-right:0 !important;padding-left:0 !important;">
+                                    		<span class="text-master" ng-if="act.messages[0].type == 'string'" ng-bind-html="act.messages[0].message"></span>
+
+                                    		<span ng-if="act.messages[0].type == 'list'" ng-repeat="value in act.messages[0].message" style="width:100%;color:#626262;display:table;" >
+												<span class="text-master" ng-bind-html="value"></span><br/>
+											</span>
+
+											<span ng-if="act.messages[0].type == 'table'" ng-repeat="m in act.messages[0].message" style="width: 100%; color: #626262; display: table;" >
+												<span class="text-master" ng-bind-html="m.key"></span>
+												<span class="text-master" style="float: right;" ng-bind-html="m.value"></span><br/>
+											</span>
+                                    	</p>
+
+	                                    <p ng-show="collapsed" class="col-middle col-xs-12 fs-12" style="padding-right: 0px; padding-left: 0px;">
+	                                    	<span ng-repeat="msg in act.messages | limitTo: 10 : 1" style="display: block; margin-top: 12px;" >
+												<span class="text-master" ng-if="msg.type == 'string'" ng-bind-html="msg.message"></span>
+
+												<span ng-if="msg.type == 'list'" ng-repeat="value in msg.message" style="width: 100%; color: #626262; display: table;" >
+													<span class="text-master" ng-bind-html="value"></span><br/>
+												</span>
+
+												<span ng-if="msg.type == 'table'" ng-repeat="m in msg.message" style="width: 100%; color: #626262; display: table;" >
+													<span class="text-master" ng-bind-html="m.key"></span>
+													<span class="text-master" style="float: right;" ng-bind-html="m.value"></span><br/>
+												</span>
+											</span>
+	                                    </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       <!--  <div class="tab-pane fade no-padding" id="quickview-chat">
+            <div class="view-port clearfix" id="chat">
+                <div class="view bg-white"> -->
+                    <!-- BEGIN View Header !-->
+                   <!--  <div class="navbar navbar-default">
+                        <div class="navbar-inner"> -->
+                            <!-- BEGIN Header Controler !-->
+                           <!--  <a href="javascript:;" class="inline action p-l-10 link text-master" pg-navigate data-view-port="#chat" data-view-animation="push-parrallax">
+                                <i class="pg-plus"></i>
+                            </a> -->
+                            <!-- END Header Controler !-->
+                          <!--   <div class="view-heading">
+                                Chat List
+                                <div class="fs-11">Show All</div>
+                            </div> -->
+                            <!-- BEGIN Header Controler !-->
+                            <!-- <a href="" class="inline action p-r-10 pull-right link text-master">
+                                <i class="pg-more"></i>
+                            </a> -->
+                            <!-- END Header Controler !-->
+                        <!-- </div>
+                    </div> -->
+                    <!-- END View Header !-->
+                   <!--  <div data-init-list-view="ioslist" class="list-view boreded no-top-border">
+                        <div class="list-view-group-container">
+                            <div class="list-view-group-header text-uppercase">
+                                a</div>
+                            <ul> -->
+                                <!-- BEGIN Chat User List Item  !-->
+                              <!--   <li class="chat-user-list clearfix">
+                                    <a data-view-animation="push-parrallax" data-view-port="#chat" pg-navigate class="" href="">
+                                        <span class="col-xs-height col-middle">
+                        <span class="thumbnail-wrapper d32 circular bg-success">
+                            <img width="34" height="34" alt="" ui-jq="unveil" data-src-retina="{{app.jawsPathTPL}}assets/img/profiles/1x.jpg" data-src="{{app.jawsPathTPL}}assets/img/profiles/1.jpg" ng-src="{{app.jawsPathTPL}}assets/img/profiles/1x.jpg" class="col-top">
+                        </span>
+                                        </span>
+                                        <p class="p-l-10 col-xs-height col-middle col-xs-12">
+                                            <span class="text-master">ava flores</span>
+                                            <span class="block text-master hint-text fs-12">Hello there</span>
+                                        </p>
+                                    </a>
+                                </li> -->
+                                <!-- END Chat User List Item  !-->
+                          <!--   </ul>
+                        </div>
+                        <div class="list-view-group-container">
+                            <div class="list-view-group-header text-uppercase">b</div>
+                            <ul> -->
+                                <!-- BEGIN Chat User List Item  !-->
+                              <!--   <li class="chat-user-list clearfix">
+                                    <a data-view-animation="push-parrallax" data-view-port="#chat" pg-navigate class="" href="">
+                                        <span class="col-xs-height col-middle">
+                        <span class="thumbnail-wrapper d32 circular bg-success">
+                            <img width="34" height="34" alt="" ui-jq="unveil" data-src-retina="{{app.jawsPathTPL}}assets/img/profiles/2x.jpg" data-src="{{app.jawsPathTPL}}assets/img/profiles/2.jpg" ng-src="{{app.jawsPathTPL}}assets/img/profiles/2x.jpg" class="col-top">
+                        </span>
+                                        </span>
+                                        <p class="p-l-10 col-xs-height col-middle col-xs-12">
+                                            <span class="text-master">bella mccoy</span>
+                                            <span class="block text-master hint-text fs-12">Hello there</span>
+                                        </p>
+                                    </a>
+                                </li> -->
+                                <!-- END Chat User List Item  !-->
+                                <!-- BEGIN Chat User List Item  !-->
+                               <!--  <li class="chat-user-list clearfix">
+                                    <a data-view-animation="push-parrallax" data-view-port="#chat" pg-navigate class="" href="">
+                                        <span class="col-xs-height col-middle">
+                        <span class="thumbnail-wrapper d32 circular bg-success">
+                            <img width="34" height="34" alt="" ui-jq="unveil" data-src-retina="{{app.jawsPathTPL}}assets/img/profiles/3x.jpg" data-src="{{app.jawsPathTPL}}assets/img/profiles/3.jpg" ng-src="{{app.jawsPathTPL}}assets/img/profiles/3x.jpg" class="col-top">
+                        </span>
+                                        </span>
+                                        <p class="p-l-10 col-xs-height col-middle col-xs-12">
+                                            <span class="text-master">bob stephens</span>
+                                            <span class="block text-master hint-text fs-12">Hello there</span>
+                                        </p>
+                                    </a>
+                                </li> -->
+                                <!-- END Chat User List Item  !-->
+                          <!--   </ul>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- BEGIN Conversation View  !-->
+                <!-- <div class="view chat-view bg-white clearfix"> -->
+                    <!-- BEGIN Header  !-->
+                    <!-- <div class="navbar navbar-default">
+                        <div class="navbar-inner">
+                            <a href="javascript:;" class="link text-master inline action p-l-10" pg-navigate data-view-port="#chat" data-view-animation="push-parrallax">
+                                <i class="pg-arrow_left"></i>
+                            </a>
+                            <div class="view-heading">
+                                John Smith
+                                <div class="fs-11 hint-text">Online</div>
+                            </div>
+                            <a href="" class="link text-master inline action p-r-10 pull-right ">
+                                <i class="pg-more"></i>
+                            </a>
+                        </div>
+                    </div> -->
+                    <!-- END Header  !-->
+                    <!-- BEGIN Conversation  !-->
+                   <!--  <div class="chat-inner" id="my-conversation"> -->
+                        <!-- BEGIN From Me Message  !-->
+                       <!--  <div class="message clearfix">
+                            <div class="chat-bubble from-me">
+                                Hello there
+                            </div>
+                        </div> -->
+                        <!-- END From Me Message  !-->
+                        <!-- BEGIN From Them Message  !-->
+                        <!-- <div class="message clearfix">
+                            <div class="profile-img-wrapper m-t-5 inline">
+                                <img class="col-top" width="30" height="30" ng-src="{{app.jawsPathTPL}}assets/img/profiles/avatar_small.jpg" alt="" data-src="{{app.jawsPathTPL}}assets/img/profiles/avatar_small.jpg" ui-jq="unveil" data-src-retina="{{app.jawsPathTPL}}assets/img/profiles/avatar_small2x.jpg">
+                            </div>
+                            <div class="chat-bubble from-them">
+                                Hey
+                            </div>
+                        </div> -->
+                        <!-- END From Them Message  !-->
+                        <!-- BEGIN From Me Message  !-->
+                       <!--  <div class="message clearfix">
+                            <div class="chat-bubble from-me">
+                                Did you check out Pages framework ?
+                            </div>
+                        </div> -->
+                        <!-- END From Me Message  !-->
+                        <!-- BEGIN From Me Message  !-->
+                        <!-- <div class="message clearfix">
+                            <div class="chat-bubble from-me">
+                                Its an awesome chat
+                            </div>
+                        </div> -->
+                        <!-- END From Me Message  !-->
+                        <!-- BEGIN From Them Message  !-->
+                       <!--  <div class="message clearfix">
+                            <div class="profile-img-wrapper m-t-5 inline">
+                                <img class="col-top" width="30" height="30" ng-src="{{app.jawsPathTPL}}assets/img/profiles/avatar_small.jpg" alt="" data-src="{{app.jawsPathTPL}}assets/img/profiles/avatar_small.jpg" ui-jq="unveil" data-src-retina="{{app.jawsPathTPL}}assets/img/profiles/avatar_small2x.jpg">
+                            </div>
+                            <div class="chat-bubble from-them">
+                                Yea
+                            </div>
+                        </div> -->
+                        <!-- END From Them Message  !-->
+                    <!-- </div> -->
+                    <!-- BEGIN Conversation  !-->
+                    <!-- BEGIN Chat Input  !-->
+                    <!-- <div class="b-t b-grey bg-white clearfix p-l-10 p-r-10">
+                        <div class="row">
+                            <div class="col-xs-1 p-t-15">
+                                <a href="" class="link text-master"><i class="fa fa-plus-circle"></i></a>
+                            </div>
+                            <div class="col-xs-8 no-padding">
+                                <input type="text" class="form-control chat-input" data-chat-input="" data-chat-conversation="#my-conversation" placeholder="Say something">
+                            </div>
+                            <div class="col-xs-2 link text-master m-l-10 m-t-15 p-l-10 b-l b-grey col-top">
+                                <a href="" class="link text-master"><i class="pg-camera"></i></a>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- END Chat Input  !-->
+               <!--  </div> -->
+                <!-- END Conversation View  !-->
+           <!--  </div>
+        </div> -->
+    </div>
+</div>
+<!-- END QUICKVIEW-->

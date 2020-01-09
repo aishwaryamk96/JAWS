@@ -1,0 +1,234 @@
+<style>
+.new-career {
+	bottom: 2vw;
+	position: fixed;
+	right: 2vw;
+	z-index: 10;
+}
+.btn-job-ctrl {
+	margin-right: 10px;
+}
+.job-title-group {
+	display: flex;
+	flex-direction: column;
+}
+.job-title-group-item-heading {
+	margin-bottom: 5px;
+}
+.job-title-group-item-text {
+	color: #aaa;
+	font-size: 90%;
+}
+.form-group-1 {
+	width: 100%;
+}
+.form-group-2 {
+	width: 48%;
+}
+.tools-chip {
+	background-color: #efefef;
+	border-radius: 30px;
+	margin-right: 10px;
+	padding: 10px 20px;
+}
+.tools-chip label {
+	margin-right: 15px;
+}
+input[type='date'] {
+	height: 32px;
+}
+input[type='date']:required:invalid::-webkit-datetime-edit {
+	color: transparent;
+}
+input[type='date']:focus::-webkit-datetime-edit {
+	color: initial;
+}
+.job-codes {
+	border: 2px solid #eee;
+	padding: 10px;
+	position: relative;
+}
+.job-codes .btn-copy {
+	background: #eee;
+	font-size: 9px;
+	padding: 5px;
+	position: absolute;
+	right: -2px;
+	top: -2px;
+}
+</style>
+<script>
+	$(document).ready(function() {
+		$(".form-control").focusin(function() {
+			$(this).parent(".bmd-form-group").addClass("is-focused");
+		});
+		$(".form-control").focusout(function() {
+			if (($(this)[0].tagName == "INPUT" && $(this).val() == '') || ($(this)[0].tagName == "CODE" && $(this).html() == '')) {
+				$(this).parent(".bmd-form-group").removeClass("is-focused");
+			}
+		});
+	});
+</script>
+<button type="button" class="btn btn-primary bmd-btn-fab new-career" data-toggle="modal" data-target="#newCareer">
+	<i class="material-icons">add</i>
+</button>
+<div class="page-title">
+	<label>Careers</label>
+	<a href="" class="btn btn-primary" target="_self">Download</a>
+</div>
+<div class="container-fluid">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Job Title</th>
+				<th scope="col">Created On</th>
+				<th scope="col">Created By</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="(i, c) in careers">
+				<th scope="row">{{i + 1}}</th>
+				<td>
+					<div class="job-title-group">
+						<p class="job-title-group-item-heading">{{c.title}}</p>
+						<p class="job-title-group-item-text">{{c.company}}</p>
+					</div>
+				</td>
+				<td>{{c.created_at}}</td>
+				<td>{{c.created_by}}</td>
+				<td>
+					<div class="d-flex justify-content-end">
+						<button type="button" class="btn btn-danger bmd-btn-fab bmd-btn-fab-sm btn-job-ctrl" ng-click="jobDelete(c.id)">
+							<i class="material-icons">delete</i>
+						</button>
+						<button type="button" class="btn btn-success bmd-btn-fab bmd-btn-fab-sm btn-job-ctrl" ng-click="jobView(c.id)">
+							<i class="material-icons">remove_red_eye</i>
+						</button>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="modal fade" id="newCareer" tabindex="-1" role="dialog" aria-labelledby="newCareer" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<!-- <h5 class="modal-title" id="exampleModalLabel">Add new career</h5> -->
+				<input type="text" class="form-control" id="jobTitle" placeholder="Awesome Job">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" tabindex="-1">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="d-flex justify-content-between">
+					<div class="form-group bmd-form-group form-group-2">
+						<label for="jobCompany" class="bmd-label-floating">Company</label>
+						<input type="text" class="form-control" id="jobCompany">
+					</div>
+					<div class="form-group bmd-form-group form-group-2">
+						<label for="jobLocation" class="bmd-label-floating">Location</label>
+						<input type="text" class="form-control" id="jobLocation">
+					</div>
+				</div>
+				<div class="d-flex justify-content-between">
+					<div class="form-group bmd-form-group form-group-2">
+						<label for="jobRole" class="bmd-label-floating">Role</label>
+						<input type="text" class="form-control" id="jobRole">
+					</div>
+					<div class="form-group bmd-form-group form-group-2">
+						<label for="jobExperience" class="bmd-label-floating">Experience</label>
+						<input type="text" class="form-control" id="jobExperience">
+					</div>
+				</div>
+				<div class="d-flex justify-content-between">
+					<form class="form-group mb-0 bmd-form-group form-group-2" ng-submit="toolsAdd()">
+						<label for="jobTools" class="bmd-label-floating">Tools</label>
+						<input type="text" class="form-control" id="jobTools" ng-model="insert">
+					</form>
+					<div class="form-group bmd-form-group form-group-2">
+						<label for="jobSubmitBy" class="bmd-label-floating">Submit By</label>
+						<input type="date" class="form-control" id="jobSubmitBy" required>
+					</div>
+				</div>
+				<div class="d-flex justify-content-start">
+					<div class="tools-chip" ng-repeat="tool in tools">
+						<label>{{tool}}</label>
+						<button type="button" class="close" ng-click="toolsRemove(tool)" tabindex="-1">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+				<div class="d-flex justify-content-between">
+					<div class="form-group bmd-form-group form-group-2">
+						<label for="jobCode" class="bmd-label-floating">Code</label>
+						<input type="text" class="form-control" id="jobCode">
+					</div>
+					<div class="form-group bmd-form-group form-group-2">
+						<label for="jobVacancies" class="bmd-label-floating">Vacancies</label>
+						<input type="number" class="form-control" id="jobVacancies">
+					</div>
+				</div>
+				<div class="d-flex justify-content-between">
+					<div class="form-group bmd-form-group form-group-1">
+						<label for="jobDescription" class="bmd-label-floating">Description</label>
+						<code type="text" class="form-control" id="jobDescription" contenteditable="true"></code>
+					</div>
+				</div>
+				<div class="d-flex justify-content-between">
+					<div class="form-group bmd-form-group form-group-1">
+						<label for="jobCourses" class="bmd-label-floating">Courses</label>
+						<select multiple class="form-control" id="jobCourses">
+							<option ng-repeat="c in courses" value="{{c.id}}">{{c.name}} ({{c.sis_id}})</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" ng-click="jobSave()">Save</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="viewCareer" tabindex="-1" role="dialog" aria-labelledby="viewCareer" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<!-- <h5 class="modal-title" id="exampleModalLabel">Add new career</h5> -->
+				<input type="text" class="form-control" id="vJobTitle" placeholder="Awesome Job">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" tabindex="-1">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<nav>
+					<div class="nav nav-tabs bg-dark nav-fill" id="nav-tab" role="tablist">
+						<a target="_self" class="nav-item nav-link" id="nav-info-tab" data-toggle="tab" href="#nav-info" role="tab" aria-controls="nav-info" aria-selected="true">Info</a>
+						<a target="_self" class="nav-item nav-link active" id="nav-html-tab" data-toggle="tab" href="#nav-html" role="tab" aria-controls="nav-html" aria-selected="false">HTML</a>
+						<a target="_self" class="nav-item nav-link" id="nav-preview-tab" data-toggle="tab" href="#nav-preview" role="tab" aria-controls="nav-preview" aria-selected="false">Preview</a>
+					</div>
+				</nav>
+				<div class="tab-content" id="nav-tabContent">
+					<div class="tab-pane fade" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab">
+
+					</div>
+					<div class="tab-pane fade show active job-codes" id="nav-html" role="tabpanel" aria-labelledby="nav-html-tab">
+						<button type="button" class="btn btn-copy" ng-click="copy('#vJobHtml')">Copy</button>
+						<code id="vJobHtml" contenteditable="true"></code>
+					</div>
+					<div class="tab-pane fade job-codes" id="nav-preview" role="tabpanel" aria-labelledby="nav-preview-tab">
+						<code id="vJobPreview" contenteditable="true"></code>
+					</div>
+				</div>
+				<textarea id="copyDest" class="hidden"></textarea>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" ng-click="jobSave()">Save</button>
+			</div>
+		</div>
+	</div>
+</div>

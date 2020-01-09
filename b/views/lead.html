@@ -1,0 +1,280 @@
+<style>
+#activities label {
+	margin-bottom: 0px;
+}
+</style>
+<div class="page-title">
+	<section class="d-flex">
+		<section class="d-flex flex-column">
+			<label class="page-title-name">{{lead.name}}</label>
+			<div class="d-flex">
+				<label class="text-muted text-lowercase">{{lead.email}}</label>
+				<label class="text-secondary ml-1">|</label>
+				<label class="text-info text-uppercase ml-1">{{lead.phone ? lead.phone : 'Phone: NA'}}</label>
+			</div>
+		</section>
+		<div class="d-flex flex-column justify-content-center ml-3">
+			<a class="btn btn-primary btn-raised" ng-if="!!lead.user_id" href="/users/{{lead.user_id}}">Open user</a>
+		</div>
+	</section>
+</div>
+<div class="container-fluid mt-3">
+	<ul class="nav nav-tabs nav-fill bg-primary" id="myTab" role="tablist">
+		<li class="nav-item">
+			<a class="nav-link active" id="actions-tab" href="" data-toggle="tab" data-target="#actions" role="tab" aria-controls="home" aria-selected="true">Actions</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" id="activities-tab" href="" data-toggle="tab" data-target="#activities" role="tab" aria-controls="home" aria-selected="true">Activities</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" id="crm-tab" href="" data-toggle="tab" data-target="#crm" role="tab" aria-controls="home" aria-selected="true">CRM</a>
+		</li>
+	</ul>
+	<div class="tab-content px-1 py-2 mt-3">
+		<div class="tab-pane fade show active" id="actions" role="tabpanel" aria-labelledby="actions-tab">
+			<table class="table table-striped table-hover table-borderless-excess">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>URLs</th>
+						<th>UTMs</th>
+						<th>IP</th>
+						<th>Event</th>
+						<th>Date</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="rec in records">
+						<th>{{$index + 1}}</th>
+						<td class="w-50">
+							<div class="d-flex flex-column">
+								<div class="d-flex">
+									<label class="text-secondary mr-3">Landing:</label>
+									<label>{{rec.page_url}}</label>
+								</div>
+								<div class="d-flex">
+									<label class="text-secondary mr-3">Referer:</label>
+									<label style="word-break:break-all;">{{rec.referer}}</label>
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="d-flex flex-column">
+								<div class="d-flex">
+									<label class="text-secondary mr-3">Campaign:</label>
+									<label>{{rec.utm_campaign}}</label>
+								</div>
+								<div class="d-flex">
+									<label class="text-secondary mr-3">Medium:</label>
+									<label>{{rec.utm_medium}}</label>
+								</div>
+								<div class="d-flex">
+									<label class="text-secondary mr-3">Term:</label>
+									<label>{{rec.utm_term}}</label>
+								</div>
+								<div class="d-flex">
+									<label class="text-secondary mr-3">Content:</label>
+									<label>{{rec.utm_content}}</label>
+								</div>
+							</div>
+						</td>
+						<td>{{rec.ip}}</td>
+						<td>{{rec.event}}</td>
+						<td>{{rec.create_date}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="tab-pane fade" id="activities" role="tabpanel" aria-labelledby="activities-tab">
+			<div class="d-flex flex-column">
+				<div class="d-flex flex-column border-bottom" ng-repeat="uuid in activities">
+					<div class="d-flex justify-content-center bg-light py-3">
+						<label class="text-secondary mr-3">Resolution:</label>
+						<label>{{uuid.screen_width}} x {{uuid.screen_height}}</label>
+					</div>
+					<div class="d-flex flex-column px-5 border-bottom mt-3" ng-repeat="session in uuid.sessions">
+						<table class="table table-bordered mb-0">
+							<thead>
+								<tr>
+									<th colspan="2">
+										<div class="d-flex justify-content-center py-3">
+											<label class="text-secondary mr-3">Session:</label>
+											<label>{{$index + 1}}</label>
+										</div>
+									</th>
+								</tr>
+							</thead>
+							<tr>
+								<td>
+									<div class="d-flex justify-content-center">
+										<label class="text-secondary mr-3">IP:</label>
+										<label>{{session.ip}}</label>
+									</div>
+								</td>
+								<td>
+									<div class="d-flex justify-content-center">
+										<label class="text-secondary mr-3">IP:</label>
+										<label>{{session.ip}}</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="d-flex justify-content-center">
+										<label class="text-secondary mr-3">User Agent:</label>
+										<label>{{session.user_agent}}</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="d-flex justify-content-center">
+										<label class="text-secondary mr-3">Cookies:</label>
+										<label>{{session.cookies}}</label>
+									</div>
+								</td>
+							</tr>
+						</table>
+						<div class="px-5">
+							<table class="table table-stripped table-bordered">
+								<thead>
+									<tr>
+										<th colspan="3">
+											<div class="d-flex justify-content-center font-weight-bold py-3">
+												<label class="text-secondary mr-3">Activities</label>
+											</div>
+										</th>
+									</tr>
+								</thead>
+								<tr ng-repeat="activity in session.activities">
+									<td class="font-weight-bold">{{$index + 1}}</td>
+									<td>{{activity.pathname}}</td>
+									<td>{{activity.activity}}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="crm" role="tabpanel" aria-labelledby="crm-tab">
+			<div class="row">
+				<div class="col-4">
+					<label class="mb-3">The information below is indicative.</label>
+					<div class="card">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th class="w-40 text-right">Key</th>
+									<th class="w-60">Value</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th class="w-40 text-right">Lead ID</th>
+									<td class="w-60">{{crm.crm.ProspectID}}</td>
+								</tr>
+								<tr>
+									<th class="w-40 text-right">Created By</th>
+									<td class="w-60">{{crm.crm.CreatedByName}}</td>
+								</tr>
+								<tr>
+									<th class="w-40 text-right">Prospect Stage</th>
+									<td class="w-60">{{crm.crm.ProspectStage}}</td>
+								</tr>
+								<tr>
+									<th class="w-40 text-right">Score</th>
+									<td class="w-60">{{crm.crm.Score}}</td>
+								</tr>
+								<tr>
+									<th class="w-40 text-right">Owner Name</th>
+									<td class="w-60">{{crm.crm.OwnerIdName}}</td>
+								</tr>
+								<tr>
+									<th class="w-40 text-right">Owner Email</th>
+									<td class="w-60">{{crm.crm.OwnerIdEmailAddress}}</td>
+								</tr>
+								<tr>
+									<th class="w-40 text-right">Disposition</th>
+									<td class="w-60">{{crm.crm.mx_Disposition}}</td>
+								</tr>
+								<tr>
+									<th class="w-40 text-right">Sub Disposition</th>
+									<td class="w-60">{{crm.crm.mx_Sub_Disposition}}</td>
+								</tr>
+								<tr>
+									<th class="w-40 text-right">Activity</th>
+									<td class="w-60">{{crm.crm.ProspectActivityName_Max}}</td>
+								</tr>
+								<tr>
+									<th class="w-40 text-right">Activity Date</th>
+									<td class="w-60">{{crm.crm.ProspectActivityDate_Max}}</td>
+								</tr>
+								<tr>
+									<th class="w-40 text-right">Previous Owner</th>
+									<td class="w-60">{{crm.crm.mx_Old_Owner}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-8">
+					<label class="mb-3">Activities</label>
+					<div id="activities" class="table">
+						<div class="d-flex thead">
+							<div class="col-4">Name</div>
+							<div class="col-4">Date</div>
+							<div class="col-4">Type</div>
+						</div>
+						<div class="d-flex flex-column border-bottom" ng-repeat="activity in crm.crm.activities">
+							<div class="d-flex py-3" data-toggle="collapse" data-target="#activity-{{$index}}">
+								<div class="col-4">{{activity.EventName}}</div>
+								<div class="col-4">{{activity.CreatedOn}}</div>
+								<div class="col-4">
+									<div class="d-flex justify-content-between">
+										<label>{{activity.Type}}</label>
+										<i class="material-icons" ng-show="activity.IsEmailType">mail</i>
+									</div>
+								</div>
+							</div>
+							<div class="collapse" id="activity-{{$index}}">
+								<table class="table table-striped" ng-show="activity.Data.length>0">
+									<thead>
+										<tr>
+											<th colspan="2" class="text-center">Data</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="datum in activity.Data" ng-show="!!datum.Value">
+											<th class="w-50 text-right">{{datum.Key}}</th>
+											<td class="w-50">
+												<label ng-if="datum.Value.indexOf('http')!=0">{{datum.Value}}</label>
+												<a href="{{datum.Value}}" ng-if="datum.Value.indexOf('http')==0" target="_blank">{{datum.Value}}</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<table class="table table-striped" ng-show="activity.ActivityFields">
+									<thead>
+										<tr>
+											<th colspan="2" class="text-center">Fields</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="(key, value) in activity.ActivityFields">
+											<th class="w-50 text-right">{{key}}</th>
+											<td class="w-50">
+												<label ng-if="value.indexOf('http')!=0">{{value}}</label>
+												<a href="{{value}}" ng-if="value.indexOf('http')==0" target="_blank">{{value}}</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

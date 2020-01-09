@@ -1,0 +1,54 @@
+<div class="page-title">
+	<label class="page-title-name">Settings</label>
+	<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newCourse" ng-show="profile.$dirty">Save</button> -->
+</div>
+<div class="container mt-3">
+	<form name="profile" class="col-8 mx-auto">
+		<label class="mb-3">Profile</label>
+		<div class="card mb-4">
+			<div class="card-header d-flex">
+				<div class="col-6">
+					<div class="form-group bmd-form-group">
+						<label for="name" class="bmd-label-floating">Name</label>
+						<input type="text" id="name" ng-model="user.name" class="form-control" name="name" ng-change="dataChanged()">
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-group bmd-form-group">
+						<label for="phone" class="bmd-label-floating">Phone</label>
+						<input type="number" id="phone" ng-model="user.phone" class="form-control" name="phone" ng-change="dataChanged()">
+					</div>
+				</div>
+			</div>
+			<div class="card-header d-flex">
+				<div class="col-12">
+					<div class="form-group bmd-form-group">
+						<label for="email" class="bmd-label-floating">Email</label>
+						<input type="text" id="email" ng-model="user.email" class="form-control" name="email" ng-change="dataChanged()">
+					</div>
+				</div>
+			</div>
+		</div>
+		<label class="mb-3">Layout</label>
+		<div class="card mb-4">
+			<div class="card-body">
+				<div class="checkbox">
+					<label class="text-dark">
+						<input type="checkbox" ng-model="preferences.settings.drawer.fixed" ng-change="dataChanged()">Lock the drawer
+					</label>
+				</div>
+			</div>
+		</div>
+		<label class="mb-3">Search</label>
+		<div class="card">
+			<div class="card-body">
+				<div class="checkbox">
+					<label class="text-dark">
+						<input type="checkbox" ng-model="preferences.settings.search.leads" ng-change="dataChanged()">Include leads in search (might be slower)
+					</label>
+					<button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="right" title="Leads database will also be searched for terms containing '@' (emails)">?</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

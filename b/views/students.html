@@ -1,0 +1,210 @@
+<style>
+#optionsOverlay {
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity .3s ease-out;
+}
+#optionsOverlay.show {
+	opacity: .85;
+	pointer-events: all;
+	z-index: 99;
+}
+#bottomPanel {
+	box-shadow: 0 -15px 40px -20px rgba(40,44,63,.15);
+	padding-left: 70px;
+	z-index: 100;
+	transition: .3s ease-out;
+}
+.section-title {
+	top: -13px;
+	left: 10px;
+}
+.lowered {
+	transform: translateY(390px);
+}
+.btn[disabled] {
+	pointer-events: none;
+}
+</style>
+<div class="position-fixed w-100 h-100 bg-dark" id="optionsOverlay" ng-click="toggleBottomPanel()"></div>
+<div class="page-title">
+	<section class="d-flex flex-column">
+		<label class="page-title-name">Students</label>
+		<label class="text-muted mb-0">{{students.length}} students</label>
+	</section>
+	<div class="d-flex">
+		<div class="form-group mb-0">
+			<label for="resultsPerPage" class="bmd-label-floating mb-0">Results/Page</label>
+			<select class="form-control px-5" id="resultsPerPage" ng-model="resultsPerPage" ng-change="resultsPerPageChange()">
+				<option value="10">10</option>
+				<option value="20">20</option>
+				<option value="30">30</option>
+				<option value="40">40</option>
+				<option value="50">50</option>
+				<option value="{{students.length}}">All</option>
+			</select>
+		</div>
+	</div>
+	<a class="btn btn-primary d-flex flex-column justify-content-center mb-0" href="{{api}}/students?download=1" target="_blank" ng-disabled="students.length==0">Download</a>
+</div>
+<div class="container-fluid mt-3">
+	<div id="accordion" class="table">
+		<div class="d-flex thead">
+			<div class="col-1 d-flex flex-column justify-content-center">#</div>
+			<div class="col-4 d-flex flex-column justify-content-center">Student</div>
+			<div class="col-4 d-flex flex-column justify-content-center">Program</div>
+			<div class="col-3 d-flex justify-content-between">
+				<label class="mb-0 d-flex flex-column justify-content-center">Enrolled on</label>
+				<i class="material-icons cursor-pointer" ng-click="order=!order">{{order ? 'arrow_drop_down' : 'arrow_drop_up'}}</i>
+			</div>
+		</div>
+		<div class="d-flex flex-column border-bottom" ng-repeat="student in students | filter : resultsByRange | orderBy: sortDate: order" ng-class="{'bg-warning text-white': student.acs=='N'}">
+			<div class="d-flex py-3" data-toggle="collapse" data-target="#collapse{{$index}}">
+				<div class="col-1">{{(currentPage - 1) * resultsPerPage + $index + 1}}</div>
+				<div class="col-4">
+					<a href="/users/{{student.user_id}}" ng-class="{'text-white': student.acs=='N'}" target="_blank">{{student.name}}</a>
+				</div>
+				<div class="col-4">{{student.program}}</div>
+				<div class="col-3">{{student.start_date}}</div>
+			</div>
+			<div class="collapse" id="collapse{{$index}}" data-parent="#accordion">
+				<div class="d-flex justify-content-around py-3 border-top">
+					<div class="d-flex flex-column">
+						<div class="{{student.acs=='N' ? 'text-white' : 'text-muted'}}">Access Setup</div>
+						<div class="d-flex justify-content-center">{{student.acs}}</div>
+					</div>
+					<div class="d-flex flex-column">
+						<div class="d-flex justify-content-center {{student.acs=='N' ? 'text-white' : 'text-muted'}}">Welcome email?</div>
+						<div class="d-flex justify-content-center">{{student.email_at}}</div>
+					</div>
+					<div class="d-flex flex-column" ng-show="(student.iot_email_at!='N' && student.iot_email_at!='NA') || criteria.iot">
+						<div class="d-flex justify-content-center {{student.acs=='N' ? 'text-white' : 'text-muted'}}">IoT Email</div>
+						<div class="d-flex justify-content-center">{{student.iot_email_at}}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<nav class="mb-5">
+		<ul class="pagination justify-content-center" ng-show="students.length > resultsPerPage">
+			<li class="page-item d-flex flex-column justify-content-center" ng-show="currentPage>1" title="First Page">
+				<span class="page-link" href="#" aria-label="Previous" ng-click="pageChange(1)">
+					<i class="fas fa-angle-double-left"></i>
+				</a>
+			</li>
+			<li class="page-item d-flex flex-column justify-content-center" ng-show="currentPage>1" title="Previous Page">
+				<span class="page-link" href="#" aria-label="Previous" ng-click="pageChange(currentPage - 1)">
+					<i class="fas fa-angle-left"></i>
+				</a>
+			</li>
+			<li class="page-item {{n==currentPage ? 'active' : ''}}" ng-repeat="n in range(1, totalPages) | filter: pagesByRange">
+				<span class="page-link" href="#" ng-click="pageChange(n)">{{n}}</span>
+			</li>
+			<li class="page-item d-flex flex-column justify-content-center" ng-show="currentPage<totalPages" title="Next Page">
+				<span class="page-link" href="#" aria-label="Next" ng-click="pageChange(currentPage + 1)">
+					<i class="fas fa-angle-right"></i>
+				</span>
+			</li>
+			<li class="page-item d-flex flex-column justify-content-center" ng-show="currentPage<totalPages" title="Last Page">
+				<span class="page-link" href="#" aria-label="Previous" ng-click="pageChange(totalPages)">
+					<i class="fas fa-angle-double-right"></i>
+				</a>
+			</li>
+		</ul>
+	</nav>
+</div>
+<div class="fixed-bottom bg-light lowered d-flex flex-column w-100 pb-3 pr-3" id="bottomPanel">
+	<div class="d-flex justify-content-center" style="transform: translateY(-40%);" ng-click="toggleBottomPanel()">
+		<button class="btn btn-info bmd-btn-fab bmd-btn-fab-sm">
+			<i class="material-icons">expand_less</i>
+		</button>
+	</div>
+	<form name="criterion" class="mb-0">
+		<div class="d-flex">
+			<div class="d-flex position-relative border border-muted px-5 w-50">
+				<div class="position-absolute section-title bg-light px-2">
+					<label class="text-primary text-uppercase">Start date</label>
+				</div>
+				<div class="d-flex justify-content-start w-100">
+					<div class="form-group bmd-form-group w-50">
+						<label for="startDate" class="bmd-floating-label">From</label>
+						<input class="form-control w-100" type="date" format-date id="startDate" ng-model="criteria.from_start_date">
+					</div>
+					<div class="form-group bmd-form-group ml-5 w-50">
+						<label for="endDate" class="bmd-floating-label">To</label>
+						<input class="form-control w-100" type="date" format-date id="endDate" ng-model="criteria.to_start_date">
+					</div>
+				</div>
+			</div>
+			<div class="d-flex position-relative border border-muted px-5 w-50 ml-3">
+				<div class="position-absolute section-title bg-light px-2">
+					<label class="text-primary text-uppercase">end date</label>
+				</div>
+				<div class="d-flex justify-content-start w-100">
+					<div class="form-group bmd-form-group w-50">
+						<label for="startDate" class="bmd-floating-label">From</label>
+						<input class="form-control w-100" type="date" format-date id="startDate" ng-model="criteria.from_end_date">
+					</div>
+					<div class="form-group bmd-form-group ml-5 w-50">
+						<label for="endDate" class="bmd-floating-label">To</label>
+						<input class="form-control w-100" type="date" format-date id="endDate" ng-model="criteria.to_end_date">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="d-flex position-relative border border-muted px-5 mt-3 pb-3">
+			<div class="position-absolute section-title bg-light px-2">
+				<label class="text-primary text-uppercase">catalogue</label>
+			</div>
+			<div class="form-group bmd-form-group w-50">
+				<label for="program" class="bmd-floating-label">Program</label>
+				<select class="form-control" ng-model="criteria.catalogue" ng-change="catalogueChange()">
+					<option value="0">Select</option>
+					<optgroup label="Full Stacks"></optgroup>
+					<option ng-repeat="(id, bundle) in bundles.full_stack" value="f{{id}}">{{bundle.name}}</option>
+					<optgroup label="Specializations"></optgroup>
+					<option ng-repeat="(id, bundle) in bundles.specialization" value="s{{id}}">{{bundle.name}}</option>
+					<optgroup label="Bootcamps"></optgroup>
+					<option ng-repeat="(id, bundle) in bundles.bootcamps" value="b{{id}}">{{bundle.name}}</option>
+					<optgroup label="Programs"></optgroup>
+					<option ng-repeat="(id, bundle) in bundles.programs" value="p{{id}}">{{bundle.name}}</option>
+					<optgroup label="Courses"></optgroup>
+					<option ng-repeat="c in courses" value="c{{c.id}}">{{c.name}}</option>
+				</select>
+			</div>
+			<div class="form-group bmd-form-group w-50 ml-3">
+				<label for="program" class="bmd-floating-label">Batch</label>
+				<select class="form-control" ng-model="criteria.batch">
+					<option value="n0">Select</option>
+					<option ng-repeat="b in batches" value="{{b.id}}">{{b.name}}</option>
+				</select>
+			</div>
+		</div>
+		<div class="d-flex position-relative border border-muted px-5 mt-3 pb-3">
+			<div class="position-absolute section-title bg-light px-2">
+				<label class="text-primary text-uppercase">misc</label>
+			</div>
+			<div class="d-flex justify-content-between w-100">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" ng-model="criteria.as"> No Access Setup
+					</label>
+				</div>
+				<div class="checkbox ml-5">
+					<label>
+						<input type="checkbox" ng-model="criteria.we"> No Welcome Email
+					</label>
+				</div>
+				<div class="checkbox ml-5">
+					<label>
+						<input type="checkbox" ng-model="criteria.iot"> IoT Kit
+					</label>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="d-flex justify-content-end mt-3">
+		<button class="btn btn-raised btn-secondary" ng-click="resetCriteria()">reset</button>
+		<button class="btn btn-raised btn-info ml-3" ng-disabled="!criterion.$dirty" ng-click="applyCriteria()">Apply</button>
+	</div>
+</div>

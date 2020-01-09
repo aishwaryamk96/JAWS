@@ -1,0 +1,171 @@
+<div class="modal-container" ng-class="{hidden: !processing}">
+	<div class="modal-box">
+		<div class="lds-hourglass"></div>
+	</div>
+</div>
+<div class="refer-parent regular-font">
+	<table class="refer-header">
+		<thead>
+			<tr>
+				<th>Total</th>
+				<th>Expired</th>
+				<th>No Action</th>
+				<th>Registered</th>
+				<th>Can claim</th>
+				<th>Awaiting approval</th>
+				<th>Awarded</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{count.enrolled}} / {{count.total}}</td>
+				<td>
+					{{count.invite_expired.total}}
+					<i class="fa fa-info filter-icon">
+						<div class="status-filter regular-font">
+							<div class="filter-container info-list">
+								<div class="each" ng-click="expirySelected='registered'">
+									<div>Registered</div>
+									<div>{{count.invite_expired.registered}}</div>
+								</div>
+								<div class="each" ng-click="expirySelected='enrolled'">
+									<div>Enrolled</div>
+									<div>{{count.invite_expired.enrolled}}</div>
+								</div>
+								<div class="each" ng-click="expirySelected='default'">
+									<div>Expired</div>
+									<div>{{count.invite_expired.default}}</div>
+								</div>
+							</div>
+						</div>
+					</i>
+				</td>
+				<td style="text-decoration: underline;cursor: pointer;" ng-click="export()">{{count.no_action}}</td>
+				<td>{{count.registered}}</td>
+				<td>{{count.claim_reward}}</td>
+				<td>{{count.awaiting_approval}}</td>
+				<td>{{count.voucher_awarded}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="refer-container" ng-show="!!referrals">
+		<table class="referrals" cellspacing="0">
+			<thead>
+				<th>Referral</th>
+				<th>Referrer</th>
+				<th>Date</th>
+				<th style="display: flex;">
+					Status
+					<i class="fa fa-filter filter-icon">
+						<div class="status-filter regular-font">
+							<div class="filter-container">
+								<div class="each" ng-click="statusSelected='invite_expired'">
+									<div class="color-code invite_expired"></div>
+									Invite expired
+								</div>
+								<div class="each" ng-click="statusSelected='no_action'">
+									<div class="color-code no_action"></div>
+									No action
+								</div>
+								<div class="each" ng-click="statusSelected='registered'">
+									<div class="color-code registered"></div>
+									Registered
+								</div>
+								<div class="each" ng-click="statusSelected='enrolled'">
+									<div class="color-code enrolled"></div>
+									Enrolled
+								</div>
+								<div class="each" ng-click="statusSelected='claim_reward'">
+									<div class="color-code claim_reward"></div>
+									Can claim
+								</div>
+								<div class="each" ng-click="statusSelected='awaiting_approval'">
+									<div class="color-code awaiting_approval"></div>
+									Awaiting approval
+								</div>
+								<div class="each" ng-click="statusSelected='voucher_awarded'">
+									<div class="color-code voucher_awarded"></div>
+									Voucher awarded
+								</div>
+								<div class="each" ng-click="statusSelected='voucher_rejected'">
+									<div class="color-code voucher_rejected"></div>
+									Voucher rejected
+								</div>
+								<div class="each" ng-click="statusSelected=''">
+									<div class="color-code reset"></div>
+									Reset
+								</div>
+							</div>
+						</div>
+					</i>
+					<div ng-show="statusSelected!=''" class="color-code-id {{statusSelected}}" ng-click="statusSelected=''" title="Cancel selection">
+						<i class="fa fa-times toggle-status-select"></i>
+					</div>
+				</th>
+			</thead>
+			<tbody ng-repeat="refer in referrals" ng-show="statusSelected==''||statusSelected==refer.status||(expirySelected!=''&&expirySelected==refer.invite_expired)" ng-click="expand(refer.id)">
+				<tr>
+					<td class="refer">
+						<span class="expand">
+							<i class="fa fa-chevron-right" id="expander-{{refer.id}}"></i>
+						</span>
+						<span class="info">
+							<span class="name">
+								<span>{{refer.name}}</span>
+								<a href="{{profileUrl+refer.referral_id}}" target="_blank" ng-show="!!refer.referral_id">
+									<i class="fa fa-external-link" aria-hidden="true"></i>
+								</a>
+							</span>
+							<span class="contact">
+								<span class="phone">
+									<i class="fa fa-phone"></i>
+									<span>{{refer.phone}}</span>
+								</span>
+								<span class="email">
+									<i class="fa fa-envelope"></i>
+									<a href="mailto:{{refer.email}}">{{refer.email}}</a>
+								</span>
+							</span>
+						</span>
+					</td>
+					<td>
+						<a href="{{profileUrl+refer.referrer_id}}" target="_blank" ng-show="refer.referrer_type=='user'">{{refer.referrer_name}}</a>
+						<span ng-show="refer.referrer_type!='user'">{{refer.referrer_name}}</span>
+					</td>
+					<td>{{refer.create_date}}</td>
+					<td class="status {{!!refer.invite_expired ? refer.invite_expired : refer.status}}">
+						{{refer.status_name}}<br>
+						<span ng-show="!!refer.invite_expired" class="smaller-font">({{refer.invite_expired}})</span>
+						<span ng-show="!!refer.amount" class="smaller-font">{{refer.amount | currency: "₹": 0}}</span>
+					</td>
+				</tr>
+				<tr class="dates-row">
+					<td colspan="4">
+						<div class="dates-parent" id="dates-{{refer.id}}">
+							<table cellspacing="0">
+								<tr>
+									<td>
+										<span class="date-title">Registerred on:</span>
+										<span class="date-body">{{!!refer.reg_date ? refer.reg_date : "Not available"}}</span>
+									</td>
+									<td>
+										<span class="date-title">Enrolled on:</span>
+										<span class="date-body">{{!!refer.enr_date ? refer.enr_date : "Not available"}}</span>
+									</td>
+									<td>
+										<span class="date-title">Claimed on:</span>
+										<span class="date-body">{{!!refer.claim_date ? refer.claim_date : "Not available"}}</span>
+									</td>
+									<td>
+										<span class="date-title">Voucher awarded on:</span>
+										<span class="date-body">{{!!refer.voucher_awarded_date ? refer.voucher_awarded_date : "Not available"}}</span>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

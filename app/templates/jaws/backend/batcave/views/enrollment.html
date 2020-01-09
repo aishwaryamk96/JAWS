@@ -1,0 +1,145 @@
+<div class="modal-container" ng-class="{hidden: !processing}">
+	<div class="modal-box">
+		<div class="lds-hourglass"></div>
+	</div>
+</div>
+<div class="enr-parent regular-font">
+	<div class="panel-top">
+		<div class="enr-head">
+			<div class="enr-title">
+				<div class="user-info names">
+					<label class="user-name">{{enrollment.user_name}}</label>
+					<label class="user-sis-id code">{{enrollment.jig_id}}</label>
+				</div>
+				<div class="course-info names">
+					<a href="https://www.jigsawacademy.com/jaws/batcave#!/course/{{enrollment.course_id}}" target="_blank" class="course-name">{{enrollment.course_name}}</a>
+					<label class="course-sis-id code">{{enrollment.section_name}}</label>
+				</div>
+			</div>
+		</div>
+		<div class="enr-lab">
+			<div class="each">
+				<label class="key key-separator">Lab IP</label>
+				<label class="value" ng-show="!!enrollment.lab_ip">{{enrollment.lab_ip}}</label>
+				<label class="value" ng-show="!enrollment.lab_ip">NA</label>
+			</div>
+			<div class="each">
+				<label class="key key-separator">Username</label>
+				<label class="value" ng-show="!!enrollment.lab_user">{{enrollment.lab_user}}</label>
+				<label class="value" ng-show="!enrollment.lab_user">NA</label>
+			</div>
+			<div class="each">
+				<label class="key key-separator">Password</label>
+				<label class="value" ng-show="!!enrollment.lab_pass">{{enrollment.lab_pass}}</label>
+				<label class="value" ng-show="!enrollment.lab_pass">NA</label>
+			</div>
+		</div>
+	</div>
+	<div class="panel-second">
+		<div class="panel-title">
+			<label>Topics</label>
+		</div>
+		<div class="topics-summary">
+			<div class="each">
+				<label class="key">Total</label>
+				<label class="value">{{enrollment.jlc.total}}</label>
+			</div>
+			<div class="each">
+				<label class="key">Completed</label>
+				<label class="value">{{enrollment.jlc.completed}}</label>
+			</div>
+		</div>
+	</div>
+	<div class="panel-third">
+		<div class="panel-body">
+			<div class="topics-list">
+				<div class="topic-head">
+					<div class="column topic-name">
+						<label>Name</label>
+					</div>
+					<div class="column video-count">
+						<label>Videos</label>
+					</div>
+					<div class="column assignments-count">
+						<label>Assignments</label>
+					</div>
+					<div class="column topic-lock">
+						<label>Status</label>
+					</div>
+				</div>
+				<div class="topic-body">
+					<div class="topic" ng-repeat="topic in enrollment.jlc.topics" data-id="{{topic.id}}">
+						<div class="topic-info" ng-click="expandTopic(topic.id)">
+							<div class="column topic-name">
+								<i class="fa fa-angle-right"></i>
+								<label>{{topic.name}}</label>
+							</div>
+							<div class="column video-count">
+								<label>{{topic.videos.v}} / {{topic.videos.c.length}}</label>
+							</div>
+							<div class="column assignments-count">
+								<label>{{topic.assignments.s}} / {{topic.assignments.c.length}}</label>
+							</div>
+							<div class="column topic-lock">
+								<i class="fa fa-lock" title="Locked" ng-show="topic.progress.workflow_state == 'locked'"></i>
+								<i class="fa fa-unlock" title="Unlocked" ng-show="topic.progress.workflow_state == 'unlocked'"></i>
+								<i class="fa fa-check-circle" title="Completed" ng-show="topic.progress.workflow_state == 'completed'"></i>
+								<i class="fa fa-play-circle" title="Started" ng-show="topic.progress.workflow_state == 'started'"></i>
+								<i class="fa fa-exclamation-triangle" title="Not started" ng-show="topic.progress.workflow_state == 'not_started'"></i>
+							</div>
+						</div>
+						<input type="text" required="true" class="accordian" id="topic-{{topic.id}}">
+						<div class="topic-content">
+							<div class="videos" ng-show="topic.videos.c.length > 0">
+								<div class="content-type">
+									<label>Videos</label>
+								</div>
+								<div class="content-list video-list">
+									<div class="content video" ng-repeat="video in topic.videos.c" data-id="video.i" data-content-id="video.ci">
+										<div class="column video-name">
+											<label>{{video.t}}</label>
+										</div>
+										<div class="column video-watched">
+											<label ng-show="video.v">Watched</label>
+											<label ng-show="!video.v">Not watched</label>
+										</div>
+										<div class="column video-mandatory">
+											<i class="fa fa-tasks" ng-show="video.m" title="Adds to progress"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="assignments" ng-show="topic.assignments.c.length > 0">
+								<div class="content-type">
+									<label>Assignments</label>
+								</div>
+								<div class="content-list assignment-list">
+									<div class="content assignment" ng-repeat="assignment in topic.assignments.c" data-id="assignment.i" data-content-id="assignment.ci">
+										<div class="column assignment-name">
+											<label>{{assignment.t}}</label>
+										</div>
+										<div class="column assignment-submitted">
+											<!-- <label ng-show="assignment.v">Submitted</label> -->
+											<!-- <label ng-show="!assignment.v">Not submitted</label> -->
+											<label>{{assignment.ss}}</label>
+										</div>
+										<div class="column assignment-mandatory">
+											<i class="fa fa-tasks" ng-show="assignment.m" title="Adds to progress"></i>
+										</div>
+										<div class="column assignment-submission" ng-show="!!assignment.ss">
+											<label>{{assignment.sg}}/{{assignment.sp}} ({{assignment.sa}} attempt{{assignment.sa > 1 ? "s" : ""}})</label>
+											<label>On {{assignment.st}}</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="no-content" ng-show="topic.videos.c.length == 0 && topic.assignments.c.length == 0">
+								<label>Not sure why this topic exists... LOL!</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

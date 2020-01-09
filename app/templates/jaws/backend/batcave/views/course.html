@@ -1,0 +1,66 @@
+<div class="modal-container" ng-class="{hidden: !processing}">
+	<div class="modal-box">
+		<div class="lds-hourglass"></div>
+	</div>
+</div>
+<div class="course-parent regular-font" ng-click="courseParentClick($event)">
+	<div class="head">
+		<div class="course-title">
+			<label>{{course.name}}</label>
+			<a class="jlc-link" href="https://jigsawacademy.net/accounts/1/courses?utf8=%E2%9C%93&focus=course_name&course%5Bname%5D={{course.sis_id}}" target="_blank">
+				<label class="sis-id">{{course.sis_id}}</label>
+				<i class="fa fa-external-link" aria-hidden="true"></i>
+			</a>
+		</div>
+	</div>
+	<div class="separator"></div>
+	<div class="course-body">
+		<div class="primary">
+			<div class="each">
+				<label class="key">Duration</label>
+				<label class="value lowercase">{{course.duration_length}} {{course.duration_unit}}</label>
+			</div>
+			<div class="each">
+				<label class="key">Price</label><label class="value">&#8377{{course.sp_price_inr | number: 0}}</label>
+			</div>
+			<div class="each" ng-show="!!course.sp_price_usd">
+				<label class="key">Price</label><label class="value">${{course.sp_price_usd | number: 0}}</label>
+			</div>
+			<div class="each" ng-show="!!course.sp_code">
+				<label class="key">Code</label><label class="value uppercase">{{course.sp_code}}</label>
+			</div>
+			<div class="each">
+				<label class="key">Lab</label>
+				<label class="value" ng-show="course.labs.length > 0">Yes</label>
+				<label class="value" ng-show="course.labs.length == 0">No</label>
+			</div>
+			<div class="each">
+				<label class="key">Students</label>
+				<label class="value">{{course.enrollments}}</label>
+			</div>
+		</div>
+		<div class="meta">
+			<div class="section">
+				<div class="section-title">
+					<label>Batches</label>
+				</div>
+				<div class="section-body">
+					<div class="batch">
+						<input type="text" required="true" ng-model="batchName" ng-click="showOptions()">
+						<label class="placeholder floating">Sections</label>
+						<input type="hidden" id="batch-id" ng-model="batchId">
+						<div class="options hidden">
+							<div class="option" ng-repeat="batch in course.sections" data-id="{{batch.id}}" ng-click="batchSelected(batch.id, batch.name)">
+								<label class="batch-name">{{batch.name}}</label>
+								<label class="batch-sis-id">{{batch.sis_id}}</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="buttons">
+					<button class="btn btn-disabled" disabled="true" ng-click="gotoSection()">Students</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

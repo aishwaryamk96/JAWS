@@ -1,0 +1,132 @@
+<?php
+
+/* 
+		   8 8888       .8. `8.`888b                 ,8' d888888o.   
+		   8 8888      .888. `8.`888b               ,8'.`8888:' `88. 
+		   8 8888     :88888. `8.`888b             ,8' 8.`8888.   Y8 
+		   8 8888    . `88888. `8.`888b     .b    ,8'  `8.`8888.     
+		   8 8888   .8. `88888. `8.`888b    88b  ,8'    `8.`8888.    
+		   8 8888  .8`8. `88888. `8.`888b .`888b,8'      `8.`8888.   
+88.        8 8888 .8' `8. `88888. `8.`888b8.`8888'        `8.`8888.  
+`88.       8 888'.8'   `8. `88888. `8.`888`8.`88'     8b   `8.`8888. 
+  `88o.    8 88'.888888888. `88888. `8.`8' `8,`'      `8b.  ;8.`8888 
+	`Y888888 ' .8'       `8. `88888. `8.`   `8'        `Y8888P ,88P' 
+
+	JIGSAW ACADEMY WORKFLOW SYSTEM v1					
+	---------------------------------
+*/
+	
+	// Prevent exclusive access
+	if (!defined("JAWS")) {
+		header('Location: https://www.jigsawacademy.com');
+		die();
+	}
+
+	// This will add the info to all captured leads with the given token
+	// Note: User exists is checked internally in the module and assoced if needed
+	// Note: persistence is yet to be implemented on this API !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	// -------------------
+
+	// Auth check
+	//if (!auth_api ("leads.basic")) die ("You do not have sufficient privileges to perform this operation");
+
+	// Send Header
+	header('Access-Control-Allow-Origin: *');
+	header('Content-Type: image/gif');
+	header("Pragma-directive: no-cache");
+	header("Cache-directive: no-cache");
+	header("Cache-control: no-cache");
+	header("Pragma: no-cache");
+	header("Expires: 0");
+
+	// Load stuff
+	load_module("leads");
+
+	// Check
+	if (!isset($_GET["user_info"])) exit();
+	if (!isset($_COOKIE["_shuri_afl"])) exit();
+
+	// Parse
+	$user_info;
+	foreach($_GET["user_info"] as $field) {
+		if ((!isset($user_info["email"])) && (filter_var($field["attr_value"], FILTER_VALIDATE_EMAIL))) {
+			if (((isset($field["attr_placeholder"])) && (stripos(str_ireplace(["-", " "],"",strtolower($field["attr_placeholder"])), "email") !== false)) 
+				|| ((isset($field["attr_id"])) && (stripos(str_ireplace(["-", " "],"",strtolower($field["attr_id"])), "email") !== false))
+				|| ((isset($field["attr_name"])) && (stripos(str_ireplace(["-", " "],"",strtolower($field["attr_name"])), "email") !== false))) 
+				$user_info["email"] = $field["attr_value"];
+		}
+
+			if ((!isset($user_info["phone"])) && (strlen(filter_var($field["attr_value"], FILTER_SANITIZE_NUMBER_INT)) > 9)) {
+				if ((isset($field["attr_placeholder"]) && (
+						(stripos($field["attr_placeholder"], "phone") !== false) ||
+						(stripos($field["attr_placeholder"], "mobile") !== false) ||
+						(stripos($field["attr_placeholder"], "contact") !== false) ||
+						(stripos($field["attr_placeholder"], "tel") !== false)
+					)) || (isset($field["attr_id"]) && (
+						(stripos($field["attr_id"], "phone") !== false) ||
+						(stripos($field["attr_id"], "mobile") !== false) ||
+						(stripos($field["attr_id"], "contact") !== false) ||
+						(stripos($field["attr_id"], "tel") !== false)
+					)) ||(isset($field["attr_name"]) && (
+						(stripos($field["attr_name"], "phone") !== false) ||
+						(stripos($field["attr_name"], "mobile") !== false) ||
+						(stripos($field["attr_name"], "contact") !== false) ||
+						(stripos($field["attr_name"], "tel") !== false)
+					))) $user_info["phone"] = filter_var($field["attr_value"], FILTER_SANITIZE_NUMBER_INT);
+		}
+
+			if (!isset($user_info["name"])) {
+			if (((isset($field["attr_placeholder"])) && (
+					(strcmp(str_ireplace(["-", " "],"",strtolower($field["attr_placeholder"])), "name") == 0) 
+				|| (stripos($field["attr_placeholder"], "first name") !== false)
+				|| (strcmp(str_ireplace(["-", " "],"",strtolower($field["attr_placeholder"])), "first") == 0)
+				|| (stripos($field["attr_placeholder"], "full name") !== false)
+				|| (stripos($field["attr_placeholder"], "last name") !== false)
+				|| (strcmp(str_ireplace(["-", " "],"",strtolower($field["attr_placeholder"])), "last") == 0)
+				|| (stripos($field["attr_placeholder"], "surname") !== false)))
+
+				|| ((isset($field["attr_id"])) && (
+				   (stripos($field["attr_id"], "name") !== false)
+				|| (stripos($field["attr_id"], "first") !== false)
+				|| (stripos($field["attr_id"], "last") !== false)
+				|| (stripos($field["attr_id"], "surname") !== false)))
+
+				|| ((isset($field["attr_name"])) && (
+				   (stripos($field["attr_name"], "name") !== false)
+				|| (stripos($field["attr_name"], "first") !== false)
+				|| (stripos($field["attr_name"], "last") !== false)
+				|| (stripos($field["attr_name"], "surname") !== false)))
+				) $user_info["name"] = $field["attr_value"];
+		} 
+
+	}
+
+	//Check
+	if ((!isset($user_info["email"])) || (!isset($user_info["name"])) || (!isset($user_info["phone"]))) exit();
+
+	// Prep
+	$lead_params["ad_url"] = $_SERVER["HTTP_REFERER"];
+	$lead_params["ad_lp"] = "99k LP"; 						// IMP - retreive from DB in future !!
+	$lead_params["type"] = "url";
+	$lead_params["trigger"] = "formsubmit";
+	$lead_params["ip"] = $_SERVER['REMOTE_ADDR'];
+
+	// Token
+	$token = isset($_COOKIE["_shuri_afl"]) ? str_replace('"', "", $_COOKIE["_shuri_afl"]) : "";
+
+	// Basic Capture
+	$token_new = json_encode(leads_basic_capture($lead_params, "token", $token));
+
+	// Refresh / Set cookie
+	setcookie("_shuri_afl", isset($_COOKIE["_shuri_afl"]) ? $token : $token_new, time() + (86400 * 365), "/");	
+
+	// Assoc
+	leads_basic_assoc_user_partial($user_info, str_replace('"','',isset($_COOKIE["_shuri_afl"]) ? $token : $token_new));
+
+	// Output the transparent GIF
+	// Note: Using escape sequence is much faster than using base64_decode
+	// Note: GIF are preferred over PNG for smaller data size
+	die("\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x90\x00\x00\xff\x00\x00\x00\x00\x00\x21\xf9\x04\x05\x10\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x04\x01\x00\x3b");
+
+?>
+

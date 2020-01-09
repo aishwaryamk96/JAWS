@@ -1,0 +1,1 @@
+<?php echo "google-site-verification: google845ac1fc57312367.html" ?>

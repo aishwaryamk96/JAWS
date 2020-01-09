@@ -1,0 +1,183 @@
+// Color Customiation
+@color-primary: #242a34;
+@color-success: #00bcd4;
+@color-info: rgb(0,149,217);
+@color-warning: rgb(243,117,46);
+@color-danger: #d9534f;
+@color-secondary: lighten(@color-primary, 70%);
+@color-ternary: lighten(@color-primary, 15%);
+
+.bg-secondary { background-color: @color-secondary; }
+.bg-ternary { background-color: @color-ternary; }
+
+// Positional Customization
+.v-align {
+	display: flex;
+	align-items: center;
+}
+
+.v-align-alt { vertical-align: middle; }
+
+.rel { position: relative; }
+.abs { position: absolute; }
+.fix { position: fixed; }
+.abs-alt {
+	.abs;
+	top: 0px;
+	left: 0px;
+}
+
+.pad-none { padding: 0px!important; }
+.mar-none { margin: 0px!important; }
+
+@padding-iterations: 60;
+.padding-loop (@sz) when (@sz > -1) {
+    .pad-left-@{sz} { padding-left: ~"@{sz}px"; }
+	.pad-right-@{sz} { padding-right: ~"@{sz}px"; }
+	.pad-top-@{sz} { padding-top: ~"@{sz}px"; }
+	.pad-bottom-@{sz} { padding-bottom: ~"@{sz}px"; }
+
+	.pad-col-@{sz} {
+		padding-left: ~"@{sz}px";
+		padding-right: ~"@{sz}px";
+	}
+	.pad-row-@{sz} {
+		padding-top: ~"@{sz}px";
+		padding-bottom: ~"@{sz}px";
+	}
+
+	.pad-@{sz} { padding: ~"@{sz}px"; }
+	.padding-loop(@sz - 1);
+}
+.padding-loop (@padding-iterations);
+
+@margin-iterations: 50;
+.margin-loop (@sz) when (@sz > -1) {
+    .mar-left-@{sz} { margin-left: ~"@{sz}px"; }
+	.mar-right-@{sz} { margin-right: ~"@{sz}px"; }
+	.mar-top-@{sz} { margin-top: ~"@{sz}px"; }
+	.mar-bottom-@{sz} { margin-bottom: ~"@{sz}px"; }
+
+	.mar-col-@{sz} {
+		margin-left: ~"@{sz}px";
+		margin-right: ~"@{sz}px";
+	}
+	.mar-row-@{sz} {
+		margin-top: ~"@{sz}px";
+		margin-bottom: ~"@{sz}px";
+	}
+
+	.mar-@{sz} { margin: ~"@{sz}px"; }
+	.margin-loop(@sz - 1);
+}
+.margin-loop (@margin-iterations);
+
+// Text Cuustomization
+.font-alt { font-family: "Montserrat", sans-serif; }
+
+@fs-iterations: 35;
+.fs-loop (@sz) when (@sz > 0) {
+    .fs-@{sz} { font-size: ~"@{sz}px"; }
+    .fs-loop(@sz - 1);
+}
+.fs-loop (@fs-iterations);
+
+.text-shadow-gen (@color) {
+	.text-shadow-@{color} {
+		@clr: "color-@{color}";
+		text-shadow: 0px 0px 8px @@clr;
+	}
+}
+
+.text-shadow-gen (~"primary");
+.text-shadow-gen (~"success");
+.text-shadow-gen (~"info");
+.text-shadow-gen (~"warning");
+.text-shadow-gen (~"danger");
+.text-shadow-gen (~"secondary");
+.text-shadow-gen (~"ternary");
+
+.text-primary { color: @color-primary; }
+.text-secondary { color: darken(@color-secondary, 15%); }
+.text-ternary { color: lighten(@color-primary, 40%); }
+
+.text-right-alt { text-align: right; }
+.text-left-alt { text-align: left; }
+
+.text-bold { font-weight: 500; }
+
+.text-read {
+	cursor: default;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+@media only screen and (max-width: 765px) {
+	.text-right-alt { text-align: left!important; }
+	.text-left-alt { text-align: right!important; }
+}
+
+// Border Customizations
+.bdr-common() { border-style: solid; }
+
+.bdr-color-gen (@color) {
+	.bdr-@{color} {
+		@clr: "color-@{color}";
+		border-color: @@clr;
+		/*border-left-color: @@clr;
+		border-right-color: @@clr;
+		border-top-color: @@clr;
+		border-bottom-color: @@clr;*/
+		.bdr-common();
+	}
+}
+
+.bdr-color-gen (~"primary");
+.bdr-color-gen (~"success");
+.bdr-color-gen (~"info");
+.bdr-color-gen (~"warning");
+.bdr-color-gen (~"danger");
+.bdr-color-gen (~"secondary");
+.bdr-color-gen (~"ternary");
+
+.bdr-left {
+	border-width: 0px;
+	border-left-width: 1px;
+	.bdr-common();
+}
+
+.bdr-right {
+	border-width: 0px;
+	border-right-width: 1px;
+	.bdr-common();
+}
+
+.bdr-top {
+	border-width: 0px;
+	border-top-width: 1px;
+	.bdr-common();
+}
+
+.bdr-bottom {
+	border-width: 0px;
+	border-bottom-width: 1px;
+	.bdr-common();
+}
+
+.bdr-col {
+	border-width: 0px;
+	border-left-width: 1px;
+	border-right-width: 1px;
+	.bdr-common();
+}
+
+.bdr-row {
+	border-width: 0px;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	.bdr-common();
+}

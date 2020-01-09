@@ -1,0 +1,132 @@
+<div class="profile" ng-hide="processing">
+	<div class="left-panel">
+		<div class="misc-info">
+			<div class="img-container">
+				<img class="profile-img" src="{{user.photo_url}}" ng-show="user.photo_url != null" width="256" height="256">
+				<i class="fa fa-user user-no-pic" aria-hidden="true" ng-show="user.photo_url == null"></i>
+			</div>
+			<div class="addr-container left-panel-containers" ng-show="!!user.city">
+				<center>
+					<span class="addr regular-font"><i class="fa fa-map-marker addr-icon" aria-hidden="true"></i>{{user.city}}, {{user.state}}, {{user.country}}</span>
+				</center>
+			</div>
+			<div class="reg-date-container left-panel-containers">
+				<center>
+					<span class="reg-date regular-font left-panel-dates">Registered: {{user.reg_date}}</span>
+				</center>
+			</div>
+			<div class="access-setup-container left-panel-containers">
+				<center>
+					<span class="access-setup-date regular-font left-panel-dates" ng-show="!!user.survey_date">Access Setup on: {{user.survey_date}}</span>
+				</center>
+			</div>
+		</div>
+	</div>
+	<div class="main-panel">
+		<div class="primary-info">
+			<div class="username">
+				<span class="name">{{user.name}}</span>
+				<span class="jig-id regular-font" ng-show="!!jigId"><a class="jlc-link" href="https://jigsawacademy.net/accounts/1/users?utf8=%E2%9C%93&focus=user_name&user%5Bname%5D={{jigId}}" target="_blank" title="Go to JLC">{{jigId}} <i class="fa fa-external-link" aria-hidden="true"></i></a></span>
+				<i class="fa fa-pencil edit-profile" aria-hidden="true" title="Edit Profile"></i>
+			</div>
+			<div class="sub-header">
+				<div class="comm sub-header-1 regular-font">
+					<a href="tel:{{user.phone}}" class="comm-link comm-phone">
+						<span class="comm-icon comm-icon-phone"><i class="fa fa-phone" aria-hidden="true"></i></span>
+						<span class="comm-container" ng-show="!!user.phone">{{user.phone}}</span>
+						<span class="comm-container" ng-show="!user.phone">N/A</span>
+					</a>
+				</div>
+				<div class="comm sub-header-2 regular-font">
+					<a href="mailto:{{user.email}}" class="comm-link comm-email">
+						<span class="comm-icon comm-icon-email"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+						<span class="comm-container">{{user.email}}</span>
+					</a>
+				</div>
+			</div>
+			<div class="divider"></div>
+			<div class="socials">
+				<div class="fb regular-font social-email" ng-show="!!user.soc_fb">
+					<span class="fb-icon-container"><i class="fa fa-facebook-official fb-icon" aria-hidden="true"></i></span>
+					<span class="fb-email">{{user.soc_fb}}</span>
+					<span class="jlc-login-soc" ng-show="user.lms_soc == 'fb'"><img src="https://www.jigsawacademy.com/jaws/media/jaws/frontend/images/favicon.png" height="16" width="16" title="JLC Social Account"></span>
+				</div>
+				<div class="gp regular-font social-email" ng-show="!!user.soc_gp">
+					<span class="gp-icon-container"><i class="fa fa-google-plus gp-icon" aria-hidden="true"></i></span>
+					<span class="gp-email">{{user.soc_gp}}</span>
+					<span class="jlc-login-soc" ng-show="user.lms_soc == 'gp'"><img src="https://www.jigsawacademy.com/jaws/media/jaws/frontend/images/favicon.png" height="16" width="16" title="JLC Social Account"></span>
+				</div>
+				<div class="li regular-font social-email" ng-show="!!user.soc_li">
+					<span class="li-icon-container"><i class="fa fa-linkedin-square li-icon" aria-hidden="true"></i></span>
+					<span class="li-email">{{user.soc_li}}</span>
+					<span class="jlc-login-soc" ng-show="user.lms_soc == 'li'"><img src="https://www.jigsawacademy.com/jaws/media/jaws/frontend/images/favicon.png" height="16" width="16" title="JLC Social Account"></span>
+				</div>
+			</div>
+			<div class="divider"></div>
+			<div class="no-lms-soc-container regular-font" ng-show="!!user.lms_soc_link">
+				<div class="no-lms-soc">
+					Access setup is pending. Please click on the link to copy access setup link.<i class="fa fa-clipboard copy-lms-soc-link" aria-hidden="true" title="Copy setup access link" ng-click="textCopy(user.lms_soc_link)"></i>
+				</div>
+			</div>
+			<div class="subs-container">
+				<table class="subs-each-parent regular-font" ng-repeat="(status, subs_by_status) in user.subs">
+					<thead>
+						<tr>
+							<th class="subs-status" ng-click="subsStatusToggle(status)">
+								<i id="arrow-{{status}}" class="fa subs-toggle" aria-hidden="true" ng-class="{'fa-chevron-down': $index == 0, 'fa-chevron-right': $index > 0}"></i><span style="margin-left: 10px;">{{status}}</span>
+							</th>
+						</tr>
+					</thead>
+					<tbody ng-show="$index == 0" id="subs-{{status}}">
+						<tr ng-repeat="subs in subs_by_status" class="subs-each-tr">
+							<td class="subs-each">
+								<table class="subs" cellspacing="0">
+									<thead>
+										<tr>
+											<th class="bundle-name">{{subs.bundle}}</th>
+											<th class="duration" ng-show="!!subs.start_date">
+												{{subs.start_date}} to {{subs.end_date}} <span class="duration-length">({{subs.duration}} months)</span>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="enr in subs.enr">
+											<td colspan="2" class="enr-container">
+												<table class="enrollment" ng-class="{'no-border': $index == subs.enr.length - 1}">
+													<tr>
+														<td>{{enr.name}}<span class="complimentary-course" ng-show="!!enr.complimentary"><br>(Complimentary)</span></td>
+														<td style="text-align: center;font-size: 15px;">{{enr.section_name}}</td>
+														<td class="lab-details">
+															<span ng-show="!!enr.lab_ip">
+																<span title="Click to copy" ng-click="textCopy(enr.lab_ip)" style="cursor: pointer">{{enr.lab_ip}}</span><br><span class="lab-login">{{enr.lab_user}}, {{enr.lab_pass}}</span>
+															</span>
+														</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr ng-show="!!subs.pay">
+											<td colspan="2" class="payment-summary">Payment Summary</td>
+										</tr>
+										<tr ng-show="!!subs.pay">
+											<td colspan="2">
+												<table class="pay-master">
+													<tr>
+														<td style="width: 33.333333%">Total: <i class="fa fa-inr" aria-hidden="true" ng-show="subs.pay.currency == 'inr'"></i><span ng-show="subs.pay.currency == 'usd'">$</span>{{subs.pay.sum_total}}</td>
+														<td style="width: 33.333333%; text-align: center;">{{subs.pay.instl_total}} Installment<span ng-show="subs.pay.instl_total==2">s</span></td>
+														<td style="text-transform: capitalize;width: 33.333333%; text-align: center">{{subs.pay.status}}</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<input type="text" hidden id="txt-temp">

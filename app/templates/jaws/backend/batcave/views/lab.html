@@ -1,0 +1,144 @@
+<div class="modal-container" ng-class="{hidden: !processing}">
+	<div class="modal-box">
+		<div class="lds-hourglass"></div>
+	</div>
+</div>
+<div class="lab-parent regular-font">
+	<div class="head">
+		<div class="lab-title">
+			<label>All labs</label>
+		</div>
+		<form class="lab-search">
+			<input type="text" placeholder="Search...">
+		</form>
+	</div>
+	<div class="lab-body">
+		<div class="labs-control">
+			<div class="labs-count">{{labIds.length > 0 ? labIds.length: 'No'}} lab{{labIds.length > 1 ? 's' : ''}} available.</div>
+			<button id="lab-create" ng-click="showEditLab(false, edit)" ng-show="edit">
+				<div class="icon">
+					<i class="fa fa-plus"></i>
+				</div>
+				<div class="text">Create a new lab</div>
+			</button>
+		</div>
+		<table class="labs-list" ng-show="labIds.length > 0">
+			<tbody ng-repeat="lab in labs" class="lab-row">
+				<tr>
+					<td class="lab-info-td">
+						<div class="lab-info">
+							<label class="lab-name">{{lab.name}}<label ng-show="lab.status == -1" class="lab-disabled">(Disabled)</label></label>
+							<a href="https://www.jigsawacademy.com/lab/{{lab.route}}" target="_blank" class="lab-url">https://www.jigsawacademy.com/lab/{{lab.route}}</a>
+							<label class="lab-created-at">{{lab.created_at}}</label>
+						</div>
+					</td>
+					<td class="lab-domain-td">
+						{{lab.domain}}
+					</td>
+					<td class="lab-ami-td">
+						<div class="lab-ami">
+							<label class="lab-ami-id">{{lab.config.AWS_IMAGE_ID}}</label>
+							<label class="lab-lifespan" title="Lifespan of AMI instance (in seconds)">{{lab.lifespan}} sec</label>
+						</div>
+					</td>
+					<td class="lab-ctrl-td">
+						<div class="lab-ctrl-parent">
+							<div class="lab-ctrl">
+								<svg width="24" height="24" class="ami-info" title="About lab" ng-click="showEditLab(lab, false)">
+									<circle cx="12" cy="12" r="12" fill="blue"></circle>
+									<text x="9" y="19.5" fill="white" font-size="22" font-weight="1000">i</text>
+								</svg>
+								<label class="switch" ng-show="lab.status > -1 && edit" title="Toggle lab">
+									<input type="checkbox" ng-if="lab.status == 1" checked ng-click="toggleLab(lab)">
+									<input type="checkbox" ng-if="lab.status != 1" ng-click="toggleLab(lab)">
+									<span class="slider round"></span>
+								</label>
+								<i class="fa fa-pencil edit" title="Edit the lab" ng-show="edit" ng-click="showEditLab(lab, edit)"></i>
+								<i class="fa fa-trash delete" title="Delete the lab" ng-show="edit" ng-click="deleteLab(lab)" ng-class="{disabled: lab.status==-1}"></i>
+								<i class="fa fa-clone clone" title="Copy the lab" ng-show="edit" ng-click="copyLab(lab)"></i>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr ng-repeat="version in lab.versions" class="version-row">
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div id="modal-container-lab" ng-click="modalClickEdit($event)" class="modal-container hidden">
+	<div id="modal-box-lab" class="modal-box">
+		<div id="modal-lab" class="regular-font modal">
+			<div class="dialog-header">
+				<span class="dialog-title">{{labNewOrEditOrAboutTitle}} Lab</span>
+				<i id="btn-close-lab" class="fa fa-times btn-close" aria-hidden="true"></i>
+			</div>
+			<div class="dialog-body">
+				<label class="section-header-first">Name</label>
+				<div class="first-container">
+					<input type="text" class="lab-edit-inputs" ng-model="lab.name" ng-if="editModalEdit" placeholder="Legendary Lab!">
+					<input type="text" class="lab-edit-inputs" ng-model="lab.name" ng-if="!editModalEdit" readonly="true">
+				</div>
+				<label class="section-header-next">Route</label>
+				<div class="next-container layout-row route-container">
+					<span type="text" readonly="true">https://www.jigsawacademy.com/lab/</span>
+					<input type="text" class="lab-edit-inputs" ng-model="lab.route" ng-if="editModalEdit" placeholder="some-epic-route">
+					<input type="text" class="lab-edit-inputs" ng-model="lab.route" ng-if="!editModalEdit" readonly="true">
+				</div>
+				<label class="section-header-next">Domain</label>
+				<div class="next-container">
+					<input type="text" class="lab-edit-inputs" ng-model="lab.domain" ng-if="editModalEdit" placeholder="Interstellar Domain">
+					<input type="text" class="lab-edit-inputs" ng-model="lab.domain" ng-if="!editModalEdit" readonly="true">
+				</div>
+				<label class="section-header-next">AMI Settings</label>
+				<div class="next-container">
+					<div class="inner">
+						<span class="inner-title">ID</span>
+						<input type="text" class="lab-edit-inputs" ng-model="lab.config.AWS_IMAGE_ID" ng-if="editModalEdit" placeholder="AWS Image ID (AMI)">
+						<input type="text" class="lab-edit-inputs" ng-model="lab.config.AWS_IMAGE_ID" ng-if="!editModalEdit" readonly="true">
+					</div>
+					<div class="inner">
+						<span class="inner-title">Key</span>
+						<input type="text" class="lab-edit-inputs" ng-model="lab.config.AWS_KEY_NAME" ng-if="editModalEdit" placeholder="Key Name">
+						<input type="text" class="lab-edit-inputs" ng-model="lab.config.AWS_KEY_NAME" ng-if="!editModalEdit" readonly="true">
+					</div>
+					<div class="inner">
+						<span class="inner-title">Subnet</span>
+						<input type="text" class="lab-edit-inputs" ng-model="lab.config.AWS_SUBNETID" ng-if="editModalEdit" placeholder="Subnet ID">
+						<input type="text" class="lab-edit-inputs" ng-model="lab.config.AWS_SUBNETID" ng-if="!editModalEdit" readonly="true">
+					</div>
+					<div class="inner">
+						<span class="inner-title">Type</span>
+						<input type="text" class="lab-edit-inputs" ng-model="lab.config.AWS_INSTANCE_TYPE" ng-if="editModalEdit" placeholder="Instance Type">
+						<input type="text" class="lab-edit-inputs" ng-model="lab.config.AWS_INSTANCE_TYPE" ng-if="!editModalEdit" readonly="true">
+					</div>
+					<div class="inner">
+						<span class="inner-title">Security Group</span>
+						<input type="text" class="lab-edit-inputs" ng-model="lab.config.AWS_SECURITY_GROUP_ID" ng-if="editModalEdit" placeholder="Security Group ID">
+						<input type="text" class="lab-edit-inputs" ng-model="lab.config.AWS_SECURITY_GROUP_ID" ng-if="!editModalEdit" readonly="true">
+					</div>
+					<div class="inner">
+						<span class="inner-title">Max</span>
+						<input type="number" class="lab-edit-inputs" ng-model="lab.config.AWS_INSTANCE_MAX_COUNT" ng-if="editModalEdit" placeholder="Maximum Instances" min="1" max="10">
+						<input type="text" class="lab-edit-inputs" ng-model="lab.config.AWS_INSTANCE_MAX_COUNT" ng-if="!editModalEdit" readonly="true">
+					</div>
+					<div class="inner">
+						<span class="inner-title">Min</span>
+						<input type="number" class="lab-edit-inputs" ng-model="lab.config.AWS_INSTANCE_MIN_COUNT" ng-if="editModalEdit" placeholder="Minimum Instances" min="1" max="10">
+						<input type="text" class="lab-edit-inputs" ng-model="lab.config.AWS_INSTANCE_MIN_COUNT" ng-if="!editModalEdit" readonly="true">
+					</div>
+					<div class="inner">
+						<span class="inner-title">Lifespan</span>
+						<input type="number" class="lab-edit-inputs" ng-model="lab.lifespan" ng-if="editModalEdit" placeholder="Duration of Instance (in seconds)" min="1" max="86400">
+						<input type="text" class="lab-edit-inputs" ng-model="lab.config.AWS_INSTANCE_MIN_COUNT" ng-if="!editModalEdit" readonly="true">
+					</div>
+				</div>
+			</div>
+			<div class="dialog-ctrl">
+				<input type="hidden" name="subs_id" id="inp-subs-id">
+				<span id="btn-cancel-lab" class="dialog-ctrl-btn btn-cancel">Cancel</span>
+				<span id="btn-save-lab" class="dialog-ctrl-btn btn-ok enabled" ng-click="saveLab()">Save</span>
+			</div>
+		</div>
+	</div>
+</div>

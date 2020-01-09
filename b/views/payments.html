@@ -1,0 +1,64 @@
+<style>
+	.w-25x {
+		width: 25px;
+		height: 25px;
+	}
+</style>
+<div class="page-title">
+	<section class="d-flex flex-column">
+		<label class="page-title-name m-0">Payments</label>
+		<!-- <div>
+			<label>{{orders.length}}</label> <label class="text-muted text-uppercase">total</label>
+		</div> -->
+	</section>
+	<section>
+		<button class="btn btn-primary" ng-click="overdue()">Overdue</button>
+	</section>
+	<section class="d-flex flex-column justify-content-center align-items-center">
+		<a class="btn btn-primary mb-0 d-flex flex-column justify-content-center" href="https://www.jigsawacademy.com/jaws/#!/app/payment/edit/" target="_blank">new</a>
+	</section>
+</div>
+<div class="container-fluid mt-3">
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>User</th>
+				<th></th>
+				<th>Total</th>
+				<th># of installments</th>
+				<th>Due</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="row in pay">
+				<th ng-bind="$index + 1"></th>
+				<td>
+					<div class="d-flex flex-column">
+						<a href="/users/{{row.user_id}}" target="_blank">{{row.name}}</a>
+						<label>{{row.email}}</label>
+						<label>{{row.phone}}</label>
+					</div>
+				</td>
+				<td class="align-middle">
+					<div class="d-flex justify-content-center align-items-center h-100">
+						<div class="rounded-circle bg-{{jlc.color(row.jlc_status)}} w-25x" title="{{jlc.status(row.jlc_status)}}"></div>
+					</div>
+				</td>
+				<td>
+					<div class="d-flex flex-column">
+						<label>{{row.currency == 'inr' ? '₹' : '$'}} {{row.sum_total | number:0}}</label>
+						<label>{{row.bundle_name}}</label>
+					</div>
+				</td>
+				<td>{{row.instl.length}}</td>
+				<td>
+					<div class="d-flex flex-column">
+						<div><label>{{row.instl_count}}</label><sup>{{format.number(row.instl_count)}}</sup> due on</div>
+						<label>{{row.due_date}}</label>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

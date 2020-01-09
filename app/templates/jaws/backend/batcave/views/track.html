@@ -1,0 +1,40 @@
+<div class="students-list">
+	<center>
+		<table id="students" cellspacing="2" cellpadding="5">
+			<thead>
+				<tr class="tr-btm-border">
+					<th>Student</th>
+					<th>Specialization</th>
+					<th>Duration</th>
+					<th>Welcome Email</th>
+					<th>Welcome Call</th>
+					<th>SMS</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="x in students" class="tr-btm-border tr-{{x.subs_id}}">
+					<td class="stud-id">
+						<div class="id-cell-container">
+							<i class="fa fa-chevron-right expand" aria-hidden="true"></i>
+							<table class="id-cell">
+								<tr class="stud-name tr-btm-border-no">
+									<td>{{x.name}}</td>
+								</tr>
+								<tr class="tr-btm-border-no">
+									<td class="stud-email">{{x.email}}</td>
+									<td id="ph-{{x.subs_id}}" class="stud-phone" ng-click="call_connect($event)"><i class="fa fa-phone" aria-hidden="true"></i><span> {{x.phone}}</span></td>
+								</tr>
+							</table>
+						</div>
+					</td>
+					<td class="td-center">{{x.bundle}}</td>
+					<td class="td-center">{{x.start_date}}<br>to<br>{{x.end_date}}<br>({{x.duration}} months)</td>
+					<td class="td-center" ng-if="x.email_sent_at">{{x.email_sent_at}}</td>
+					<td class="td-center" ng-if="!x.email_sent_at">Pending</td>
+					<td class="td-center" ng-if="x.call_status=='pending'">Pending</td>
+					<td class="td-center">--</td>
+				</tr>
+			</tbody>
+		</table>
+	</center>
+</div>

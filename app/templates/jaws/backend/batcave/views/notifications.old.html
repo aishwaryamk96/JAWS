@@ -1,0 +1,40 @@
+<div class="notifications-parent">
+	<div class="notification-heading regular-font">Mobile Notifications</div>
+	<div class="separator"></div>
+	<div class="notification-body">
+		<div class="notification-form">
+			<div class="notification-form-element" ng-repeat="form in forms">
+				<div class="notification-forms">
+					<div class="content-row" ng-repeat="e in form.sub">
+						<div class="cell">
+							<div class="section-title">
+								<label>{{e.name}}</label>
+							</div>
+						</div>
+						<div class="cell">
+							<div class="section-body">
+								<input type="{{e.type}}" ng-show="e.type!='select'" id="{{e.id}}" ng-model="e.value">
+								<select ng-show="e.type=='select'" id="{{e.id}}" ng-model="e.value" ng-change="formOptionChange(e, forms.indexOf(form))" ng-options="s as s.name for s in e.options track by s.id"></select>
+								<label class="small-desc" ng-show="e.desc">({{e.desc}})</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="notification-desc" ng-show="selected.desc!=''">
+					<div>{{selected.desc}}</div>
+				</div>
+			</div>
+		</div>
+		<div class="separator"></div>
+		<div class="notification-form-control">
+			<div class="content-row">
+				<div class="cell padding-10">
+					<button ng-click="saveNotification()">Save</button>
+				</div>
+				<div class="cell padding-10">
+					<button ng-click="clearNotification()">Clear</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

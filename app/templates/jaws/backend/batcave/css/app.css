@@ -1,0 +1,148 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	overflow: auto;
+}
+.header {
+	width: 100%;
+	background-color: #263238;
+	color: white;
+	position: fixed;
+	font-family: Helvetica, Arial, sans-serif;
+	letter-spacing: 1px;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	box-shadow: 0px 3px 5px #888888;
+	z-index: 10;
+}
+.header-icon {
+	float: left;
+	margin-top: 1px;
+}
+.title {
+	float: left;
+	padding: 8px;
+	cursor: pointer;
+}
+.title-text {
+	text-transform: uppercase;
+	margin: 10px 0px;
+	float: right;
+	margin-left: 10px;
+	font-weight: normal;
+}
+.search-form {
+	top: 9px;
+	position: absolute;
+	left: 250px;
+	margin: 0px;
+	right: 440px;
+}
+.search-icon {
+	position: absolute;
+	padding: 8px;
+	color: #506c79;
+}
+.search-query {
+	background: #37474F;
+	border: none;
+	box-shadow: none;
+	box-sizing: border-box;
+	color: #546E7A;
+	font-size: 14px;
+	text-shadow: none;
+	transition: all .3s;
+	height: 33px;
+	padding-left: 35px;
+	padding-right: 5px;
+	width: 100%;
+	border-radius: 3px;
+}
+.clear-icon {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	color: #506c79;
+	cursor: pointer;
+}
+.search-query::placeholder {
+	color: #506c79;
+}
+.search-query.focused {
+	background: white;
+	color: #37474f;
+}
+.user {
+	float: right;
+	padding: 8px;
+	cursor: pointer;
+	margin-right: 10px;
+}
+.header-hover:hover {
+	background: #37474f;
+}
+.user-icon {
+	float: right;
+}
+.user-text {
+	text-transform: uppercase;
+	margin: 10px 0px;
+	float: right;
+	margin-left: 10px;
+	margin-right: 5px;
+	display: none;
+}
+div.header a {
+	color: white;
+}
+.profile-menu {
+	right: 10px;
+	position: fixed;
+	top: 51px;
+	background: #37474f;
+	color: white;
+	font-family: Verdana;
+	letter-spacing: 1px;
+	padding: 0px;
+	margin: 0px;
+	z-index: 20;
+	opacity: 1;
+	transition: opacity 0.7s;
+	box-shadow: 3px 3px 5px #888888;
+}
+.profile-menu.ng-hide {
+	opacity: 0;
+}
+.menu-item {
+	list-style: none;
+	transition: background 0.5s;
+	cursor: pointer;
+}
+.menu-item.not-last {
+	border-bottom: 1px solid white
+}
+.menu-item:hover {
+	background: #506c79;
+}
+.user.focused {
+	background: #37474f;
+}
+.logout {
+	background: #c44;
+}
+.logout:hover {
+	background-color: #f33;
+}
+.menu-item-icon {
+	padding-right: 15px;
+}
+.menu-item-text {
+	padding: 0px 25px;
+	line-height: 48px;
+}
+.body {
+	position: relative;
+	top: 50px;
+	padding: 15px;
+}

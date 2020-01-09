@@ -1,0 +1,56 @@
+.edit-profile {
+	bottom: -30px;
+	position: absolute;
+	right: 50px;
+	z-index: 100;
+}
+.header {
+	/*background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);*/
+	/*background: linear-gradient(to right, rgb(119, 161, 211), rgb(121, 203, 202), rgb(230, 132, 174))*/
+	background: linear-gradient(to right, rgb(49, 71, 85), rgb(38, 160, 218));
+}
+.header.header-inactive {
+	background: linear-gradient(to right, #A40606, #D98324);
+}
+.name {
+	color: white;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 30px;
+	font-weight: bold;
+	letter-spacing: 1px;
+}
+.bell-icon {
+	background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAQAAABIkb+zAAACUUlEQVR4Ae3aNZgUQRCG4a9xJ8bd3TPcItzTS3BPcMK7PIIITZcYd01wdyfDHabJkKJnbZjeaZ56Ky75T9dQSiml1H+pPou5a6yx3GUx9QlMS64b+6u4TksCYjht7J/FaQzBqDL276KKYJx1BjhHMN47A7wjFMa6SwN40jI2QEsyrg/rOGdsXBFxjnX0JpP6c8bY4ooz9CdT2rKLyNjii4jdtCEjRvDG2NKLN4wgA2byxdjyii/MpMKWGZusWEYFzTM2eTGPChkR98PDB3Ywnj60ogENaUUfJrKdT7E/SCPwj068dp7zguU0x6U5y3nh7HlNJ7w74TjkLRtpSD6N2Mg7R+dRPJvi/Np3oxjdXN8HJuNRXR45zu9IsTryRPbzkLp4s0Cu5yNdKUUXPsgZLMCbc3I5yynViso9Y+vuWG0oleGsnENPvKiWixlCOYbJOVTjxU2x9hTlOi0m3cSDZvLrxkzKNVPOojmpmyBWfqIO5aojH14wgdRtFCv3kcQ+MW0DqcuJlWtJYq2Ytsf7YyDGkcRYMe0EqbsqVvYnif5i2lVS91ysbEsSbcW056QuEiubkEQTMS3y/rJh1uZpAA2gATSABtAAGkADaAANoAE0gAbQACnZnHqAzT7OTyGAhwjy/BQCiAgezv8nATxEkOd7KDYHcL6HCOL8cCLI8wOOYGxli6Q0gAZQSvn1Jv+ndcm8C3kDXCTzavIGqCHz2vE99vzvtCUAW2IDbCUI9bng/vmnPoFoQo5IfIQgRxOC0pbVHOEVrzjMatqilFJKpeAHqddQrV2OvWgAAAAASUVORK5CYII=);
+	height: 32px;
+	width: 32px;
+}
+.contact label, .contact a {
+	cursor: pointer;
+	margin-left: 5px;
+	padding-top: 4px;
+	text-decoration: none;
+}
+.contact a:hover {
+	text-decoration: none;
+}
+#phoneOptions {
+	cursor: pointer;
+}
+.b-badge {
+	position: absolute;
+	top: -10px;
+	right: -10px;
+	padding: 3px 8px;
+	border-radius: 50%;
+	font-size: 80%;
+}
+.form-group label {
+	text-transform: uppercase;
+}
+.form-control[disabled] {
+	background: transparent;
+	border-bottom: 1px solid #eeeeee;
+}
+.hover-btn:hover button:not(.no-soc) {
+	display: block!important;
+}

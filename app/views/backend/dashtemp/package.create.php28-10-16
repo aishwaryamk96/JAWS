@@ -1,0 +1,526 @@
+<?php 
+
+/* 
+           8 8888       .8. `8.`888b                 ,8' d888888o.   
+           8 8888      .888. `8.`888b               ,8'.`8888:' `88. 
+           8 8888     :88888. `8.`888b             ,8' 8.`8888.   Y8 
+           8 8888    . `88888. `8.`888b     .b    ,8'  `8.`8888.     
+           8 8888   .8. `88888. `8.`888b    88b  ,8'    `8.`8888.    
+           8 8888  .8`8. `88888. `8.`888b .`888b,8'      `8.`8888.   
+88.        8 8888 .8' `8. `88888. `8.`888b8.`8888'        `8.`8888.  
+`88.       8 888'.8'   `8. `88888. `8.`888`8.`88'     8b   `8.`8888. 
+  `88o.    8 88'.888888888. `88888. `8.`8' `8,`'      `8b.  ;8.`8888 
+    `Y888888 ' .8'       `8. `88888. `8.`   `8'        `Y8888P ,88P' 
+
+    JIGSAW ACADEMY WORKFLOW SYSTEM v1					
+    ---------------------------------
+*/
+
+	// Prevent exclusive access
+	if (!defined("JAWS")) {
+		header('Location: https://www.jigsawacademy.com');
+		die();
+	}
+
+	//Load Stuff
+	load_module("ui");
+
+	// Prep
+    	$login_params["return_url"] = JAWS_PATH_WEB."/kform2";
+
+    	// Login Check
+    	if (!auth_session_is_logged()) {
+        		ui_render_login_front(array(
+                    		"mode" => "login",
+                    		"return_url" => $login_params["return_url"],
+                    		"text" => "Please login to access this page."
+                		));
+        		exit();
+    	}
+
+    	// Priviledge Check
+    	if (!auth_session_is_allowed("paylink.create")) {
+        		ui_render_msg_front(array(
+                		"type" => "error",
+                		"title" => "Jigsaw Academy",
+                		"header" => "No Tresspassing",
+                		"text" => "Sorry, but you do not have permission to access this page.<br/>Contact Jigsaw Support team for assistance."
+                		));
+		
+        		exit();
+    	}
+
+	//Render Krishna's Form
+	load_module("course");	
+	$courses = course_get_info_all();
+	
+	// set locale for money format
+	setlocale(LC_MONETARY, 'en_IN');
+
+?>
+<!doctype html>
+<html lang="en">
+  	<head>
+	    	<meta charset="utf-8">
+	    	<title>JAWS - New Subscription</title>
+		<meta name="author" content="BadGuppy">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="description" content="JAWS v2.0">
+		<link rel="icon" type="image/png" href="<?php echo $_SERVER["server_name"]."/".JAWS_PATH_LOCAL.'/media/jaws/frontend/images/favicon.png'; ?>">
+
+	    	<!-- Stylesheets -->
+		<link rel="stylesheet/less" type="text/css" href="<?php echo $_SERVER["server_name"]."/".JAWS_PATH_LOCAL."/app/templates/jaws/backend/dashtemp/theme.light.less"; ?>" />
+		<link rel="stylesheet/less" type="text/css" href="<?php echo $_SERVER["server_name"]."/".JAWS_PATH_LOCAL."/app/templates/jaws/backend/dashtemp/layout.less"; ?>" />
+
+		<!-- Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="<?php echo $_SERVER["server_name"]."/".JAWS_PATH_LOCAL.'/common/fa/css/font-awesome.css'; ?>">
+
+		<!-- Libraries -->
+		<script   src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+		<script src="<?php echo $_SERVER["server_name"]."/".JAWS_PATH_LOCAL.'/common/less.js/less.min.js'; ?>" data-env="development"></script>
+
+		<!-- DashMIN -->
+		<script src="<?php echo $_SERVER["server_name"]."/".JAWS_PATH_LOCAL."/app/templates/jaws/backend/dashtemp/dash.js"; ?>"></script>
+
+		<!-- Page Specific -->
+		<script src="<?php echo $_SERVER["server_name"]."/".JAWS_PATH_LOCAL."/app/templates/jaws/backend/dashtemp/subs.create.js"; ?>"></script>
+
+  </head>
+  <body data-tourian="false">
+		<div class="wrapper">
+
+			<div id="main-container" class="">	
+				<div class="wrapper">
+
+					<div class="section-boxed">
+<!-- Users Panel: Start -->
+						<div class="accordian-panel pin has-subpanel" id="user-info">
+
+							<div class="panel-tab">
+								<i class="fa fa-user fa-lg fa-fw"></i>
+							</div>
+
+							<div class="panel-main">
+								<div class="content-min overflow" style="opacity: 1; pointer-events: auto;">
+									
+									<div class="section-col"><div class="user-pic" style="background-image: url('<?php echo $_SERVER["server_name"]."/".JAWS_PATH_LOCAL.'/media/jaws/backend/user-default.png'; ?>');"></div></div>
+									<div class="section-col"><input type="email" placeholder="Email" id="txt-email" value="" required /></div>
+									<div class="section-col"><input type="text" required placeholder="Name" id="txt-name" value="" class="disable"/></div>
+									<div class="section-col"><input type="text" required maxlength="15" placeholder="Phone" id="txt-phone" value="" class="disable"/></div>
+
+								</div>
+							</div>						
+
+							<div class="panel-sub">
+								<div class="content">
+									Currency
+									<div class="accordian-panel-select" onclick="javascript:updateCurrency();">
+										<b class="selected currency"><?php echo ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'inr' ) ? 'Indian Rupees' : ( ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'usd') ? 'US Dollar' : 'Indian Rupees' ); ?></b>
+										<i class="fa fa-fw fa-lg fa-exchange"></i>
+									</div>
+								</div>
+							</div>	
+
+						</div>
+<!-- Users Panel: End -->
+<!-- Courses Panel: Start -->
+						<div class="accordian-panel min has-subpanel">
+
+							<div class="panel-tab">
+								<i class="fa fa-chevron-down fa-lg fa-fw"></i>
+								<div class="panel-title">Courses</div>
+							</div>
+
+							<div class="panel-main">
+								<div class="content-min">
+									<div id="courses-info" class="info-box-container">	
+										<div>Courses : <strong style="color:black;">None</strong></div>	
+										
+									</div>
+								</div>
+								<div class="content">						
+									<div id="courses" class="course-container">
+										<div class="course-row">
+										<?php $i = 1;
+											foreach($courses as &$course) {
+												$meta = json_decode($course['meta']['content'],true);
+												// il_price_inr = premium price in inr/ live mode
+												// sp_price_inr = regular price in inr/ video mode
+												// course combo = course_id,mode;course_id,mode;...
+												// mode = 1 is premium, 2 is regular;
+										?>
+											<div class="course" data-course-id="<?php echo $course['course_id']; ?>" data-combo_hierarchy="<?php echo $course['combo_hierarchy']; ?>">
+												<div class="title" data-il-code="<?php echo $course['il_code']; ?>" data-sp-code="<?php echo $course['sp_code']; ?>">
+													<p>
+														<?php echo $course['name']; ?>
+														<span class="desc">
+															<br/>Pre-requisites: <?php echo mb_strimwidth($meta['prerequisite'], 0, 70, "..."); ?>
+															<br/>Tools: <?php echo mb_strimwidth($meta['tools'], 0, 32, "..."); ?>
+														</span>
+													</p>
+												</div>
+												<?php if ( $course['il_status_inr'] == 1 || $course['il_status_usd'] == 1 ) { ?>
+												<div class="mode live" data-mode="<?php echo $course['course_id'].','.'1'; ?>" data-il_price_inr="<?php echo $course['il_price_inr']; ?>" data-il_price_inr_alt="<?php echo $course['il_price_inr_alt']; ?>" data-il_price_usd="<?php echo $course['il_price_usd']; ?>" data-il_price_usd_alt="<?php echo $course['il_price_usd_alt']; ?>">
+													<p>Premium<br/>
+														<span class="price"><?php echo ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'inr' ) ? money_format('%.0n', $course['il_price_inr']) : ( ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'usd') ? money_format('%.0n', $course['il_price_usd']) : money_format('%.0n', $course['il_price_inr']) ); ?></span>
+													</p>
+												</div>
+												<?php } ?>
+												<?php if ( $course['sp_status_inr'] == 1 || $course['sp_status_usd'] == 1 ) { ?>
+												<div class="mode video" data-mode="<?php echo $course['course_id'].','.'2'; ?>" data-sp_price_inr="<?php echo $course['sp_price_inr']; ?>" data-sp_price_inr_alt="<?php echo $course['sp_price_inr_alt']; ?>" data-sp_price_usd="<?php echo $course['sp_price_usd']; ?>" data-sp_price_usd_alt="<?php echo $course['sp_price_usd_alt']; ?>">
+													<p>Regular<br/>
+														<span class="price"><?php echo ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'inr' ) ? money_format('%.0n', $course['sp_price_inr']) : ( ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'usd') ? money_format('%.0n', $course['sp_price_usd']) : money_format('%.0n', $course['sp_price_inr']) ); ?></span>
+													</p>
+												</div>
+												<?php } ?>
+											</div>
+
+										<?php 
+										if( $i % 2 == 0 ){
+											echo '</div><div class="course-row">';  
+										}
+										$i++;	} unset($course);
+										?>
+										</div>
+									</div>
+
+								</div>
+							</div>							
+
+							<div class="panel-sub">
+								<div class="content-min">
+									<div>Combo Price<br/>
+										<b id="courses-combo-min" data-combo-min="0">&#8377; 0 </b>
+									</div>
+								</div>
+								<div class="content">							
+									<div>Actual Price<br/>
+										<b id="courses-actual" data-price="0">&#8377; 0 </b>
+									</div><br/>
+									<div>Discount<br/>
+										<b id="courses-discount" data-discount="0">&#8377; 0 </b>
+									</div><br/>
+									<div>Combo Price<br/>
+										<b id="courses-combo" data-combo="0">&#8377; 0 </b>
+									</div><br/>
+								</div>
+							</div>	
+
+						</div>
+<!-- Courses Panel: End -->
+<!-- Complimentary Courses Panel: Start -->
+						<div class="accordian-panel min has-subpanel">
+
+							<div class="panel-tab">
+								<i class="fa fa-chevron-down fa-lg fa-fw"></i>
+								<div class="panel-title">Complimentary</div>
+							</div>
+
+							<div class="panel-main">
+								<div class="content-min">
+									<div id="complimentary-info" class="info-box-container">	
+										<div>Complimentary : <strong style="color:black;">None</strong></div>
+									</div>
+								</div>
+								<div class="content">
+									<div id="complimentary" class="course-container">
+										<div class="course-row">
+										<?php $i = 1;
+											foreach($courses as &$complimentary) {
+												$meta = json_decode($complimentary['meta']['content'],true);
+												// il_price_inr = premium price in inr/ live mode
+												// sp_price_inr = regular price in inr/ video mode
+												// course combo = course_id,mode;course_id,mode;...
+												// mode = 1 is premium, 2 is regular;
+												// no price related calculations for complimentary courses as they are free.
+										?>
+											<div class="course" data-course-id="<?php echo $complimentary['course_id']; ?>" data-combo_hierarchy="<?php echo $complimentary['combo_hierarchy']; ?>">
+												<div class="title" data-il-code="<?php echo $complimentary['il_code']; ?>" data-sp-code="<?php echo $complimentary['sp_code']; ?>">
+													<p><?php echo $complimentary['name']; ?>
+													<span class="desc">
+														<br/>Pre-requisites: <?php echo mb_strimwidth($meta['prerequisite'], 0, 70, "..."); ?>
+														<br/>Tools: <?php echo mb_strimwidth($meta['tools'], 0, 32, "..."); ?>
+													</span>
+													</p>
+												</div>
+												<?php if ( $complimentary['il_status_inr'] == 1 || $complimentary['il_status_usd'] == 1 ) { ?>
+													<div class="mode live" data-mode="<?php echo $complimentary['course_id'].','.'1'; ?>" data-il_price_inr="<?php echo $complimentary['il_price_inr']; ?>" data-il_price_inr_alt="<?php echo $complimentary['il_price_inr_alt']; ?>" data-il_price_usd="<?php echo $complimentary['il_price_usd']; ?>" data-il_price_usd_alt="<?php echo $complimentary['il_price_usd_alt']; ?>">
+														<p>Premium<br/>
+															<span class="price"><?php echo ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'inr' ) ? money_format('%.0n', $complimentary['il_price_inr']) : ( ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'usd') ? money_format('%.0n', $complimentary['il_price_usd']) : money_format('%.0n', $complimentary['il_price_inr']) ); ?></span>
+														</p>
+													</div>
+												<?php } ?>
+												<div class="mode video" data-mode="<?php echo $complimentary['course_id'].','.'2'; ?>" data-sp_price_inr="<?php echo $complimentary['sp_price_inr']; ?>" data-sp_price_inr_alt="<?php echo $complimentary['sp_price_inr_alt']; ?>" data-sp_price_usd="<?php echo $complimentary['sp_price_usd']; ?>" data-sp_price_usd_alt="<?php echo $complimentary['sp_price_usd_alt']; ?>">
+													<p>Regular<br/>
+														<span class="price"><?php echo ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'inr' ) ? money_format('%.0n', $complimentary['sp_price_inr']) : ( ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'usd') ? money_format('%.0n', $complimentary['sp_price_usd']) : money_format('%.0n', $complimentary['sp_price_inr']) ); ?></span>
+													</p>
+												</div>
+											</div>
+										<?php 
+										if( $i % 2 == 0 ){
+											echo '</div><div class="course-row">';  
+										}
+										$i++;	} unset($complimentary);
+										?>
+										</div>
+									</div>									
+								</div>
+							</div>							
+
+							<div class="panel-sub">
+								<div class="content-min">
+									<div>Complimentary Price<br/><b>FREE</b></div>
+								</div>
+								<div class="content">
+									<div>Actual Price<br/><b>FREE</b></div><br/>
+									<div>Complimentary Price<br/><b>FREE</b></div><br/>
+								</div>
+							</div>	
+
+						</div>
+<!-- Complimentary Courses Panel: End -->
+<!-- Payments Panel: Start -->
+						<div class="accordian-panel min has-subpanel">
+							<div class="panel-tab">
+								<i class="fa fa-chevron-down fa-lg fa-fw"></i>
+								<div class="panel-title">Payment</div>
+							</div>
+
+							<div class="panel-main">
+								<div class="content-min">
+									<div>Payment Mode : <b id="payment_mode_min">Online</b></div>
+								</div>
+								<div class="content" style="min-height: 180px;">
+									<div class="section-col">
+										Payment Mode :
+										<div class="accordian-panel-select">
+											<select name="payment_mode">
+												<option value="online" selected>Online (via Payment Gateway)</option>
+												<option value="cash">Cash (Already Paid)</option>
+												<option value="cheque">Cheque (Already Paid)</option>
+												<option value="dd">DD (Already Paid)</option>
+												<option value="other">Other (Already Paid)</option>
+											</select>
+										</div>
+									</div>
+									<div class="section-col payment_comment" style="display:none;">
+										Comment : 
+										<input type="text" placeholder="Payment Comment" name="payment_comment" />
+									</div>
+									<div class="section-col">
+										Discount :
+										<input type="number" placeholder="Discount" name="total_discount" min="0" max="20" />
+									</div>
+								</div>
+							</div>							
+
+							<div class="panel-sub">
+								<div class="content-min">
+									<div>Offered Price<br/>
+										<b id="actual_offered_price_min"><?php echo ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'inr' ) ? '&#8377; '.'0' : ( ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'usd') ? '&#36; '.'0' : '&#8377; '.'0' ); ?></b>
+									</div>
+								</div>
+								<div class="content">
+									<div>Tax @ 15%<br/>
+										<b id="tax_amount"><?php echo ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'inr' ) ? '&#8377; '.'0' : ( ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'usd') ? '&#36; '.'0' : '&#8377; '.'0' ); ?></b>
+									</div><br/>
+									<div>Additional Discount<br/>
+										<b id="total_discount"><?php echo ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'inr' ) ? '- &#8377; '.'0' : ( ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'usd') ? '- &#36; '.'0' : '- &#8377; '.'0' ); ?></b>
+									</div><br/>
+									<div>
+										Offered Price<br/>
+										<b id="actual_offered_price" data-actual_offered_price="0"><?php echo ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'inr' ) ? '&#8377; '.'0' : ( ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'usd') ? '&#36; '.'0' : '&#8377; '.'0' ); ?></b>
+									</div><br/>
+								</div>
+							</div>	
+
+						</div>
+<!-- Payments Panel: End -->
+<!-- Installments Panel: Start -->
+						<div class="accordian-panel min has-subpanel">
+
+							<div class="panel-tab">
+								<i class="fa fa-chevron-down fa-lg fa-fw"></i>
+								<div class="panel-title">Installment </div>
+							</div>
+
+							<div class="panel-main">
+								<div class="content-min">
+									<div id="instalments-info" class="info-box-container">	
+										<div>Installments : <b>Does Not Apply</b></div>
+										<!-- <div class="info-box"><i onclick="javascript:addInstalmentBox2();" class="fa fa-fw fa-lg fa-plus"></i></div> -->
+									</div>
+								</div>
+								<div class="content">
+									<div class="instl-container">
+										<div id="box1" class="instl fst">
+											<!-- <i onclick="javascript:removeInstalment($(this));" class="fa fa-fw fa-lg fa-close"></i> -->
+											<!-- <i onclick="javascript:removeInstalment($(this));" class="fa fa-fw fa-lg fa-close"></i> -->
+											<i onclick="javascript:editInstalment2($(this));" class="fa fa-fw fa-lg fa-edit sum"></i>
+											<!-- <i onclick="javascript:editDate($(this));" class="fa fa-fw fa-lg fa-edit date"></i> -->
+
+											<div class="separater top"></div>
+											<div class="separater bottom"></div>
+
+											<div class="count">Down Payment</div>
+											<div class="sum" data-sum="0">
+												<?php echo ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'inr' ) ? '&#8377; '.'0' : ( ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'usd') ? '&#36; '.'0' : '&#8377; '.'0' ); ?>
+											</div>
+											<div class="sum-desc">
+												<span>
+													<?php echo ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'inr' ) ? '&#8377; '.'0' : ( ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'usd') ? '&#36; '.'0' : '&#8377; '.'0' ); ?>
+												</span>
+												<input type="text" style="display:none;" placeholder="Please provide appropriate value!" pattern="/[^\d]+/" value="0" />
+											 + Instl Fee</div>
+											<div class="date">0</div>
+											<div class="date-desc">Days From Previous</div>
+										</div>
+										<div class="instl add" data-count="1">
+											<div onclick="javascript:addInstalmentBox2();"><i class="fa fa-fw fa-lg fa-plus"></i></div>
+										</div>
+									</div>
+								</div>
+							</div>							
+
+							<div class="panel-sub">
+								<div class="content-min">
+									<div>
+										Nett Payable<br/>
+										<b id="net_payable_min"><?php echo ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'inr' ) ? '&#8377; '.'0' : ( ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'usd') ? '&#36; '.'0' : '&#8377; '.'0' ); ?></b>
+									</div>
+								</div>
+								<div class="content">
+									<div>
+										Installment Fees<br/>
+										<b id="instalment_fee" data-instalment_fee="0"><?php echo ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'inr' ) ? '&#8377; '.'0' : ( ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'usd') ? '&#36; '.'0' : '&#8377; '.'0' ); ?></b>
+									</div><br/>
+									<div>
+										Nett Payable<br/>
+										<b id="net_payable" data-net_payable="0"><?php echo ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'inr' ) ? '&#8377; '.'0' : ( ( !empty($_COOKIE['currency']) && $_COOKIE['currency'] == 'usd') ? '&#36; '.'0' : '&#8377; '.'0' ); ?></b>
+									</div>
+								</div>
+							</div>	
+
+						</div>
+<!-- Installments Panel: End -->
+					</div>
+
+					<div class="section-boxed" style="text-align: right;">
+						<div class="button ripple">Save Package</div>
+						<div class="button alt orange ripple">Create Subscription<div class="corner-glow orange"></div></div>
+					</div>				
+
+				</div>
+			</div>
+
+			<div id="nav-container" class="corner">
+				<div class="overlay"></div>
+
+				<div id="nav" class="">
+					<i class="fa hotspot fa-fw fa-lg fa-bars"></i>
+
+					<div class="menu" class="">	
+
+						<div class="menu-item ripple animate" href="#">
+							<i class="fa fa-fw fa-lg fa-search"></i><span class="desc">Search</span>
+						</div>
+
+						<div class="menu-item ripple animate" href="#">
+							<i class="fa fa-fw fa-lg fa-area-chart"></i><span class="desc">Dashboard</span>
+						</div>
+						
+						<div class="menu-item animate has-submenu" href="#" id="menu-subs">
+							<i class="fa fa-fw fa-lg fa-group animate"></i><span class="desc">Subscriptions<span class="arrow fa fa-fw fa-caret-right"></span></span>
+
+							<div class="submenu">
+								<div class="submenu-item ripple"  href="#">Add New Subscription</div>
+								<div class="submenu-item ripple"  href="#">Pending Subscriptions</div>
+								<div class="submenu-item ripple"  href="#">Pending Installments</div>						
+							</div>
+						</div>						
+
+					</div>
+				</div>
+				
+			</div>
+
+			<div id="user-container" class="corner">
+				<div class="overlay"></div>
+
+				<div id="user" style="background-image: url('<?php echo $_SESSION["user"]["photo_url"]; ?>');">
+					<div class="header-box">
+						<span id="user-name"><?php echo $_SESSION["user"]["name"]; ?></span><br/>
+						<span id="user-badges" style="pointer-events: none; color: rgba(0,0,0,0.1);">Profile</span>
+					</div>
+
+					<div class="dp-border"></div>
+
+					<div class="menu">
+						<i class="fa fa-fw fa-lg fa-envelope ripple" href="#" style="pointer-events: none; color: rgba(0,0,0,0.1);"><span class="desc">Inbox</span></i>
+						<i class="fa fa-fw fa-lg fa-cog ripple" href="#" style="pointer-events: none; color: rgba(0,0,0,0.1);"><span class="desc">Settings</span></i>
+						<i class="fa fa-fw fa-lg fa-power-off ripple" href="#"><span class="desc">Logout</span></i>
+					</div>
+
+					<div id="user-alert" style="display:none">3</div>
+
+					<div class="hover-mask"></div>
+				</div>
+			</div>
+
+			<div id="msg-container" class="corner" style="display: none">
+				<div class="overlay"></div>
+
+				<div id="msg" class="">
+					<i class="fa fa-fw fa-lg fa-comment hotspot"></i>
+
+					<div class="header-box">
+						<span id="msg-title">Comm Centre</span><br/>
+						<span id="msg-title-mini">3 New Messages</span>
+					</div>
+
+					<div class="menu">
+						<i class="fa fa-fw fa-lg fa-comments-o ripple" href="#" id="tourian-trigger"><span class="desc">Chat</span></i>
+						<i class="fa fa-fw fa-lg fa-info ripple" href="#"><span class="desc">Thread</span></i>
+						<i class="fa fa-fw fa-lg fa-bullhorn ripple" href="#"><span class="desc">Broadcast</span></i>
+					</div>
+
+					<div class="hover-mask"></div>
+				</div>
+			</div>
+			
+			<div id="alert-container" class="corner">
+				<div class="overlay"></div>
+			</div>
+
+			<div id="search-container" class="">
+
+			</div>
+
+			<div id="top-container" class="">
+				<div id="logo" class="grayscale" style="background-image: url('<?php echo $_SERVER["server_name"]."/".JAWS_PATH_LOCAL.'/media/jaws/backend/logo_small.png'; ?>');"></div>
+				
+				<div id="page-title"><span>Jigsaw Academy</span></div>
+				
+				<div id="bread-crumbs">
+					<a href="#">JAWS</a>
+					<i class="fa fa-fw fa-caret-right"></i>
+					<a href="#">New Subscription</a>
+				</div>
+
+				<div class="progress min pin" data-progress="50">
+					<div class="fill animate"></div>
+					<div class="desc"></div>
+				</div>
+				
+			</div>
+
+			<div id='ripple-container'>
+				<div id='ripple'></div>
+			</div>		
+
+		</div>	
+
+		<div style="display:none;" id="payment-data" data-instalment-fees-inr="100" data-instalment-fees-usd="10" data-instalment-date="30" data-tax-rate-inr="12.5" data-tax-rate-usd="2" data-max-discount=""  data-jaws-url="<?php echo JAWS_PATH_WEB; ?>" data-pic-default="<?php echo $_SERVER["server_name"]."/".JAWS_PATH_LOCAL.'/media/jaws/backend/user-default.png'; ?>" data-currency="inr"></div>
+	</body>
+</html>

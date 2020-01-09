@@ -1,0 +1,166 @@
+<div class="page-title">
+	<section class="d-flex flex-column">
+		<label class="page-title-name">Courses</label>
+		<div>
+			<label>{{courses.length}}</label> <label class="text-muted text-uppercase">total</label>
+		</div>
+	</section>
+	<div class="d-flex">
+		<div class="form-group mb-0">
+			<label for="resultsPerPage" class="bmd-label-floating mb-0">Results/Page</label>
+			<select class="form-control px-5" id="resultsPerPage" ng-model="resultsPerPage" ng-change="resultsPerPageChange()">
+				<option value="10">10</option>
+				<option value="20">20</option>
+				<option value="30">30</option>
+				<option value="40">40</option>
+				<option value="50">50</option>
+				<option value="{{courses.length}}">All</option>
+			</select>
+		</div>
+		<div class="form-group mb-0 ml-5">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" ng-model="noCode" ng-change="noCodeToggle()"> No Course Code
+				</label>
+			</div>
+			<!-- <label for="resultsPerPage" class="bmd-label-floating mb-0">No Code</label>
+			<div class="toggle">
+				<input type="checkbox">
+			</div> -->
+		</div>
+	</div>
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newCourse">new</button>
+</div>
+<div class="container-fluid mt-3">
+	<table class="table table-stripped table-hover table-borderless-excess">
+		<tbody>
+			<tr ng-repeat="course in courses | filter : resultsByRange">
+				<th class="text-muted">{{(currentPage - 1) * resultsPerPage + $index + 1}}</th>
+				<td class="d-flex flex-column">
+					<a class="text-decoration-none text-capitalize font-weight-bold" href="/courses/{{course.course_id}}">{{course.name.toLowerCase()}}</a>
+					<!-- <elipsize class="text-muted" style="font-size:90%" ng-show="course.desc" str="course.desc" length="150"></elipsize> -->
+					<label class="text-muted text-capitalize mb-0" style="font-size:90%">{{course.status}}</label>
+				</td>
+				<td class="text-muted">{{course.create_date}}</td>
+				<td class="text-right {{!course.sis_id ? 'text-danger' : ''}}">{{course.sis_id ? course.sis_id : 'NA'}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<nav style="margin-bottom: 20px">
+		<ul class="pagination justify-content-center" ng-show="courses.length > resultsPerPage">
+			<li class="page-item d-flex flex-column justify-content-center" ng-show="currentPage>1" title="First Page">
+				<span class="page-link" href="#" aria-label="Previous" ng-click="pageChange(1)">
+					<i class="fas fa-angle-double-left"></i>
+				</span>
+			</li>
+			<li class="page-item d-flex flex-column justify-content-center" ng-show="currentPage>1" title="Previous Page">
+				<span class="page-link" href="#" aria-label="Previous" ng-click="pageChange(currentPage - 1)">
+					<i class="fas fa-angle-left"></i>
+				</span>
+			</li>
+			<li class="page-item {{n==currentPage ? 'active' : ''}}" ng-repeat="n in range(1, totalPages) | filter: pagesByRange">
+				<span class="page-link" href="#" ng-click="pageChange(n)">{{n}}</span>
+			</li>
+			<li class="page-item d-flex flex-column justify-content-center" ng-show="currentPage<totalPages" title="Next Page">
+				<span class="page-link" href="#" aria-label="Next" ng-click="pageChange(currentPage + 1)">
+					<i class="fas fa-angle-right"></i>
+				</span>
+			</li>
+			<li class="page-item d-flex flex-column justify-content-center" ng-show="currentPage<totalPages" title="Last Page">
+				<span class="page-link" href="#" aria-label="Previous" ng-click="pageChange(totalPages)">
+					<i class="fas fa-angle-double-right"></i>
+				</span>
+			</li>
+		</ul>
+	</nav>
+</div>
+<div class="modal fade" id="newCourse" tabindex="-1" role="dialog" aria-labelledby="newCourse" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Add new course</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" tabindex="-1">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form-row">
+					<div class="form-group bmd-form-group">
+						<label for="courseCode" class="bmd-label-floating">Code</label>
+						<input type="text" class="form-control" id="courseCode" ng-model="newCourse.sis_id" ng-blur="courseCodeChanged()">
+						<span class="bmd-help" ng-attr-style="{{newCourse.sis_id_tip_class ? 'color:' + newCourse.sis_id_tip_class + '!important;' : undefined}}" ng-show="newCourse.sis_id_tip">{{newCourse.sis_id_tip}}</span>
+					</div>
+					<div class="form-group bmd-form-group">
+						<label for="courseName" class="bmd-label-floating">Name</label>
+						<input type="text" class="form-control" id="courseName" ng-model="newCourse.name">
+					</div>
+				</form>
+				<form class="form-row">
+					<div class="input-group mb-3">
+						<div class="form-group bmd-form-group" style="width:60%!important">
+							<label for="courseDuration" class="bmd-label-floating">Duration</label>
+							<input type="number" class="form-control" id="courseDuration" ng-model="newCourse.duration_length">
+						</div>
+						<div class="input-group-append">
+							<button class="btn btn-secondary dropdown-toggle mb-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-bind="newCourse.duration_unit"></button>
+							<div class="dropdown-menu">
+								<button class="dropdown-item" ng-click="newCourse.duration_unit='months'">months</button>
+								<button class="dropdown-item" ng-click="newCourse.duration_unit='years'">years</button>
+								<button class="dropdown-item" ng-click="newCourse.duration_unit='weeks'">weeks</button>
+								<button class="dropdown-item" ng-click="newCourse.duration_unit='days'">days</button>
+							</div>
+						</div>
+					</div>
+					<div class="form-group bmd-form-group">
+						<label for="coursePaymentCode" class="bmd-label-floating">Payments code</label>
+						<input type="text" class="form-control" id="coursePaymentCode" ng-model="newCourse.p_code">
+					</div>
+				</form>
+				<!-- <form class="form-row">
+					<div class="d-flex justify-content-center form-group">
+						<div class="form-group">
+							<label for="ibmContent" class="bmd-label-floating">Has IBM content topic</label>
+							<div class="toggle">
+								<input type="checkbox" ng-model="newCourse.ibm_content">
+							</div>
+						</div>
+					</div>
+					<div class="d-flex justify-content-center form-group">
+						<div class="form-group">
+							<label for="noShowKform" class="bmd-label-floating">Show on KForm?</label>
+							<div class="toggle">
+								<input type="checkbox" ng-model="newCourse.no_show" inverse-boolean>
+							</div>
+						</div>
+					</div>
+				</form> -->
+				<div class="bg-light text-uppercase text-primary text-center py-2 rounded">Self paced</div>
+				<form class="form-row">
+					<div class="form-group bmd-form-group">
+						<label for="spPriceInr" class="bmd-label-floating">Price (INR)</label>
+						<input type="number" class="form-control" id="spPriceInr" ng-model="newCourse.sp_price_inr">
+					</div>
+					<div class="form-group bmd-form-group">
+						<label for="spPriceUsd" class="bmd-label-floating">Price (USD)</label>
+						<input type="number" class="form-control" id="ilPriceInr" ng-model="newCourse.sp_price_usd">
+					</div>
+				</form>
+				<div class="bg-light text-uppercase text-primary text-center py-2 rounded">instructor led</div>
+				<form class="form-row">
+					<div class="form-group bmd-form-group">
+						<label for="ilPriceInr" class="bmd-label-floating">Price (INR)</label>
+						<input type="number" class="form-control" id="spPriceInr" ng-model="newCourse.il_price_inr">
+					</div>
+					<div class="form-group bmd-form-group">
+						<label for="ilPriceUsd" class="bmd-label-floating">Price (USD)</label>
+						<input type="number" class="form-control" id="ilPriceInr" ng-model="newCourse.il_price_usd">
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" ng-click="saveCourse()" ng-disabled="newCourse.invalid || !newCourse.sis_id || !newCourse.name || !newCourse.duration_length">Save</button>
+			</div>
+		</div>
+	</div>
+</div>

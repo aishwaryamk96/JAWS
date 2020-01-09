@@ -1,0 +1,233 @@
+<style>
+.rows-loader.show .list-group .list-group-item {
+	animation: loader 1s linear 0s infinite forwards;
+	background: #F6F6F6;
+	background: linear-gradient(to right, #F6F6F6 8%, #F0F0F0 18%, #F6F6F6 33%);
+	background-size: 1000px 104px;
+	position: relative;
+	margin-bottom: 10px;
+}
+@keyframes loader {
+	0% {
+		background-position: -468px 0
+	}
+	100% {
+		background-position: 468px 0
+	}
+}
+</style>
+<div class="page-title">
+	<section class="d-flex flex-column">
+		<label class="page-title-name">{{program.name}}</label>
+		<div class="d-flex">
+			<label class="text-muted text-uppercase">{{program.bundle_type}}</label>
+			<label class="text-secondary ml-1">|</label>
+			<label class="text-info text-uppercase ml-1">{{program.status}}</label>
+		</div>
+	</section>
+	<section>
+		<button type="button" class="btn btn-danger" ng-click="showSaveProgram()" ng-show="edit">save</button>
+		<button type="button" class="btn btn-primary" ng-click="edit=!edit">{{edit ? 'cancel' : 'edit'}}</button>
+	</section>
+</div>
+<div class="d-flex mt-3"></div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-8">
+			<div class="d-flex flex-column">
+				<div class="bg-light text-uppercase text-primary text-center py-2 rounded mb-3">components</div>
+				<div class="rows-loader show w-100" id="componentLoader" ng-show="!courses">
+					<ul class="list-group bmd-list-group-sm">
+						<li class="list-group-item"></li>
+						<li class="list-group-item"></li>
+						<li class="list-group-item"></li>
+						<li class="list-group-item"></li>
+						<li class="list-group-item"></li>
+					</ul>
+				</div>
+				<table class="table table-striped" ng-show="courses">
+					<tbody>
+						<tr ng-show="program.combo.length==0">
+							<td colspan="4" class="text-center">No courses in the program</td>
+						</tr>
+						<tr ng-repeat="c in program.combo" class="{{c.removed ? 'bg-secondary' : ''}}">
+							<th class="{{c.removed ? 'text-light' : 'text-muted'}}">{{$index+1}}</th>
+							<td class="text-muted text-capitalize">
+								<a href="/courses/{{c.id}}" ng-show="!edit || c.removed" class="{{c.removed ? 'text-light' : ''}}">{{courses[c.id].name.toLowerCase()}}</a>
+								<select class="form-control text-capitalize" ng-model="c.id" ng-show="edit && !c.removed">
+									<option value="0" disabled>Select</option>
+									<option ng-repeat="course in courses" value="{{course.course_id}}" class="text-capitalize">{{course.sis_id}} - {{course.name.toLowerCase()}}</option>
+								</select>
+							</td>
+							<td class="text-capitalize {{c.removed ? 'text-light' : 'text-muted'}}">{{courses[c.id].sis_id}}</td>
+							<td ng-show="edit"><button class="btn {{c.removed ? 'btn-info' : 'btn-danger'}} bmd-btn-fab bmd-btn-fab-sm" ng-click="c.removed=c.removed ? false : true"><i class="material-icons">{{c.removed ? 'add' : 'remove'}}</i></button></td>
+						</tr>
+						<!-- <tr ng-repeat="c in program.newCourses">
+							<th class="text-muted">{{program.combo.length + $index+1}}</th>
+							<td class="text-muted text-capitalize">
+								<select class="form-control text-capitalize" ng-model="c.id">
+									<option value="0" disabled>Select</option>
+									<option ng-repeat="course in courses" value="{{course.course_id}}" class="text-capitalize">{{course.name.toLowerCase()}} ({{course.sis_id}})</option>
+								</select>
+							</td>
+							<td class="text-muted text-capitalize">{{courses[c.id].sis_id}}</td>
+							<td><button class="btn btn-danger bmd-btn-fab bmd-btn-fab-sm"><i class="material-icons">remove</button></td>
+						</tr> -->
+					</tbody>
+				</table>
+				<table class="table">
+					<tbody>
+						<tr ng-show="edit" class="bg-muted">
+							<td class="text-center" colspan="4"><button class="btn btn-info btn-raised" ng-click="program.combo.push({id: '0', lm: '2'})">Add</button></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="bg-light text-uppercase text-primary text-center py-2 rounded mb-3">batches</div>
+				<div class="rows-loader show w-100" id="batchLoader" ng-show="!batches">
+					<ul class="list-group bmd-list-group-sm">
+						<li class="list-group-item"></li>
+						<li class="list-group-item"></li>
+						<li class="list-group-item"></li>
+						<li class="list-group-item"></li>
+						<li class="list-group-item"></li>
+					</ul>
+				</div>
+				<table class="table table-striped" ng-show="courses">
+					<thead ng-show="program.bundle_type=='bootcamps'">
+						<tr>
+							<th>#</th>
+							<th>Name</th>
+							<th>Code</th>
+							<th>Start Date</th>
+							<th>End Date</th>
+							<th>Students</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-show="batches.length==0">
+							<td colspan="4" class="text-center">No batches yet for the program</td>
+						</tr>
+						<tr ng-repeat="b in batches" class="{{c.removed ? 'bg-secondary' : ''}}">
+							<th class="text-muted">{{$index+1}}</th>
+							<td class="text-muted text-capitalize">
+								<a href="/{{program.bundle_type=='bootcamps' ? 'bootcamp_' : ''}}batches/{{b.id}}" target="_blank">{{b.meta.name}}</a>
+							</td>
+							<td class="text-muted">{{b.code}}</td>
+							<td class="text-muted">{{b.start_date}}</td>
+							<td class="text-muted">{{b.end_date}}</td>
+							<td class="text-muted">{{b.enr_count}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-4">
+			<div class="bg-light text-uppercase text-primary text-center py-2 rounded">payments</div>
+			<div class="d-flex justify-content-between px-2">
+				<div class="form-group bmd-form-group w-30">
+					<label for="priceInr" class="bmd-label-floating">Price (INR)</label>
+					<input type="number" class="form-control" id="priceInr" ng-model="program.price_inr" format-number ng-disabled="!edit">
+				</div>
+				<div class="form-group bmd-form-group w-30">
+					<label for="priceUsd" class="bmd-label-floating">Price (USD)</label>
+					<input type="number" class="form-control" id="priceUsd" ng-model="program.price_usd" format-number ng-disabled="!edit">
+				</div>
+				<div class="form-group bmd-form-group w-30">
+					<label for="receiptType" class="bmd-label-floating">Receipt Type</label>
+					<select class="form-control" id="receiptType" ng-model="program.receipt_type" ng-disabled="!edit">
+						<option value="retail">Retail</option>
+						<option value="pgpdm">PGPDM</option>
+						<option value="corp">Corp</option>
+					</select>
+				</div>
+			</div>
+			<div class="bg-light text-uppercase text-primary text-center py-2 rounded">enrollment</div>
+			<div class="form-row mx-0 px-2">
+				<div class="input-group mb-3 d-flex justify-content-center">
+					<div class="form-group bmd-form-group">
+						<label for="programDuration" class="bmd-label-floating">Duration</label>
+						<input type="number" class="form-control" id="programDuration" ng-model="program.subs_duration_length" format-number ng-disabled="!edit">
+					</div>
+					<div class="input-group-append">
+						<button class="btn btn-secondary dropdown-toggle mb-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-bind="program.subs_duration_unit" ng-disabled="!edit"></button>
+						<div class="dropdown-menu">
+							<button class="dropdown-item" ng-click="program.subs_duration_unit='months'">months</button>
+							<button class="dropdown-item" ng-click="program.subs_duration_unit='years'">years</button>
+							<button class="dropdown-item" ng-click="program.subs_duration_unit='weeks'">weeks</button>
+							<button class="dropdown-item" ng-click="program.subs_duration_unit='days'">days</button>
+						</div>
+					</div>
+				</div>
+				<form class="form-group bmd-form-group">
+					<div class="checkbox d-flex justify-content-center {{!edit ? 'disabled' : ''}}">
+						<label>
+							<input type="checkbox" ng-model="program.iot_kit" ng-disabled="!edit"> IoT kit?
+						</label>
+					</div>
+				</form>
+			</div>
+			<div class="bg-light text-uppercase text-primary text-center py-2 rounded">website</div>
+			<div class="d-flex justify-content-center mt-3">
+				<label class="text-muted d-flex flex-column justify-content-center mb-0">WordPress ID:</label>
+				<a class="ml-3" href="https://www.jigsawacademy.com/wp-admin/post.php?post={{program.ext_id}}&action=edit" target="_blank" ng-show="program.ext_id">{{program.ext_id}}</a>
+				<label class="ml-3 mb-0" ng-show="!program.ext_id">No associated path in WordPress</a>
+			</div>
+			<div class="d-flex justify-content-center my-3">
+				<label class="text-muted d-flex flex-column justify-content-center mb-0">URL:</label>
+				<a class="ml-3" href="{{program.content.url_web}}" target="_blank" ng-show="program.content.url_web">{{program.content.url_web}}</a>
+				<label class="ml-3 mb-0" ng-show="!program.content.url_web">Hidden</a>
+			</div>
+			<div class="bg-light text-uppercase text-primary text-center py-2 rounded">stats</div>
+			<div class="d-flex justify-content-center mt-3">
+				<label class="text-muted d-flex flex-column justify-content-center mb-0">Enrollments:</label>
+				<a class="text-primary d-flex flex-column justify-content-center mb-0 ml-2" href="/students/{{program.bundle_type_preserved}}/{{program.bundle_id}}">{{program.enr_count}}</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="saveProgram" tabindex="-1" role="dialog" aria-labelledby="saveProgram" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Save program</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" tabindex="-1">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group bmd-form-group">
+						<label for="programName" class="bmd-label-floating">Name</label>
+						<input type="text" class="form-control" id="programName" ng-model="program.name">
+					</div>
+				</form>
+				<form class="form-inline w-100">
+					<div class="form-group bmd-form-group w-45">
+						<label for="programType" class="bmd-label-floating">Program Type</label>
+						<select class="form-control w-100" id="programType" ng-model="program.bundle_type">
+							<option value="full stack">Full Stack</option>
+							<option value="specialization">Specialization</option>
+							<option value="bootcamps">Bootcamps</option>
+							<option value="programs">Programs</option>
+						</select>
+					</div>
+					<div class="form-group bmd-form-group w-45 ml-auto">
+						<label for="programStatus" class="bmd-label-floating">Program Status</label>
+						<select class="form-control w-100" id="programStatus" ng-model="program.status">
+							<option value="draft">Draft</option>
+							<option value="upcoming">Upcoming</option>
+							<option value="enabled">Enabled</option>
+							<option value="expired">Expired</option>
+							<option value="disabled">Disabled</option>
+							<option value="offline">Offline</option>
+						</select>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" ng-click="saveProgram()">Save</button>
+			</div>
+		</div>
+	</div>
+</div>

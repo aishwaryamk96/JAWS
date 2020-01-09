@@ -1,0 +1,133 @@
+<style>
+.hoverable-options div div:last-child {
+	opacity: 0;
+	pointer-events: none;
+}
+.hoverable-options:hover div {
+	flex-direction: row!important;
+	justify-content: flex-end!important;
+}
+.hoverable-options:hover div div:first-child {
+	opacity: 0;
+	pointer-events: none;
+}
+.hoverable-options:hover div div:last-child {
+	opacity: 1;
+	pointer-events: all;
+}
+</style>
+<script>
+$(document).off("click", ".hover-anchor");
+$(document).on("click", ".hover-anchor", function() {
+	$selector = $(this).data("scroll");
+	$highlight = $(this).data("highlight");
+	target = $($selector);
+	var top = target.offset().top + 150;
+	$('html, body').animate(
+		{scrollTop: top},
+		1000,
+		function() {
+			// Callback after animation
+			// Must change focus!
+			var $target = $(target);
+			$target.focus();
+			if ($target.is(":focus")) { // Checking if the target was focused
+				return false;
+			} else {
+				$target.attr('tabindex','-1'); // Adding tabindex for elements not focusable
+				$target.focus(); // Set focus again
+				if ($highlight) {
+					$target.addClass($highlight);
+					setTimeout(function() {
+						$target.removeClass($highlight);
+					}, 500);
+				}
+			};
+		}
+	);
+});
+</script>
+<div class="page-title">
+	<label class="page-title-name">Notifications</label>
+	<a href="" class="btn btn-primary" target="_self">Download</a>
+</div>
+<div class="container-fluid">
+	<ul class="nav nav-tabs bg-secondary nav-fill mt-2">
+		<li class="nav-item">
+			<a class="nav-link text-white active" data-toggle="tab" data-target="#userCreated" href="">User</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link text-white" data-toggle="tab" data-target="#agentCreated" href="">Internal</a>
+		</li>
+	</ul>
+	<div class="tab-content px-1 py-2">
+		<div class="tab-pane fade {{activeTab == 0 ? 'show active' : ''}}" id="userCreated" role="tabpanel" aria-labelledby="userCreated-tab">
+			<div ng-show="scp==0" class="bg-light text-uppercase text-primary text-center py-2">{{sc.length==0 ? 'no' : sc.length}} notifications</div>
+			<div ng-show="scp>0" class="bg-light text-uppercase text-primary text-center py-2">{{scp}} pending notifications</div>
+			<ul class="list-group">
+				<li ng-repeat="n in sc" class="d-flex justify-content-between {{n.resolved_at ? 'bg-light' : ''}} border-bottom border-muted p-3" id="n-{{n.id}}" data-scroll="#n-{{n.id}}" data-highlight="highlight" ng-attr-rendered="{{in.length==0 && $index==sc.length-1 ? 'vm.contentLoaded()' : undefined}}">
+					<div class="d-flex flex-column justify-content-center text-muted font-weight-bold">{{$index + 1}}</div>
+					<div class="d-flex flex-column col-10 pl-4">
+						<a class="mb-3 text-decoration-none {{!n.resolved_at ? 'text-danger' : ''}}" href="/users/{{n.user_id}}" target="_blank">{{n.name}}</a>
+						<p class="text-muted">{{n.desc}}</p>
+					</div>
+					<div class="col-2 {{!n.resolved_at ? 'text-danger' : ''}} hoverable-options d-flex flex-column justify-content-center">
+						<div class="d-flex flex-row-reverse">
+							<div class="d-flex flex-column justify-content-center">{{n.resolved_at ? n.resolved_at : 'Pending'}}</div>
+							<div>
+								<button type="button" class="btn btn-light text-secondary bmd-btn-fab" ng-click="showNotification(n)"><i class="material-icons">settings</i></button>
+							</div>
+						</div>
+						<div class="text-muted d-flex justify-content-end">{{n.created_at}}</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="tab-pane fade {{activeTab == 1 ? 'show active' : ''}}" id="agentCreated" role="tabpanel" aria-labelledby="agentCreated-tab">
+			<div ng-show="inp==0" class="bg-light text-uppercase text-primary text-center py-2">{{in.length==0 ? 'no' : in.length}} notifications</div>
+			<div ng-show="inp>0" class="bg-light text-uppercase text-primary text-center py-2">{{inp}} pending notifications</div>
+			<ul ng-show="in.length" class="list-group">
+				<li ng-repeat="n in in" class="d-flex justify-content-between {{n.resolved_at ? 'bg-light' : ''}} border-bottom border-muted p-3" id="n-{{n.id}}" data-scroll="#n-{{n.id}}" data-highlight="highlight" ng-attr-rendered="{{in.length>0 && $index==in.length-1 ? 'vm.contentLoaded()' : undefined}}">
+					<div class="d-flex flex-column justify-content-center text-muted font-weight-bold">{{$index + 1}}</div>
+					<div class="d-flex flex-column col-10 pl-4">
+						<p class="{{!n.resolved_at ? 'text-danger' : ''}}">{{n.name}}</p>
+						<p class="text-muted">{{n.desc}}</p>
+					</div>
+					<div class="col-2 {{!n.resolved_at ? 'text-danger' : ''}} hoverable-options d-flex flex-column justify-content-center">
+						<div class="d-flex flex-row-reverse">
+							<div class="d-flex flex-column justify-content-center">{{n.resolved_at ? n.resolved_at : 'Pending'}}</div>
+							<div>
+								<button type="button" class="btn btn-secondary bmd-btn-fab" ng-click="showNotification(n)"><i class="material-icons">settings</i></button>
+							</div>
+						</div>
+						<div class="text-muted d-flex justify-content-end">{{n.created_at}}</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="showNotification" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{editableN.name}} says:</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p class="border border-muted p-2 rounded">{{editableN.desc}}</p>
+				<div class="d-flex justify-content-between mt-4">
+					<div class="text-muted">{{editableN.created_at}}</div>
+					<div class="text-muted" ng-if="editableN.resolved_at">{{editableN.resolved_at}}</div>
+				</div>
+				<div class="bg-danger text-light text-uppercase text-center py-2 rounded mt-4" ng-show="editableN.saveState==1">Are you sure?</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button class="btn btn-success" ng-click="saveNotification()">save</button>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,145 @@
+// Progress Container
+#progress-container {
+	.hidden-xs {
+		background: @color-secondary;
+		background: -webkit-radial-gradient(circle at 50% 40%, @color-secondary, fade(@color-secondary, 95%) 15%, transparent);
+  		background: -o-radial-gradient(circle at 50% 40%, @color-secondary, fade(@color-secondary, 95%) 15%, transparent);
+  		background: -moz-radial-gradient(circle at 50% 40%, @color-secondary, fade(@color-secondary, 95%) 15%, transparent);
+  		background: radial-gradient(circle at 50% 40%, @color-secondary, fade(@color-secondary, 95%) 15%, transparent);
+
+		.i-progress-playlist-item {
+			cursor: pointer;
+			&:hover {
+				color: black;
+				text-shadow: 0px 0px 10px rgba(66,134,244,1);
+			}
+		}
+
+		.progress-line {
+			height: 1px;
+			@progress-line-color-bg: fade(@color-ternary, 35%);
+
+			&.left {
+				background: @progress-line-color-bg;
+		    	background: -webkit-linear-gradient(270deg, @progress-line-color-bg, transparent);
+		    	background: -o-linear-gradient(270deg, @progress-line-color-bg, transparent);
+		    	background: -moz-linear-gradient(270deg, @progress-line-color-bg, transparent);
+		    	background: linear-gradient(270deg, @progress-line-color-bg, transparent);
+			}
+
+			&.right {
+				background: @progress-line-color-bg;
+		    	background: -webkit-linear-gradient(90deg, @progress-line-color-bg, transparent);
+		    	background: -o-linear-gradient(90deg, @progress-line-color-bg, transparent);
+		    	background: -moz-linear-gradient(90deg, @progress-line-color-bg, transparent);
+		    	background: linear-gradient(90deg, @progress-line-color-bg, transparent);
+			}
+
+			div {
+				height:1px;
+				position: absolute;
+
+			}
+		}
+
+		.i-resume {
+			i {
+				cursor: pointer;
+				width: 100%;
+
+				font-size: 85px;
+				color: @color-primary;
+				text-shadow: 0px 0px 80px rgba(66,134,244,1);
+				transition: text-shadow 0.2s ease-in, color 0.2s ease-in;
+
+				&:hover {
+					color: @color-warning;
+					text-shadow: 0px 0px 80px @color-warning;
+					transition: text-shadow 0.2s ease-out, color 0.2s ease-out;
+				}
+			}
+		}
+	}
+
+	.progress-min {
+		display: none;
+		height: 64px;
+		box-sizing: border-box;
+
+		.i-resume {
+			text-shadow: 0px 0px 15px rgba(0,0,0,0.35);
+		}
+	}
+
+	@media only screen and (max-width: 765px) {
+		.progress-min {
+			display: flex!important;
+			.v-align();
+		}
+	}
+
+}
+
+// Module
+.module-container {
+
+	.module-header {
+		margin-bottom: -15px;
+		transition: margin-bottom 0.2s ease-out;
+
+		@media only screen and (max-width: 765px) {
+			.fs-17 { font-size: 14px!important;	}
+			.fs-14 { font-size: 12px!important; }
+		}
+	}
+
+	.module-content {
+		max-height: 0px;
+		overflow: hidden;
+		opacity: 0;
+		transition: max-height 0.2s ease-out, opacity 0.5s ease-out;
+
+		@media only screen and (max-width: 765px) {
+			.module-topic {
+				font-size: 12px;
+				//.bdr-bottom();
+				//border-color: lighten(@color-secondary, 5%);
+			}
+		}
+
+		.module-topic {
+			cursor: pointer;
+
+			&.active, &.active:hover {
+				color: @color-info;
+				background-color: lighten(@color-secondary, 8.5%);
+			}
+
+			&:hover { div:nth-child(2) { text-decoration: underline; }}
+		}
+	}
+
+	.ion-chevron-down { display: inline; }
+	.ion-chevron-up { display: none; }
+
+	&.active {
+		.module-header {
+			transition: margin-bottom 0.2s ease-in;
+			margin-bottom: 15px;
+		}
+
+		.module-content {
+			transition: max-height 0.2s ease-in, opacity 0.5s ease-out;
+			max-height: 300px;
+			opacity: 1;
+		}
+
+		.ion-chevron-down { display: none; }
+		.ion-chevron-up { display: inline; }
+	}
+
+	&:not(.active):hover {
+		cursor: pointer;
+		.ion-chevron-down { color: @color-ternary; }
+	}
+}

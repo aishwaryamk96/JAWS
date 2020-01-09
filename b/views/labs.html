@@ -1,0 +1,270 @@
+<style>
+.new-lab {
+	bottom: 2vw;
+	position: fixed;
+	right: 2vw;
+	z-index: 10;
+}
+.btn-lab-ctrl {
+	margin-right: 10px;
+}
+.lab-title-group {
+	display: flex;
+	flex-direction: column;
+}
+.lab-title-group-item-heading {
+	margin-bottom: 5px;
+}
+.lab-title-group-item-text {
+	color: #aaa;
+	font-size: 90%;
+}
+.form-group-1 {
+	width: 100%;
+}
+.form-group-2 {
+	width: 48%;
+}
+.tools-chip {
+	background-color: #efefef;
+	border-radius: 30px;
+	margin-right: 10px;
+	padding: 10px 20px;
+}
+.tools-chip label {
+	margin-right: 15px;
+}
+input[type='date'] {
+	height: 32px;
+}
+input[type='date']:required:invalid::-webkit-datetime-edit {
+	color: transparent;
+}
+input[type='date']:focus::-webkit-datetime-edit {
+	color: initial;
+}
+.lab-codes {
+	border: 2px solid #eee;
+	padding: 10px;
+	position: relative;
+}
+.lab-codes .btn-copy {
+	background: #eee;
+	font-size: 9px;
+	padding: 5px;
+	position: absolute;
+	right: -2px;
+	top: -2px;
+}
+</style>
+<script>
+	$(document).ready(function() {
+		$(".form-control").focusin(function() {
+			$(this).parent(".bmd-form-group").addClass("is-focused");
+		});
+		$(".form-control").focusout(function() {
+			if (($(this)[0].tagName == "INPUT" && $(this).val() == '') || ($(this)[0].tagName == "CODE" && $(this).html() == '')) {
+				$(this).parent(".bmd-form-group").removeClass("is-focused");
+			}
+		});
+	});
+</script>
+<div class="page-title">
+	<section class="d-flex flex-column">
+		<label class="page-title-name">Labs</label>
+		<div>
+			<label class="ng-binding">{{courseLabs.length}}</label>
+			<label class="text-muted text-uppercase">total</label>
+		</div>
+	</section>
+	<div class="btn-group" role="group">
+		<button type="button" class="btn dropdown-toggle" data-toggle="dropdown">Add</button>
+		<ul class="dropdown-menu dropdown-menu-right">
+			<li class="dropdown-item" data-toggle="modal" data-target="#newCourseLab">Lab</li>
+			<li class="dropdown-item" data-toggle="modal" data-target="#newAmi">AMI</li>
+		</ul>
+	</div>
+</div>
+<div class="container-fluid">
+	<ul class="nav nav-tabs nav-fill bg-primary" id="myTab" role="tablist">
+		<li class="nav-item">
+			<a class="nav-link active" id="course-labs-tab" href="" data-toggle="tab" data-target="#courseLabsTab">Course Labs</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" id="labs-tab" href="" data-toggle="tab" data-target="#labsTab">AMI</a>
+		</li>
+	</ul>
+	<div class="tab-content px-1 py-2">
+		<div class="tab-pane fade active show" id="courseLabsTab">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Course</th>
+						<th scope="col">AMI ID</th>
+						<th scope="col">Creation</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="cl in courseLabs">
+						<th scope="row">{{$iindex + 1}}</th>
+						<td>
+							<div class="lab-title-group">
+								<p class="lab-title-group-item-heading">{{cl.name}}</p>
+								<p class="lab-title-group-item-text">{{cl.code}}</p>
+							</div>
+						</td>
+						<td>
+							<div class="lab-title-group">
+								<p class="lab-title-group-item-heading text-primary cursor-pointer" ng-click="lab.show(labs[cl.lab_id])">{{labs[cl.lab_id].ami_id}}</p>
+								<p class="lab-title-group-item-text">{{cl.lifespan}} sec</p>
+							</div>
+						</td>
+						<td>
+							<div class="lab-title-group">
+								<p class="lab-title-group-item-heading">{{cl.created_at}}</p>
+								<a class="lab-title-group-item-text" href="/users/{{cl.created_by}}" target="_blank">{{cl.name}}</a>
+							</div>
+						</td>
+						<td>
+							<button class="btn btn-fab btn-primary" ng-click="courseLab.show(cl)">
+								<i class="fas fa-eye"></i>
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="tab-pane" id="labsTab">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">AMI ID</th>
+						<th scope="col">Type</th>
+						<th scope="col">Creation</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="ami in labs">
+						<th scope="row">{{$iindex + 1}}</th>
+						<td>{{ami.ami_id}}</td>
+						<td>{{ami.type}}</td>
+						<td>
+							<div class="lab-title-group">
+								<p class="lab-title-group-item-heading">{{ami.created_at}}</p>
+								<a class="lab-title-group-item-text" href="/users/{{ami.created_by}}" target="_blank">{{ami.name}}</a>
+							</div>
+						</td>
+						<td>
+							<button class="btn btn-fab btn-primary" ng-click="lab.show(ami)">
+								<i class="fas fa-eye"></i>
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+</div>
+<div class="modal fade" id="newAmi" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<form class="modal-content" ng-submit="lab.save()">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">{{lab.id ? 'View' : 'New'}} Lab</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" tabindex="-1">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-row">
+					<div class="form-group bmd-form-group {{lab.obj.ami_id ? 'is-filled' : ''}}">
+						<label for="amiId" class="bmd-label-floating">AMI ID</label>
+						<input required type="text" class="form-control" id="amiId" ng-model="lab.obj.ami_id">
+					</div>
+					<div class="form-group bmd-form-group">
+						<label for="amiTarget" class="bmd-label-floating">Target</label>
+						<select required class="form-control" id="amiTarget" ng-model="lab.obj.type">
+							<option value="Linux">Linux</option>
+							<option value="Windows">Windows</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group bmd-form-group">
+						<label for="amiKey" class="bmd-label-floating">Key</label>
+						<input required type="text" class="form-control" id="amiKey" ng-model="lab.obj.meta.AWS_KEY_NAME">
+					</div>
+					<div class="form-group bmd-form-group">
+						<label for="amiSubnet" class="bmd-label-floating">Subnet</label>
+						<input required type="text" class="form-control" id="amiSubnet" ng-model="lab.obj.meta.AWS_SUBNETID">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group bmd-form-group">
+						<label for="amiKey" class="bmd-label-floating">Type</label>
+						<input required type="text" class="form-control" id="amiKey" ng-model="lab.obj.meta.AWS_INSTANCE_TYPE">
+					</div>
+					<div class="form-group bmd-form-group">
+						<label for="amiSecurityGroup" class="bmd-label-floating">Security Group</label>
+						<input required type="text" class="form-control" id="amiSecurityGroup" ng-model="lab.obj.meta.AWS_SECURITY_GROUP_ID">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group bmd-form-group">
+						<label for="amiKey" class="bmd-label-floating">Minimum Count</label>
+						<input required type="number" class="form-control" id="amiKey" ng-model="lab.obj.meta.AWS_INSTANCE_MIN_COUNT">
+					</div>
+					<div class="form-group bmd-form-group">
+						<label for="amiSubnet" class="bmd-label-floating">Maximum Count</label>
+						<input required type="number" class="form-control" id="amiSubnet" ng-model="lab.obj.meta.AWS_INSTANCE_MAX_COUNT">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" ng-disabled="lab.saving">Close</button>
+				<button class="btn btn-primary" ng-disabled="lab.invalid() || lab.saving">Save</button>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="modal fade" id="newCourseLab" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<form class="modal-content" ng-submit="courseLab.save()">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">{{courseLab.id ? 'View' : 'New'}} AMI</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" tabindex="-1">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-group bmd-form-group {{courseLab.obj.code ? 'is-filled' : ''}}">
+					<label for="labCode" class="bmd-label-floating">Course/Program Code</label>
+					<input required type="text" class="form-control" id="labCode" ng-model="courseLab.obj.code">
+				</div>
+				<div class="form-group bmd-form-group {{courseLab.obj.name ? 'is-filled' : ''}}">
+					<label for="labName" class="bmd-label-floating">Lab Name</label>
+					<input required type="text" class="form-control" id="labName" ng-model="courseLab.obj.name">
+				</div>
+				<div class="form-group bmd-form-group">
+					<label for="labId" class="bmd-label-floating">AMI</label>
+					<select required class="form-control" id="labId" ng-model="courseLab.obj.lab_id">
+						<option ng-repeat="(i, ami) in labs" value="{{i}}">{{ami.ami_id}}</option>
+					</select>
+				</div>
+				<div class="form-group bmd-form-group">
+					<label for="labLifespan" class="bmd-label-floating">Lifespan</label>
+					<input required type="number" class="form-control" id="labLifespan" ng-model="courseLab.obj.lifespan">
+					<small class="form-help">Duration (in seconds) after which the instance will be terminated</small>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" ng-disabled="courseLab.saving">Close</button>
+				<button class="btn btn-primary" ng-disabled="courseLab.invalid() || courseLab.saving">Save</button>
+			</div>
+		</form>
+	</div>
+</div>

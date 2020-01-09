@@ -1,0 +1,64 @@
+<?php header("Content-type: application-xml"); ?>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+<url>
+  <loc>https://www.jigsawacademy.com/iot/</loc>
+  <changefreq>always</changefreq>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://www.jigsawacademy.com/iot/home</loc>
+  <changefreq>always</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.jigsawacademy.com/iot/iot-courses</loc>
+  <changefreq>always</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.jigsawacademy.com/iot/iot-career</loc>
+  <changefreq>always</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.jigsawacademy.com/iot/iot-beginners-course</loc>
+  <changefreq>always</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.jigsawacademy.com/iot/iot-using-arduino</loc>
+  <changefreq>always</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.jigsawacademy.com/iot/iot-using-raspberry-pi</loc>
+  <changefreq>always</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.jigsawacademy.com/iot/iot-cloud</loc>
+  <changefreq>always</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.jigsawacademy.com/iot/introduction-to-iot-analytics</loc>
+  <changefreq>always</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.jigsawacademy.com/iot/data-science-for-iot</loc>
+  <changefreq>always</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.jigsawacademy.com/iot/faqs</loc>
+  <changefreq>always</changefreq>
+  <priority>0.80</priority>
+</url>
+</urlset>

@@ -1,0 +1,195 @@
+<style>
+#componentLoader.show .list-group .list-group-item {
+	animation: loader 1s linear 0s infinite forwards;
+	background: #F6F6F6;
+	background: linear-gradient(to right, #F6F6F6 8%, #F0F0F0 18%, #F6F6F6 33%);
+	background-size: 1000px 104px;
+	position: relative;
+	margin-bottom: 10px;
+}
+@keyframes loader {
+	0% {
+		background-position: -468px 0
+	}
+	100% {
+		background-position: 468px 0
+	}
+}
+</style>
+<div class="page-title">
+	<section class="d-flex flex-column">
+		<div class="d-flex">
+			<label class="page-title-name">{{course.name}}</label>
+			<a class="btn btn-primary btn-raised ml-3" href="https://jigsawacademy.net/accounts/1/courses?utf8=%E2%9C%93&focus=course_name&course%5Bname%5D={{course.sis_id}}" target="_blank" ng-show="course.sis_id">{{course.sis_id}}</a>
+		</div>
+		<div class="d-flex">
+			<label class="text-danger text-uppercase" ng-show="!course.sis_id">NA</label>
+			<label class="text-secondary ml-1" ng-show="!course.sis_id">|</label>
+			<label class="text-info text-uppercase ml-1">{{course.status}}</label>
+		</div>
+	</section>
+	<section>
+		<button type="button" class="btn btn-danger" ng-click="showSaveCourse()" ng-show="edit">save</button>
+		<button type="button" class="btn btn-primary" ng-click="edit=!edit">{{edit ? 'cancel' : 'edit'}}</button>
+	</section>
+</div>
+<div class="d-flex mt-3"></div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-6">
+			<div class="bg-light text-uppercase text-primary text-center py-2 rounded">batches</div>
+			<div class="show w-100" id="componentLoader" ng-show="!sections">
+				<ul class="list-group bmd-list-group-sm">
+					<li class="list-group-item"></li>
+					<li class="list-group-item"></li>
+					<li class="list-group-item"></li>
+					<li class="list-group-item"></li>
+					<li class="list-group-item"></li>
+				</ul>
+			</div>
+			<div class="form-group bmd-form-group" ng-show="sections">
+				<label class="bmd-label-floating">Batches</label>
+				<select class="form-control" ng-model="batch" ng-options="section.name+' ('+section.sis_id+')' for section in sections">
+					<option value="" disabled>{{sections.length}} batches</option>
+				</select>
+			</div>
+			<div class="d-flex flex-column" ng-show="batch">
+				<form class="form-inline" name="sectionSisId">
+					<div class="form-group bmd-form-group col-5 px-0">
+						<label for="batchCode" class="bmd-label-floating">Batch Code</label>
+						<input type="text" class="form-control w-100" id="batchCode" name="sectionCode" ng-model="batch.sis_id">
+					</div>
+					<div class="form-group bmd-form-group col-5 mx-auto px-0">
+						<label for="batchMode" class="bmd-label-floating">Batch Code</label>
+						<select class="form-control w-100" id="batchMode" name="sectionMode" ng-model="batch.learn_mode">
+							<option value="1">Instructer Led</option>
+							<option value="2">Self Paced</option>
+							<option value="3">Catalyst</option>
+							<option value="4">Instructer Led (NEW)</option>
+						</select>
+					</div>
+					<div class="form-group col-1 px-0 d-flex justify-content-end pt-4">
+						<button class="btn btn-primary btn-raised mb-0" ng-disabled="!sectionSisId.sectionCode.$dirty || !sectionSisId.sectionMode.$dirty">save</button>
+					</div>
+				</form>
+			</div>
+			<button class="btn btn-info btn-raised" ng-show="batch">Students</button>
+		</div>
+		<div class="col-6">
+			<div class="bg-light text-uppercase text-primary text-center py-2 rounded">payments</div>
+			<div class="d-flex justify-content-between px-2">
+				<div class="form-group bmd-form-group">
+					<label for="spPriceInr" class="bmd-label-floating">Self Paced Price (INR)</label>
+					<input type="number" class="form-control" id="spPriceInr" ng-model="course.sp_price_inr" format-number ng-disabled="!edit">
+				</div>
+				<div class="form-group bmd-form-group">
+					<label for="spPriceUsd" class="bmd-label-floating">Self Paced Price (USD)</label>
+					<input type="number" class="form-control" id="spPriceUsd" ng-model="course.sp_price_usd" format-number ng-disabled="!edit">
+				</div>
+				<div class="form-group bmd-form-group">
+					<label for="spCode" class="bmd-label-floating">Self Paced Code</label>
+					<input type="text" class="form-control" id="spCode" ng-model="course.sp_code" ng-disabled="!edit">
+				</div>
+			</div>
+			<div class="d-flex justify-content-between px-2">
+				<div class="form-group bmd-form-group">
+					<label for="ilPriceInr" class="bmd-label-floating">Instructor Led Price (INR)</label>
+					<input type="number" class="form-control" id="ilPriceInr" ng-model="course.il_price_inr" format-number ng-disabled="!edit">
+				</div>
+				<div class="form-group bmd-form-group">
+					<label for="ilPriceUsd" class="bmd-label-floating">Instructor Led Price (USD)</label>
+					<input type="number" class="form-control" id="ilPriceUsd" ng-model="course.il_price_usd" format-number ng-disabled="!edit">
+				</div>
+				<div class="form-group bmd-form-group">
+					<label for="ilCode" class="bmd-label-floating">Instructor Led Code</label>
+					<input type="text" class="form-control" id="ilCode" ng-model="course.il_code" ng-disabled="!edit">
+				</div>
+			</div>
+			<div class="bg-light text-uppercase text-primary text-center py-2 rounded">enrollment</div>
+			<div class="d-flex justify-content-between px-2">
+				<div class="input-group mb-3">
+					<div class="form-group bmd-form-group">
+						<label for="programDuration" class="bmd-label-floating">Duration</label>
+						<input type="number" class="form-control" id="programDuration" ng-model="course.duration_length" format-number ng-disabled="!edit">
+					</div>
+					<div class="input-group-append">
+						<button class="btn btn-secondary dropdown-toggle mb-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-bind="course.duration_unit" ng-disabled="!edit"></button>
+						<div class="dropdown-menu">
+							<button class="dropdown-item" ng-click="course.duration_unit='months'">months</button>
+							<button class="dropdown-item" ng-click="course.duration_unit='years'">years</button>
+							<button class="dropdown-item" ng-click="course.duration_unit='weeks'">weeks</button>
+							<button class="dropdown-item" ng-click="course.duration_unit='days'">days</button>
+						</div>
+					</div>
+				</div>
+				<div class="form-group bmd-form-group w-33">
+					<label for="categories" class="bmd-label-floating">Categories</label>
+					<textarea class="form-control" ng-model="course.category" ng-disabled="!edit"></textarea>
+				</div>
+				<div class="form-group bmd-form-group w-33">
+					<div class="checkbox d-flex justify-content-center {{!edit ? 'disabled' : ''}}">
+						<label>
+							<input type="checkbox" ng-model="course.ibm_content" ng-disabled="!edit"> IBM Topic
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="bg-light text-uppercase text-primary text-center py-2 rounded">website</div>
+			<div class="d-flex justify-content-center mt-3">
+				<label class="text-muted d-flex flex-column justify-content-center mb-0">WordPress ID:</label>
+				<a class="ml-3" href="https://www.jigsawacademy.com/wp-admin/post.php?post={{course.ext_id}}&action=edit" target="_blank" ng-show="course.ext_id">{{course.ext_id}}</a>
+				<label class="ml-3 mb-0" ng-show="!course.ext_id">No associated course in WordPress</label>
+			</div>
+			<div class="d-flex justify-content-center my-3">
+				<label class="text-muted d-flex flex-column justify-content-center mb-0">URL:</label>
+				<a class="ml-3" href="{{course.content.url_web}}" target="_blank" ng-show="course.content.url_web">{{course.content.url_web}}</a>
+				<label class="ml-3 mb-0" ng-show="!course.content.url_web">Hidden</label>
+			</div>
+			<div class="bg-light text-uppercase text-primary text-center py-2 rounded">stats</div>
+			<div class="d-flex justify-content-center mt-3">
+				<label class="text-muted d-flex flex-column justify-content-center mb-0">Enrollments:</label>
+				<a class="text-primary d-flex flex-column justify-content-center mb-0 ml-2" href="/students/courses/{{course.course_id}}">{{course.enr_count}}</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="saveCourse" tabindex="-1" role="dialog" aria-labelledby="saveCourse" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Save Course</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" tabindex="-1">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group bmd-form-group">
+						<label for="courseName" class="bmd-label-floating">Name</label>
+						<input type="text" class="form-control" id="courseName" ng-model="course.name">
+					</div>
+				</form>
+				<form class="form-inline">
+					<div class="form-group bmd-form-group w-45">
+						<label for="courseCode" class="bmd-label-floating">Course Code</label>
+						<input type="text" class="form-control w-100" id="courseCode" ng-model="course.sis_id">
+					</div>
+					<div class="form-group bmd-form-group w-45 ml-auto">
+						<label for="courseStatus" class="bmd-label-floating">Course Status</label>
+						<select class="form-control w-100" id="courseStatus" ng-model="course.status">
+							<option value="draft">Draft</option>
+							<option value="upcoming">Upcoming</option>
+							<option value="enabled">Enabled</option>
+							<option value="disabled">Disabled</option>
+							<option value="hidden">Hidden</option>
+						</select>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" ng-click="saveCourse()">Save</button>
+			</div>
+		</div>
+	</div>
+</div>

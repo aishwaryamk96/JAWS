@@ -1,0 +1,1112 @@
+<style scoped>
+    .table.table-alt.table-detailed>tbody>tr.shown>td {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .table.table-alt.table-detailed>tbody>tr.status-white>td:first-child,
+    .border-status-white {
+        border-left: 4px solid rgba(255, 255, 255, 0);
+    }
+
+    .table.table-alt.table-detailed>tbody>tr.status-orange>td:first-child,
+    .border-status-orange {
+        border-left: 4px solid #f8d053;
+    }
+
+    .table.table-alt.table-detailed>tbody>tr.status-red>td:first-child,
+    .border-status-red {
+        border-left: 4px solid #F77975;
+    }
+
+    .table.table-alt.table-detailed>tbody>tr.status-blue>td:first-child,
+    .border-status-blue {
+        border-left: 4px solid #6DC0F9;
+    }
+
+    .table.table-alt.table-detailed>tbody>tr.status-green>td:first-child,
+    .border-status-green {
+        border-left: 4px solid #40D9CA;
+    }
+
+    .table.table-alt.table-detailed>tbody>tr.status-gray>td:first-child,
+    .border-status-gray {
+        border-left: 4px solid #D8DADC;
+    }
+
+    .table.table-alt.table-detailed.highlight>tbody>tr.status-white>td:last-child {
+        /*background-color: rgba(255,255,255,0)!important;*/
+    }
+
+    .table.table-alt.table-detailed.highlight>tbody>tr.status-orange>td:last-child {
+        background-color: #f8d053 !important;
+    }
+
+    .table.table-alt.table-detailed.highlight>tbody>tr>td:last-child>span.status-span:before {
+        font-family: FontAwesome;
+        display: inline;
+        padding-right: 10px;
+    }
+
+    .table.table-alt.table-detailed.highlight>tbody>tr.status-red>td:last-child>span.status-span:before {
+        content: '\f12a';
+    }
+
+    .table.table-alt.table-detailed.highlight>tbody>tr.status-red>td:last-child {
+        background-color: #F77975 !important;
+        color: white !important;
+    }
+
+    .table.table-alt.table-detailed.highlight>tbody>tr.status-blue>td:last-child>span.status-span:before {
+        content: '\f16b';
+    }
+
+    .table.table-alt.table-detailed.highlight>tbody>tr.status-blue>td:last-child {
+        background-color: #6DC0F9 !important;
+        color: white !important;
+    }
+
+    .table.table-alt.table-detailed.highlight>tbody>tr.status-green>td:last-child>span.status-span:before {
+        content: '\f00c';
+    }
+
+    .table.table-alt.table-detailed.highlight>tbody>tr.status-green>td:last-child {
+        background-color: #40D9CA !important;
+        color: white !important;
+    }
+
+    .table.table-alt.table-detailed.highlight>tbody>tr.status-gray>td:last-child {
+        background-color: #D8DADC !important;
+    }
+
+    .table.table-hover tbody tr.row-details:hover td,
+    .table.table-hover tbody tr.row-details td {
+        background-color: #f0f0f0 !important;
+        cursor: auto !important;
+    }
+
+    .table.table-alt.table-detailed>tbody>tr.shown>td:first-child:before {
+        -webkit-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+
+    .table.table-detailed.table-alt>tbody>tr>td:first-child:before {
+        content: "\f054";
+        display: inline-block;
+        margin-right: 20px;
+        font-family: FontAwesome;
+        -webkit-transition: all 0.12s linear;
+        transition: all 0.12s linear;
+        vertical-align: middle;
+    }
+
+    :before {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .table.table-alt.table-detailed>tbody>tr.row-details>td:first-child:before {
+        content: '';
+    }
+
+    .table-alt.table-hover tbody tr:hover td.bg-menu-light,
+    .table .bg-menu-light {
+        background-color: #788195 !important;
+    }
+</style>
+
+
+<div class="jumbotron" data-pages="parallax">
+    <div class="container-fluid container-fixed-lg">
+        <div class="inner" style="transform: translateY(0px); opacity: 1;">
+            <ul class="breadcrumb">
+                <li>
+                    <a ui-sref='app.home'>JAWS</a>
+                </li>
+                <li>
+                    <a class="active" ui-sref='app.aform'>Track Payments</a>
+                </li>
+            </ul>
+
+            <h3 style='display:inline-block;' class="page-title">Track Payments</h3>
+            <br/>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid container-fixed-lg ng-scope">
+    <div class="row">
+        <div class="col-md-12">
+            <div pg-portlet="" class="panel panel-default ng-scope panel-collapsed">
+                <div class="panel-heading">
+                    <div class="panel-title" data-toggle="collapse" style="cursor:pointer;">Filter</div>
+                    <div class="panel-controls">
+                        <ul>
+                            <li>
+                                <a ng-click="filter.apply()" class="portlet-refresh">
+                                    <i class="portlet-icon portlet-icon-refresh" style="{{filter.wait ? 'pointer-events:none; ' : ''}}"></i>
+                                </a>
+                            </li>
+                            <li style="cursor:pointer;" data-toggle="collapse">
+                                <a style="pointer-events:none;" data-toggle="collapse" class="portlet-collapse">
+                                    <i class="pg-arrow_maximize"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="panel-body" style="display: block;">
+                    <br/>
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <form role="form">
+                                <div>
+                                    <div pg-form-group class="form-group form-group-default">
+                                        <label style="margin-bottom:5px;">Lead</label>
+                                        <input style="" type="text" class="form-control" enter-submit="filter.apply()" placeholder="Email or Name" ng-model="filter.lead">
+                                    </div>
+                                    <div pg-form-group ng-disabled="((!permissions.pm) && (filter.lead.length == 0))" ng-class="{'disabled':((!permissions.pm) && (filter.lead.length == 0))}"
+                                        class="form-group form-group-default-select form-group-default">
+                                        <label style="margin-bottom:5px;">Source</label>
+                                        <ui-select ng-disabled="((!permissions.pm) && (filter.lead.length == 0))" ng-class="{'disabled':((!permissions.pm) && (filter.lead.length == 0))}"
+                                            on-select="filter.apply()" ng-model="filter.source">
+                                            <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices ng-disabled="((!permissions.pm) && (filter.lead.length == 0))" ng-class="{'disabled':((!permissions.pm) && (filter.lead.length == 0))}"
+                                                repeat="item in sourcemodels">
+                                                <div style="padding-left: 15px;" ng-bind-html="trustAsHtml(item.name)"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div pg-form-group ng-disabled="!permissions.approver" ng-class="{'disabled':(!permissions.approver) || (filter.source.source=='system')}"
+                                        class="form-group form-group-default">
+                                        <label style="margin-bottom:5px;">Agent</label>
+                                        <input ng-disabled="(!permissions.approver) || (filter.source.source=='system')" ng-class="{'disabled':(!permissions.approver) || (filter.source.source=='system')}"
+                                            type="text" class="form-control" enter-submit="filter.apply()" placeholder="Jigsaw Email or Name"
+                                            ng-model="filter.agent">
+                                    </div>
+                                    <div pg-form-group ng-class="{disabled : !permissions.pm}" class="form-group form-group-default-select form-group-default">
+                                        <label style="margin-bottom:5px;">Team</label>
+                                        <ui-select ng-disabled="!permissions.pm" ng-class="{disabled : !permissions.pm}" ng-model="filter.team" on-select="filter.apply()">
+                                            <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices ng-disabled="!permissions.pm" repeat="item in teammodels">
+                                                <div ng-disabled="!permissions.pm" ng-class="{disabled : !permissions.pm}" style="padding-left: 15px;" ng-bind-html="trustAsHtml(item.name)"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-md-4">
+                            <form role="form">
+                                <div>
+                                    <div pg-form-group class="form-group form-group-default-select form-group-default">
+                                        <label style="margin-bottom:5px;">Currency</label>
+                                        <ui-select on-select="filter.apply()" ng-model="filter.currency">
+                                            <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices repeat="item in currencymodels">
+                                                <div ng-bind-html="trustAsHtml(item.name)"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                                <div class="form-group form-group-default">
+                                    <label style="margin-bottom:5px;">Total
+                                        <span class="hint-text">(Nett Payable)</span>
+                                    </label>
+                                    <div style="width:100%" class="input-daterange input-group" id="discount-range">
+                                        <input enter-submit="filter.apply()" style='position:relative; top: 5px;' type="text" class="autonumeric input-sm form-control"
+                                            ui-jq="autoNumeric" ng-model="filter.price.min">
+                                        <span class="input-group-addon">to</span>
+                                        <input enter-submit="filter.apply()" style='position:relative; top: 5px;' type="text" class="autonumeric input-sm form-control"
+                                            ui-jq="autoNumeric" ng-model="filter.price.max">
+                                    </div>
+                                </div>
+                                <div class="form-group form-group-default">
+                                    <label style="margin-bottom:5px;">Discount
+                                        <span class="hint-text">(Amount or %)</span>
+                                    </label>
+                                    <div style="width:100%" class="input-daterange input-group" id="discount-range">
+                                        <input enter-submit="filter.apply()" style='position:relative; top: 5px;' type="text" class="input-sm form-control" ng-model="filter.discount.min">
+                                        <span class="input-group-addon">to</span>
+                                        <input enter-submit="filter.apply()" style='position:relative; top: 5px;' type="text" class="input-sm form-control" ng-model="filter.discount.max">
+                                    </div>
+                                </div>
+                                <div pg-form-group class="form-group form-group-default-select form-group-default">
+                                    <label style="margin-bottom:5px;">Financing</label>
+                                    <ui-select on-select="filter.apply()" ng-model="filter.instl">
+                                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="item in instlmodels">
+                                            <div ng-bind-html="trustAsHtml(item.name)"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-md-4">
+                            <form role="form">
+                                <div>
+                                    <div class="form-group form-group-default">
+                                        <label style="margin-bottom:5px;">Create Date</label>
+                                        <div style="width:100%" class="input-daterange input-group" id="date-range" ui-jq="datepicker">
+                                            <input style='position:relative; top: 5px;' type="text" class="input-sm form-control" name="start" ng-model="filter.date.min">
+                                            <span class="input-group-addon">to</span>
+                                            <input style='position:relative; top: 5px;' type="text" class="input-sm form-control" name="end" ng-model="filter.date.max">
+                                        </div>
+                                    </div>
+                                    <div pg-form-group class="form-group form-group-default-select form-group-default">
+                                        <label style="margin-bottom:5px;">Status</label>
+                                        <ui-select on-select="filter.apply()" ng-model="filter.status">
+                                            <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices repeat="item in statusmodels">
+                                                <div class="border-status-{{item.color}}" style="padding-left: 15px;" ng-bind-html="trustAsHtml(item.name)"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div pg-form-group class="form-group form-group-default-select form-group-default">
+                                        <label style="margin-bottom:5px;">Show</label>
+                                        <ui-select on-select="table.pages.paginate()" ng-model="table.pages.rows.count">
+                                            <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices repeat="item in rowcountmodels">
+                                                <div ng-bind-html="trustAsHtml(item.name)"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                    <br/>
+                    <div class="row" style="position: relative;">
+                        <div class="col-md-9"></div>
+                        <div class="col-md-1">
+                            <button ng-if="permissions.approver" ng-disabled="filter.wait" ng-class="{'disabled': filter.wait}" ng-click="filter.export()"
+                                class="btn btn-lg btn-default btn-block m-t-5 btn-cons pull-right">Download</button>
+                        </div>
+                        <div class="col-md-1">
+                            <button ng-disabled="filter.wait" ng-class="{'disabled': filter.wait}" ng-click="filter.reset()" class="btn btn-lg btn-default btn-block m-t-5 btn-cons pull-right">Reset</button>
+                        </div>
+                        <div class="col-md-1">
+                            <button ng-disabled="filter.wait" ng-class="{'disabled': filter.wait}" ng-click="filter.apply()" class="btn btn-lg btn-primary btn-block m-t-5 btn-cons pull-right">Refresh</button>
+                        </div>
+                        <div class="progress progress-small" style="opacity: 0.75; position: absolute; left: -5px; bottom: -20px; width: calc(100% + 10px); margin-bottom: 0px;">
+                            <div ng-class="{'progress-bar-indeterminate': filter.wait && !action.wait}" class="progress-bar-complete"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="filter.wait" class="portlet-progress" style="background-color: rgba(255, 255, 255, 0.8); display: block; height: calc(100% - 5px);">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+
+<div class="container-fluid container-fixed-lg dataTables_wrapper form-inline no-footer" style="{{(filter.wait || table.wait) ? 'opacity: 0.35; pointer-events: none;' : ''}} overflow:scroll;">
+
+    <table class="table table-detailed highlight table-alt table-hover dataTable no-footer" id="tbl-paytrack" role="grid">
+        <thead>
+            <tr role="row">
+                <th class="sorting col-md-3" ng-class="{'sorting_asc': (table.sort.key=='sort_0') && !table.sort.flip,'sorting_desc': (table.sort.key=='sort_0') && table.sort.flip}"
+                    ng-click="table.sort.apply('0')" tabindex="0" rowspan="1" colspan="1">Lead</th>
+                <th class="sorting col-md-4" ng-class="{'sorting_asc': (table.sort.key=='sort_1') && !table.sort.flip,'sorting_desc': (table.sort.key=='sort_1') && table.sort.flip}"
+                    ng-click="table.sort.apply('1')" tabindex="0" rowspan="1" colspan="1">Courses</th>
+                <th class="sorting col-md-1" ng-class="{'sorting_asc': (table.sort.key=='sort_2') && !table.sort.flip,'sorting_desc': (table.sort.key=='sort_2') && table.sort.flip}"
+                    ng-click="table.sort.apply('2')" tabindex="0" rowspan="1" colspan="1">Total</th>
+                <th class="sorting col-md-1" ng-class="{'sorting_asc': (table.sort.key=='sort_3') && !table.sort.flip,'sorting_desc': (table.sort.key=='sort_3') && table.sort.flip}"
+                    ng-click="table.sort.apply('3')" tabindex="0" rowspan="1" style="width: 85px;" colspan="1">Discount</th>
+                <th class="sorting col-md-1" ng-class="{'sorting_asc': (table.sort.key=='sort_4') && !table.sort.flip,'sorting_desc': (table.sort.key=='sort_4') && table.sort.flip}"
+                    ng-click="table.sort.apply('4')" tabindex="0" rowspan="1" style="width: 50px;" colspan="1">Instl.</th>
+                <th class="sorting col-md-1" ng-class="{'sorting_asc': (table.sort.key=='sort_5') && table.sort.flip,'sorting_desc': (table.sort.key=='sort_5') && !table.sort.flip}"
+                    ng-click="table.sort.apply('5')" tabindex="0" rowspan="1" colspan="1">Date</th>
+                <th class="sorting col-md-1" ng-class="{'sorting_asc': (table.sort.key=='sort_6') && !table.sort.flip,'sorting_desc': (table.sort.key=='sort_6') && table.sort.flip}"
+                    ng-click="table.sort.apply('6')" tabindex="0" rowspan="1" colspan="1">Agent</th>
+                <th class="sorting col-md-1" ng-class="{'sorting_asc': (table.sort.key=='sort_7') && !table.sort.flip,'sorting_desc': (table.sort.key=='sort_7') && table.sort.flip}"
+                    ng-click="table.sort.apply('7')" tabindex="0" rowspan="1" colspan="1">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr role="row row-sm-height" class="status-{{pkg.status.color}}" ng-class="{shown: (table.expand == ($index + table.pages.rows.start))}"
+                ng-click="table.expand = (table.expand == $index + table.pages.rows.start) ? -1 : ($index + table.pages.rows.start);"
+                ng-repeat-start="pkg in packages | orderBy: table.sort.key : table.sort.flip | limitTo: table.pages.rows.count.count : table.pages.rows.start"
+                ng-init="pkgIndex = pkg.package_index" style="cursor:pointer;">
+
+                <td class="v-align-middle col-sm-height col-middle" colspan="1" style="white-space: nowrap!important; padding-right: 0px;">
+                    <p style="display: inline-block; vertical-align: middle; margin: 0px;">
+                        <b style="text-transform: capitalize;">{{pkg.lead.name | lowercase}}</b>
+                        <br/>
+                        <span class='hint-text' style="text-transform: lowercase;">{{pkg.lead.email}}</span>
+                        <br>
+                        <span class='hint-text'>{{pkg.lead.phone}}</span>
+                    </p>
+                </td>
+
+                <td class="v-align-middle col-sm-height col-middle" colspan="1" style="padding: 5px 0px 5px 10px;">
+                    <span class="bundle_name" style="display: block;" ng-if="pkg.bundle">
+                        <span style="text-transform: capitalize;">{{pkg.bundle_type}}</span> -
+                        <b>{{pkg.bundle}}</b>
+                        <br>
+                        <small ng-if="pkg.bundle_batch_name">Bootcamp Batch -
+                            <b>{{pkg.bundle_batch_name}}</b>
+                        </small>
+                    </span>
+                    <span class="courses" ng-repeat="crs in pkg.courses">
+                        <a class="btn btn-tag" style="margin: 4px 3px; padding: 4px; font-size: 13px;" title='{{crs.free ? "FREE " : ""}}{{crs.name}} ({{(pkg.pricing.currency == "usd") ? "$" : "&#8377;"}}{{crs.price | number:0}})'>
+                            <small style='text-transform: uppercase; font-weight: {{crs.free ? "bold" : "auto"}}'>{{crs.code}}</small>
+                        </a>
+                        <span ng-if="pkg.app_num.length">
+                            <br>
+                            Application Number - <b>{{pkg.app_num}}</b>
+                        </span>
+                    </span>
+                </td>
+
+                <td class="v-align-middle col-sm-height col-middle" colspan="1">
+                    {{(pkg.pricing.currency == 'usd') ? "$" : "&#8377;"}}{{pkg.pricing.total | number:0}}
+                </td>
+
+                <td class="v-align-middle col-sm-height col-middle" style="width: 85px;" colspan="1">
+                    <span ng-class="{'hint-text': (pkg.pricing.discount == 0)}" style='margin-bottom:5px; font-weight: {{pkg.pricing.discount > 0 ? "bold" : "auto"}}'>
+                        {{(pkg.pricing.discount * 100 / pkg.pricing.basic) | number:(pkg.pricing.discount > 0 ? 1 : 0 )}}%
+                    </span>
+                    <br/>
+                    <span class="hint-text" ng-if="pkg.pricing.discount > 0">
+                        {{(pkg.pricing.currency == 'usd') ? "$" : "&#8377;"}}{{pkg.pricing.discount | number:0}}
+                    </span>
+                </td>
+
+                <td class="v-align-middle col-sm-height col-middle" style='width: 50px; font-weight: {{pkg.instl_total > 1 ? "bold" : "auto"}}'
+                    colspan="1">
+                    <span ng-class="{'hint-text': (pkg.instl_total == 1)}">
+                        <span ng-if="pkg.instl_next > 1">{{pkg.instl_next - 1}} / </span>
+                        <span ng-if="(pkg.instl_next == 0) && (pkg.instl_total > 1)">{{pkg.instl_total}} / </span>
+                        {{pkg.instl_total}}
+                    </span>
+                </td>
+
+                <td class="v-align-middle col-sm-height col-middle" style="padding-right: 0px;" colspan="1">
+                    <small title="{{pkg.date.time}} {{pkg.date.date}}">
+                        <span ng-if="pkg.date.is_today">
+                            <span style='margin-bottom:5px;'>{{pkg.date.time}}</span>
+                            <br/>
+                            <span class="hint-text">Today</span>
+                        </span>
+                        <span class="hint-text" ng-if="!pkg.date.is_today">{{pkg.date.date}}</span>
+                    </small>
+                </td>
+
+                <td class="v-align-middle col-sm-height col-middle" style="padding-right: 0px;" colspan="1">
+                    <small ng-if="pkg.source == 'system'" class="hint-text">(Website)</small>
+                    <span ng-if="pkg.source == 'user'">{{pkg.agent.name}}</span>
+                    <span class="row" ng-if="pkg.status.approval.auth.pm"><span style="font-weight: bold;">Approver:</span>{{pkg.status.approval.auth.pm}}</span>
+                </td>
+
+                <td class="v-align-middle col-sm-height col-middle text-center bg-warning" style="padding-left: 0px; padding-right: 0px;"
+                    colspan="1">
+                    <span class="status-span">{{pkg.status.name}}</span>
+                </td>
+
+            </tr>
+
+            <tr class="row-details" ng-show="table.expand == ($index + table.pages.rows.start)" ng-repeat-end>
+                <td colspan="1" style='background-color: rgb(235,235,235)!important;'>
+
+                </td>
+
+                <td colspan="4">
+                    <table class="table table-inline" style='margin-top: 0px; margin-bottom: 0px;'>
+                        <tbody>
+                            <tr ng-repeat="instl in pkg.instl">
+
+                                <td colspan='1' ng-if="pkg.instl.length == 1">
+                                    Full Payment
+                                    <br>
+                                    <span ng-if="instl.receipt" title="Receipt Number">
+                                        <b>{{instl.receipt}}</b>
+                                    </span>
+                                </td>
+                                <td colspan='1' ng-if="pkg.instl.length > 1">
+                                    <span ng-if="$index == 0">
+                                        Down Payment
+                                        <br>
+                                        <span ng-if="instl.receipt" title="Receipt Number">
+                                            <b>{{instl.receipt}}</b>
+                                        </span>
+                                    </span>
+                                    <span ng-if="$index > 0">
+                                        {{$index + 1}}
+                                        <sup>{{ordinal($index + 1)}}</sup>&nbsp;Installment
+                                        <br>
+                                        <span ng-if="instl.receipt" title="Receipt Number">
+                                            <b>{{instl.receipt}}</b>
+                                        </span>
+                                    </span>
+                                </td>
+
+                                <td colspan='1'>{{(pkg.pricing.currency == 'usd') ? "$" : "&#8377;"}}{{instl.sum | number:0}}</td>
+
+                                <td colspan='3' ng-if="pkg.status.code <= 4">
+                                    <span ng-if="$index == 0">
+                                        {{pkg.expiry.length > 0 ? ('Expires' + (pkg.expiry.is_today ? 'today' : ('on ' + pkg.expiry.date))) : 'To be paid';}}
+                                    </span>
+                                    <span ng-if="$index > 0">
+                                        <span ng-show="!instl.due_date">{{instl.due_days}}&nbsp;Days(s)</span>
+                                        <span ng-show="!!instl.due_date">Due on {{instl.due_date.date}}</span>
+                                    </span>
+                                </td>
+                                <td colspan='3' ng-if="pkg.status.code > 4">
+                                    <span ng-if="instl.status == 'disabled'">
+                                        <span ng-if="(pkg.status.code == 7) && ($index == 0)">
+                                            <i class='text-danger fa fa-lg fa-exclamation-circle fa-fw'></i>&nbsp;
+                                            <b>Expired</b>&nbsp;{{pkg.expiry.is_today ? 'today' : ('on ' + pkg.expiry.date)}}
+                                        </span>
+                                        <span ng-if="(pkg.status.code != 7) || ($index > 0)">Disabled</span>
+                                    </span>
+                                    <span ng-if="instl.status == 'enabled'">
+                                        Due</b>&nbsp;{{instl.due_date.is_today ? 'today' : ('on ' + instl.due_date.date)}}
+                                    </span>
+                                    <span ng-if="instl.status == 'due'">
+                                        <i class='text-warning fa fa-lg fa-exclamation-circle fa-fw'></i>&nbsp;
+                                        <b>Due</b>&nbsp;{{instl.due_date.is_today ? 'today' : ('on ' + instl.due_date.date)}}
+                                    </span>
+                                    <span ng-if="instl.status == 'paid'">
+                                        <i class='text-success fa fa-lg fa-check-circle fa-fw'></i>&nbsp;
+                                        <b>Paid&nbsp;{{instl.mode == 'online' ? '' : 'via '}}{{instl.mode}}</b>&nbsp;{{instl.pay_date.is_today
+                                        ? 'today' : ('on ' + instl.pay_date.date)}}&nbsp;
+                                        <span class="hint-text small" ng-if="permissions.approver">
+                                            <span ng-if="instl.mode == 'online'" title="{{instl.gateway.channel_info}}" style='text-transform: uppercase;'>
+                                                {{(instl.gateway.name.length >= 3) ? ('(' + instl.gateway.name + ' - ' + instl.gateway.reference + ')') : '(Pre-paid)'}}
+                                            </span>
+                                            <!--<span ng-if="instl.mode != 'online'" style='text-transform: capitalize;'>({{instl.payer.name |lowercase}})</span>-->
+                                        </span>
+                                    </span>
+                                </td>
+
+                                <td colspan='3' ng-if="pkg.status.code <= 4" style='padding: 10px 10px 0px 0px;'>
+                                    <div class="btn-group pull-right" ng-if="($index == 0) && (pkg.status.code == 0) && (pkg.agent.email == user.email)">
+                                        <!--
+									-->
+                                        <button type="button" ng-click="action.edit(pkgIndex)" title="Edit" class="btn btn-default">
+                                            <i class="fa fa-fw fa-pencil"></i>&nbsp;Edit</button>
+                                        <!--
+									-->
+                                        <button disabled='disabled' type="button" href="#modal-delete" data-toggle="modal" ng-click="action.preDelete(pkgIndex)"
+                                            ng-if="permissions.approver" title="Delete" class="btn btn-danger">
+                                            <i class="fa fa-fw fa-minus-circle"></i>&nbsp;Delete</button>
+                                        <!--
+								-->
+                                    </div>
+                                    <div class="btn-group pull-right" ng-if="($index == 0) && (permissions.approver) && (((pkg.status.code == 1) && permissions.approver) || ((pkg.status.code == 2) && permissions.pm))">
+                                        <!--
+									-->
+                                        <button type="button" href="#modal-approve" data-toggle="modal" ng-click="action.preApprove(pkgIndex)" title="Approve" class="btn btn-default">
+                                            <i class="fa fa-fw fa-thumbs-up"></i>&nbsp;Approve</button>
+                                        <!--
+									-->
+                                        <button type="button" href="#modal-reject" data-toggle="modal" ng-click="action.preReject(pkgIndex)" title="Reject" class="btn btn-danger">
+                                            <i class="fa fa-fw fa-thumbs-down"></i>&nbsp;Reject</button>
+                                        <!--
+								-->
+                                    </div>
+                                    <div class="btn-group pull-right" ng-if="($index == 0) && (pkg.status.code == 4)">
+                                        <!--
+									-->
+                                        <button type="button" href="#modal-notify" data-toggle="modal" ng-click="action.preNotify(pkgIndex, $index)" title="Resend"
+                                            class="btn btn-default">
+                                            <i class="fa fa-fw fa-envelope"></i>&nbsp;Resend</button>
+                                        <!--
+									-->
+                                        <button type="button" href="#modal-disable" data-toggle="modal" ng-click="action.preDisable(pkgIndex, $index)" ng-if="permissions.approver"
+                                            title="Disable" class="btn btn-danger">
+                                            <i class="fa fa-fw fa-minus-circle"></i>&nbsp;Disable</button>
+                                        <!--
+								-->
+                                    </div>
+                                </td>
+
+                                <td colspan='3' ng-if="pkg.status.code > 4" style='padding: 10px 10px 0px 0px;'>
+                                    <div class="btn-group pull-right" ng-if="instl.status == 'disabled'">
+                                        <!--
+									-->
+                                        <button href="#modal-enable" data-toggle="modal" ng-if="permissions.approver" type="button" ng-click="action.preEnable(pkgIndex, $index)"
+                                            title="Enable" class="btn btn-complete">
+                                            <i class="fa fa-fw fa-plus-circle"></i>&nbsp;Enable</button>
+                                        <!--
+								-->
+                                    </div>
+                                    <div class="btn-group pull-right" ng-if="(instl.status == 'enabled') || (instl.status == 'due')">
+                                        <!--
+									-->
+                                        <button type="button" href="#modal-notify" data-toggle="modal" ng-click="action.preNotify(pkgIndex, $index)" title="Notify"
+                                            class="btn btn-default">
+                                            <i class="fa fa-fw fa-bell"></i>&nbsp;Notify</button>
+                                        <!--
+									-->
+                                        <button href="#modal-disable" data-toggle="modal" ng-if="permissions.approver" type="button" ng-click="action.preDisable(pkgIndex, $index)"
+                                            title="Disable" class="btn btn-danger">
+                                            <i class="fa fa-fw fa-minus-circle"></i>&nbsp;Disable</button>
+                                        <!--
+								-->
+                                    </div>
+                                    <div class="btn-group pull-right" ng-if="instl.status == 'paid'">
+                                        <!--
+									-->
+                                        <!-- <button href="#modal-invoice" data-toggle="modal" ng-if="permissions.approver" type="button" ng-click="action.preInvoice(pkgIndex, $index)"
+                                            title="Send Payment Invoice & Acknowledgement" class="btn btn-default">
+                                            <i class="fa fa-fw fa-envelope"></i>&nbsp;Receipt</button> -->
+                                        <!--
+								-->
+                                    </div>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+
+                <td colspan="3" style='background-color: rgb(235,235,235)!important;'>
+                    <div class="panel-group" style="margin-bottom: 0px;" id="accordion" role="tablist" aria-multiselectable="true">
+
+                        <div class="panel panel-default" style="user-select: none;{{(pkg.status.approval.agent_comment.instl.length + pkg.status.approval.agent_comment.misc.length +
+						pkg.status.approval.agent_comment.combo_free.length +
+						pkg.status.approval.agent_comment.discount.length) > 0 ? '' : 'pointer-events: none; opacity: 0.4;'}}">
+                            <div style='padding: 10px; min-height: auto;' class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a ng-class="{collapsed:!collapseNotesAgent}" ng-click="collapseNotesAgent=!collapseNotesAgent" aria-expanded="true" aria-controls="collapseNotesAgent"
+                                        class="" style='font-size: 85%; padding: 0px;'>
+                                        <span>{{ (pkg.status.approval.agent_comment.instl.length + pkg.status.approval.agent_comment.misc.length
+                                            + pkg.status.approval.agent_comment.combo_free.length + pkg.status.approval.agent_comment.discount.length)
+                                            > 0 ? ( (pkg.status.approval.agent_comment.instl.length > 0 ? 1 : 0) + (pkg.status.approval.agent_comment.discount.length
+                                            > 0 ? 1 : 0) + (pkg.status.approval.agent_comment.misc.length > 0 ? 1 : 0) +
+                                            (pkg.status.approval.agent_comment.combo_free.length > 0 ? 1 : 0) ) : '0' }}
+                                        </span>&nbsp;Notes
+                                        <span class="hint-text">(Agent)</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" ng-class="{in:collapseNotesAgent}">
+                                <div class="panel-body" style='padding: 10px;'>
+                                    <span ng-if="pkg.status.approval.agent_comment.discount.length > 0">
+                                        <b>Discount :</b>&nbsp;{{pkg.status.approval.agent_comment.discount}}
+                                        <br/>
+                                        <br/>
+                                    </span>
+                                    <span ng-if="pkg.status.approval.agent_comment.instl.length > 0">
+                                        <b>Discount :</b>&nbsp;{{pkg.status.approval.agent_comment.instl}}
+                                        <br/>
+                                        <br/>
+                                    </span>
+                                    <span ng-if="pkg.status.approval.agent_comment.combo_free.length > 0">
+                                        <b>Free Courses :</b>&nbsp;{{pkg.status.approval.agent_comment.combo_free}}
+                                        <br/>
+                                        <br/>
+                                    </span>
+                                    <span ng-if="pkg.status.approval.agent_comment.misc.length > 0">
+                                        <b>Pre-paid :</b>&nbsp;{{pkg.status.approval.agent_comment.misc}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default" style="user-select: none; {{pkg.status.approval.sm_comment.length > 0 ? '' : 'pointer-events: none; opacity: 0.4;'}}">
+                            <div style='padding: 10px; min-height: auto;' class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a ng-class="{'collapsed': !collapseNotesSM}" ng-click="collapseNotesSM=!collapseNotesSM" aria-expanded="true" aria-controls="collapseNotesSM"
+                                        class="collapsed" style='font-size: 85%; padding: 0px;'>
+                                        <span>{{pkg.status.approval.sm_comment.length > 0 ? '1' : '0'}}</span>&nbsp;Notes
+                                        <span class="hint-text">(Sales Manager)</span>&nbsp;
+                                    </a>
+                                </h4>
+                            </div>
+                            <div class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" ng-class="{in:collapseNotesSM}">
+                                <div class="panel-body" style='padding: 10px;'>
+                                    <span ng-if="pkg.status.approval.sm_comment.length > 0">
+                                        <b ng-if='!pkg.status.approval.sm'>Rejected :&nbsp;</b>{{pkg.status.approval.sm_comment}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default" style="user-select: none; {{pkg.status.approval.pm_comment.length > 0 ? '' : 'pointer-events: none; opacity: 0.4;'}}">
+                            <div style='padding: 10px; min-height: auto;' class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a ng-class="{'collapsed': !collapseNotesPM}" ng-click="collapseNotesPM=!collapseNotesPM" aria-expanded="true" aria-controls="collapseNotesPM"
+                                        class="collapsed" style='font-size: 85%; padding: 0px;'>
+                                        <span>{{pkg.status.approval.pm_comment.length > 0 ? '1' : '0'}}</span>&nbsp;Notes
+                                        <span class="hint-text">(Payments Manager)</span>&nbsp;
+                                    </a>
+                                </h4>
+                            </div>
+                            <div class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" ng-class="{in:collapseNotesPM}">
+                                <div class="panel-body" style='padding: 10px;'>
+                                    <span ng-if="pkg.status.approval.pm_comment.length > 0">
+                                        <b ng-if='!pkg.status.approval.pm'>Rejected :&nbsp;</b>{{pkg.status.approval.pm_comment}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row" style="-webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;">
+        <div>
+            <div class="dataTables_info">
+                <span ng-if="packages.length > 0">
+                    Showing
+                    <b>{{table.pages.rows.start + 1}} to {{(table.pages.rows.start + table.pages.rows.count.count)
+                        < packages.length ? (table.pages.rows.start + table.pages.rows.count.count) : packages.length}}</b> of
+                            {{packages.length}}{{(packages.length == 100) ? '+' : ''}} packages
+                </span>
+                <span ng-if="packages.length == 0">
+                    No packages found matching the selected filters
+                </span>
+            </div>
+            <div ng-if="packages.length > 0" class="dataTables_paginate paging_simple_numbers" style='position:relative; top: -8px; left: -30px;'>
+                <ul>
+                    <li class="previous" ng-click="table.pages.prev()" style='cursor:{{(table.pages.rows.start > 0) ? "pointer" : "auto"}};'
+                        ng-class="{disabled: (table.pages.rows.start == 0)}">
+                        <i class="pg-arrow_left"></i>&nbsp;Prev
+                    </li>
+
+                    <li style='margin-left:2px; margin-right: 2px;' class="" ng-class="{active : table.pages.rows.start == page}" ng-repeat="page in table.pages.page">
+                        <a ng-click="table.pages.rows.start = page;" style='font-size: 12px; {{table.pages.rows.start == page ? " pointer-events: none;" : ""}}'>{{$index
+                            + 1}}</a>
+                    </li>
+
+                    <li class="next" ng-click="table.pages.next()" style='cursor:{{((table.pages.rows.start + table.pages.rows.count.count) < packages.length) ? "pointer" : "auto"}};'
+                        ng-class="{disabled: ((table.pages.rows.start + table.pages.rows.count.count) >= packages.length)}">
+                        Next&nbsp;
+                        <i class="pg-arrow_right"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+<br/>
+
+<div class="modal fade slide-up disable-scroll" id="modal-enable" tabindex="-1" role="dialog" aria-labelledby="modalSlideUpLabel"
+    aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <h5 style="margin-bottom: 0px">
+                        <span class="semi-bold">Enable Payment Link</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style='padding: 20px 50px;'>
+                        <span ng-if="allowedToEnable">
+                            The {{action.instl + 1}}
+                            <sup>{{ordinal(action.instl + 1)}}</sup> and any subsequent installments will be enabled for
+                            the {{packages[action.pkg].lead.name}} (
+                            <strong title="Subs id: {{packages[action.pkg].subs_id}}, Pay id: {{packages[action.pkg].pay_id}}">{{packages[action.pkg].lead.email}}</strong>).
+                            Are you sure you want to proceed?
+                        </span>
+                        <span ng-if="!allowedToEnable">There seems to be some previous instalments pending so cannot enable this instalment.</span>
+                    </div>
+                    <label for="disable_date"><input type="checkbox" name="disable_date" id="disable_date" ng-model="disable_date" value="yes"> Disable Date Update</label>
+                    <div class="row" ng-if="allowedToEnable">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4" style='padding-right: 0px;'>
+                            <button type="button" class="btn btn-default btn-block m-t-5" data-dismiss="modal">Cancel</button>
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="button" class="btn btn-primary btn-block m-t-5" ng-click="action.enable();" data-dismiss="modal">Enable</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade slide-up disable-scroll" id="modal-disable" tabindex="-1" role="dialog" aria-labelledby="modalSlideUpLabel"
+    aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <h5 style="margin-bottom: 0px">
+                        <span class="semi-bold">Disable</span>&nbsp;{{action.instl + 1}}
+                        <sup>{{ordinal(action.instl + 1)}}</sup>&nbsp;Installment</h5>
+                    Please choose from an option below.
+                    <br/>
+                    <b style="text-transform: capitalize;">
+                        {{packages[action.pkg].lead.name | lowercase}}
+                        <span class='hint-text' style="text-transform: lowercase;">
+                            {{packages[action.pkg].lead.email}}
+                        </span>
+                    </b>
+                    <br>
+                    <select ng-model="user_state">
+                        <option value="">Please Confirm User's state</option>
+                        <optgroup label="States">
+                            <option value="andhra-pradesh">Andhra Pradesh</option>
+                            <option value="arunachal-pradesh">Arunachal Pradesh</option>
+                            <option value="assam">Assam</option>
+                            <option value="bihar">Bihar</option>
+                            <option value="chhattisgarh">Chhattisgarh</option>
+                            <option value="goa">Goa</option>
+                            <option value="gujurat">Gujurat</option>
+                            <option value="haryana">Haryana</option>
+                            <option value="himachal-pradesh">Himachal Pradesh</option>
+                            <option value="jammu-and-kashmir">Jammu & Kashmir</option>
+                            <option value="jharkhand">Jharkhand</option>
+                            <option value="karnataka">Karnataka</option>
+                            <option value="kerala">Kerala</option>
+                            <option value="madhya-pradesh">Madhya Pradesh</option>
+                            <option value="maharashtra">Maharashtra</option>
+                            <option value="manipur">Manipur</option>
+                            <option value="meghalaya">Meghalaya</option>
+                            <option value="mizoram">Mizoram</option>
+                            <option value="nagaland">Nagaland</option>
+                            <option value="odisha">Odisha</option>
+                            <option value="punjab">Punjab</option>
+                            <option value="rajasthan">Rajasthan</option>
+                            <option value="sikkim">Sikkim</option>
+                            <option value="tamil-nadu">Tamil Nadu</option>
+                            <option value="telangana">Telangana</option>
+                            <option value="tripura">Tripura</option>
+                            <option value="uttar-pradesh">Uttar Pradesh</option>
+                            <option value="west-bengal">West Bengal</option>
+                        </optgroup>
+                        <optgroup label="Union Territories">
+                            <option value="andaman-and-nicobar-islands">Andaman & Nicobar Islands</option>
+                            <option value="chandigarh">Chandigarh</option>
+                            <option value="dadra-and-nagar-haveli">Dadra & Nagar Haveli</option>
+                            <option value="daman-and-diu">Daman & Diu</option>
+                            <option value="delhi">The Government of NCT of Delhi</option>
+                            <option value="lakshadweep">Lakshadweep</option>
+                            <option value="puducherry">Puducherry</option>
+                        </optgroup>
+                        <optgroup label="Others">
+                            <option value="outside-india">USD Payment</option>
+                        </optgroup>
+                    </select>
+                    &emsp;
+                    <label for="disable_date_update"><input type="checkbox" name="disable_date_update" id="disable_date_update" ng-model="disable_date_update" value="yes"> Disable Date Update</label>
+                    <br>
+                    <span id="error_msg" style="color: red;"></span>
+                </div>
+                <div class="modal-body">
+                    <br/>
+                    <form role="form" class="ng-pristine ng-valid">
+                        <div class="form-group-attached">
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="required form-group form-group-default" style="overflow: inherit;">
+
+                                        <div class="radio radio-success inline">
+                                            <input id="disable_disable" name="disable_mode" type="radio" value="disable" ng-model="action.disableMode" class="">
+                                            <label for="disable_disable">Disable this and all upcoming installments</label>
+                                            <br/>
+
+                                            <input id="disable_paid" name="disable_mode" type="radio" value="paid" ng-model="action.disableMode" checked="checked" class="">
+                                            <label for="disable_paid">Mark this installment as paid</label>
+                                        </div>
+
+                                        <div ng-if="action.disableMode == 'paid'" class="form-group form-group-default form-group-default-select">
+                                            <ui-select ng-model="paymodel.mode" ng-change="description=$select.selected.desc">
+                                                <ui-select-match>{{$select.selected.mode}}</ui-select-match>
+                                                <ui-select-choices repeat="x in paymodels">
+                                                    <div ng-bind-html="trustAsHtml(x.mode)"></div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+
+                                        <div class="required form-group-default" style="margin:10px 0;">
+                                            <textarea class="form-control" placeholder="Provide reason for disabling..." required ng-model="paymodel.detail"></textarea>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <br/>
+                    <div class="row">
+                        <div class="col-sm-8">
+                        </div>
+                        <div class="col-sm-4 m-t-10 sm-m-t-10">
+                            <button type="button" class="btn btn-primary btn-block m-t-5" ng-click="action.disable();">Commit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade slide-up disable-scroll" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modalSlideUpLabel"
+    aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <h5 style="margin-bottom: 0px">
+                        <span class="semi-bold">Title</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style='padding: 20px 50px;'>
+                        Detail
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4" style='padding-right: 0px;'>
+                            <button type="button" class="btn btn-default btn-block m-t-5" data-dismiss="modal">Cancel</button>
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="button" class="btn btn-primary btn-block m-t-5" ng-click="">Commit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade slide-up disable-scroll" id="modal-notify" tabindex="-1" role="dialog" aria-labelledby="modalSlideUpLabel"
+    aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <h5 style="margin-bottom: 0px">
+                        <span class="semi-bold">Notify User</h5>
+                </div>
+                <div class="modal-body">
+                    <!-- <div class="row" ng-if="packages[action.pkg].instl_total > 1" style="width: 80%; margin: 0 auto;">
+						<ui-select on-select="setInstl()" ng-model="user_notify.instl">
+							<ui-select-match>{{user_notify.instl.value}}</ui-select-match>
+							<ui-select-choices repeat="(key, value) in packages[action.pkg].instl">
+								{{ $index + 1 }}<sup>{{ordinal($index + 1)}}</sup> Instalment
+							</ui-select-choices>
+						</ui-select>
+					</div> -->
+                    <div class="row" style='padding: 20px 50px;'>
+                        <span>{{packages[action.pkg].lead.name}} will be notified about their {{ action.instl + 1 }}
+                            <sup>{{ordinal( action.instl + 1)}}</sup>&nbsp;Installment on their email id - {{ packages[action.pkg].lead.email
+                            }}
+                        </span>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4" style='padding-right: 0px;'>
+                            <button type="button" class="btn btn-default btn-block m-t-5" data-dismiss="modal">Cancel</button>
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="button" class="btn btn-primary btn-block m-t-5" ng-click="action.notify()">Notify</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade slide-up disable-scroll" id="modal-invoice" tabindex="-1" role="dialog" aria-labelledby="modalSlideUpLabel"
+    aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <h5 style="margin-bottom: 0px">
+                        <span class="semi-bold">Mail Receipt</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style='padding: 20px 50px;'>
+                        Receipt will be generated for
+                        <b>{{packages[action.pkg].lead.name}}&nbsp;({{packages[action.pkg].lead.email}})</b> and will be
+                        sent to them via email.
+                        <br> Please select State of user :
+                        <select ng-model="user_state">
+                            <option value="">Please Select</option>
+                            <optgroup label="States">
+                                <option value="andhra-pradesh">Andhra Pradesh</option>
+                                <option value="arunachal-pradesh">Arunachal Pradesh</option>
+                                <option value="assam">Assam</option>
+                                <option value="bihar">Bihar</option>
+                                <option value="chhattisgarh">Chhattisgarh</option>
+                                <option value="goa">Goa</option>
+                                <option value="gujurat">Gujurat</option>
+                                <option value="haryana">Haryana</option>
+                                <option value="himachal-pradesh">Himachal Pradesh</option>
+                                <option value="jammu-and-kashmir">Jammu & Kashmir</option>
+                                <option value="jharkhand">Jharkhand</option>
+                                <option value="karnataka">Karnataka</option>
+                                <option value="kerala">Kerala</option>
+                                <option value="madhya-pradesh">Madhya Pradesh</option>
+                                <option value="maharashtra">Maharashtra</option>
+                                <option value="manipur">Manipur</option>
+                                <option value="meghalaya">Meghalaya</option>
+                                <option value="mizoram">Mizoram</option>
+                                <option value="nagaland">Nagaland</option>
+                                <option value="odisha">Odisha</option>
+                                <option value="punjab">Punjab</option>
+                                <option value="rajasthan">Rajasthan</option>
+                                <option value="sikkim">Sikkim</option>
+                                <option value="tamil-nadu">Tamil Nadu</option>
+                                <option value="telangana">Telangana</option>
+                                <option value="tripura">Tripura</option>
+                                <option value="uttar-pradesh">Uttar Pradesh</option>
+                                <option value="west-bengal">West Bengal</option>
+                            </optgroup>
+                            <optgroup label="Union Territories">
+                                <option value="andaman-and-nicobar-islands">Andaman & Nicobar Islands</option>
+                                <option value="chandigarh">Chandigarh</option>
+                                <option value="dadra-and-nagar-haveli">Dadra & Nagar Haveli</option>
+                                <option value="daman-and-diu">Daman & Diu</option>
+                                <option value="delhi">The Government of NCT of Delhi</option>
+                                <option value="lakshadweep">Lakshadweep</option>
+                                <option value="puducherry">Puducherry</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4" style='padding-right: 0px;'>
+                            <button type="button" class="btn btn-default btn-block m-t-5" data-dismiss="modal">Cancel</button>
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="button" class="btn btn-primary btn-block m-t-5" ng-click="action.invoice();">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade slide-up disable-scroll" data-backdrop="static" data-keyboard="false" id="modal-approve" tabindex="-1"
+    role="dialog" aria-labelledby="modalSlideUpLabel" aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" ng-show="!action.wait" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <h5 style="margin-bottom: 0px">
+                        <span class="semi-bold">Approve Package</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style='padding: 20px 50px;'>
+                        For&nbsp;
+                        <b>{{packages[action.pkg].lead.name}}</b>&nbsp;({{packages[action.pkg].lead.email}})
+                        <br/> Priced&nbsp;
+                        <b>{{(packages[action.pkg].pricing.currency == 'usd') ? "$" : "&#8377;"}}{{packages[action.pkg].pricing.total
+                            | number:0}}</b>&nbsp;({{(packages[action.pkg].pricing.discount * 100 / packages[action.pkg].pricing.basic)
+                        | number:(packages[action.pkg].pricing.discount > 0 ? 1 : 0 )}}%&nbsp;Discount)
+                        <br/> In&nbsp;
+                        <b>{{packages[action.pkg].instl_total}}</b>&nbsp;Installments
+                        <br/> Offered by&nbsp;
+                        <b>{{packages[action.pkg].agent.name}}</b>
+                        <br/> Expires on&nbsp;
+                        <b>{{packages[action.pkg].expiry}}</b>
+                        <br/>
+                        <br/> Are you sure you want to approve this package?
+                        <br/>
+                        <div ng-if="permissions.approver && permissions.pm" class="checkbox check-warning">
+                            <input id="chk-force-approve" type="checkbox" ng-model="action.forceApprove">
+                            <label for="chk-force-approve">Force approval on behalf of Sales Manager.</label>
+                        </div>
+                    </div>
+
+                    <div class="row" style='{{action.wait ? "pointer-events: none; opacity: 0.75;" : ""}}'>
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4" style='padding-right: 0px;'>
+                            <button ng-disabled="action.wait" type="button" class="btn btn-default btn-block m-t-5" data-dismiss="modal">Cancel</button>
+                        </div>
+                        <div class="col-sm-4">
+                            <button ng-disabled="action.wait" type="button" class="btn btn-primary btn-block m-t-5" ng-click="action.approve()">Approve</button>
+                        </div>
+                    </div>
+
+                    <div class="progress progress-small" style="opacity:0.75; position: absolute; left: -2px; bottom: -1px; width: calc(100% + 4px); margin-bottom: 0px;">
+                        <div ng-class="{'progress-bar-indeterminate': action.wait}" class="progress-bar-primary"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade slide-up disable-scroll" data-backdrop="static" data-keyboard="false" id="modal-reject" tabindex="-1"
+    role="dialog" aria-labelledby="modalSlideUpLabel" aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" ng-show="!action.wait" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <h5 style="margin-bottom: 0px">
+                        <span class="semi-bold">Reject Package</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style='padding: 20px 50px;'>
+                        For&nbsp;
+                        <b>{{packages[action.pkg].lead.name}}</b>&nbsp;({{packages[action.pkg].lead.email}})
+                        <br/> Priced&nbsp;
+                        <b>{{(packages[action.pkg].pricing.currency == 'usd') ? "$" : "&#8377;"}}{{packages[action.pkg].pricing.total
+                            | number:0}}</b>&nbsp;({{(packages[action.pkg].pricing.discount * 100 / packages[action.pkg].pricing.basic)
+                        | number:(packages[action.pkg].pricing.discount > 0 ? 1 : 0 )}}%&nbsp;Discount)
+                        <br/> In&nbsp;
+                        <b>{{packages[action.pkg].instl_total}}</b>&nbsp;Installments
+                        <br/> Offered by&nbsp;
+                        <b>{{packages[action.pkg].agent.name}}</b>
+                        <br/>
+                        <br/> Please state your reason for rejecting this package.
+                        <br/>
+                        <textarea style="margin-top: 8px;" ng-model="action.rejectMsg" class="form-control" required></textarea>
+                    </div>
+
+                    <div class="row" style='{{action.wait ? "pointer-events: none; opacity: 0.75;" : ""}}'>
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4" style='padding-right: 0px;'>
+                            <button ng-disabled="action.wait" type="button" class="btn btn-default btn-block m-t-5" data-dismiss="modal">Cancel</button>
+                        </div>
+                        <div class="col-sm-4">
+                            <button ng-disabled="action.wait || (action.rejectMsg.length < 5) || isNaN(action.rejectMsg.length)" type="button" class="btn btn-danger btn-block m-t-5"
+                                ng-click="action.reject()">Reject</button>
+                        </div>
+                    </div>
+
+                    <div class="progress progress-small" style="opacity:0.75; position: absolute; left: -2px; bottom: -1px; width: calc(100% + 4px); margin-bottom: 0px;">
+                        <div ng-class="{'progress-bar-indeterminate': action.wait}" class="progress-bar-danger"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

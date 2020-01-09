@@ -1,0 +1,35 @@
+<style scoped>
+	.container-fluid {
+		width: auto!important;
+	}
+</style>
+<!-- BEGIN SIDEBAR -->
+<div ng-include src=" app.jawsPathTPL + 'tpl/blocks/sidebar.html' + app.jawsDevAppend" include-replace>
+</div>
+<!-- END SIDEBAR -->
+<!-- START PAGE-CONTAINER -->
+<div class="page-container" style="{{quickview ? 'padding-right: 285px' : ''}}">
+    <!-- START PAGE HEADER WRAPPER -->
+    <div ng-include=" app.jawsPathTPL + 'tpl/blocks/header.html' + app.jawsDevAppend">
+    </div>
+    <!-- END PAGE HEADER WRAPPER -->
+    <!-- START PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrapper">
+        <!-- START PAGE CONTENT -->
+        <div class="content full-height" ui-view>
+        </div>
+        <!-- END PAGE CONTENT -->
+        <div ng-include=" app.jawsPathTPL + 'tpl/blocks/footer.html' + app.jawsDevAppend">
+        </div>
+    </div>
+    <!-- END PAGE CONTENT WRAPPER -->
+	<!--START QUICKVIEW -->
+	<div ng-include src=" app.jawsPathTPL + 'tpl/blocks/quick_view.html' + app.jawsDevAppend" include-replace>
+	</div>
+	<!-- END QUICKVIEW-->
+</div>
+<!-- END PAGE CONTAINER -->
+<!-- START OVERLAY -->
+<!--<div ng-include src=" app.jawsPathTPL + 'tpl/blocks/quick_search.html' + app.jawsDevAppend" include-replace>
+</div>-->
+<!-- END OVERLAY -->

@@ -1,0 +1,192 @@
+// Topic
+#topic-container {
+	display: block;
+	position: fixed;
+	overflow: hidden;
+
+	top: 0px;
+	left: 0px;
+	width: 100vw;
+	height: 100vh;
+
+	&.header-allow {
+		margin-top: 64px;
+		height: calc(~"100vh - 64px");
+	}
+
+	z-index: 9000;
+	background-color: white;
+
+	.topic-menu-wide { display: auto; }
+	.topic-menu-thin { display: none!important; }
+
+	&:not(.pip) {
+		@media only screen and (max-width: 765px) and (min-aspect-ratio: 5/4) {
+			.topic-playlist-item {
+				div.col-xs-16 {
+					padding: 0px 0px 0px 15px!important;
+
+					.item-desc { display: none!important; }
+					.item-name {
+						padding: 0px 0px 0px 15px!important;
+						font-size: 13px!important;
+					}
+				}
+			}
+		}
+	}
+
+	@media only screen and (max-height: 480px) and (min-aspect-ratio: 5/4) {
+		.topic-menu {
+			height: 40px!important;
+			.topic-menu-lnk {
+				padding: 9px 9px!important;
+			}
+		}
+
+		.topic-content { height: calc(~"100vh - 40px")!important; }
+		&.header-allow { .topic-content { height: calc(~"100vh - 104px")!important; }}
+	}
+
+	@media only screen and (max-aspect-ratio: 5/4) {
+		.topic-menu-wide { display: none!important; }
+		.topic-menu-thin { display: flex!important; }
+
+		.topic-menu {.topic-menu-lnk { padding: 20px 0px; }}
+		.topic-content { height: calc(~"50vh - 64px")!important; }
+		&.header-allow { .topic-content { height: calc(~"50vh - 96px")!important; }}
+
+		.pane-right { width: 100vw!important; }
+		.pane-left { width: 100vw!important; }
+
+		.topic-menu-lnk { padding: 20px 0px!important; }
+	}
+
+	&.pip {
+		.topic-menu {
+			height: 40px!important;
+			.topic-menu-lnk {
+				padding: 9px 9px!important;
+			}
+		}
+
+		@media only screen and (min-aspect-ratio: 5/4) {
+			.topic-content { height: calc(~"100vh - 40px")!important; }
+		}
+
+		@media only screen and (max-width: 860px) and (min-aspect-ratio: 5/4) {
+			.pane-left {
+				display: block;
+				position: absolute;
+				box-sizing: border-box;
+				top: 40px;
+				left: 0px;
+				width: calc(~"100vw - 64px;");
+			}
+
+			.pane-right {
+				display: block;
+				position: absolute;
+				box-sizing: border-box;
+
+				top: 40px;
+				left: auto;
+				right: 0px;
+				width: 64px;
+
+				.item-name, .item-desc {
+					opacity: 0;
+					transition: opacity 0.2s ease-in;
+				}
+
+				&:hover {
+					min-width: 300px;
+					width: 35%;
+					.item-name, .item-desc { opacity: 1; }
+				}
+			}
+		}
+
+		@media only screen and (max-aspect-ratio: 5/4) {
+			.topic-content { height: calc(~"50% - 40px")!important; }
+		}
+	}
+
+	.topic-menu {
+		.v-align();
+		height: 64px;
+		overflow: hidden;
+
+		background-color: @color-secondary;
+		text-transform: capitalize;
+
+		.topic-menu-lnk {
+			cursor: pointer;
+			padding: 20px 20px;
+			margin: 0px 0px;
+
+			border-bottom-width: 3px;
+			border-bottom-style: solid;
+			border-bottom-color: transparent;
+
+			&:not(.active):hover {
+				color: lighten(@color-ternary, 25%);
+				border-bottom-color: lighten(@color-primary, 60%);
+			}
+
+			&.active, &.active:hover {
+				font-weight: bold;
+				text-decoration: none;
+				border-bottom-color: lighten(@color-primary, 30%);
+			}
+		}
+	}
+
+	&.header-allow { .topic-content { height: calc(~"100vh - 128px"); }}
+
+	.topic-content {
+		height: calc(~"100vh - 64px");
+		overflow-y: auto;
+		overflow-x: hidden;
+
+		#topic-playlist {
+			.topic-playlist-item {
+				position: relative;
+				height: 64px;
+				box-sizing: border-box;
+				overflow: hidden;
+
+				border-top: 1px solid transparent;
+				border-left: 1px solid transparent;
+				border-right: 1px solid transparent;
+
+				background-color: transparent;
+				cursor: pointer;
+
+				&.active {
+					top: -1px;
+					height: 65px;
+					width: calc(~"100% + 2px");
+
+					border: 1px solid @color-info!important;
+					color: @color-info;
+					font-weight: 500;
+					background-color: lighten(@color-secondary, 8.5%);
+					pointer-events: none;
+				}
+
+				div {
+					&:hover {
+						color: lighten(@color-ternary, 25%);
+					}
+
+					 div {
+						display: inline-block;
+						height: 64px;
+						.v-align();
+					}
+				}
+			}
+		}
+	}
+}

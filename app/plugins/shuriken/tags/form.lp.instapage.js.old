@@ -1,0 +1,29 @@
+$(document).ready(function() {
+	$("form").submit(function(event) {
+		var f=[], y = false, fe = $(this).find('input, textarea, select').not(':input[type=button], :input[type=submit], :input[type=reset]');
+
+		fe.each(function(i, le) { 
+			var l = $(le), v = l.val();
+			if (v.length > 0) {
+				var fl = base64_decode(l.attr("name")).toLowerCase().replace(/([^a-z0-9]+)/gi, '-');
+
+				if ((fl.indexOf('phone') != -1) || (fl.indexOf('contact') != -1) || (fl.indexOf('mobile') != -1)) {
+					
+				}
+
+
+
+				f[fl] = v;
+				y = true;
+			}
+		});
+
+		if (y) {
+			if ($(this).attr('name') != undefined) f['_fn'] = $(this).attr('name');
+			if ($(this).attr('id') != undefined) f['_fid'] = $(this).attr('id');
+			_kueue('form', f, undefined, -1);
+		}
+
+		_klush(undefined, false, false);
+	});
+});

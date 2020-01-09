@@ -1,0 +1,99 @@
+<style>
+.cart-components-list {
+	max-height: 30vh;
+	min-height: 30vh;
+	overflow: auto;
+}
+</style>
+<div class="page-title">
+	<label class="page-title-name">New Order</label>
+	<div class="switch">
+		<label class="mr-3 mb-0 text-muted text-capitalize d-flex flex-column justify-content-center">currency</label>
+		<input type="checkbox" class="h-100" ng-model="order.inr" data-checked="$" data-unchecked="₹" ng-change="updateCart()">
+	</div>
+</div>
+<div class="container-fluid mt-3 d-flex">
+	<div class="col-6">
+		<ul class="nav nav-tabs nav-fill bg-primary" id="myTab" role="tablist">
+			<li class="nav-item" ng-repeat="(type, products) in categories">
+				<a class="nav-link {{type=='full stack' ? 'active' : ''}}" id="{{type}}-tab" href="" data-toggle="tab" data-target="#{{type}}" role="tab" aria-controls="home" aria-selected="true">{{type}}</a>
+			</li>
+		</ul>
+		<div class="tab-content px-1 py-2">
+			<div class="tab-pane fade {{type=='full stack' ? 'show active' : ''}}" id="{{type}}" role="tabpanel" aria-labelledby="nav-home-tab" ng-repeat="(type, products) in categories">
+				<table class="table table-hover table-borderless-excess">
+					<tbody>
+						<tr ng-repeat="product in products" class="{{product.chosen ? 'bg-light' : ''}}" ng-show="order.inr ? product.price_inr : product.price_usd" ng-click="product.chosen=!product.chosen;addComponent(product)">
+							<td>
+								<div class="checkbox">
+									<label class="mb-3">
+										<input type="checkbox" ng-model="product.chosen">
+									</label>
+								</div>
+							</td>
+							<td class="w-75">
+								<a href="{{product.type=='course' ? 'courses' : 'programs'}}/{{product.id}}" target="_blank">{{product.name}}</a>
+							</td>
+							<td class="text-right">{{order.inr ? product.price_inr : product.price_usd | currency:order.inr ? '₹' : '$' :2}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="col-6">
+		<div class="bg-light text-uppercase text-primary text-center py-2 rounded">cart</div>
+		<div class="d-flex flex-column">
+			<div class="d-flex justify-content-between bg-light text-muted px-2 pb-3 rounded mb-3">
+				<label class="mb-0">{{order.components.length}} items in cart</label>
+				<label class="mb-0">{{order.price | currency: (order.inr ? '₹' : '$') : 2}}</label>
+			</div>
+			<div class="cart-components-list">
+				<table class="table table-striped">
+					<tbody>
+						<tr ng-repeat="component in order.components">
+							<td class="w-75">{{component.name}}</td>
+							<td>
+								<div class="checkbox">
+									<label class="mb-3">
+										<input type="checkbox" ng-model="component.free" ng-change="updateCart(component)">
+									</label>
+								</div>
+							</td>
+							<td class="text-right">{{component.order_price | currency:order.inr ? '₹' : '$' :2}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="bg-light text-uppercase text-primary text-center py-2 rounded">price</div>
+		<table class="table">
+			<tbody>
+				<tr>
+					<td class="w-50 text-center">Discount</td>
+					<td class="w-50">
+						<input class="form-control text-center" type="number" ng-model="order.discount" step="0.01" max="{{order.price}}" ng-change="updateCartPrice()">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<table class="table">
+			<tbody>
+				<tr ng-repeat="instl in order.installments">
+					<th class="w-10">{{$index+1}}</th>
+					<td class="w-45">
+						<input class="form-control text-center" type="number" ng-model="instl.sum" max="{{instl.sum + order.instlDiff}}" min="0" step="0.01" ng-change="updateInstallmentChange($index, instl)">
+					</td>
+					<td class="w-45">
+						<input class="form-control text-center" type="number" ng-model="instl.due" max="90" min="0">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" class="text-center">
+						<button class="btn btn-info btn-raised" ng-click="order.installments.push({sum: order.instlDiff, due: 0, sumPreserved: 0.00})">+</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

@@ -1,0 +1,320 @@
+/* 
+           8 8888       .8. `8.`888b                 ,8' d888888o.   
+           8 8888      .888. `8.`888b               ,8'.`8888:' `88. 
+           8 8888     :88888. `8.`888b             ,8' 8.`8888.   Y8 
+           8 8888    . `88888. `8.`888b     .b    ,8'  `8.`8888.     
+           8 8888   .8. `88888. `8.`888b    88b  ,8'    `8.`8888.    
+           8 8888  .8`8. `88888. `8.`888b .`888b,8'      `8.`8888.   
+88.        8 8888 .8' `8. `88888. `8.`888b8.`8888'        `8.`8888.  
+`88.       8 888'.8'   `8. `88888. `8.`888`8.`88'     8b   `8.`8888. 
+  `88o.    8 88'.888888888. `88888. `8.`8' `8,`'      `8b.  ;8.`8888 
+    `Y888888 ' .8'       `8. `88888. `8.`   `8'        `Y8888P ,88P' 
+
+    JIGSAW ACADEMY WORKFLOW SYSTEM v1					
+    ---------------------------------
+*/
+
+body {
+	overflow-x: hidden!important;
+	overflow-y: auto!important;
+
+	font-family: "Montserrat", "Sans-serif";
+}
+
+div.title {
+	margin: 25px 0 5px 0;
+
+	color: black;
+	font-weight: 400;
+	font-size: 18px;
+	color: rgba(0,0,0,0.75);
+	text-transform: uppercase;
+
+	cursor: default;
+}
+
+div.title > span {
+	background-color: rgba(0,0,0,0.05);
+	padding: 10px;
+}
+
+/* WNS Form ----------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
+div#wns-form {
+	display: block;
+	position: relative;
+	width: 90vw;
+
+	margin: 5vh 5vw;
+	padding: 50px 60px;
+	box-sizing: border-box;
+	z-index: 9999;
+
+	background-color: rgba(255,255,255,1);
+	opacity: 1;
+
+	-webkit-box-shadow: 0px 0px 30px rgba(245,245,245,0.5);
+	-moz-box-shadow: 0px 0px 30px rgba(245,245,245,0.5);
+	-o-box-shadow: 0px 0px 30px rgba(245,245,245,0.5);
+	-ms-box-shadow: 0px 0px 30px rgba(245,245,245,0.5);
+	box-shadow: 0px 0px 30px rgba(245,245,245,0.5);
+}
+
+div#wns-form > div.header {
+
+	display: block;
+
+	font-family: "Montserrat", "Sans-serif";
+	font-weight: 700;
+	font-size: 14px;
+	color: rgba(0,0,0,0.35);
+	text-transform: uppercase;
+
+	cursor: default;
+
+}
+
+div#wns-form > div.sub-header {
+
+	display: block;
+	margin-top: 2px;
+
+	font-family: "Montserrat", "Sans-serif";
+	font-weight: 400;
+	font-size: 25px;
+	color: rgba(0,0,0,0.75);
+	text-transform: uppercase;
+
+	cursor: default;
+
+}
+
+div#wns-form > div.intro {
+
+	display: block;
+	margin: 15px 0;
+	padding: 15px 0;
+
+	border-width: 1px 0 0 0;
+	border-style: solid;
+	border-color: rgba(0,0,0,0.1);
+
+	font-size: 14px;
+	font-family: "Montserrat", "Sans-serif";
+	color: rgba(0,0,0,0.5);
+
+	cursor: default;
+}
+
+div#wns-form > div#details {
+
+	display: block;
+	margin: 15px 0 0 0;
+	padding: 15px 0 30px 0;
+
+	border-width: 0 0 1px 0;
+	border-style: solid;
+	border-color: rgba(0,0,0,0.1);
+
+}
+
+div#wns-form > div#details > div.panel {
+	display: inline-block;
+	bottom: 0;
+	left: 0;
+	width: 49.5%;	
+
+	margin: 12px 0 0 0;
+	box-sizing: border-box;
+}
+
+div#wns-form > div#details > div.panel:nth-child(2) { padding-left: 2%; }
+
+div#wns-form > div#course-selector {
+	display: inline-block;
+	width: calc(100% - 300px);
+}
+
+div#wns-form > div#course-selector > div.course {
+	display: block;
+	height: 50px;
+	width: 100%;
+	margin: 1px 0 0 0;
+	padding: 7px 0;
+
+	border-top: 1px solid rgba(0,0,0,0);
+	border-bottom: 1px solid rgba(0,0,0,0.05);
+	border-left: 1px solid rgba(0,0,0,0);
+	border-right: 1px solid rgba(0,0,0,0);
+
+	cursor: default;
+}
+
+div#wns-form > div#course-selector > div.course.active, div#wns-form > div#course-selector > div.course.active:hover {
+	background-color: rgba(76, 175, 80, 0.05)!important;
+
+	border-top: 1px solid #4CAF50!important;
+	border-bottom: 1px solid #4CAF50!important;
+	border-left: 1px solid #4CAF50!important;
+	border-right: 1px solid #4CAF50!important;
+}
+
+div#wns-form > div#course-selector > div.course:hover {
+	background-color: rgba(0,0,0,0.025);
+
+	border-top: 1px solid rgba(20,70,150,0.15)!important;
+	border-bottom: 1px solid rgba(20,70,150,0.15)!important;
+	border-left: 1px solid rgba(20,70,150,0.15)!important;
+	border-right: 1px solid rgba(20,70,150,0.15)!important;
+}
+
+div#wns-form > div#course-selector > div.course:nth-child(1) {
+	border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+div#wns-form > div#course-selector > div.course > div.text {
+	display: inline-block;
+	width: 65%;
+	height: 100%;
+	padding: 0 10px;
+	margin: 0;	
+	box-sizing: border-box;
+}
+
+div#wns-form > div#course-selector > div.course > div.text > div.name {
+	position: relative;
+	top: -3px;
+
+	font-size: 90%;
+    color: #0c8dc9;
+    text-transform: uppercase;
+    line-height: 145%;
+}
+
+div#wns-form > div#course-selector > div.course > div.text > div.name > a {
+	color: #0c8dc9;
+	text-decoration: none!important;
+}
+
+div#wns-form > div#course-selector > div.course > div.text > div.desc {
+	position: relative;
+	top: 2px;
+
+	font-size: 75%;
+    color: #787878;
+}
+
+div#wns-form > div#course-selector > div.course > div.mode-selector {
+	display: inline-block;
+	width: 34%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+
+	font-size: 14px;
+} 
+
+div#wns-form > div#course-selector > div.course > div.mode-selector > div.mode {
+	display: inline-block;
+	width: 49%;
+	height: 100%;
+	padding: 1% 0 1% 12%;
+	box-sizing: border-box;
+
+	border-left: 1px solid rgba(0,0,0,0.05);
+
+	cursor: pointer;
+}
+
+div#wns-form > div#course-selector > div.course > div.mode-selector > div.mode:not(.disabled):not(.active):hover {
+	color: #0c8dc9;
+}
+
+div#wns-form > div#course-selector > div.course > div.mode-selector > div.mode.active {
+	color: #4CAF50;
+}
+
+div#wns-form > div#course-selector > div.course > div.mode-selector > div.mode.disabled {
+	pointer-events: none;
+	color: rgba(0,0,0,0.1)!important;
+}
+
+div#wns-form > div#course-selector > div.course > div.mode-selector div.mode-name {
+	position: relative;
+	margin-top: 5%;
+}
+
+div#wns-form > div#course-selector > div.course > div.mode-selector div.select {
+	display: none;
+	color: #4CAF50;
+}
+
+div#wns-form > div#course-selector > div.course.active > div.mode-selector > div.mode.active div.select {
+	display: block;
+	position: absolute;
+	top: 45%;
+	left: -27.5%;
+}
+
+div#wns-form > div#pricing {
+	display: inline-block;	
+	position: absolute;
+	right: 60px;
+	width: 250px;
+	box-sizing: border-box;
+
+	border: 1px solid rgba(0,0,0,0.1);
+
+	background-color: rgba(235, 235, 235, 1);
+	-webkit-box-shadow: 0px 0px 25px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0px 0px 25px rgba(0,0,0,0.1);
+	-o-box-shadow: 0px 0px 25px rgba(0,0,0,0.1);
+	-ms-box-shadow: 0px 0px 25px rgba(0,0,0,0.1);
+	box-shadow: 0px 0px 25px rgba(0,0,0,0.1);
+
+	font-family: "Montserrat", "sans-serif";
+
+	cursor: default!important;
+	user-select: none;
+}
+
+div#wns-form > div#pricing.sticky {
+	position: fixed;
+	top: 50px;
+	right: calc(40px + 5vw);
+}
+
+div#wns-form > div#pricing.sticky2 {
+	position: relative;
+	left: 47px;
+	bottom: 0px;
+}
+
+div#wns-form > div#pricing > div.row {
+	display: block;
+	padding: 10px;
+
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+div#wns-form > div#pricing > div.row:last-child {
+	border-bottom: 0px solid #ffffff;
+}
+
+div#wns-form > div#pricing > div.row > div.left {
+	display: inline-block;
+	width: 150px;
+
+	color: rgba(0,0,0,0.5);
+	text-transform: uppercase;
+	font-size: 14px;
+}
+
+div#wns-form > div#pricing > div.row > div.right {
+	display: inline-block;
+
+	color: rgba(0,0,0,0.75);
+	font-size: 14px;
+	font-weight: bold;
+}

@@ -1,0 +1,92 @@
+<div class="modal-container" ng-class="{hidden: !processing}">
+	<div class="modal-box">
+		<div class="lds-hourglass"></div>
+	</div>
+</div>
+<div class="students-parent regular-font">
+	<div class="heading">New Students</div>
+	<div class="students-content">
+		<div class="filters-section">
+			<div class="filter-cell">
+				<label>From</label>
+				<input type="date" ng-model="startDate" ng-change="dateChange()">
+			</div>
+			<div class="filter-cell">
+				<label>To</label>
+				<input type="date" ng-model="endDate" ng-change="dateChange(1)">
+			</div>
+			<div class="filter-cell">
+				<label>Access Setup NA</label>
+				<label class="switch" title="Toggle lab" style="margin: auto;">
+					<input type="checkbox" ng-if="accessSetupNA == 1" checked ng-click="accessSetupChange()">
+					<input type="checkbox" ng-if="accessSetupNA != 1" ng-click="accessSetupChange()">
+					<span class="slider round"></span>
+				</label>
+			</div>
+			<div class="filter-cell">
+				<label>Welcome email NA</label>
+				<label class="switch" title="Toggle lab" style="margin: auto;">
+					<input type="checkbox" ng-if="welcomeEmailNA == 1" checked ng-click="welcomeEmailChange()">
+					<input type="checkbox" ng-if="welcomeEmailNA != 1" ng-click="welcomeEmailChange()">
+					<span class="slider round"></span>
+				</label>
+			</div>
+			<div class="filter-cell">
+				<label>IoT Kit Mail</label>
+				<label class="switch" title="Toggle lab" style="margin: auto;">
+					<input type="checkbox" ng-if="iotKitMailNA == 1" checked ng-click="iotKitChange()">
+					<input type="checkbox" ng-if="iotKitMailNA != 1" ng-click="iotKitChange()">
+					<span class="slider round"></span>
+				</label>
+			</div>
+			<div class="filter-cell">
+				<label>Program</label>
+				<select ng-model="program" ng-options="p.name for p in programs track by p.bundle_id" ng-change="programChange()"></select>
+			</div>
+		</div>
+		<div class="list">
+			<div class="list-header">
+				<div class="cell">
+					<label>Student</label>
+				</div>
+				<div class="cell">
+					<label>Program</label>
+				</div>
+				<div class="cell">
+					<label>Enrolled On</label>
+				</div>
+				<div class="cell">
+					<label>Access Setup?</label>
+				</div>
+				<div class="cell">
+					<label>Welcome Email?</label>
+				</div>
+				<div class="cell" ng-if="iotKitMailNA == 1">
+					<label>Iot Kit Email</label>
+				</div>
+			</div>
+			<div class="list-list">
+				<div class="student {{s.bundle_type}}" ng-repeat="s in students">
+					<div class="cell">
+						<a href="/batcave/user/{{s.user_id}}" target="_blank">{{s.name}}</a>
+					</div>
+					<div class="cell">
+						<label>{{s.program}}</label>
+					</div>
+					<div class="cell">
+						<label>{{s.start_date}}</label>
+					</div>
+					<div class="cell {{s.acs}}">
+						<label>{{s.acs}}</label>
+					</div>
+					<div class="cell {{s.email_at == 'N' ? 'N' : 'Y'}}">
+						<label>{{s.email_at}}</label>
+					</div>
+					<div class="cell" ng-if="iotKitMailNA == 1">
+						<label>{{s.iot_email_at}}</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

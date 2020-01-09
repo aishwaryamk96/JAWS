@@ -1,0 +1,198 @@
+<?php
+
+/* 
+           8 8888       .8. `8.`888b                 ,8' d888888o.   
+           8 8888      .888. `8.`888b               ,8'.`8888:' `88. 
+           8 8888     :88888. `8.`888b             ,8' 8.`8888.   Y8 
+           8 8888    . `88888. `8.`888b     .b    ,8'  `8.`8888.     
+           8 8888   .8. `88888. `8.`888b    88b  ,8'    `8.`8888.    
+           8 8888  .8`8. `88888. `8.`888b .`888b,8'      `8.`8888.   
+88.        8 8888 .8' `8. `88888. `8.`888b8.`8888'        `8.`8888.  
+`88.       8 888'.8'   `8. `88888. `8.`888`8.`88'     8b   `8.`8888. 
+  `88o.    8 88'.888888888. `88888. `8.`8' `8,`'      `8b.  ;8.`8888 
+    `Y888888 ' .8'       `8. `88888. `8.`   `8'        `Y8888P ,88P' 
+
+    JIGSAW ACADEMY WORKFLOW SYSTEM v1					
+    ---------------------------------
+*/
+
+    // Prevent exclusive access
+	if (!defined("JAWS")) {
+		header('Location: ../index.php');
+		die();
+	}
+
+    	// Start Output Buffering - Optional
+    	ob_start();
+
+?>
+
+<html>
+	<head>
+		<title>JAWS - Test Page</title>
+		<style>
+			body {
+				display:block;
+
+				background-color: black;
+				color: white;
+				font-family: "consolas", "sans-serif";
+				font-size: 90%;
+
+				margin: 0;
+				padding: 20px;
+
+				overflow-x: hidden;
+				overflow-y: scroll;
+			}
+		</style>
+	</head>
+<body>
+
+<?php
+
+	error_reporting(E_ALL);
+
+	echo "JAWS v".JAWS_VERSION, "<br/>Jigsaw Academy Workflow System", "<br/>&copy; Jigsaw Academy Education Pvt. Ltd.<br/>";
+	echo "<br/>";
+
+	echo "JAWS Test Routine - Testing Auto Loaders";
+	echo " <br />";
+
+	echo "Loading auto loaders..";
+	echo " &#10004;<br /><br />";
+
+	echo "JAWS Test Routine - Testing Manual Loaders";
+	echo " <br />";
+
+	echo "Loading ui..";
+	load_module("ui");
+	echo " &#10004;<br />";
+
+	echo "Loading user..";
+	load_module("user");
+	echo " &#10004;<br />";
+
+	echo "Loading course..";
+	load_module("course");
+	echo " &#10004;<br />";
+
+	echo "Loading subs..";
+	load_module("subs");
+	echo " &#10004;<br />";  
+
+	echo "Loading leads..";
+	load_module("leads");
+	echo " &#10004;<br />";  
+
+	echo "Loading payment lib..";
+	load_library("payment");
+	echo " &#10004;<br />"; 
+
+	echo "Loading email lib..";
+	load_library("email");
+	echo " &#10004;<br />";  
+
+	echo "<br />";
+	echo "Test Routine Successfull - Testing Custom Code";
+	echo "<br /><br />";
+
+	$GLOBALS['jaws_exec_live'] = false;
+
+    	var_dump(dynamics_pe_lead_push(
+    		array(
+    			array(
+    				"test" => "test",
+    				"test2" => "test2"
+    				)
+    			),
+    		"test"
+     	));
+
+/*
+    $subs = array(
+        "combo" => "26,2;"
+        );
+
+    $pay = array(
+        "status" => "pending",
+         "currency" => "inr",
+          "sum_basic" => "5",
+           "sum_total" => "5",
+            "instl_total" => "1",
+             "instl" => array (
+                                    1 => array(
+                                          "instl_count" => "pending",
+                                            "instl_total" => "1",
+                                              "sum" => "5",
+                                              "due_days" => 0,
+                                              "create_entity_type" => "user",
+                                              "create_entity_type" => "3"
+                                        )
+                            )
+        );
+
+$user_arr = array(
+array("John Wilson", "john.w@jigsawacademy.com"),
+array("Nilonee Shah", "nilonee@jigsawacademy.com"),
+array("Madhan Mohan Y", "madhan@jigsawacademy.com"),
+array("T Shubham Jain", "shubham@jigsawacademy.com"),
+array("Chandra Shekar L", "chandra.s@jigsawacademy.com"),
+array("Shreya Goswami", "shreya@jigsawacademy.com"),
+array("Anamika Jain", "anamika.j@jigsawacademy.com"),
+array("Aseem Saxena", "aseem@jigsawacademy.com"),
+array("Pankaj Chaudhary", "pankaj.c@jigsawacademy.com"),
+array("Rathandeep Naik", "rathandeep@jigsawacademy.com"),
+array("Arathi John", "arathi@jigsawacademy.com"),
+array("Naveen D", "naveen.d@jigsawacademy.com"),
+array("Anju Mary Mathew", "anju@jigsawacademy.com"),
+array("Sumit G Dengra", "sumit@jigsawacademy.com"),
+array("Jiffy Jimmy", "jiffy@jigsawacademy.com"),
+array("Kushal Saini", "kushal@jigsawacademy.com"),
+array("Usha N", "usha@jigsawacademy.com"),
+array("Sheldon Hawkes", "sheldon@jigsawacademy.com"),
+array("Niju PK", "niju@jigsawacademy.com"),
+array("Maria Rekha A", "maria@jigsawacademy.com"),
+array("Megha Bothra", "megha.b@jigsawacademy.com"),
+array("Reema Iyer", "reema@jigsawacademy.com"),
+array("Bhagyarathi Macharanda Uthappa", "bhagyarathi@jigsawacademy.com"),
+array("Deepak Samuel Prabhakar", "deepak.s@jigsawacademy.com"),
+array("Anamika Jain", "anamika.j@jigsawacademy.com"),
+array("Aseem Saxena", "aseem@jigsawacademy.com"),
+array("Ujjwala Singh", "ujjwala@jigsawacademy.com"),
+array("Sarita Pandey", "pandey.sarita@jigsawacademy.com"),
+array("Aarti Sharma", "aarti.sharma@jigsawacademy.com"),
+array("Durgashree N", "durgashree@jigsawacademy.com"),
+array("Vishakha Puri", "vishakha@jigsawacademy.com"),
+array("Karthik B", "karthik.b@jigsawacademy.com"),
+array("Bhavani A", "bhavani@jigsawacademy.com"),
+array("Sabrish Sathiavan", "sabrish@jigsawacademy.com"),
+array("Shashidar Bhandari", "shashidar@jigsawacademy.com"),
+array("Jashwanth Bharath R", "jashwanth@jigsawacademy.com"),
+array("Manasa H L", "manasa@jigsawacademy.com"),
+array("Deepak M", "deepak.m@jigsawacademy.com"),
+array("Sarika Amranta", "sarika@jigsawacademy.com"),
+array("Amrutha R Rao", "amrutha@jigsawacademy.com"),
+array("Vinay Prakash", "vinay@jigsawacademy.com"),
+array("Neha Jha", "neha.jha@jigsawacademy.com"),
+array("Dhiraj Chaudhary", "dhiraj@jigsawacademy.com"),
+        );
+
+$user_arr = array(
+array("Sunitha Menon", "sunitha@jigsawacademy.com"),
+array("Isha C", "isha@jigsawacademy.com"),
+array("Balaji V.K", "balaji@jigsawacademy.com"));
+
+foreach ($user_arr as $user) {
+   var_dump(subscribe($user[1], $subs, $pay, true, true, $user[0]));
+   echo "<br/>";
+}*/
+
+
+    //var_dump(subscribe("krishna.kumar@jigsawacademy.com", $subs, $pay, true, true, "Krishna Kumar"));
+
+
+?>
+<br /><br />
+   Custom Code Exec Complete !
+    </body>

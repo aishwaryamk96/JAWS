@@ -1,0 +1,44 @@
+.students-list {
+	width: 100%;
+	font-family: Verdana,sans-serif;
+	padding-top: 30px;
+}
+#students {
+	font-size: 13px;
+	border-collapse: collapse;
+}
+#students th {
+	text-align: left;
+	text-transform: uppercase;
+	color: lightgray;
+}
+.tr-btm-border td, .tr-btm-border th {
+	border-bottom: 1px solid lightgray;
+}
+.expand {
+	padding-top: 15px;
+}
+.id-cell-container {
+	width: 100%;
+}
+.id-cell {
+	width: 93%;
+	float: right;
+}
+.tr-btm-border-no td {
+	border: 0px;
+}
+.td-center {
+	text-align: center;
+}
+.stud-email {
+	font-size: 90%;
+	color: rgb(127, 127, 127);
+}
+.stud-phone {
+	float: right;
+	cursor: pointer;
+}
+.btn-phone {
+	text-decoration: none;
+}

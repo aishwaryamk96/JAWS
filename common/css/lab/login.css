@@ -1,0 +1,125 @@
+body {
+	background: -webkit-radial-gradient(50% 50%, 50% 50%, rgba(255,255,255,1), rgba(215,215,215,1));
+}
+.parent {
+	width: 100%;
+	height: 100%;
+	display: flex;
+}
+.modal {
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+}
+.head {
+	display: flex;
+	flex-direction: column;
+}
+.header {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 30px;
+	width: 620px;
+}
+.header > span:nth-child(1) {
+	color: rgba(0,0,0,0.25);
+	font-size: 250%;
+	font-weight: bold;
+	position: relative;
+	top: 10px;
+	left: 20px;
+	opacity: 1;
+}
+.header > span:nth-child(2) {
+	color: rgba(0,0,0,0.75);
+	font-size: 500%;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+.header > span:nth-child(3) {
+	color: rgba(0,0,0,0.25);
+	font-size: 250%;
+	font-weight: bold;
+	text-transform: lowercase;
+	position: relative;
+	top: -15px;
+	left: 145px;
+}
+.header > span:nth-child(3) > span:nth-child(2) {
+	text-transform: capitalize;
+	color: rgba(0,0,0,0.75);
+}
+.modal .logout-form {
+	margin: 0px;
+	padding: 0px;
+	margin-left: auto;
+}
+.modal .login-form, .start-form {
+	display: flex;
+	flex-direction: column;
+	padding: 30px;
+	font-size: 150%;
+	border-top: 3px solid #777;
+}
+.form-title {
+	display: flex;
+	flex-direction: row;
+	margin: auto;
+	padding-bottom: 10px;
+}
+.form-error {
+	color: red;
+	display: flex;
+	flex-direction: row;
+	margin: auto;
+	font-size: 70%;
+}
+.welcome {
+	display: flex;
+	flex-direction: row;
+	text-transform: capitalize;
+	margin-bottom: 5px;
+}
+.form-elements {
+	margin: auto;
+	display: flex;
+	flex-direction: row;
+	padding: 20px 0px;
+}
+.form-elements i {
+	margin-right: 15px;
+	font-size: 38px;
+	margin-top: 5px;
+}
+.form-elements input {
+	border: 2px solid #999;
+	font-size: 20px;
+	height: 50px;
+	padding-left: 5px;
+	width: 100%;
+}
+.form-submit {
+	border-top: 1px solid #eee;
+	display: flex;
+	flex-direction: row-reverse;
+	padding: 20px 0px 0px;
+	margin: auto;
+}
+button {
+	background-color: transparent;
+	border: 2px solid #777;
+	font-size: 20px;
+	color: rgba(0,0,0,0.85);
+	cursor: pointer;
+	padding: 10px 40px;
+	transition: .4s background-color, color, border;
+}
+button:hover {
+	background-color: rgba(0,180,75,1);
+	color: white;
+	border: 2px solid transparent;
+	box-shadow: 0px 0px 10px rgba(0,250,120,0.5);
+}
+button i {
+	margin-left: 10px;
+}

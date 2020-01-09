@@ -1,0 +1,160 @@
+.custom-body {
+	background-color: #eee;
+	min-width: 1025px;
+	height: auto;
+}
+/* Loading animation */
+.lds-hourglass {
+	margin-left: auto;
+	margin-right: auto;
+	width: 64px;
+	height: 64px;
+}
+.lds-hourglass:after {
+	content: " ";
+	display: block;
+	border-radius: 50%;
+	width: 0;
+	height: 0;
+	margin: 6px;
+	box-sizing: border-box;
+	border: 26px solid #fff;
+	border-color: #fff transparent #fff transparent;
+	animation: lds-hourglass 1.2s infinite;
+}
+@keyframes lds-hourglass {
+	0% {
+		transform: rotate(0);
+		animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+	}
+	50% {
+		transform: rotate(900deg);
+		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+	}
+	100% {
+		transform: rotate(1800deg);
+	}
+}
+/* Loading animation */
+.notifications-parent {
+	background-color: white;
+	box-shadow: 0px 0px 10px 3px #aaa;
+	display: flex;
+	flex-direction: column;
+	margin: 10px;
+	min-width: 960px;
+	padding: 20px;
+}
+.notification-heading {
+	display: flex;
+	font-size: 20px;
+	font-weight: bold;
+	justify-content: space-between;
+	margin-bottom: 10px;
+}
+.app-mode {
+	display: flex;
+}
+.app-mode-title {
+	margin-right: 10px;
+}
+.notification-body {
+	display: flex;
+	flex-direction: column;
+	margin-top: 10px;
+}
+.element-row {
+	display: flex;
+	margin-bottom: 10px;
+}
+.row-select {
+	display: flex;
+	width: 100%;
+}
+.row-form {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+.form-title {
+	display: flex;
+	justify-content: center;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+.cell {
+	display: flex;
+	padding: 0px 20px;
+	width: 100%;
+}
+.cell:first-child {
+	justify-content: flex-end;
+}
+.cell.single {
+	justify-content: unset;
+}
+.element-name {
+	font-weight: bold;
+}
+.element-form {
+	display: flex;
+	flex-direction: column;
+}
+.cell input {
+	width: 200px;
+}
+.form-control {
+	display: flex;
+	margin-top: 10px;
+}
+.notification-modal {
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	width: 55%;
+}
+.modal-row {
+	display: flex;
+	padding: 20px 0px;
+}
+.notification-modal .modal-title {
+	border-bottom: 1px solid #777;
+	font-weight: bold;
+	padding-left: 20px;
+}
+.modal-body {
+	border-bottom: 1px solid #777;
+	flex-direction: column;
+}
+.row {
+	display: flex;
+	width: 100%;
+}
+.row:first-child {
+	padding-bottom: 20px;
+}
+.desc {
+	font-size: 14px;
+	margin-left: 10px;
+}
+pre {
+	outline: 1px solid #ccc;
+	padding: 5px 20px;
+	width: 100%;
+}
+.string {
+	color: green;
+}
+.number {
+	color: darkorange;
+}
+.boolean {
+	color: blue;
+}
+.null {
+	color: magenta;
+}
+.key {
+	color: red;
+}

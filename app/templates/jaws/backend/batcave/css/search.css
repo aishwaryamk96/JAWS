@@ -1,0 +1,91 @@
+.search-body {
+	font-family: Helvetica, arial, sans-serif;
+}
+.results-header {
+	margin-bottom: 0px;
+}
+.search-settings-link {
+	float: right;
+	color: #777;
+	cursor: pointer;
+}
+.search-settings {
+	float: right;
+	background: white;
+	color: black;
+	border: 1px solid darkgray;
+	border-radius: 3px;
+	box-shadow: 0px 0px 10px #888888;
+	list-style: none;
+	padding-left: 0px;
+	margin-top: 5px;
+	font-size: 12px;
+}
+.search-settings:before {
+	position: relative;
+	float: right;
+	top: -7px;
+	right: 3px;
+	display: inline-block;
+	border-right: 7px solid transparent;
+	border-bottom: 7px solid #ccc;
+	border-left: 7px solid transparent;
+	border-bottom-color: rgba(0, 0, 0, 0.2);
+	content: '';
+}
+.search-settings.hide {
+	display: none;
+}
+.search-setting-elem {
+	padding: 7px 10px;
+	background-color: white;
+	transition: background-color 0.5s;
+	cursor: pointer;
+}
+.search-setting-elem:hover {
+	background-color: lightgray;
+}
+.search-setting-icon {
+	padding: 10px 10px 10px 0px;
+}
+.result-count {
+	font-size: 13px;
+}
+.list-item {
+	list-style: none;
+	margin: 26px 0px;
+}
+.list-item a {
+	font-size: 18px;
+	color: #1a0dab;
+	cursor: pointer;
+	text-decoration: none;
+}
+.list-item a:hover {
+	text-decoration: underline;
+}
+.list-item a:visited {
+	color: #609;
+}
+.list-item .s {
+	font-size: 13px;
+	color: #777;
+	padding-top: 2px;
+}
+.pages li {
+	display: inline;
+}
+.page-num {
+	font-size: 12px;
+	padding: 0px 5px;
+}
+.page-link {
+	color: #4285f4;
+	cursor: pointer;
+}
+.page-link:hover {
+	text-decoration: underline;
+}
+.no-results {
+	margin-left: 20px;
+}

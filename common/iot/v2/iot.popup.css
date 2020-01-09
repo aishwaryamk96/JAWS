@@ -1,0 +1,132 @@
+a:focus{ outline: none;}
+.popupbox-inner {
+    padding: 0 20px;
+}
+.box-with-border.no-border {
+    border: none;
+}
+.box-with-border {
+    border: 4px #eaebeb solid;
+    padding: 25px 40px 25px;
+    margin: 15px 0;
+}
+div.popupbox-inner h3 {
+    font-size: 24px;
+    color: #323c3e;
+    font-weight: 400;
+    padding-bottom: 5px;
+    line-height: 27px;
+}
+.information-form-account {
+    margin-top: 20px;
+}
+html[xmlns] .clearfix {
+    display: block;
+}
+.jigsawforms {
+    position: relative;
+}
+
+.appform-left-box {
+    // float: left;
+    width: 100%;
+}
+.left-image-info-form {
+    float: left;
+    margin-right: 5%;
+    width: 23%;
+}
+.left-image-info-form .image-main {
+    position: relative;
+    display: block;
+    // overflow: hidden;
+}
+ .image-main img{ width:100%;}
+
+.form-with-field {
+    float: left;
+    width: 67%;
+}
+.field-main {
+    padding-bottom: 20px;
+}
+.form-with-field label, .application-form label {
+    color: #3f3c3c;
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+}
+.field {
+    padding: 6px 6px;
+    border: 1px #d4d5d5 solid;
+    width: 100%;
+    color: #5f6365;
+    font-size: 14px;
+    font-family: 'Lato', sans-serif;
+    margin-bottom: 10px;
+    font-weight: 400;
+}
+
+.step-footer {
+    margin-top: 5px;
+    padding: 14px 35px;
+}
+
+.send-button {
+    border: none;
+    cursor: pointer;
+    background-color: #f27900;
+    text-transform: uppercase;
+    padding: 7px 16px;
+    display: inline-block;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 400;
+    margin: 5px 0;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+.update-account-form-button {
+    float: right;
+}
+
+.send-button img {
+    vertical-align: middle;
+    padding-left: 3px;
+}
+
+.phone_num{ padding-bottom:0px;}
+.alert{ color:red; padding:0px; margin-bottom:0px;}
+
+//============ media queries for pop-up======================//
+@media screen and (max-width:860px) {
+    .field{ font-size: 20px; }
+}
+
+@media screen and (max-width:700px) {
+    .popupbox-inner{ padding: 15px 0; }
+}
+
+@media screen and (max-width:600px) {
+    .left-image-info-form{
+        width: 35%;
+    }
+}
+
+@media screen and (max-width:640px) {
+     .box-with-border{ padding: 15px 0; }
+     .form-with-field{ width: 100%; float: none; margin-right: 0; clear: both; padding-top: 30px; }
+     .application-form{  width: 100%; float: none; margin-right: 0; }
+}
+
+@media screen and (max-width:480px) {
+    h3 { font-size: 20px; line-height: 23px; }
+}
+
+@media screen and (max-width:380px) {
+    .left-image-info-form{
+        width: 45%;
+    }
+}

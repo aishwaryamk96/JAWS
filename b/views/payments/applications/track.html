@@ -1,0 +1,246 @@
+<style>
+	.table *, .entries * {
+		font-size: 13px;
+	}
+	.table td {
+		vertical-align: middle;
+	}
+	.table a {
+		margin-bottom: .5rem;
+	}
+	.table div label:last-child {
+		margin-bottom: 0;
+	}
+	.bmd-btn-fab-xsm {
+		width: 1.5rem!important;
+		height: 1.5rem!important;
+		max-width: 1.5rem!important;
+		min-width: 1.5rem!important;
+		margin-bottom: 0;
+	}
+	.entries {
+		background: #f5f5f5!important;
+		display: flex;
+		flex-direction: column;
+	}
+	.line {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 1rem;
+	}
+	.line:nth-child(even) {
+		background: #d9d9d9!important;
+	}
+	.line label {
+		margin-bottom: 0;
+	}
+	.form-select {
+		height: calc(1.9375rem + 2px)!important;
+	}
+</style>
+<div class="d-flex flex-column p-3">
+	<div class="card mb-3">
+		<div class="card-body">
+			<div class="row">
+				<div class="col-3">
+					<input type="text" class="form-control" placeholder="Search applicant" ng-model="filter.text">
+				</div>
+				<div class="col-3">
+					<select class="form-control form-select" ng-model="filter.form_name">
+						<option value="all">All application types</option>
+						<option value="uc-apply">PGPDM</option>
+						<option value="cyber-apply">Cyber Security</option>
+						<option value="ipba-apply">IPBA</option>
+						<option value="pgds-apply">"PGDDS</option>
+						<option value="uc-apply-attempt">PGPDM - Attempt</option>
+						<option value="cyber-apply-attempt">Cyber Security - Attempt</option>
+						<option value="ipba-apply-attempt">IPBA - Attempt</option>
+						<option value="pgds-apply-attempt">PGDDS - Attempt</option>
+					</select>
+				</div>
+				<div class="col-3">
+					<select class="form-control form-select" ng-model="filter.lead_status">
+						<option value="all">All lead status</option>
+						<option value="Applied">Applied</option>
+						<option value="Aptitude Test Shared">Aptitude Test Shared</option>
+						<option value="JAT Cleared">JAT Cleared</option>
+						<option value="Interview Scheduled">Interview Scheduled</option>
+						<option value="Selected">Selected</option>
+						<option value="Offer Sent">Offer Sent</option>
+						<option value="Mised Interview">Mised Interview</option>
+						<option value="RNR">RNR</option>
+						<option value="Paid">Paid</option>
+						<option value="Move to Next Batch">Move to Next Batch</option>
+						<option value="Rejected">Rejected</option>
+						<option value="JAT Not Cleared">JAT Not Cleared</option>
+						<option value="Wait List">Wait List</option>
+						<option value="Dead">Dead</option>
+					</select>
+				</div>
+				<div class="col-2">
+					<select class="form-control form-select" ng-model="filter.enroll_status">
+						<option value="all">All</option>
+						<option value="1">Enrolled</option>
+						<option value="0">Not Enrolled</option>
+					</select>
+				</div>
+				<div class="col-1">
+					<a class="btn" href="https://batcave.jigsawacademy.com/btcapi/payments/exports/applications" target="_blank">Export</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Submitted On</th>
+					<th>Applicant</th>
+					<th>Form</th>
+					<th>Application No.</th>
+					<th>Links</th>
+					<th>Enrolled?</th>
+				</tr>
+			</thead>
+			<tbody ng-repeat="app in applications | filter:filter.filter | orderBy: '-submitted_on'">
+				<tr>
+					<th>{{$index + 1}}</th>
+					<td>
+						<div class="d-flex flex-column">
+							<label>{{app.submitted_on | date: 'dd MMM yyyy, HH:mm'}}</label>
+							<label>{{app.website ? 'Website' : 'Payment Link'}}</label>
+						</div>
+					</td>
+					<td>
+						<div class="d-flex flex-column">
+							<label>{{app.name}}</label>
+							<a href="/users/{{app.user_id}}" ng-show="app.user_id" target="_blank">{{app.email}}</a>
+							<label ng-show="!app.user_id">{{app.email}}</label>
+							<label>{{app.phone}}</label>
+							<label>{{app.city}}</label>
+						</div>
+					</td>
+					<td>
+						<div class="d-flex flex-column">
+							<label>{{app.form_name_formatted}}</label>
+							<label class="{{app.status == 'paid' ? '' : 'text-danger'}}">{{app.currency == 'inr' ? '₹' : '$'}}{{app.sum_total ? app.sum_total : 'Not paid'}}</label>
+						</div>
+					</td>
+					<td>{{app.app_num}}</td>
+					<td>
+						<div class="d-flex flex-column">
+							<a href="{{app.form_submit.latest_cv}}" class="{{app.form_submit.latest_cv ? '' : 'd-none'}}">CV</a>
+							<label class="{{!app.pay_id || app.form_submit.latest_cv ? 'd-none' : ''}}">No CV</label>
+							<a href="{{app.form_submit.file_score_proof}}" ng-show="app.form_submit.file_score_proof">Score</a>
+							<label class="{{!app.pay_id || app.form_submit.file_score_proof ? 'd-none' : ''}}">No Score</label>
+						</div>
+					</td>
+					<td class="{{app.main_payment.length ? 'text-success' : ''}}">
+						<div class="d-flex flex-column">
+							<label>{{app.main_payment.length ? 'Yes' : 'No'}}</label>
+							<label>{{app.main_payment[0].batch}}</label>
+							<label ng-show="app.main_payment.length">{{app.main_payment[0].currency == 'usd' ? '$' : '₹'}}{{app.main_payment[0].sum_total}}</label>
+							<label ng-show="app.main_payment.length">{{app.main_payment[0].instl_total}} instls</label>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><span class="font-weight-bold">JAT Score:</span> {{app.jat_score}}</td>
+					<td colspan="2"><span class="font-weight-bold">Agent:</span> {{app.agent_name}}</td>
+					<td colspan="2"><span class="font-weight-bold">Lead Status:</span> {{app.lead_status}}</td>
+					<td>
+						<button type="button" class="btn btn-danger bmd-btn-fab bmd-btn-fab-xsm" ng-click="showApplication(app)">
+							<i class="material-icons">eye</i>
+						</button>
+					</td>
+				</tr>
+				<tr class="{{app.comment ? '' : 'd-none'}} bg-white">
+					<td colspan="7">
+						<label ng-show="app.comment"><span class="font-weight-bold">Comment:</span> {{app.comment}}</label>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="modal fade" id="application" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Application</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<ul class="nav nav-tabs bg-secondary nav-fill" ng-show="user_can('edit', 'applications')">
+					<li class="nav-item">
+						<a class="nav-link py-2 text-white active" data-toggle="tab" data-target="#exportRequest" href="">More Info</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link py-2 text-white" data-toggle="tab" data-target="#exportResponse" href="">Edit</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane fade active show" id="exportRequest" role="tabpanel">
+						<div class="entries">
+							<div class="line" ng-repeat="(key, value) in application.form_submit">
+								<label class="mr-3">{{key}}</label>
+								<label class="text-right" ng-show="value.indexOf('https://') < 0">{{value}}</label>
+								<a class="text-right" ng-show="value.indexOf('https://') == 0" ng-href="{{value}}" target="_blank">View Attachment</a>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade px-1" id="exportResponse" role="tabpanel">
+						<form class="d-flex flex-column mb-0" ng-submit="saveApplication($event)">
+							<div class="form-group bmd-form-group">
+								<label class="form-label bmd-form-label">Agent</label>
+								<input class="form-control" type="email" name="agentEmail" ng-model="application.agent_email">
+							</div>
+							<div class="form-group bmd-form-group">
+								<label class="form-label bmd-form-label">JAT Score</label>
+								<input class="form-control" type="number" name="jatScore" ng-model="application.jat_score" min="0" step=".01">
+							</div>
+							<div class="form-group bmd-form-group">
+								<label class="form-label bmd-form-label">Lead Status</label>
+								<select class="form-control" name="leadStatus" ng-model="application.lead_status">
+									<option value="Applied">Applied</option>
+									<option value="Aptitude Test Shared">Aptitude Test Shared</option>
+									<option value="JAT Cleared">JAT Cleared</option>
+									<option value="Interview Scheduled">Interview Scheduled</option>
+									<option value="Selected">Selected</option>
+									<option value="Offer Sent">Offer Sent</option>
+									<option value="Mised Interview">Mised Interview</option>
+									<option value="RNR">RNR</option>
+									<option value="Paid">Paid</option>
+									<option value="Move to Next Batch">Move to Next Batch</option>
+									<option value="Rejected">Rejected</option>
+									<option value="JAT Not Cleared">JAT Not Cleared</option>
+									<option value="Wait List">Wait List</option>
+									<option value="Dead">Dead</option>
+								</select>
+							</div>
+							<div class="form-group bmd-form-group">
+								<label class="form-label bmd-form-label">Comment</label>
+								<textarea class="form-control" name="jatScore" ng-model="application.comment" placeholder="250 characters max"></textarea>
+							</div>
+							<div class="form-group bmd-form-group">
+								<label class="form-label bmd-form-label">City</label>
+								<input class="form-control" type="text" name="city" ng-model="application.city">
+							</div>
+							<div class="d-flex justify-content-end">
+								<button class="btn btn-secondary">Save</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<label class="text-danger" ng-show="error">{{error}}</label>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>

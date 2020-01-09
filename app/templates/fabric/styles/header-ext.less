@@ -1,0 +1,17 @@
+// Extended Header
+#header-ext {
+	a {
+		cursor: pointer;
+		color: lighten(@color-info, 10%);
+		&:hover { color: lighten(@color-info, 25%); }
+
+		&.alt {
+			color: white;
+			text-decoration: none;
+			&:hover > span.text-ternary {
+				color: lighten(@color-primary, 50%);
+				text-decoration: underline;
+			}
+		}
+	}
+}

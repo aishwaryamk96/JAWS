@@ -1,0 +1,182 @@
+.custom-course {
+	background-color: #eee;
+	display: flex;
+}
+/* Loading animation */
+.lds-hourglass {
+	margin-left: auto;
+	margin-right: auto;
+	width: 64px;
+	height: 64px;
+}
+.lds-hourglass:after {
+	content: " ";
+	display: block;
+	border-radius: 50%;
+	width: 0;
+	height: 0;
+	margin: 6px;
+	box-sizing: border-box;
+	border: 26px solid #fff;
+	border-color: #fff transparent #fff transparent;
+	animation: lds-hourglass 1.2s infinite;
+}
+@keyframes lds-hourglass {
+	0% {
+		transform: rotate(0);
+		animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+	}
+	50% {
+		transform: rotate(900deg);
+		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+	}
+	100% {
+		transform: rotate(1800deg);
+	}
+}
+/* Loading animation */
+.course-parent {
+	background-color: white;
+	box-shadow: 0px 0px 10px 3px #aaa;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	margin: 10px;
+	padding: 20px;
+	width: 100%;
+}
+.course .head {
+	display: flex;
+	flex-direction: row;
+}
+.course-title {
+	font-size: 30px;
+}
+.jlc-link {
+	font-size: 16px;
+	margin-left: 10px;
+}
+.separator {
+	width: 100%;
+	border-bottom: 2px solid #aaa;
+}
+.course-body {
+	display: flex;
+	flex-direction: column;
+	margin-top: 10px;
+}
+.primary {
+	display: flex;
+	justify-content: space-between;
+	width: 50%;
+}
+.primary .each {
+	display: flex;
+	padding-bottom: 5px;
+}
+.key {
+	color: #999;
+	padding-right: 5px;
+	text-align: right;
+}
+.value {
+	font-weight: bold;
+	padding-left: 5px;
+	text-transform: capitalize;
+}
+.uppercase {
+	text-transform: uppercase!important;
+}
+.lowercase {
+	text-transform: lowercase!important;
+}
+.meta {
+	display: flex;
+}
+.section {
+	display: flex;
+	flex-direction: column;
+	margin: 10px;
+	margin-left: 0px;
+	width: 100%;
+}
+.section-title {
+	font-size: 18px;
+}
+.batch {
+	margin: 20px 10px 10px;
+	position: relative;
+}
+.batch input {
+	border: none;
+	font-size: 18px;
+	min-width: 400px;
+	padding: 5px 10px;
+}
+.batch input:focus {
+	outline: none;
+}
+.batch input:focus ~ .floating {
+	left: 0px;
+	top: -20px;
+}
+.batch input:valid ~ .floating {
+	left: 0px;
+	top: -20px;
+}
+.placeholder {
+	color: #999;
+}
+.floating {
+	left: 13px;
+	position: absolute;
+	top: 6px;
+	transition: 0.2s ease all;
+}
+.options {
+	background-color: white;
+	box-shadow: 0px 0px 10px 1px #aaa;
+	max-height: 400px;
+	min-width: 400px;
+	overflow-y: scroll;
+	position: absolute;
+	z-index: 2;
+}
+.hidden {
+	visibility: hidden;
+}
+.option {
+	cursor: pointer;
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 5px 10px 10px;
+}
+.option:hover {
+	background-color: rgba(200, 200, 255, 1);
+}
+.option label {
+	cursor: pointer;
+}
+.batch-sis-id {
+	font-size: 14px;
+	color: #999;
+}
+.btn {
+	background-color: #efefef;
+	border: none;
+	box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.26);
+	color: black!important;
+	cursor: pointer;
+	display: flex;
+	justify-content: space-around;
+	font-size: 15px!important;
+	min-width: 130px;
+	min-height: 20px!important;
+	padding: 10px 30px;
+	text-transform: uppercase;
+}
+.btn-disabled {
+	background-color: #efefef!important;
+	color: darkgray!important;
+	cursor: default!important;
+}

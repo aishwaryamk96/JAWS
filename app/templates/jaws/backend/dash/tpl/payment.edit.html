@@ -1,0 +1,1163 @@
+<!-- PAYMENT EDIT NEW -->
+<div class="jumbotron" data-pages="parallax">
+    <div class="container-fluid container-fixed-lg ">
+        <div class="inner" style="transform: translateY(0px); opacity: 1;">
+            <ul class="breadcrumb">
+                <li>
+                    <a ui-sref='app.home'>JAWS</a>
+                </li>
+                <li>
+                    <a class="active" ui-sref='app.kform'>New Payment</a>
+                </li>
+            </ul>
+
+            <h3 style='display:inline-block;' class="page-title">New Payment</h3>
+            <div style='display:inline-block;' class='pull-right'>
+                <h5 style='display:inline-block;' class="font-montserrat all-caps small no-margin hint-text bold">INR</h5>
+                &nbsp;&nbsp;
+                <input type="checkbox" class="js-switch" ng-model="currencyUSD" ui-switch="{color: '#6D5CAE'}" checked="checked" />                &nbsp;&nbsp;
+                <h5 style='display:inline-block;' class="font-montserrat all-caps small no-margin hint-text bold">USD</h5>
+            </div>
+            <br/>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid container-fixed-lg">
+    <style scoped>
+        .checkbox.alt label::after {
+            left: 0.2px !important;
+        }
+    </style>
+
+    <div class="row row-same-height">
+
+        <div class="col-md-7">
+            <div class="panel panel-transparent">
+
+                <ul class="nav nav-tabs nav-tabs-linetriangle hidden-sm hidden-xs" pg-tab-dropdownfx="">
+                    <li class="{{fullstacks.length>0 ? 'active' : ''}}">
+                        <a data-toggle="tab" pg-tab="" href="#tab-fullstacks" aria-expanded="true">
+                            <span>Full stacks&nbsp;
+                                <span ng-if='fullstack_selected.length>0'>({{fullstack_selected.length | number:0}})</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="{{fullstacks.length==0 ? 'active' : ''}}">
+                        <a data-toggle="tab" pg-tab="" href="#tab-specs" aria-expanded="false">
+                            <span>Specializations&nbsp;
+                                <span ng-if='spec_selected.length>0'>({{spec_selected.length | number:0}})</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" pg-tab="" href="#tab-courses" aria-expanded="false">
+                            <span>Courses&nbsp;
+                                <span ng-if='courses_selected.length>0'>({{courses_selected.length | number:0}})</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class=''>
+                        <a data-toggle="tab" pg-tab="" href="#tab-bootcamps" aria-expanded="false">
+                            <span>Bootcamps</span>
+                        </a>
+                    </li>
+                    <li class=''>
+                        <a data-toggle="tab" pg-tab="" href="#tab-programs" aria-expanded="false">
+                            <span>Programs</span>
+                        </a>
+                    </li>
+                    <li class=''>
+                        <a data-toggle="tab" pg-tab="" href="#tab-misc" aria-expanded="false">
+                            <span>Miscellaneous</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="nav-tab-dropdown cs-wrapper full-width p-t-10 visible-xs visible-sm">
+                    <div class="cs-select cs-skin-slide full-width" tabindex="0">
+                        <span class="cs-placeholder">Specializations&nbsp;
+                            <span ng-if='spec_selected.length>0'>({{spec_selected.length | number:0}})</span>
+                        </span>
+                        <div class="cs-options">
+                            <ul>
+                                <li data-option="" data-value="#tab-fullstacks">
+                                    <span>Full stacks&nbsp;
+                                        <span ng-if='fullstack_selected.length>0'>({{fullstack.length | number:0}})</span>
+                                    </span>
+                                </li>
+                                <li data-option="" data-value="#tab-specs">
+                                    <span>Specializations&nbsp;
+                                        <span ng-if='spec_selected.length>0'>({{spec_selected.length | number:0}})</span>
+                                    </span>
+                                </li>
+                                <li data-option="" data-value="#tab-courses">
+                                    <span>Courses&nbsp;
+                                        <span ng-if='courses_selected.length>0'>({{courses_selected.length | number:0}})</span>
+                                    </span>
+                                </li>
+                                <li data-option="" data-value="#tab-bootcamps">
+                                    <span>Bootcamps</span>
+                                </li>
+                                <li data-option="" data-value="#tab-programs">
+                                    <span>Programs</span>
+                                </li>
+                                <li data-option="" data-value="#tab-misc">
+                                    <span>Miscellaneous</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <select class="cs-select cs-skin-slide full-width" data-init-plugin="cs-select">
+                            <option value="#tab-specs" selected="">Full stacks&nbsp;
+                                <span ng-if='fullstack_selected.length>0'>({{fullstack_selected.length | number:0}})</span>
+                            </option>
+                            <option value="#tab-specs" selected="">Specializations&nbsp;
+                                <span ng-if='spec_selected.length>0'>({{spec_selected.length | number:0}})</span>
+                            </option>
+                            <option value="#tab-courses">Courses&nbsp;
+                                <span ng-if='courses_selected.length>0'>({{courses_selected.length | number:0}})</span>
+                            </option>
+                            <option value="#tab-bootcamps">Bootcamps</option>
+                            <option value="#tab-programs">Programs</option>
+                            <option value="#tab-misc">Miscellaneous</option>
+                        </select>
+                        <div class="cs-backdrop"></div>
+                    </div>
+                </div>
+
+                <div class="tab-content">
+                    <div class="tab-pane fade in {{fullstacks.length>0 ? 'active' : ''}}" id="tab-fullstacks">
+                        <div class="table-responsive">
+                            <div id="basicTable_wrapper" class="dataTables_wrapper form-inline no-footer">
+                                <table class="table table-hover dataTable no-footer table-condensed" id="basicTable" role="grid">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="col-md-1" tabindex="0" aria-controls="basicTable" rowspan="1" colspan="1" aria-sort="descending" aria-label="Title: activate to sort column ascending"></th>
+                                            <th class="col-md-8" tabindex="0" aria-controls="basicTable" rowspan="1" colspan="1" aria-sort="descending" aria-label="Title: activate to sort column ascending">Full stacks</th>
+                                            <th class="col-md-3 sorting" style='text-align: center;' tabindex="0" aria-controls="basicTable" rowspan="1" colspan="3"
+                                                aria-label="Places: activate to sort column ascending">Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr role="row row-sm-height" ng-repeat="fullstack in fullstacks" ng-class='{"selected" : fullstacks[$index].selected}'>
+                                            <td style="text-align: center;padding: 0;" class="col-md-1 v-align-middle col-sm-height col-middle" rowspan="1" colspan="1"
+                                                role="row row-sm-height">
+                                                <div class="checkbox check-warning" style="width: 20px;">
+                                                    <input type="checkbox" id="fullstack-select-{{$index}}" ng-model='fullstacks[$index].selected' ng-change="fullstackSelect(fullstacks[$index].selected ? $index : -1, fullstack.bundle_id, fullstack.batch_id)">
+                                                    <label for="fullstack-select-{{$index}}"></label>
+                                                </div>
+                                            </td>
+                                            <td class="col-md-8 v-align-middle col-sm-height col-middle" style="white-space: initial;" rowspan="1" colspan="1">
+                                                <span class="m-l-10 font-montserrat fs-18 all-caps">{{fullstack.name}}</span>
+                                                <br>
+                                                <small title="{{fullstack.code}}">{{fullstack.meta.name}}</small>
+                                            </td>
+                                            <td class="col-md-3 v-align-middle col-sm-height col-middle no-padding" style="overflow:unset;" rowspan="1" colspan="1">
+                                                <div style="width:100px;">
+                                                    <h5 style="width:100px;" ng-class='{"bold": fullstacks[$index].selected}' class="m-l-10 font-montserrat small all-caps hint-text">{{currencyUSD
+                                                        ? "$" : "&#8377;"}}{{(currencyUSD ? fullstack.price_usd : fullstack.price_inr)
+                                                        | number:0}}</h5>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade in {{fullstacks.length==0 ? 'active' : ''}}" id="tab-specs">
+                        <div class="table-responsive">
+                            <div id="basicTable_wrapper" class="dataTables_wrapper form-inline no-footer">
+                                <table class="table table-hover dataTable no-footer table-condensed" id="basicTable" role="grid">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="col-md-1" tabindex="0" aria-controls="basicTable" rowspan="1" colspan="1" aria-sort="descending" aria-label="Title: activate to sort column ascending"></th>
+                                            <th class="col-md-9" tabindex="0" aria-controls="basicTable" rowspan="1" colspan="1" aria-sort="descending" aria-label="Title: activate to sort column ascending">Specialization</th>
+                                            <th class="col-md-2" tabindex="0" aria-controls="basicTable" rowspan="1" colspan="1" aria-label="Places: activate to sort column ascending">Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr role="row row-sm-height" ng-class='{"selected" : specializations[$index].selected}' ng-repeat="spec in specializations">
+                                            <td class="col-md-1 v-align-middle col-sm-height col-middle">
+                                                <div class="checkbox check-warning" style="width: 20px;">
+                                                    <input type="checkbox" id="spec-select-{{$index}}" ng-model='specializations[$index].selected' ng-change="specSelect(specializations[$index].selected ? $index : -1)">
+                                                    <label for="spec-select-{{$index}}"></label>
+                                                </div>
+                                            </td>
+                                            <td class="col-md-9 v-align-middle col-sm-height col-middle" title="{{spec.name}}">
+                                                <span class="m-l-10 font-montserrat fs-18 all-caps">{{spec.name}}</span>
+                                            </td>
+                                            <td class="col-md-2 v-align-middle col-sm-height col-middle no-padding">
+                                                <div>
+                                                    <h5 ng-class='{"bold": specializations[$index].selected}' class="m-l-10 font-montserrat small all-caps hint-text">{{currencyUSD
+                                                        ? "$" : "&#8377;"}}{{(currencyUSD ? spec.price_usd : spec.price_inr)
+                                                        | number:0}}</h5>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade in" id="tab-courses">
+                        <div class="table-responsive">
+                            <div id="basicTable_wrapper" class="dataTables_wrapper form-inline no-footer">
+                                <table class="table table-hover dataTable no-footer table-condensed" id="basicTable" role="grid">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="col-md-1" tabindex="0" aria-controls="basicTable" rowspan="1" colspan="1" aria-sort="descending" aria-label="Title: activate to sort column ascending"></th>
+                                            <th class="col-md-5" tabindex="0" aria-controls="basicTable" rowspan="1" colspan="1" aria-sort="descending" aria-label="Title: activate to sort column ascending">Course</th>
+                                            <th class="col-md-3" tabindex="0" style='text-align: center;' aria-controls="basicTable" rowspan="1" colspan="1" aria-sort="descending"
+                                                aria-label="Title: activate to sort column ascending"></th>
+                                            <th class="col-md-3 sorting" style='text-align: center;' tabindex="0" aria-controls="basicTable" rowspan="1" colspan="3"
+                                                aria-label="Places: activate to sort column ascending">Regular&nbsp;&nbsp;/&nbsp;&nbsp;Premium</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr role="row row-sm-height" ng-class='{"selected" : courses[$index].selected,"electives" : elect_course.indexOf(courses[$index].course_id) !== -1}'
+                                            ng-repeat="course in courses" ng-show='!(courses[$index].selectedAsSpec)' ng-if="!course.no_show">
+                                            <td class="col-md-1 v-align-middle col-sm-height col-middle">
+                                                <div class="checkbox check-warning" style="width: 20px;">
+                                                    <input type="checkbox" id="course-select-{{$index}}" ng-model='courses[$index].selected' ng-change="getWorth()">
+                                                    <label for="course-select-{{$index}}"></label>
+                                                </div>
+                                            </td>
+                                            <td class="col-md-5 v-align-middle col-sm-height col-middle" title="{{course.name}}">
+                                                <span class="m-l-10 font-montserrat fs-18 all-caps">{{course.name}}</span>
+                                            </td>
+                                            <td class="col-md-3 v-align-middle" style='text-align: center;'>
+                                                <div class="checkbox alt check-success" style='position: relative; top: 2px;' ng-if="courses[$index].selected && !courses[$index].disallowFree">
+                                                    <input type="checkbox" value="free" id="course-free-{{$index}}" ng-model='courses[$index].free' ng-change="getWorth()">
+                                                    <label for="course-free-{{$index}}" ng-class='{bold: courses[$index].free}'>Free</label>
+                                                </div>
+                                            </td>
+                                            <td class="col-md-1 v-align-middle col-sm-height col-middle no-padding" style="text-align: center;{{!courses[$index].premium && courses[$index].selected ? 'background-color: #f8d053!important;' : ''}}">
+                                                <div ng-if="currencyUSD ? (course.sp_status_usd && (course.sp_price_usd > 0)) : (course.sp_status_inr && (course.sp_price_inr > 0))">
+                                                    <h5 style="{{!courses[$index].premium && courses[$index].selected ? 'opacity:1!important;' : ''}}" ng-class='{"bold": !courses[$index].premium && courses[$index].selected}'
+                                                        class="m-l-10 font-montserrat small all-caps hint-text">{{currencyUSD
+                                                        ? "$" : "&#8377;"}}{{(currencyUSD ? course.sp_price_usd : course.sp_price_inr)
+                                                        | number:0}}</h5>
+                                                </div>
+                                            </td>
+                                            <td class="col-md-1 v-align-middle col-sm-height col-middle no-padding" style='text-align: center;'>
+                                                <div ng-show="courses[$index].selected && (currencyUSD ? (course.sp_status_usd && (course.sp_price_usd > 0) && course.il_status_usd && (course.il_price_usd > 0)) : (course.sp_status_inr && (course.sp_price_inr > 0) && course.il_status_inr && (course.il_price_inr > 0)))">
+                                                    <input type="checkbox" class="js-switch" ng-model="courses[$index].premium" ng-change="getWorth()" ui-switch="{color: '#f8d053', size: 'small'}"
+                                                    />
+                                                </div>
+                                            </td>
+                                            <td class="col-md-1 v-align-middle col-sm-height col-middle no-padding" style="{{courses[$index].premium && courses[$index].selected ? 'background-color: #f8d053!important;' : ''}}">
+                                                <div ng-if="currencyUSD ? (course.il_status_usd && (course.il_price_usd > 0)) : (course.il_status_inr && (course.il_price_inr > 0))">
+                                                    <h5 style="{{courses[$index].premium && courses[$index].selected ? 'opacity:1!important;' : ''}}" ng-class='{"bold": courses[$index].premium && courses[$index].selected}'
+                                                        class="m-l-10 font-montserrat small all-caps hint-text">{{currencyUSD
+                                                        ? "$" : "&#8377;"}}{{(currencyUSD ? course.il_price_usd : course.il_price_inr)
+                                                        | number:0}}</h5>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade in " id="tab-bootcamps">
+                        <div class="table-responsive">
+                            <div id="basicTable_wrapper" class="dataTables_wrapper form-inline no-footer">
+                                <table class="table table-hover dataTable no-footer table-condensed" id="basicTable" role="grid">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="col-md-1" tabindex="0" aria-controls="basicTable" rowspan="1" colspan="1" aria-sort="descending" aria-label="Title: activate to sort column ascending"></th>
+                                            <th class="col-md-5" tabindex="0" aria-controls="basicTable" rowspan="1" colspan="1" aria-sort="descending" aria-label="Title: activate to sort column ascending">Batch</th>
+                                            <th class="hide" tabindex="0" style='text-align: center;' aria-controls="basicTable" rowspan="1" colspan="1" aria-sort="descending"
+                                                aria-label="Title: activate to sort column ascending">Location</th>
+                                            <th class="col-md-3" tabindex="0" style='text-align: center;' aria-controls="basicTable" rowspan="1" colspan="1" aria-sort="descending"
+                                                aria-label="Title: activate to sort column ascending">Date</th>
+                                            <th class="col-md-3 sorting" style='text-align: center;' tabindex="0" aria-controls="basicTable" rowspan="1" colspan="3"
+                                                aria-label="Places: activate to sort column ascending">Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr role="row row-sm-height" ng-repeat="batch in newBootcamp" ng-class='{"selected" : newBootcamp[$index].selected}'>
+                                            <td style="text-align: center;padding: 0;" class="col-md-1 v-align-middle col-sm-height col-middle" role="row row-sm-height">
+                                                <div class="checkbox check-warning" style="width: 20px;">
+                                                    <input type="checkbox" id="camp-select-{{$index}}" ng-model='newBootcamp[$index].selected' ng-change="campSelect(newBootcamp[$index].selected ? $index : -1,batch.bundle_id,batch.id)">
+                                                    <label for="camp-select-{{$index}}"></label>
+                                                </div>
+                                            </td>
+                                            <td class="col-md-5 v-align-middle col-sm-height col-middle" style="white-space: initial;">
+                                                <span class="m-l-10 font-montserrat fs-18 all-caps">{{batch.bundle_name}}</span>
+                                                <br>
+                                                <small title="{{batch.code}}">{{batch.meta.name}}</small>
+                                            </td>
+                                            <td class="hide">
+                                                <div>
+                                                    <h5 class="m-l-10 font-montserrat small all-caps hint-text">{{batch.location}}</h5>
+                                                </div>
+                                            </td>
+                                            <td class="col-md-3 v-align-middle col-sm-height col-middle no-padding">
+                                                <div>
+                                                    <h5 class="m-l-10 font-montserrat small all-caps hint-text">{{batch.start_date
+                                                        | date:'MMM d, y'}}</h5>
+                                                </div>
+                                            </td>
+                                            <td class="col-md-3 v-align-middle col-sm-height col-middle no-padding" style="overflow:unset;">
+                                                <div style="width:100px;">
+                                                    <h5 style="width:100px;" ng-class='{"bold": newBootcamp[$index].selected}' class="m-l-10 font-montserrat small all-caps hint-text">{{currencyUSD
+                                                        ? "$" : "&#8377;"}}{{(currencyUSD ? batch.price_usd : batch.price)
+                                                        | number:0}}</h5>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade in " id="tab-programs">
+                        <div class="table-responsive">
+                            <div id="basicTable_wrapper" class="dataTables_wrapper form-inline no-footer">
+                                <table class="table table-hover dataTable no-footer table-condensed" id="basicTable" role="grid">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="col-md-1" tabindex="0" aria-controls="basicTable" rowspan="1" colspan="1" aria-sort="descending" aria-label="Title: activate to sort column ascending"></th>
+                                            <th class="col-md-8" tabindex="0" aria-controls="basicTable" rowspan="1" colspan="1" aria-sort="descending" aria-label="Title: activate to sort column ascending">Program</th>
+                                            <th class="col-md-3 sorting" style='text-align: center;' tabindex="0" aria-controls="basicTable" rowspan="1" colspan="3"
+                                                aria-label="Places: activate to sort column ascending">Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr role="row row-sm-height" ng-repeat="program in programs" ng-class='{"selected" : programs[$index].selected}'>
+                                            <td style="text-align: center;padding: 0;" class="col-md-1 v-align-middle col-sm-height col-middle" rowspan="1" colspan="1"
+                                                role="row row-sm-height">
+                                                <div class="checkbox check-warning" style="width: 20px;">
+                                                    <input type="checkbox" id="program-select-{{$index}}" ng-model='programs[$index].selected' ng-change="programSelect(programs[$index].selected ? $index : -1, program.bundle_id, program.batch_id)">
+                                                    <label for="program-select-{{$index}}"></label>
+                                                </div>
+                                            </td>
+                                            <td class="col-md-8 v-align-middle col-sm-height col-middle" style="white-space: initial;" rowspan="1" colspan="1">
+                                                <span class="m-l-10 font-montserrat fs-18 all-caps">{{program.name}}</span>
+                                                <br>
+                                                <small title="{{program.code}}">{{program.meta.name}}</small>
+                                            </td>
+                                            <td class="col-md-3 v-align-middle col-sm-height col-middle no-padding" style="overflow:unset;" rowspan="1" colspan="1">
+                                                <div style="width:100px;">
+                                                    <h5 style="width:100px;" ng-class='{"bold": programs[$index].selected}' class="m-l-10 font-montserrat small all-caps hint-text">{{currencyUSD
+                                                        ? "$" : "&#8377;"}}{{(currencyUSD ? program.price_usd : program.price_inr)
+                                                        | number:0}}</h5>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade in " id="tab-misc">
+                        <div class="table-responsive">
+                            <div id="basicTable_wrapper" class="dataTables_wrapper form-inline no-footer">
+                                <p>Coming soon!!!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5 bg-white">
+            <div class="padding-30">
+
+                <h5>Full Stack</h5>
+                <div ng-show='fullstack_selected.name.length==0' style='padding: 10px 0px 10px 30px!important;' class='small hint-text'>
+                    No full stack selected
+                </div>
+                <div ng-if='fullstack_selected.name.length>0'>
+                    <table class="table table-condensed" style='margin-bottom: 0px;'>
+                        <tbody>
+                            <tr>
+                                <td class="col-lg-12 col-md-12 col-sm-12" style='border:none!important;'>
+                                    {{fullstack_selected.name}}
+                                    <br> {{fullstack_selected.batch_name}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br/>
+
+                <h5>Program</h5>
+                <div ng-show='program_selected.name.length==0' style='padding: 10px 0px 10px 30px!important;' class='small hint-text'>
+                    No full stack selected
+                </div>
+                <div ng-if='program_selected.name.length>0'>
+                    <table class="table table-condensed" style='margin-bottom: 0px;'>
+                        <tbody>
+                            <tr>
+                                <td class="col-lg-12 col-md-12 col-sm-12" style='border:none!important;'>
+                                    {{program_selected.name}}
+                                    <br> {{program_selected.batch_name}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br/>
+
+                <h5>Bootcamp</h5>
+                <div ng-show='bootcamp_selected.name.length==0' style='padding: 10px 0px 10px 30px!important;' class='small hint-text'>
+                    No bootcamps selected
+                </div>
+                <div ng-if='bootcamp_selected.name.length>0'>
+                    <table class="table table-condensed" style='margin-bottom: 0px;'>
+                        <tbody>
+                            <tr>
+                                <td class="col-lg-12 col-md-12 col-sm-12" style='border:none!important;'>
+                                    {{bootcamp_selected.name}}
+                                    <br> {{bootcamp_selected.batch_name}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br/>
+
+                <h5>Specialization&nbsp;
+                    <span ng-if='spec_selected.length>0'>({{spec_selected.length | number:0}})</span>
+                </h5>
+                <div ng-show='spec_selected.length==0' style='padding: 10px 0px 10px 30px!important;' class='small hint-text'>
+                    No specialization selected
+                </div>
+                <div ng-if='spec_selected.length>0'>
+                    <table class="table table-condensed" style='margin-bottom: 0px;'>
+                        <tbody>
+                            <tr>
+                                <td class="col-lg-9 col-md-9 col-sm-9" style='border:none!important;'>
+                                    <a href="" class="remove-item" ng-click="specSelect(-1)">
+                                        <i class="pg-close"></i>
+                                    </a>
+                                    <span class="m-l-10 font-montserrat fs-18 all-caps">{{spec_selected[0].name}}</span>
+                                    <span class="m-l-10 "></span>
+                                </td>
+                                <td class=" col-lg-3 col-md-3 col-sm-3 text-right" style='border:none!important;'>
+                                    <h4 class="text-primary no-margin font-montserrat">{{currencyUSD ? "$" : "&#8377;"}}{{(currencyUSD
+                                        ? spec_selected[0].price_usd : spec_selected[0].price_inr) | number:0}}</h4>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-condensed" style='margin-top: 0px;'>
+                        <tbody>
+                            <style scoped>
+                                .no-border {
+                                    border: none !important;
+                                }
+
+                                .tlucent {
+                                    opacity: 0.55;
+                                }
+
+                                .nest-link {
+                                    position: absolute;
+                                    right: -12px;
+                                    top: -50%;
+                                    width: 35%;
+                                    height: 100%;
+                                    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+                                    border-left: 1px solid rgba(0, 0, 0, 0.5);
+                                    opacity: 0.25;
+                                }
+
+                                tr:first-of-type>td>.nest-link {
+                                    top: 0px !important;
+                                    height: 50% !important;
+                                }
+
+                                .strikeout {
+                                    text-decoration: line-through;
+                                    opacity: 0.175;
+                                }
+                            </style>
+
+                            <tr ng-repeat='course in spec_selected[0].courses'>
+                                <td class="col-lg-1 col-md-1 col-sm-1 text-center no-border" style='position: relative; overflow: visible;'>
+                                    <div class='nest-link'></div>
+                                </td>
+                                <td class="col-lg-5 col-md-5 col-sm-5 no-border tlucent" ng-class='{"strikeout" : !spec_selected[0].courses[$index].enroll}'>
+                                    <span class="m-l-10 font-montserrat fs-18 all-caps">{{course.name}}</span>
+                                </td>
+                                <td class=" col-lg-3 col-md-3 col-sm-3 text-center no-border tlucent" ng-class='{"strikeout" : !spec_selected[0].courses[$index].enroll}'>
+                                    <span>{{course.premium ? 'Premium' : 'Regular'}}</span>
+                                </td>
+                                <td class="col-lg-3 col-md-3 col-sm-3 text-right no-border">
+                                    <input ng-model='spec_selected[0].courses[$index].enroll' type="checkbox" class="js-switch" ui-switch="{color: '#8A7DBE', size: 'small'}"
+                                    />
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <br/>
+
+                <h5>Courses&nbsp;
+                    <span ng-if='courses_selected.length>0'>({{courses_selected.length | number:0}})</span>
+                </h5>
+                <div ng-show='courses_selected.length==0' style='padding: 10px 0px 10px 30px!important;' class='small hint-text'>
+                    No courses selected
+                </div>
+                <table ng-show='courses_selected.length>0' class="table table-condensed">
+                    <tbody>
+                        <tr ng-repeat='course in courses | filter: {selected:true} as courses_selected' class='animate-repeat'>
+                            <td class="col-lg-6 col-md-6 col-sm-6 ">
+                                <a href="" class="remove-item" ng-click="courses[courseIdToIndex[course.course_id]].selected=false;getWorth()">
+                                    <i class="pg-close"></i>
+                                </a>
+                                <span class="m-l-10 font-montserrat fs-18 all-caps">{{course.name}}</span>
+                                <span class="m-l-10 "></span>
+                            </td>
+                            <td class=" col-lg-3 col-md-3 col-sm-3 text-center">
+                                <span>{{course.premium ? 'Premium' : 'Regular'}}</span>
+                            </td>
+                            <td class=" col-lg-3 col-md-3 col-sm-3 text-right">
+                                <h4 class="text-primary no-margin font-montserrat">
+                                    <span class='fs-16' ng-if='course.free'>FREE*</span>
+                                    <span ng-if='!course.free'>
+                                        {{currencyUSD ? "$" : "&#8377;"}}{{(currencyUSD ? (course.premium ? course.il_price_usd : course.sp_price_usd) : (course.premium
+                                        ? course.il_price_inr : course.sp_price_inr)) | number:0}}
+                                    </span>
+                                </h4>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+
+                <h5>Discount*</h5>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12" ng-mouseenter="allowEditDiscount=true" ng-mouseleave="allowEditDiscount=false"
+                        ng-init='allowEditDiscount=false'>
+                        <button type="button" title='Edit amount' style='position: relative; top: 11px;' class="btn btn-default btn-xs pull-right"
+                            ng-show='allowEditDiscount' href="#modal-discount-amount" data-toggle="modal">
+                            <i class="fa fa-fw fa-pencil hint-text"></i>
+                        </button>
+                        <h5 class="text-master no-margin font-montserrat" style='margin: 7px 0px 10px 0px!important;display: inline-block;'>{{discount
+                            | number:2}}%&nbsp;
+                            <span class='hint-text'>({{currencyUSD ? "$" : "&#8377;"}}{{((currencyUSD ? worthUSD : worth)
+                                * (discount / 100)) | number:0}})</span>
+                        </h5>
+
+                        <div slider class="m-b-10 bg-master" ng-model='discount' connect='lower' ng-change="upPrice()" start=0 end=99 step=1></div>
+
+                        <p style='{{(discount==0) ? "opacity: 0.35;pointer-events: none;" : ""}}'>
+                            <button href="#modal-discount" data-toggle="modal" style='text-align: left;background: none;border: none;color:{{notes.discount.reason.length>0 ? "#48B0F7" : "red"}}'
+                                ng-show='discount>0'>
+                                <i style='font-size: 125%;vertical-align:middle;' class='fa fa-fw {{notes.discount.reason.length>0 ? "fa-check-circle" : "fa-warning"}}'></i>&nbsp;
+                                <span style='border-bottom: 1px dotted #000!important'>Provide reason for discounted pricing.</span>
+                            </button>
+                            <span ng-show='discount==0'>Provide reason for discounted pricing.</span>
+                        </p>
+                    </div>
+                    <!--<div class="col-lg-6 col-md-4 col-sm-2" style='text-align: right!important;'></div>-->
+                </div>
+                <br>
+
+                <h5 class="hide">Manual Price</h5>
+                <div class="row hide">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <input type="number" name="manual_price" id="manual_price" placeholder="" value="" ng-model="manual_price">
+                        <button type="button" ng-click="getWorth('manual')">Go</button>
+                    </div>
+                </div>
+
+                <h5 class="">Installment Fees</h5>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <input type="number" name="instl_fees" id="instl_fees" placeholder="" value="" ng-model="instl_fees_amt">
+                        <button type="button" ng-click="instlFees()">Go</button>
+                    </div>
+                </div>
+
+                <h5>Summary</h5>
+                <div class="container-sm-height b-a b-grey" style='border-collapse: separate;'>
+                    <div class="row row-sm-height">
+                        <div class="col-sm-2 col-sm-height col-middle sm-padding-15">
+                            <h5 class="font-montserrat all-caps small no-margin hint-text bold">Worth</h5>
+                            <p class="no-margin">{{currencyUSD ? "$" : "&#8377;"}}{{(currencyUSD ? worthUSD : worth) | number:0}}</p>
+                        </div>
+                        <div class="col-sm-2 col-sm-height col-middle sm-padding-15 ">
+                            <h5 class="font-montserrat all-caps small no-margin hint-text bold">Discount*
+                                <!-- ({{discount | number:0}}%)-->
+                            </h5>
+                            <p class="no-margin">-{{currencyUSD ? "$" : "&#8377;"}}{{((currencyUSD ? worthUSD : worth) *
+                                (discount / 100)) | number:0}}</p>
+                        </div>
+                        <div class="col-sm-2 col-sm-height col-middle sm-padding-15 ">
+                            <h5 class="font-montserrat all-caps small no-margin hint-text bold">Instl Fee
+                                <sup>#</sup>
+                            </h5>
+                            <p class="no-margin">{{currencyUSD ? "$" : "&#8377;"}}{{(currencyUSD ? instl_fees_USD : instl_fees)
+                                | number:0}}</p>
+                        </div>
+                        <div class="col-sm-3 col-sm-height col-middle sm-padding-15 ">
+                            <h5 class="font-montserrat all-caps small no-margin hint-text bold">Tax ({{currencyUSD ? "0%"
+                                : "18%"}})</h5>
+                            <p class="no-margin">{{currencyUSD ? "$" : "&#8377;"}}{{(currencyUSD ? 0 : (((worth * ((100 -
+                                discount) / 100)) + instl_fees) * 0.18)) | number:0}}</p>
+                        </div>
+                        <div class="col-sm-3 text-right bg-primary col-sm-height col-middle padding-10">
+                            <h5 class="font-montserrat all-caps small no-margin hint-text text-white bold">Total
+                                <sup>&dagger;</sup>
+                            </h5>
+                            <h4 class="no-margin text-white">{{currencyUSD ? "$" : "&#8377;"}}{{(currencyUSD ? ((worthUSD
+                                * ((100 - discount) / 100)) + instl_fees_USD) : (((worth * ((100 - discount) / 100)) + instl_fees)
+                                * 1.18)) | number:0}}</h4>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+
+                <h5>Finance</h5>
+                <style scoped>
+                    .instledit {
+                        display: none;
+                        font-size: 130%;
+                        opacity: 0.5;
+                        cursor: pointer;
+                        position: absolute;
+                        bottom: 15px;
+                        top: auto;
+                        left: 10px;
+                    }
+
+                    div.row:hover>div>.instledit {
+                        display: block;
+                    }
+
+                    .instledit:hover {
+                        opacity: 1;
+                    }
+
+                    .edit-sum {
+                        width: 75%;
+                        margin-left: 10px;
+                        text-align: right;
+                        color: black;
+                        border: none;
+                        font-size: 23px;
+                        line-height: 32px;
+                        letter-spacing: normal;
+                        font-weight: 300;
+                    }
+                </style>
+
+                <div class="container-sm-height b-a b-grey" style='margin-bottom: 4px;border-collapse: separate;'>
+                    <div class="row row-sm-height">
+                        <div class="col-sm-4 col-sm-height col-middle sm-padding-15">
+                            <h5 class="font-montserrat all-caps small no-margin hint-text bold" style='padding-left: 15px;'>{{instls.length
+                                == 1 ? 'Full Payment' : 'Initial Installment'}}</h5>
+                        </div>
+                        <div class="col-sm-5 col-sm-height col-middle sm-padding-15" style='text-align: center;'>
+
+                            <div class="checkbox alt check-success" style='position: relative; top: 2px; display:{{ (allowPaid)? "block": "none"; }}'>
+                                <input type="checkbox" value="paid" id="chkpaid" ng-model='paid' ng-click="expiry = ''">
+                                <label for="chkpaid">Paid*</label>
+                            </div>
+                            <p style='{{(!paid) ? "opacity: 0.35;pointer-events: none;" : ""}}; display:{{ (allowPaid)? "block": "none"; }}'>
+                                <button href='#modal-transaction' style='color:{{notes.transaction.detail.length>0 ? "#48B0F7" : "red"}};text-align: left;border: none;background: none;margin: 0;padding: 0;'
+                                    ng-show='paid' data-toggle="modal">
+                                    <i style='font-size: 125%;vertical-align:middle;' class='fa fa-fw {{notes.transaction.detail.length>0 ? "fa-check-circle" : "fa-warning"}}'></i>&nbsp;
+                                    <span style='border-bottom: 1px dotted #000!important'>Provide transaction details.</span>
+                                </button>
+                                <span ng-show='!paid'>Provide transaction details.</span>
+                            </p>
+                        </div>
+                        <div class="col-sm-3 text-right col-sm-height col-middle padding-10" style='position: relative;' ng-class="{'bg-master-light': !paid, 'bg-success': paid}">
+                            <i title='Edit amount' ng-class="{'text-white': paid}" ng-show="instls.length>1" class="fa fa-fw fa-pencil hint-text instledit"
+                                ng-click="eI = !eI"></i>
+                            <h5 class="font-montserrat all-caps small no-margin hint-text bold" ng-class="{'text-white': paid, 'text-master': !paid}">
+                                <span ng-if="!paid">To Be Paid</span>
+                                <span ng-if="paid">Paid</span>
+                            </h5>
+                            <h4 class="no-margin" ng-show='!eI' ng-class="{'text-white': paid}">{{currencyUSD ? "$" : "&#8377;"}}{{(currencyUSD
+                                ? instls[0].sumUSD : instls[0].sum) | number:0}}</h4>
+                            <input type="text" placeholder="" value="" ng-model="editSum[0]" class="edit-sum" ng-blur="newEdit(editSum[0],0);" style="background: {{(paid)?'#2BE5D3':'#F6F6F6'}}"
+                                ng-show='eI' />
+                        </div>
+                    </div>
+                </div>
+                <div class="container-sm-height b-a b-grey" style='margin-bottom: 4px;border-collapse: separate;' ng-repeat='instl in instls.slice(1)'>
+                    <div class="row row-sm-height">
+                        <div class="col-sm-1 col-sm-height col-middle sm-padding-15">
+                            <a href="" class="remove-item" ng-click="remInstl($index+1)">
+                                <i class="pg-close"></i>
+                            </a>
+                        </div>
+                        <div class="col-sm-4 col-sm-height col-middle sm-padding-15">
+                            <h5 class="font-montserrat all-caps small no-margin hint-text bold">{{$index+2}}
+                                <sup>{{ordinal($index+2)}}</sup> Installment</h5>
+                        </div>
+                        <div class="col-sm-3 col-sm-height col-middle sm-padding-15 " style='text-align: center!important;'>
+                            <h5 class="font-montserrat all-caps small no-margin hint-text bold" style='margin-bottom: 5px!important'>{{instls[$index+1].due
+                                | number}} Days</h5>
+                            <div slider class="m-b-10 bg-master" ng-model='instls[$index+1].due' start=1 end={{max_due_date}} step=1></div>
+                            <div class="input-group date" ui-jq="datepicker">
+                                <input type="text" class="form-control input-sm" value="12-02-2012" name="due_date" ng-model="instls[$index+1].due_date">
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-1 col-sm-height col-middle sm-padding-15">
+                        </div>
+                        <div class="col-sm-3 text-right bg-master-light col-sm-height col-middle padding-10">
+                            <i title='Edit amount' class="fa fa-fw fa-pencil hint-text instledit" ng-if="($index+1) < (instls.length-1)" ng-click="eI1[$index+1] = !eI1[$index+1]"></i>
+                            <h5 class="font-montserrat all-caps small no-margin hint-text bold text-master">To Be Paid</h5>
+                            <h4 ng-show='!eI1[$index+1]' class="no-margin">{{currencyUSD ? "$" : "&#8377;"}}{{(currencyUSD
+                                ? instls[$index+1].sumUSD : instls[$index+1].sum) | number:0}}</h4>
+                            <input type="text" placeholder="" value="" ng-model="editSum[$index+1]" class="edit-sum" style="background:#F6F6F6;" ng-blur="newEdit(editSum[$index+1],$index+1);"
+                                ng-show='eI1[$index+1]' />
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-block btn-default" ng-click="addInstl()">
+                    <span>
+                        <i class="pg-plus" style='margin-right: 10px;'></i>
+                    </span>Add Installment</button>
+                <br/>
+
+                <div>
+                    <p class="small hint-text no-margin">* Subject to approval by manager.</p>
+                    <p class="small hint-text no-margin">
+                        <sup>#</sup> {{currencyUSD ? "$25" : "&#8377;1,000"}} is charged for evey installment with finance
+                        period of more than 7 days.</p>
+                    <p class="small hint-text">
+                        <sup>&dagger;</sup> Sum of all installments must equal Total.</p>
+                </div>
+                <br/>
+
+                <br/>
+                <button ng-disabled="(worth==0) || (paid && !(notes.transaction.detail.length>0)) || ((discount>0) && !(notes.discount.reason.length>0))"
+                    ng-class="{disabled: ( (worth==0) || (paid && !(notes.transaction.detail.length>0)) || ((discount>0) && !(notes.discount.reason.length>0)) )}"
+                    class="btn btn-primary btn-lg btn-cons pull-right" href="#modal-proceed" data-toggle="modal" ng-click="selectMode('proceed')">Proceed</button>
+                <button class="btn btn-default btn-lg btn-cons pull-right" ng-click="selectMode('save')" href="#modal-save" data-toggle="modal">Save</button>
+                <br/>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade slide-up disable-scroll" id="modal-proceed" tabindex="-1" role="dialog" aria-labelledby="modalSlideUpLabel"
+    aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <h5>Create
+                        <span class="semi-bold">Enrollment</span>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <br/>
+                    <form role="form" class="ng-pristine ng-valid">
+                        <div class="form-group-attached">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div pg-form-group class="required form-group form-group-default">
+                                        <label>Email ID</label>
+                                        <input style="text-transform: lowercase;" type="email" class="form-control" required placeholder="ex: example@website.com"
+                                            ng-model="user.email">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-7">
+                                    <div pg-form-group class="required form-group form-group-default">
+                                        <label>Full Name</label>
+                                        <input style="text-transform: capitalize;" type="text" class="form-control" required placeholder="ex: John Doe" ng-model="user.name">
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div pg-form-group class="required form-group form-group-default">
+                                        <label>Phone</label>
+                                        <input type="tel" class="form-control" required placeholder="ex: 9899099837" ng-model="user.phone">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class="col-sm-7">
+                                    <div pg-form-group class="form-group form-group-default form-group-default-select required">
+                                        <label class="">Access Duration</label>
+                                        <ui-select ng-model="subsmodels.selected" required>
+                                            <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices repeat="item in subsmodels">
+                                                <div ng-bind-html="trustAsHtml(item.name)"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <!--<div pg-form-group class="disabled form-group form-group-default form-group-default-select required">
+	                            						<label class="">Account Type</label>
+									<ui-select disabled="disabled" ng-model="accesstypes.selected" required>
+										<ui-select-match>{{$select.selected.name}}</ui-select-match>
+										<ui-select-choices repeat="item in accesstypes">
+											<div ng-bind-html="trustAsHtml(item.name)"></div>
+										</ui-select-choices>
+									</ui-select>
+								</div>-->
+                                    <div pg-form-group="" class="form-group form-group-default input-group col-sm-10" ng-disabled="paid" ng-class="{disabled: paid}">
+                                        <label>Link Expiry</label>
+                                        <input type="text" ng-class="{disabled: paid}" ng-disabled="paid" class="form-control" style="margin-bottom:0px" placeholder="Never"
+                                            ng-model="expiry" ui-jq="datepicker" data-date-format="dd/mm/yyyy">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class="col-sm-7">
+                                    <div pg-form-group="" class="form-group form-group-default input-group col-sm-10">
+                                        <label>Course Start Date</label>
+                                        <input type="text" class="form-control" style="margin-bottom:0px" placeholder="Never" ng-model="course_start" ui-jq="datepicker"
+                                            data-date-format="dd/mm/yyyy">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div pg-form-group class="form-group form-group-default form-group-default-select required">
+                                        <label>User's State</label>
+                                        <select ng-model="user_state" style="width: 90%;">
+                                            <option value="">Please Select</option>
+                                            <optgroup label="States">
+                                                <option value="andhra-pradesh">Andhra Pradesh</option>
+                                                <option value="arunachal-pradesh">Arunachal Pradesh</option>
+                                                <option value="assam">Assam</option>
+                                                <option value="bihar">Bihar</option>
+                                                <option value="chhattisgarh">Chhattisgarh</option>
+                                                <option value="goa">Goa</option>
+                                                <option value="gujurat">Gujurat</option>
+                                                <option value="haryana">Haryana</option>
+                                                <option value="himachal-pradesh">Himachal Pradesh</option>
+                                                <option value="jammu-and-kashmir">Jammu & Kashmir</option>
+                                                <option value="jharkhand">Jharkhand</option>
+                                                <option value="karnataka">Karnataka</option>
+                                                <option value="kerala">Kerala</option>
+                                                <option value="madhya-pradesh">Madhya Pradesh</option>
+                                                <option value="maharashtra">Maharashtra</option>
+                                                <option value="manipur">Manipur</option>
+                                                <option value="meghalaya">Meghalaya</option>
+                                                <option value="mizoram">Mizoram</option>
+                                                <option value="nagaland">Nagaland</option>
+                                                <option value="odisha">Odisha</option>
+                                                <option value="punjab">Punjab</option>
+                                                <option value="rajasthan">Rajasthan</option>
+                                                <option value="sikkim">Sikkim</option>
+                                                <option value="tamil-nadu">Tamil Nadu</option>
+                                                <option value="telangana">Telangana</option>
+                                                <option value="tripura">Tripura</option>
+                                                <option value="uttar-pradesh">Uttar Pradesh</option>
+                                                <option value="west-bengal">West Bengal</option>
+                                            </optgroup>
+                                            <optgroup label="Union Territories">
+                                                <option value="andaman-and-nicobar-islands">Andaman & Nicobar Islands</option>
+                                                <option value="chandigarh">Chandigarh</option>
+                                                <option value="dadra-and-nagar-haveli">Dadra & Nagar Haveli</option>
+                                                <option value="daman-and-diu">Daman & Diu</option>
+                                                <option value="delhi">The Government of NCT of Delhi</option>
+                                                <option value="lakshadweep">Lakshadweep</option>
+                                                <option value="puducherry">Puducherry</option>
+                                            </optgroup>
+                                            <optgroup label="Others">
+                                                <option value="outside-india">USD Payment</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-sm-8">
+                        </div>
+                        <div class="col-sm-4 m-t-10 sm-m-t-10">
+                            <button type="button" class="{{ user.email.length > 0 && user.name.length > 0 && user.phone.length > 0 && user_state.length > 0 ?'':'disabled';}} btn btn-primary btn-block m-t-5"
+                                ng-click="submitPackage();" ng-disabled="isDisabled">Commit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade slide-up disable-scroll" id="modal-save" tabindex="-1" role="dialog" aria-labelledby="modalSlideUpLabel"
+    aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <h5>Save
+                        <span class="semi-bold">Package</span>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <br/>
+                    <form role="form" class="ng-pristine ng-valid">
+                        <div class="form-group-attached">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div pg-form-group class="required form-group form-group-default">
+                                        <label>Email ID</label>
+                                        <input style="text-transform: lowercase;" type="email" class="form-control" required placeholder="ex: example@website.com"
+                                            ng-model="user.email">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-7">
+                                    <div pg-form-group class="required form-group form-group-default">
+                                        <label>Full Name</label>
+                                        <input style="text-transform: capitalize;" type="text" class="form-control" required placeholder="ex: John Doe" ng-model="user.name">
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div pg-form-group class="required form-group form-group-default">
+                                        <label>Phone</label>
+                                        <input type="tel" class="form-control" required placeholder="ex: 9899099837" ng-model="user.phone">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--	<div class='row'>
+						<div class="col-sm-7">
+								<div pg-form-group class="form-group form-group-default form-group-default-select required">
+	                            	<label class="">Access Duration</label>
+									<ui-select ng-model="subsmodels.selected" required>
+										<ui-select-match>{{$select.selected.name}}</ui-select-match>
+										<ui-select-choices repeat="item in subsmodels">
+											<div ng-bind-html="trustAsHtml(item.name)"></div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+							</div>
+							<div class="col-sm-5">
+								<div pg-form-group class="disabled form-group form-group-default form-group-default-select required">
+	                            						<label class="">Account Type</label>
+									<ui-select disabled="disabled" ng-model="accesstypes.selected" required>
+										<ui-select-match>{{$select.selected.name}}</ui-select-match>
+										<ui-select-choices repeat="item in accesstypes">
+											<div ng-bind-html="trustAsHtml(item.name)"></div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+								<div pg-form-group="" class="form-group form-group-default input-group col-sm-10" ng-disabled="paid" ng-class="{disabled: paid}">
+									<label>Link Expiry</label>
+									<input type="text" ng-class="{disabled: paid}" ng-disabled="paid" class="form-control" style="margin-bottom:0px" placeholder="Never" ng-model="expiry" ui-jq="datepicker" data-date-format="dd/mm/yyyy">
+									<span class="input-group-addon">
+									<i class="fa fa-calendar"></i>
+									</span>
+								</div>
+							</div>
+						</div>-->
+                        </div>
+                    </form>
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-sm-8">
+                        </div>
+                        <div class="col-sm-4 m-t-10 sm-m-t-10">
+                            <button type="button" class="{{(user.email.length > 0 && user.name.length > 0 && user.phone.length > 0)?'':'';}} btn btn-primary btn-block m-t-5"
+                                ng-click="submitPackage(false);" ng-disabled="isDisabled">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade slide-up disable-scroll" id="modal-transaction" tabindex="-1" role="dialog" aria-labelledby="modalSlideUpLabel"
+    aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <h5>Transaction Details</h5>
+                </div>
+                <div class="modal-body">
+                    <br/>
+                    <form role="form" class="ng-pristine ng-valid">
+                        <div class="form-group-attached">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div pg-form-group class="form-group form-group-default form-group-default-select required">
+                                        <label>Payment Info</label>
+                                        <ui-select ng-model="notes.transaction.mode" required ng-change="description=$select.selected.desc">
+                                            <ui-select-match>{{$select.selected.mode}}</ui-select-match>
+                                            <ui-select-choices repeat="x in transactionModes">
+                                                <div ng-bind-html="trustAsHtml(x.mode)"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div pg-form-group class="required form-group form-group-default">
+                                        <label>{{notes.transaction.mode.desc}}</label>
+                                        <textarea style="text-transform: lowercase;" class="form-control" required ng-model="notes.transaction.detail" key-enter="modal-transaction"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-sm-8">
+                        </div>
+                        <div class="col-sm-4 m-t-10 sm-m-t-10">
+                            <button type="button" class="btn btn-primary btn-block m-t-5" data-dismiss="modal" aria-hidden="true">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade slide-up disable-scroll" id="modal-discount" tabindex="-1" role="dialog" aria-labelledby="modalSlideUpLabel"
+    aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <h5>Discount</h5>
+                </div>
+                <div class="modal-body">
+                    <br/>
+                    <form role="form" class="ng-pristine ng-valid">
+                        <div class="form-group-attached">
+                            <!--<div class="row hide">
+							<div class="col-sm-12">
+								<div class="required form-group form-group-default">
+									<label style="float: left;">Amount</label>
+									<input type="text" class="form-control" placeholder="Enter amount." value="" />
+								</div>
+							</div>
+						</div>-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="required form-group form-group-default">
+                                        <label style="float: left;">Reason</label>
+                                        <textarea class="form-control" required placeholder="Please provide reason." ng-model="notes.discount.reason" key-enter="modal-discount"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <br/>
+                    <div class="row">
+                        <div class="col-sm-8">
+                        </div>
+                        <div class="col-sm-4 m-t-10 sm-m-t-10">
+                            <button type="button" class="btn btn-primary btn-block m-t-5" data-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade slide-up disable-scroll" id="modal-discount-amount" tabindex="-1" role="dialog" aria-labelledby="modalSlideUpLabel"
+    aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <h5>Discount</h5>
+                </div>
+                <div class="modal-body">
+                    <br/>
+                    <form role="form" class="ng-pristine ng-valid">
+                        <div class="form-group-attached">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="required form-group form-group-default">
+                                        <label style="float: left;">Amount ( in {{currencyUSD ? "$" : "&#8377;"}} )</label>
+                                        <input type="text" class="form-control" placeholder="Enter amount." value="" ng-change="upPrice()" ng-model="notes.discount.amount"
+                                            key-enter="modal-discount-amount" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <br/>
+                    <div class="row">
+                        <div class="col-sm-8">
+                        </div>
+                        <div class="col-sm-4 m-t-10 sm-m-t-10">
+                            <button type="button" class="btn btn-primary btn-block m-t-5" ng-click="upPrice(-1)" data-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <button href="#modal-electives" id="initiateElective" style="display:none;" data-toggle="modal">Show Electives</button> -->
+<div class="modal fade slide-up disable-scroll" id="modal-electives" tabindex="-1" role="dialog" aria-labelledby="modalSlideUpLabel"
+    aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close fs-14"></i>
+                    </button>
+                    <h5>Electives</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <ul>
+                            <li ng-repeat="name in elect_course_text">{{name}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .electives td.col-md-5 span {
+        font-weight: bold;
+    }
+</style>

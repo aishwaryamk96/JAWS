@@ -1,0 +1,57 @@
+@CHARSET "ISO-8859-1";
+/* Reset CSS
+ * --------------------------------------- */
+
+.wrap{
+	margin-left: auto;
+	margin-right: auto;
+	width: 960px;
+	position: relative;
+}
+#menu li {
+	display:-webkit-box;
+	margin: 10px;
+	color: #000;
+	background:#dedede;
+	-webkit-border-radius: 10px;
+            border-radius: 10px;
+}
+#menu li.active{
+	/*background:#f58221;*/
+	color: #fff;
+}
+#menu li a{
+	text-decoration:none;
+	color: #000;
+}
+#menu li.active a:hover{
+	color: #f58221;
+}
+#menu li:hover{
+	background:#dedede;
+	border-color:1px solid #f58221;
+}
+#menu li a,
+#menu li.active a{
+	padding: 8px 8px;
+	display:block;
+}
+#menu li.active a{
+	color: #fff;
+}
+#menu{
+	position:fixed;
+	top:40%;
+	right:0;
+	height: 40px;
+	z-index: 70;
+	width: auto;
+	padding: 0;
+	margin:0;
+}
+.twitter-share-button{
+	position: fixed;
+	z-index: 99;
+	right: 149px;
+	top: 9px;
+}

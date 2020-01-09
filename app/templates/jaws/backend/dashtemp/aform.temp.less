@@ -1,0 +1,88 @@
+// pagination section
+@pagination-a-padding: 8px;
+@pagination-a-padding-side: 13px;
+@pagination-li-padding: 0px;
+@pagination-li-padding-side: 3px;
+@pagination-a-border: rgb(202,173,162);
+@pagination-a-color: rgb(255,255,255);
+@pagination-a-background: rgb(85,26,139);
+@pagination-a-active-background: rgb(220,220,220);
+
+.boxed(@margin: 0px; @padding: 0px) {
+	box-sizing: border-box;
+	margin: @margin;
+	padding: @padding;
+}
+
+.user_details, .agent-details{
+	text-transform: none;
+	font-size: 13px;
+}
+
+// Pagination Section
+ul.pagination{
+	list-style: none; 
+	display: inline-block; 
+	.boxed();
+	li {
+		display: inline;
+		.boxed(@padding: @pagination-li-padding @pagination-li-padding-side );
+		a {
+			.boxed(@padding: @pagination-a-padding @pagination-a-padding-side );
+			text-decoration: none; 
+			border: 1px solid @pagination-a-border;
+			&:hover {
+				background: @pagination-a-background; 
+				color: @pagination-a-color;
+			}
+
+			&.active {
+				background: @pagination-a-active-background;
+				&:hover{
+					background: @pagination-a-background;
+				}
+			}
+		}		
+	}
+}
+
+// Tooltip Section
+.tooltiptext {
+    width: auto;
+    height: auto;
+    padding: 20px;
+    border: 1px solid @pagination-a-border;
+    box-shadow: 0 0 3px rgba(0,0,0,.3);
+    -webkit-box-shadow: 0 0 3px rgba(0,0,0,.3);
+    border-radius:3px;
+    -webkit-border-radius:3px;
+    position:absolute;
+    display:none;
+	z-index:9999;
+	background: @pagination-a-color;
+	text-transform: none;
+	color: #000;
+	font-size: 15px;
+	
+	&:hover{
+		display:block !important;
+	}
+	
+}
+.tooltip:hover + .tooltiptext {
+    display:block !important;
+}
+
+div.accordian-panel-select{
+	.fa{
+		cursor: pointer;
+		.boxed(@padding: @pagination-a-padding );
+	}
+}
+
+div.section-col{
+	.fa{
+		cursor: pointer;
+		.boxed(@padding: @pagination-a-padding );
+	}
+}

@@ -1,0 +1,23 @@
+.hidden {
+	display: none!important;
+}
+.chat-body {
+	margin-top: 60px;
+	margin-bottom: 60px;
+}
+#userInput {
+	max-height: 82px;
+	min-height: 52px;
+	padding-left: 10px;
+	padding-right: 62px;
+	resize: vertical;
+}
+.flex-auto {
+	flex: 1 1 auto;
+}
+.fixed-right {
+	right: 0px;
+}
+.wrap-text {
+	word-break: break-word;
+}

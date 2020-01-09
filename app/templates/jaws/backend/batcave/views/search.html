@@ -1,0 +1,33 @@
+<div class="search-body">
+	<h2 class="results-header" ng-hide="searching">Search results for: "{{query}}"<i class="fa fa-cog search-settings-link" aria-hidden="true" ng-click="settingsShow($event)"></i></h2>
+	<ul class="search-settings" ng-show="settings_show">
+		<li class="search-setting-elem" style="border-bottom: 1px solid darkgray;border-radius: 3px 3px 0px 0px"><i class="fa fa-search-plus search-plus search-setting-icon" aria-hidden="true"></i>Advanced Search</li>
+		<li class="search-setting-elem" style="border-radius: 0px 0px 3px 3px"><i class="fa fa-cog search-settings-btn search-setting-icon" aria-hidden="true"></i>Search Settings</li>
+	</ul>
+	<h2 class="results-header" ng-show="searching">Searching results for: "{{query}}"</h2>
+	<span class="result-count" ng-hide="searching">{{results.length}} results returned<span ng-show="exec_time"> in {{exec_time}} seconds</span>.</span>
+	<div paginated ng-show="results.length && !searching">
+		<ul>
+			<li class="list-item" ng-repeat="r in results | filter : resultsByRange">
+				<a href="#!/{{r.type}}/{{r.id}}">{{r.name}} <span ng-show="r.type == 'user'">({{r.email}})</span></a>
+				<div class="s">
+					<span ng-show="r.type == 'user' && r.sis_id.length">{{r.sis_id}} | {{r.bundle}} ({{r.start_date}} to {{r.end_date}})</span>
+					<span ng-show="r.type == 'user' && !r.sis_id.length">Unenrolled</span>
+					<span ng-show="r.type == 'course'">{{r.sis_id}}</span>
+				</div>
+			</li>
+		</ul>
+		<center>
+			<ul class="pages" ng-show="results.length > resultsPerPage">
+				<li class="page-num page-link" ng-show="currentPage > 1"><i class="fa fa-chevron-left" aria-hidden="true" ng-click="pageChange(currentPage - 1)"></i></li>
+				<li class="page-num" ng-repeat="n in range(1, totalPages) | filter: pagesByRange">
+					<span ng-click="pageChange(n)" ng-class="{'page-link': n != currentPage}">{{n}}</span>
+				</li>
+				<li class="page-num page-link" ng-show="currentPage < totalPages"><i class="fa fa-chevron-right" aria-hidden="true" ng-click="pageChange(currentPage + 1)"></i></li>
+			</ul>
+		</center>
+	</div>
+	<div class="no-results" ng-show="!results.length && !searching">
+		<h3>No results found...</h3>
+	</div>
+</div>

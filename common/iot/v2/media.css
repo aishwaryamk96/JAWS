@@ -1,0 +1,499 @@
+@media(max-width:360px){
+	.beginner_internet_text{
+		font-size: 13px;
+		padding: 1px 12px 5px;
+		}
+	ul.tab li {
+		width: 33.33%;
+	}
+	ul.tab li a {
+		padding: 20px 10px;
+		font-size: 10px;
+	}
+	.custom-tabs li{
+	    width:33%;
+		text-align:center;
+	}	
+	.custom-tabs li a{
+	    padding: 20px 0px !important;
+		font-size:9px !important;
+	}	
+	.vxs-padding-left-15{
+		padding-left:15px;
+	}
+	.spe-first-tab-custom li{
+		height: 80px;
+		border-bottom: 1px solid #e6e6e6;
+	}
+}
+
+@media(max-width:767px){
+	.beginner_internet_back{
+	background:none;
+	font-size:17px !important;
+	}
+	.text-center-xs{
+	text-align:center;
+	}
+	.loginmodal{
+		width:95%;
+		margin:0 auto;
+	}
+	.modal-dialog{
+		width:95%;
+	}
+	.navbar{
+		padding-top:0px;
+		padding-bottom:0px;
+	}
+	.padding-right-none-xs{
+		padding-right:0px !important;
+	}
+	.padding-left-none-xs{
+		padding-left:0px !important;
+	}
+	.padding-right-15-xs{
+		padding-right:15px !important;
+	}
+	.padding-left-15-xs{
+		padding-left:15px !important;
+	}
+	.enroll-link{
+		width:90%;
+	}
+	.banner-link a:after, .enroll-link a:after{
+	    top: -4px;
+	}
+	.navbar-nav {
+		float: left;
+	}
+	.navbar-default{
+		position:absolute;
+		right: 0;
+		left: 0;
+		z-index: 999;
+		
+	}
+	.navbar-brand {
+		float: left;
+	}
+	.logo-margin {
+		margin-top: 0px;
+	}
+	.wrapper{
+		width:100% ;
+		height:auto;
+		margin:0 auto;
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	.banner-title {
+		font-size: 23px;
+		margin-top: 55px;
+	}
+	p {
+		font-size: 15px;
+		line-height: 27px;
+	}
+	.skew-border{
+		border: 1px solid #f5831f;
+	}
+	.banner-link a {
+		/*font-size: 13px;*/
+		padding: 10px 10px;
+	}
+	.banner-link{
+		/*width:95%;*/
+	}
+	.section-padding-bottom {
+		padding-bottom: 30px;
+	}
+	.section-padding-top {
+		padding-top: 30px;
+	}
+	.section-title {
+		font-size: 21px;
+	}
+	.gary-strip {
+		margin-top: 13px;
+	}
+	.conatin-margin-top {
+		margin-top: 25px;
+	}
+	.padding-right-none {
+		padding-right: 15px !important;
+	}
+	.career-img-margin {
+		margin-top: 0px;
+	}
+	.graybg-padding {
+		padding: 20px;
+	}
+	.cancel-prize{
+		margin-top: 10px;
+		font-size: 18px;
+	}
+	.prize {
+		font-size: 25px;
+		margin-top: -5px;
+	}
+	.enroll-link {
+		margin-top: 17px;
+	}
+	.enroll-link a{
+		padding:9px 9px;
+		font-size: 12px;
+	}
+	.footer-contain {
+		font-size: 15px;
+		width: 100%;
+		line-height: 23px;
+	}
+	.footer-padding {
+		padding-top: 12px;
+		padding-bottom: 12px;
+	}
+	.footer-menu li a,
+	.footer-menu-title a{
+		font-size:13px !important;
+	}
+	.xs-pull-left{
+		float:left !important;
+	}
+	.testimonial-contain {
+		font-size: 18px;
+	}
+	.beginners-header-margin {
+       margin-top: 30px;
+    }
+	.innerpage-title {
+		font-size: 22px;
+	}
+	.specialization-box-title {
+		font-size: 17px;
+		line-height: 28px;
+	}
+	.specialization-box {
+		min-height: 367px;
+		padding: 70px 50px 0px 50px;
+	}
+	.specialization-box-contain {
+		font-size: 15px;
+		margin-top: 7px;
+		line-height: 23px;
+	}
+	.specialization-small-circle {
+		height: 50px;
+		width: 50px;
+		padding: 10px;
+	}
+	.feature-contain {
+		font-size: 14px;
+		line-height: 21px;
+	}
+	.navbar-custom {
+        padding-left: 28px;
+    }
+	.nav-scrolling {
+		margin-bottom:90px;
+     }
+	.innerpage-banner-title {
+		font-size: 25px;
+		margin-top: 30px;
+	}
+	.border-left-side {
+		border-left: solid 0px #c7c8ca;
+	}
+	 h4 {
+		font-size: 17px;
+	}
+	.site-header.stuck {
+		position:inherit !important;
+		}
+	.owl-theme{
+		position:relative;
+		margin-left:0px !important;
+		margin-right:0px !important;
+     }	
+	ul.tab li {
+		width: 33.33%;
+	}
+	ul.tab li a {
+		padding: 20px 10px;
+		font-size: 10px;
+	}
+	.xs-tab-link{
+		padding-bottom: 34px !important;
+	}
+	.landscape-custom{
+		padding-top:25px;
+		width:100%;
+		margin:auto;
+	}	
+   .landscape-custom-center{
+		padding-top:25px;
+		width:100%;
+		margin:auto;
+    }	
+	.custom-tabs li{
+	    width:33%;
+		text-align:center;
+	}	
+	.custom-tabs li a{
+	    padding: 20px 0px !important;
+		font-size:18px;
+	}
+	.tab-contain-body {
+		padding: 20px 20px 20px 20px;	
+	}	
+	.xs-padding-top-15{
+		padding-top:15px;
+	}	
+	.timeline-label h2{
+        padding-top: 20px;
+        padding-bottom: 45px;
+        font-size: 22px;
+	}	
+	.timeline-label h3 {
+		font-size: 20px;
+    }	
+	.timeline-centered .timeline-entry {
+        margin-left: 15px;
+    }
+	.timeline-centered .timeline-entry .timeline-entry-inner .timeline-label {
+		margin-left: 100px;
+	}
+	.timeline-centered:before {
+        margin-left: 35px;
+     }
+	 .timeline-mini-icon {
+		left: -75px;
+     }
+	 .diff-course-title {
+		font-size: 21px;
+	}
+	.black-title {
+		font-size: 22px;
+	}
+	.courseforme-contain-width {
+		width: 100%;
+		margin-top: 10px;
+	}
+	.tabcontent {
+		padding: 40px 20px 20px 20px;
+	}
+	.diff-course-subtitle {
+		font-size: 15px;
+	}
+	.spe-course-title {
+		font-size: 19px;
+		padding-bottom: 10px;
+		padding-top:15px;
+	}
+	.tab-box-margin {
+		margin-top: 35px;
+	}
+	.spe-gray-band-text {
+		line-height: 25px;
+		padding-bottom: 10px;
+		font-size: 15px;
+	}
+	.certificate-contain {
+		width: 100%;
+		margin-top: 10px;
+	}
+	.spe-tabbing2-title {
+		font-size: 17px;
+		padding-bottom: 5px;
+	}
+	.spe-gray-band {
+		padding: 10px 0px 20px 0px;
+	}
+	.expert-title {
+		font-size: 19px;
+		padding-top: 15px;
+		padding-bottom: 5px;
+	}
+	.xs-btn-width-200{
+		width:200px;
+		}
+	.career-header{
+		height: inherit;
+	 } 
+	 .job-for-you{
+		height: inherit;
+	}	
+	.industry-leaders{
+		height: inherit;
+	}
+	.padding-top-xs-35{
+		padding-top:35px;
+	}
+	.font-size-23{
+		font-size:23px;
+	}
+	.xs-num-margin{
+		margin-top:10px;
+	}
+	.xs-margin-top-30{
+		margin-top:30px;
+	}
+	.minhei150 {
+		min-height: 0px;
+	}
+	.xs-banner-btn-margin{
+		margin-top:15px;
+	}
+	.xs-text-align-left{
+		text-align: left;
+	}
+	.xs-thnku-title-padding{
+		padding-top:55px;
+	}
+	.xs-f-size-15{
+		font-size: 15px;
+	}
+	.xs-display-block{
+		display:block;
+	}
+	.xs-margin-left-0{
+		margin-left:0px;
+	}
+	.xs-margin-right-0{
+		margin-right:0px;
+	}
+	
+}
+
+@media only screen and (min-width:768px) and (max-width:1024px){
+	.navbar-nav {
+		float: right;
+	}
+	.wrapper{
+		width:100%;
+		height:auto;
+		margin:0 auto;
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	p {
+		font-size: 16px;
+		line-height: 25px;
+	}
+	.navbar-default .navbar-nav>li {
+		font-size: 12px;
+		margin-left: 0px; 
+    }
+	.navbar-default .navbar-nav>li>a {
+		padding: 10px 15px;
+	}
+	.logo-margin {
+		margin-top: 10px;
+	}
+	.navbar {
+		margin-bottom: 10px;
+	}
+	.navbar-brand img {
+		width: 230px;
+	}
+	.section-padding-bottom {
+		padding-bottom: 30px;
+	}
+	.section-padding-top {
+		padding-top: 30px;
+	}
+	.banner-title {
+		font-size: 25px;
+		margin-top: 25px;
+	}
+	.banner-contain {
+		margin-top: 5px;
+	}
+	.skew-border {
+		border: 1px solid #f5831f;
+	}
+	.banner-link {
+		font-size: 13px;
+		padding: 12px 15px;
+	}
+	.banner-link {
+		margin-left: 5px;
+	}
+	.section-title {
+		font-size: 25px;
+	}
+	.gary-strip {
+		margin-top: 12px;
+	}
+	.conatin-margin-top {
+		margin-top: 25px;
+	}
+	.career-contain {
+		font-size: 14px;
+		line-height: 23px;
+	}
+	.career-img-margin {
+		margin-top: 120px;
+	}
+	.graybg-padding {
+		padding: 30px;
+	}
+	.prize {
+		font-size: 26px;
+	}
+	.cancel-prize {
+		margin-top: 5px;
+		font-size: 19px;
+	}
+	.enroll-link{
+		 margin-top: 7px;
+	}
+	.enroll-link a {
+		font-size: 13px;
+		padding: 10px 20px;
+	}
+	.footer-contain {
+		font-size: 15px;
+		width: 100%;
+		line-height: 23px;
+	}
+	.footer-contact-info li {
+		font-size: 14px;
+	}
+	.footer-menu li a,
+	.footer-menu-title a{
+		font-size:14px !important;
+	}
+	.footer-padding {
+		padding-top: 15px;
+		padding-bottom: 15px;
+	}
+	.innerpage-title {
+		font-size: 25px;
+	}
+	.feature-contain {
+		font-size: 15px;
+	}
+	.specialization-box {
+		padding: 70px 50px 0px 50px;
+	}
+	.specialization-box-title {
+		font-size: 16px;
+	}
+	.specialization-box-contain {
+		font-size: 15px;
+		margin-top: 5px;
+	}
+	.innerpage-banner-title {
+		font-size: 33px;
+	}
+	.beginners-header-margin {
+		margin-top: 75px;
+	}
+	.nav-scrolling {
+		border-bottom: solid 0px #c7c8ca; 
+	}
+	.navbar-custom .navbar-nav>li>a {
+		padding: 10px 18px 0px 0px;
+	}
+}

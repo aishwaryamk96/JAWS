@@ -1,0 +1,338 @@
+// Light Theme Colors -------------------------------------------------------------- 
+// ------------------------------------------------------------------------------------ 
+
+// Responsiveness Resolution Stops - Medium
+@resolution-med-stop-1: 480px;
+@resolution-med-stop-2: 960px;
+@resolution-med-stop-3: 1200px;
+@resolution-med-stop-4: 1600px;
+@resolution-med-stop-5: 2100px;
+@resolution-med-stop-6: 2560px;
+
+// General 
+@anim-slide-offset-y: 12px;
+@blur-default: 3px;
+
+// Click Ripples
+@ripple-bkg-color: rgba(0,0,0,0.1);
+
+// Body
+@body-bkg-color: rgba(255,255,255,1);
+@body-text-desc-color: rgba(0,0,0,1);
+@body-text-desc-color: rgba(0,0,0,1);
+@body-text-desc-font-size: 100%;
+
+// Main-container
+@main-padding-x: 0px;
+@main-padding-y: 0px;
+
+@main-bkg-grad: none;
+@main-bkg-grad-stop: 100%;
+@main-bkg-color-top: rgba(255,255,255,1);
+@main-bkg-color-bottom: rgba(255,255,255,1);
+
+// Sections
+@section-gap : 5vw;
+
+// Corners - General
+@corner-gap: 2.5vw;
+@corner-size-min: 65px;
+@corner-padding: 10px;
+@corner-bkg-color: rgba(255,255,255,1);
+@corner-bkg-color-hover: rgba(0,0,0,0.075);
+@corner-shadow: 0.5vw 1vw 3.5vw rgba(0,0,0,0.25);
+@corner-halo: 0px 0px 7.5vw rgba(255,255,255,1);
+
+@corner-text-color: rgba(94,114,131,1);
+@corner-text-color-hover: rgba(30,45,60,1);
+@corner-fa-color: rgba(94,114,131,1);
+@corner-fa-color-hover: rgba(94,114,131,1);
+@corner-padding-text: 15px;
+@corner-font-size: 20px;
+@corner-font-size-fa: 22px;
+@corner-padding-fa: 25px 0;
+@corner-text-shadow: none;
+
+// Corner - Nav
+@nav-width: 28vw;
+@nav-width-max: 37vw;
+@nav-submenu-width: @nav-width-max * 65 / 100;
+@nav-submenu-extend-height: @corner-size-min * 1.5; 
+@nav-shadow-hover: 1vw 2vw 7.5vw rgba(0,0,0,0.35);
+@nav-divider-color: rgba(94,114,131,0.15);
+@nav-bkg-accent-color: rgba(94,114,131,1);
+@nav-pin-item-count: 6;
+@nav-pin-bkg-accent-color: rgba(94,114,131,1);
+@nav-active-border-width: 7px;
+
+// Corner - User
+@user-alert-size : 18px;
+@user-alert-padding: 2px;
+@user-alert-font-size: 12px;
+@user-alert-text-color: white;
+@user-alert-bkg-color: red;
+@user-alert-halo: 0px 0px 12px fade(red, 50%);
+@user-dp-border-color: transparent;
+@user-shadow-hover: 0.5vw 1vw 5vw rgba(0,0,0,0.25);
+
+// Corner - Msg
+@msg-bkg-color:  white;
+@msg-fa-color: rgba(94,114,131,1);
+
+
+
+// Search
+@search-bkg-color: rgba(255,255,255,1);
+
+// Top Container
+@top-min-height: 1.5vw;
+
+@top-bkg-grad: radial;
+@top-bkg-color-top: rgba(255,255,255,1);
+@top-bkg-color-bottom: rgba(255,255,255,0);
+
+@top-title-text-color: rgba(0,0,0,1);
+@top-title-font-size: 26px;
+@top-title-text-shadow: 0px 0px 1.5vw @top-bkg-color-top;
+
+@top-links-gap-top: 2px;
+@top-links-text-color: rgba(94,114,131,1);
+@top-links-text-color-hover: rgba(0,0,0,1);
+@top-links-font-size: (@top-title-font-size / 2);
+@top-links-text-shadow: 0px 0px 1.5vw @top-bkg-color-top;
+
+// Progress
+@progress-min-height: 2px;
+@progress-min-height-hover: 5px;
+@progress-min-margin-top: 11px;
+
+@progress-min-text-color: rgba(125,125,125,1);
+@progress-min-text-size: 12px;
+@progress-min-text-shadow: 0px 0px 10px rgba(255,255,255,1);
+
+@progress-min-bkg-grad: linear;
+@progress-min-bkg-color-left: rgba(0,0,0,0.25);
+@progress-min-bkg-color-right: fade(@progress-min-bkg-color-left, 0%);
+
+@progress-min-fill-color: rgba(255,120,40,1);
+@progress-min-halo-size: 10px;
+
+@progress-min-color-cycle-interval: 2s;
+@progress-min-color-cycle-stop-1: rgba(231,76,60,1);
+@progress-min-color-cycle-stop-2: rgba(255,120,40,1);
+@progress-min-color-cycle-stop-3: rgba(241,196,15,1);
+@progress-min-color-cycle-stop-4: rgba(46,204,113,1);
+@progress-min-color-cycle-stop-5: rgba(52,152,219,1);
+
+@scroll-width: 10px;
+@scroll-bkg-color: transparent;
+@scroll-fill-color: transparent;
+@scroll-thumb-bkg-color: rgba(94,114,131,0.85);
+@scroll-thumb-bkg-color-hover: rgba(94,114,131,1);
+
+// Buttons
+@button-margin: 0 10px;
+@button-padding: 20px 25px;
+@button-width-min: 200px;
+@button-font-size: 11px;
+
+@button-shadow: @corner-shadow;
+@button-hover-shadow: @corner-shadow;
+@button-active-shadow: 0.3vw 0.6vw 2.25vw rgba(0,0,0,0.125);
+
+@button-bkg-color: white;
+@button-hover-bkg-color: white;
+@button-active-bkg-color: rgba(94,114,131,0.05);
+
+@button-font-color: rgba(94,114,131,1);
+@button-hover-font-color: rgba(94,114,131,1);
+@button-active-font-color: rgba(94,114,131,1);
+
+//--
+@corner-glow-width: 55vw;
+@corner-glow-height: 35vh;
+
+//-- 
+
+@button-accent-orange-color: rgba(245,80,80,1);
+@button-accent-blue-color: rgba(65,131,240,1);
+@button-accent-green-color: rgba(50,120,90,1);
+@button-accent-red-color: rgba(255,50,60,1);
+
+// Text Input
+@input-textbox-height: 40px;
+@input-textbox-width: 225px;
+@input-textbox-padding-horizontal: 10px;
+
+@input-textbox-font-size: 14.25px;
+@input-textbox-placeholder-color: rgba(94,114,131,0.75);
+@input-textbox-font-color: black;
+@input-textbox-hover-font-color: black;
+@input-textbox-active-font-color: black;
+
+@input-textbox-border-width: 3px;
+@input-textbox-border-color: rgba(94,114,131,0.05);
+@input-textbox-hover-border-color: rgba(94,114,131,0.25);
+@input-textbox-active-border-color: rgba(94,114,131,0.5);
+
+// Modal
+@modal-bkg-color: white;
+@modal-shadow: 1vw 2vw 7.5vw rgba(0,0,0,0.35);
+@modal-width: 1000px;
+@modal-height: 550px;
+@modal-padding: 50px;
+
+@modal-header-text-shadow: 0px 0px 10px white;
+@modal-header-font-size: 20px;
+@modal-header-font-color: black;
+
+@modal-fa-close-shadow: 0px 0px 10px white;
+@modal-fa-close-size: 20px;
+@modal-fa-close-color: black;
+@modal-fa-close-hover-color: rgba(255,0,0,1);
+@modal-fa-close-hover-shadow: 0px 0px 25px rgba(255,0,0,0.5);
+
+@modal-content-font-size: 14px;
+@modal-content-font-color: black;
+
+// Accordian Panel
+@accord-panel-bkg-color: transparent;
+@accord-panel-min-height: 50px;
+@accord-panel-margin-top: 50px;
+
+@accord-panel-content-font-size: 18px;
+@accord-panel-min-content-font-size: 15px;
+@accord-panel-content-padding: 1px;
+@accord-panel-min-content-padding: 20px;
+@accord-panel-content-color: black;
+
+@accord-panel-tab-width: 55px;
+@accord-panel-tab-left: 5px;
+@accord-panel-tab-border-width: 2px;
+@accord-panel-tab-border-color: rgba(94,114,131,0.25);
+@accord-panel-tab-hover-border-color: rgba(94,114,131,0.75);
+@accord-panel-tab-active-border-color: @progress-min-fill-color;
+
+@accord-panel-tab-title-gap: 0px;
+@accord-panel-tab-title-margin-top: 24px;
+@accord-panel-tab-title-fa-size: 16px;
+@accord-panel-tab-title-fa-color: rgba(94,114,131,1);
+@accord-panel-tab-title-font-size: 15px;
+@accord-panel-tab-title-font-color: rgba(94,114,131,1);
+
+@accord-panel-sub-width: 212px;
+@accord-panel-sub-border-width: 2px;
+@accord-panel-sub-border-color: rgba(94,114,131,0.25);
+@accord-panel-sub-hover-border-color: rgba(94,114,131,0.75);
+@accord-panel-sub-active-border-color: @progress-min-fill-color;
+
+// Info-Box Container
+@info-box-margin: 15px;
+@info-box-gap: 7px;
+@info-box-padding: 12px;
+
+@info-box-font-size: 13px;
+@info-box-fa-size: 15px;
+
+@info-box-font-color: rgba(0,0,0,0.85);
+@info-box-fa-color: rgba(0,0,0,0.1);
+@info-box-bkg-color: rgba(0,0,0,0.06);
+
+@info-box-hover-font-color: rgba(0,0,0,1);
+@info-box-hover-fa-color: rgba(200,30,20,0.5);
+@info-box-hover-bkg-color: rgba(0,0,0,0.025);
+
+// JAWS Specific Layout -------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------
+
+// User Info Accordian
+@user-info-section-col-margin-horizontal: 15px;
+
+@user-info-pic-size: 60px;
+@user-info-pic-shadow: @corner-shadow;
+@user-info-pic-hover-shadow: 0.5vw 1vw 3.5vw rgba(0,0,0,0.35);
+
+// Course Container
+@course-row-margin-top: 1px;
+@course-height: 80px;
+@course-padding: 15px;
+@course-gap-horizontal: @course-row-margin-top;
+@course-border-width: 5px;
+@course-video-accent-color: rgba(94,114,131,1.0);
+@course-live-accent-color: rgba(225,92,85,1);
+
+@course-bkg-color: rgba(0,0,0,0.06);
+@course-hover-bkg-color: rgba(0,0,0,0.025);
+@course-active-bkg-color: white;
+@course-active-shadow: 0.5vw 0.75vw 3.5vw rgba(0,0,0,0.3);
+
+@course-mode-width: 100px;
+
+@course-title-font-color: rgba(0,0,0,0.75);
+@course-desc-font-color: rgba(0,0,0,0.5);
+@course-title-hover-font-color: rgba(0,0,0,1);
+@course-title-active-font-color: rgba(0,0,0,1);
+
+@course-title-font-size: 14px;
+@course-desc-font-size: 10px;
+@course-mode-font-size: 13px;
+@course-mode-price-font-size: 12px;
+
+@course-mode-bkg-color: transparent;
+@course-mode-hover-bkg-color: rgba(0,0,0,0.05);
+
+@course-mode-font-color: rgba(0,0,0,0.75);
+@course-mode-hover-font-color: rgba(0,0,0,1);
+@course-mode-live-active-font-color: white;
+@course-mode-video-active-font-color: white;
+
+@course-mode-price-font-color: rgba(0,0,0,0.35);
+@course-mode-hover-price-font-color: rgba(0,0,0,0.75);
+@course-mode-active-price-font-color: rgba(255,255,255,0.75);
+
+// Installment Container
+@instl-size: 200px;
+@instl-padding: 15px;
+@instl-margin: 15px;
+
+@instl-separator-color: rgba(94,114,131,0.125);
+
+@instl-bkg-color: rgba(0,0,0,0.075);
+@instl-hover-bkg-color: rgba(0,0,0,0.035);
+
+@instl-sum-font-size: 30px;
+@instl-sum-font-color: rgba(0,0,0,0.75);
+@instl-desc-font-size: 10px;
+@instl-desc-font-color: rgba(0,0,0,0.5);
+@instl-date-font-size: 18px;
+@instl-date-font-color: rgba(0,0,0,0.65);
+
+@instl-fa-close-font-size: 18px;
+@instl-fa-close-font-color: rgba(0,0,0,0.15);
+@instl-fa-close-hover-font-color: rgba(225,92,85,1);
+
+@instl-fa-edit-font-size: 15px;
+@instl-fa-edit-font-color: rgba(0,0,0,0.35);
+@instl-fa-edit-hover-font-color: rgba(0,0,0,0.75);
+
+@instl-fa-add-font-size: 25px;
+@instl-fa-add-font-color: rgba(0,0,0,0.35);
+@instl-fa-add-hover-font-color: rgba(0,0,0,0.5);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

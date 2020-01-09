@@ -1,0 +1,63 @@
+<style>
+	.w-25x {
+		width: 25px;
+		height: 25px;
+	}
+</style>
+<div class="page-title">
+	<section class="d-flex flex-column">
+		<label class="page-title-name m-0">Payments</label>
+		<!-- <div>
+			<label>{{orders.length}}</label> <label class="text-muted text-uppercase">total</label>
+		</div> -->
+	</section>
+	<section class="d-flex flex-column justify-content-center align-items-center">
+		<a class="btn btn-primary mb-0 d-flex flex-column justify-content-center" href="https://www.jigsawacademy.com/jaws/#!/app/payment/edit/" target="_blank">new</a>
+	</section>
+</div>
+<form class="container mt-3 mb-0" name="exportForm">
+	<div class="row">
+		<div class="col-4"></div>
+		<div class="col-4">
+			<label class="text-info">Export payments made:</label>
+		</div>
+		<div class="col-4"></div>
+	</div>
+	<div class="row">
+		<div class="col-4"></div>
+		<div class="col-4">
+			<div class="d-flex justify-content-between">
+				<div class="form-group bmd-form-group">
+					<label class="form-label bmd-form-label" for="fromDate">From</label>
+					<input type="date" name="fromDate" id="fromDate" class="form-control" required ng-model="export.from">
+				</div>
+				<div class="form-group bmd-form-group">
+					<label class="form-label bmd-form-label" for="toDate">To</label>
+					<input type="date" name="toDate" id="toDate" class="form-control" required ng-model="export.to">
+				</div>
+			</div>
+		</div>
+		<div class="col-4"></div>
+	</div>
+	<div class="row">
+		<div class="col-4"></div>
+		<div class="col-4">
+			<label class="text-info">For:</label>
+		</div>
+		<div class="col-4"></div>
+	</div>
+	<div class="row">
+		<div class="col-4"></div>
+		<div class="col-4">
+			<div class="d-flex justify-content-between">
+				<button type="button" class="btn btn-primary btn-raised" ng-click="export.submit()" ng-disabled="exportForm.$invalid || export.disable()">Enrollments</button>
+				<button type="button" class="btn btn-primary btn-raised" ng-click="export.submit(false)" ng-disabled="exportForm.$invalid || export.disable()">Applications</button>
+			</div>
+		</div>
+		<div class="col-4"></div>
+	</div>
+</form>
+<form id="exportFormHidden" method="POST">
+	<input type="hidden" name="from" id="fromFinal">
+	<input type="hidden" name="to" id="toFinal">
+</form>

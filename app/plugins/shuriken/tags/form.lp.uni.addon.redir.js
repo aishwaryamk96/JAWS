@@ -1,0 +1,1 @@
+$(document).ready(function(){document.addEventListener('shuriFormCB',function(e){setTimeout(function(){window.location.href='https://www.jigsawacademy.com/'},1500)},false)});

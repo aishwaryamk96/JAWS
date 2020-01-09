@@ -1,0 +1,76 @@
+<?php
+
+	load_module("user");
+
+	$users = [
+		"sherin.mca2006@gmail.com",
+		"julkachetna@gmail.com",
+		"vivek41191@gmail.com",
+		"mail2surbhi.shrivastav@gmail.com",
+		"viky.vignesh99@gmail.com",
+		"kavyagudavalli1993@gmail.com",
+		"praba89@gmail.com",
+		"jay.dwvd@gmail.com",
+		"thahir.hussain@gmail.com",
+		"s.dhandayuthapani@gmail.com",
+		"kachroo.romil@gmail.com",
+		"seema_kohli@hotmail.com",
+		"ravikanthvb@yahoo.com",
+		"kapilagarg26@gmail.com",
+		"poojavk1993@gmail.com",
+		"tm.sukesh@gmail.com",
+		"amanjain0405@yahoo.in",
+		"prasadpatole82@gmail.com",
+		"dev.dey009@gmail.com",
+		"ashish.iyer1495@gmail.com",
+		"maadhu.k@gmail.com",
+		"hiran.puthussery@gmail.com",
+		"aishwarya.gj@gmail.com",
+		"venkateshd623@gmail.com",
+		"pavang2579@gmail.com",
+		"anamdan1@in.ibm.com",
+		"gunamuthu14@gmail.com",
+		"amanvyas.30@gmail.com",
+		"seekabhas@gmail.com",
+		"shubhambharadwaj1108@gmail.com",
+		"mrunmaymastakarofficial@gmail.com",
+		"srikanthradhakrishna@gmail.com",
+		"tcarb96@gmail.com",
+		"arvindh3@gmail.com",
+		"sreehari.nvms.kolli@gmail.com",
+		"jayasimhar@gmail.com",
+		"drshailesh2@gmail.com",
+		"prsdjyt@gmail.com",
+		"ashwin2512@gmail.com",
+		"alexfrncs025@gmail.com",
+		"demallya@gmail.com",
+		"chetanseth5@gmail.com",
+		"rajaguru.cg@gmail.com",
+		"jpranay7828@gmail.com",
+		"umapv2007@gmail.com",
+		"arjunsr2013@gmail.com"
+	];
+
+	foreach ($users as $email) {
+
+		$user = user_get_by_email($email);
+		if (empty($user)) {
+			continue;
+		}
+
+		$subs = db_query("SELECT s.subs_id FROM subs AS s WHERE s.user_id = ".$user["user_id"]);
+		echo "$email => ".count($subs)."<br>";
+		// if (!empty($subs)) {
+
+		// 	$subs_id = $subs[0]["subs_id"];
+		// 	db_exec("UPDATE subs SET status = 'blocked' WHERE subs_id = ".$subs_id);
+		// 	db_exec("UPDATE user_enrollment SET status = 'deleted' WHERE subs_id = ".$subs_id);
+
+		// }
+		// else {
+		// 	echo "Skipped $email<br>";
+		// }
+
+	}
+
+?>

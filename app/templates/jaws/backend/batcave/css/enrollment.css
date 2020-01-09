@@ -1,0 +1,240 @@
+.custom-enrollment {
+	background-color: #eee;
+	display: flex;
+}
+/* Loading animation */
+.lds-hourglass {
+	margin-left: auto;
+	margin-right: auto;
+	width: 64px;
+	height: 64px;
+}
+.lds-hourglass:after {
+	content: " ";
+	display: block;
+	border-radius: 50%;
+	width: 0;
+	height: 0;
+	margin: 6px;
+	box-sizing: border-box;
+	border: 26px solid #fff;
+	border-color: #fff transparent #fff transparent;
+	animation: lds-hourglass 1.2s infinite;
+}
+@keyframes lds-hourglass {
+	0% {
+		transform: rotate(0);
+		animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+	}
+	50% {
+		transform: rotate(900deg);
+		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+	}
+	100% {
+		transform: rotate(1800deg);
+	}
+}
+/* Loading animation */
+.enr-parent {
+	background-color: white;
+	box-shadow: 0px 0px 10px 3px #aaa;
+	display: flex;
+	flex-direction: column;
+	/*height: 100%;*/
+	margin: 10px;
+	padding: 20px;
+	width: 100%;
+}
+.panel-top {
+	display: flex;
+}
+.enr-head {
+	display: flex;
+	flex-direction: row;
+	width: 70%;
+}
+.enr-title {
+	display: flex;
+	font-size: 30px;
+	font-weight: bold;
+}
+.names {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 10px;
+	text-align: right;
+}
+.user-info {
+	border-right: 1px solid #aaa;
+	padding-bottom: 5px;
+	padding-right: 10px;
+	text-transform: capitalize;
+}
+.course-info {
+	margin-left: 10px;
+	color: rgba(50,135,255,1);
+}
+.course-info a {
+	color: rgba(50,135,255,1);
+}
+.code {
+	font-size: 16px;
+}
+.course-sis-id {
+	text-align: left;
+}
+.enr-lab {
+	display: flex;
+	flex-direction: column;
+	width: 30%;
+}
+.enr-lab .each {
+	display: flex;
+	width: 100%;
+}
+.enr-lab .each .key, .value {
+	width: 50%;
+}
+.key-separator {
+	border-right: 1px solid #aaa;
+}
+.panel-second {
+	display: flex;
+	margin-top: 20px;
+}
+.panel-title {
+	display: flex;
+	font-size: 20px;
+	font-weight: bold;
+	padding-bottom: 5px;
+	text-transform: uppercase;
+}
+.topics-summary {
+	display: flex;
+	font-size: 16px;
+	font-weight: normal;
+	justify-content: space-between;
+	padding-left: 20px;
+	padding-bottom: 5px;
+	width: 15%;
+}
+.topics-summary .each {
+	display: flex;
+}
+.topics-summary .each label {
+	padding-top: 4px;
+}
+.panel-third {
+	display: flex;
+	flex-direction: column;
+}
+.panel-body {
+
+}
+.topics-list {
+	display: flex;
+	flex-direction: column;
+}
+.topic-head {
+	background-color: #ddd;
+	border-radius: 2px;
+	color: #59f;
+	display: flex;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+.column {
+	display: flex;
+	width: 20%;
+}
+.column:first-child {
+	width: 40%;
+}
+.topic-head .column {
+	justify-content: center;
+	padding: 10px 0px;
+}
+.topic-head .column:not(:last-child) {
+	border-right: 1px solid #999;
+}
+.topic-body {
+}
+.topic-info {
+	border-bottom: 1px solid #ddd;
+	display: flex;
+	padding: 10px 0px;
+}
+.topic-info .column:not(:first-child) {
+	justify-content: center;
+}
+.topic-info .topic-name {
+	padding-left: 10px;
+}
+.topic-info .topic-name label {
+	margin-left: 10px;
+}
+.fa-lock {
+	color: red;
+}
+.fa-unlock {
+	color: dodgerblue;
+}
+.fa-check-circle {
+	color: green;
+}
+.fa-play-circle {
+	color: yellow;
+}
+.fa-exclamation-triangle {
+	color: red;
+}
+.topic-content {
+	display: none;
+	flex-direction: column;
+	border-bottom: 1px solid #aaa;
+}
+input.accordian {
+	display: none;
+}
+input.accordian:valid ~ .topic-content {
+	display: flex!important;
+}
+.videos, .assignments {
+	display: flex;
+	flex-direction: column;
+}
+.content-type {
+	background-color: #ddd;
+	color: #aaa;
+	font-size: 16px;
+	font-weight: bold;
+	padding: 5px 20px;
+	text-transform: uppercase;
+}
+.content-list {
+	display: flex;
+	flex-direction: column;
+	font-size: 90%;
+}
+.content {
+	display: flex;
+	padding: 5px 10px 5px 20px;
+}
+.content:nth-child(even) {
+	background-color: #eee;
+}
+.content .column:not(:first-child) {
+	justify-content: center;
+}
+.no-content {
+	display: flex;
+	justify-content: center;
+	padding: 10px 0px;
+}
+.assignment-submission {
+	flex-direction: column;
+	font-size: 85%;
+}
+.assignment-submission label {
+	text-align: center;
+}

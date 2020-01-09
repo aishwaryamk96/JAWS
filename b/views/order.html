@@ -1,0 +1,184 @@
+<style>
+.instls:nth-child(odd) {
+	background-color: rgba(200,200,200,.2);
+}
+.instls .bmd-form-group {
+	padding: 0;
+}
+</style>
+<div class="page-title">
+	<section class="d-flex flex-column">
+		<label class="page-title-name">{{order.id==0 ? 'New' : 'View'}} Order</label>
+		<a ng-show="order.id!=0" href="https://payments.jigsawacademy.com/{{order.payment.token}}" target="_blank">https://payments.jigsawacademy.com/{{order.payment.token}}</a>
+	</section>
+	<button type="button" class="btn btn-primary" ng-click="saveOrder()">save</button>
+</div>
+<div class="container-fluid mt-3">
+	<div class="row">
+		<div class="col-8">
+			<div class="bg-light text-uppercase text-primary text-center py-2 rounded">details</div>
+			<div class="form-group bmd-form-group">
+				<label for="order-desc" class="bmd-label-floating">Description</label>
+				<textarea class="form-control" id="order-desc" ng-model="order.description"></textarea>
+			</div>
+			<div class="bg-light text-uppercase text-primary text-center py-2 rounded">
+				<span>total</span> <u class="text-danger cursor-pointer" ng-click="toggleCurrency();">{{order.payment.currency=='inr' ? '₹' : '$'}}</u> <span>{{order.payment.total | currency:'': 2}}</span> <span>({{order.payment.installments.length}} installments)</span>
+			</div>
+			<span class="text-danger text-center" ng-show="order.errors.installments.due_date">One or more installments have empty due dates</span>
+			<span class="text-danger text-center" ng-show="order.errors.payment">No installments defined</span>
+			<div class="row mx-0 mt-3 text-secondary">
+				<div class="col-2 bg-light py-3">Amount</div>
+				<div class="col-2 bg-light py-3">Discount</div>
+				<div class="col-2 bg-light py-3"><small>Instl Fees</small></div>
+				<div class="col-1 bg-light py-3">Tax (%)</div>
+				<div class="col-2 bg-light py-3">Total</div>
+				<div class="col-3 bg-light py-3">Due Date</div>
+			</div>
+			<div class="d-flex flex-column instls py-3" ng-repeat="instl in order.payment.installments">
+				<div class="row mx-0">
+					<div class="col-2">
+						<div class="form-group">
+							<input type="number" ng-readonly="{{instl.status=='paid'}}" required class="form-control" ng-model="instl.amount" placeholder="Amount" ng-change="recalculateInstl(instl)">
+						</div>
+					</div>
+					<div class="col-2">
+						<div class="form-group">
+							<input type="number" ng-readonly="{{instl.status=='paid'}}" required class="form-control" ng-model="instl.discount" placeholder="Discount" ng-change="recalculateInstl(instl)">
+						</div>
+					</div>
+					<div class="col-2">
+						<div class="form-group">
+							<input type="number" ng-readonly="{{instl.status=='paid'}}" required class="form-control" ng-model="instl.instl_fees" placeholder="Installment Fees" ng-change="recalculateInstl(instl)">
+						</div>
+					</div>
+					<div class="col-1">
+						<div class="form-group">
+							<input type="number" ng-readonly="{{instl.status=='paid'}}" required class="form-control" ng-model="instl.tax" placeholder="Tax" ng-change="recalculateInstl(instl)">
+						</div>
+					</div>
+					<div class="col-2">
+						<div class="form-group">
+							<input type="number" readonly class="form-control" ng-model="instl.total" placeholder="Total">
+						</div>
+					</div>
+					<div class="col-3">
+						<div class="form-group">
+							<input type="date" ng-readonly="{{instl.status=='paid'}}" class="form-control" ng-model="instl.due_by" placeholder="Due">
+						</div>
+					</div>
+				</div>
+				<div class="row mx-0 px-3">
+					<div class="form-group w-100" ng-show="instl.id==0">
+						<textarea class="form-control" ng-model="instl.comments" placeholder="Comments"></textarea>
+					</div>
+					<button type="button" class="btn btn-info btn-raised" ng-show="instl.id!=0" ng-click="viewComments(instl.comments)">View Comments</button>
+					<button type="button" class="btn btn-success btn-raised ml-3" ng-show="instl.status=='paid'" ng-click="viewPayment(instl)">View payment information</button>
+					<div class="d-flex ml-3">
+						<div class="d-flex flex-column justify-content-center">
+							<label class="text-muted mb-0">Paid On:</label>
+						</div>
+						<div class="d-flex flex-column justify-content-center ml-2">
+							<label class="mb-0 text-info">{{instl.paid_at}}</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="d-flex justify-content-center mt-3">
+				<button class="btn btn-info btn-raised" ng-click="order.payment.installments.push({id: 0, amount: 0, discount: 0, tax: 18, instl_fees: 0, total: 0, status:'unpaid'})">+</button>
+			</div>
+		</div>
+		<div class="col-4">
+			<div class="bg-light text-uppercase text-primary text-center py-2 rounded mb-3">user</div>
+			<div class="row">
+				<div class="col-8 mx-auto">
+					<div class="form-group bmd-form-group">
+						<label for="user-email" class="bmd-label-floating">Email</label>
+						<input type="email" ng-readonly="{{order.id!=0}}" required class="form-control" id="user-email" ng-model="order.user.email" ng-blur="fetchUser()">
+						<small class="text-danger" ng-show="order.errors.email">Email cannot be empty</small>
+					</div>
+					<div class="form-group bmd-form-group">
+						<label for="user-name" class="bmd-label-floating">Name</label>
+						<input type="text" ng-readonly="{{order.id!=0}}" required class="form-control" id="user-name" ng-model="order.user.name">
+					</div>
+					<div class="form-group bmd-form-group">
+						<label for="user-phone" class="bmd-label-floating">Phone</label>
+						<input type="text" ng-readonly="{{order.id!=0}}" required class="form-control" id="user-phone" ng-model="order.user.phone">
+					</div>
+					<!-- <div class="checkbox">
+						<label>
+							<input type="checkbox" ng-readonly="{{order.id!=0}}" ng-model="order.notify"> Email the link to the user?
+						</label>
+					</div> -->
+				</div>
+			</div>
+			<div class="bg-light text-uppercase text-primary text-center py-2 rounded my-3">gateway</div>
+			<div class="px-3">
+				<div class="form-group">
+					<label class="bmd-label-floating">Type</label>
+					<select class="form-control" ng-readonly="{{order.id!=0}}" ng-model="order.payment.channel" disabled>
+						<option ng-repeat="(key, value) in order.payment.channel_options" value="{{key}}">{{value}}</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="orderSummary" tabindex="-1" role="dialog" aria-labelledby="orderSummary" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Order Summary</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" tabindex="-1">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<label>Below is the link for the order:</label>
+				<input type="text" class="w-100 text-muted border-0" id="orderToken" value="https://payments.jigsawacademy.com/{{order.payment.token}}">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" ng-click="copyLink()">Copy</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="viewComments" tabindex="-1" role="dialog" aria-labelledby="viewComments" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Comments</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" tabindex="-1">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="d-flex flex-column border-bottom" ng-repeat="comment in comments">
+					<label class="text-muted">{{comment.creator.name}} says:</label>
+					<label>{{comment.text}}</label>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="viewPaymentInfo" tabindex="-1" role="dialog" aria-labelledby="viewPaymentInfo" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Comments</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" tabindex="-1">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<pre style="overflow:scroll;height:500px;">{{paymentMeta}}</pre>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>

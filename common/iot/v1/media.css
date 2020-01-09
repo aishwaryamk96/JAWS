@@ -1,0 +1,316 @@
+@media(max-width:360px){
+	.beginner_internet_text{
+      font-size: 13px;
+      padding: 1px 12px 5px;
+		}
+	}
+@media(max-width:767px){
+	.beginner_internet_back{
+	background:none;
+	font-size:17px !important;
+	}
+	.text-center-xs{
+	text-align:center;
+	}
+	.loginmodal{
+		width:95%;
+		margin:0 auto;
+	}
+	.modal-dialog{
+		width:95%;
+	}
+	.navbar{
+		padding-top:6px;
+		padding-bottom:6px;
+	}
+	.padding-right-none-xs{
+		padding-right:0px !important;
+	}
+	.padding-left-none-xs{
+		padding-left:0px !important;
+	}
+	.padding-right-15-xs{
+		padding-right:15px !important;
+	}
+	.padding-left-15-xs{
+		padding-left:15px !important;
+	}
+	.enroll-link{
+		width:90%;
+	}
+	#quote-carousel .carousel-indicators li{
+	    display: table-cell;
+	}
+	.banner-link a:after, .enroll-link a:after{
+	    top: -4px;
+	}
+	.navbar-nav {
+		float: left;
+	}
+	.navbar-default{
+		position:absolute;
+		right: 0;
+		left: 0;
+		z-index: 999;
+	}
+	.navbar-brand {
+		float: none;
+	}
+	.logo-margin {
+		margin-top: 0px;
+	}
+	.wrapper{
+		width:100%;
+		height:auto;
+		margin:0 auto;
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	.banner-title {
+		font-size: 23px;
+		margin-top: 55px;
+	}
+	p {
+		font-size: 15px;
+		line-height: 27px;
+	}
+	.skew-border{
+		border: 1px solid #f5831f;
+	}
+	.banner-link a {
+		/*font-size: 13px;*/
+		padding: 10px 10px;
+	}
+	.banner-link{
+		/*width:95%;*/
+	}
+	.section-padding-bottom {
+		padding-bottom: 30px;
+	}
+	.section-padding-top {
+		padding-top: 30px;
+	}
+	.section-title {
+		font-size: 22px;
+	}
+	.gary-strip {
+		margin-top: 13px;
+	}
+	.conatin-margin-top {
+		margin-top: 25px;
+	}
+	.padding-right-none {
+		padding-right: 15px !important;
+	}
+	.career-img-margin {
+		margin-top: 0px;
+	}
+	.graybg-padding {
+		padding: 20px;
+	}
+	.cancel-prize{
+		margin-top: 10px;
+		font-size: 18px;
+	}
+	.prize {
+		font-size: 25px;
+		margin-top: 2px;
+	}
+	.enroll-link {
+		margin-top: 17px;
+	}
+	.enroll-link a{
+		padding:9px 9px;
+		font-size: 12px;
+	}
+	.footer-contain {
+		font-size: 15px;
+		width: 100%;
+		line-height: 23px;
+	}
+	.footer-padding {
+		padding-top: 12px;
+		padding-bottom: 12px;
+	}
+	.footer-menu li a,
+	.footer-menu-title a{
+		font-size:13px !important;
+	}
+	.xs-pull-left{
+		float:left !important;
+	}
+	.testimonial-contain {
+		font-size: 18px;
+	}
+	.beginners-header-margin {
+       margin-top: 30px;
+    }
+	.innerpage-title {
+		font-size: 22px;
+	}
+	.specialization-box-title {
+		font-size: 17px;
+		line-height: 28px;
+	}
+	.specialization-box {
+		min-height: 367px;
+		padding: 70px 50px 0px 50px;
+	}
+	.specialization-box-contain {
+		font-size: 15px;
+		margin-top: 7px;
+		line-height: 23px;
+	}
+	.specialization-small-circle {
+		height: 50px;
+		width: 50px;
+		padding: 10px;
+	}
+	.feature-contain {
+		font-size: 15px;
+		line-height: 21px;
+	}
+	.navbar-custom {
+        padding-left: 28px;
+    }
+	.nav-scrolling {
+		margin-bottom:90px;
+     }
+	.innerpage-banner-title {
+		font-size: 25px;
+		margin-top: 60px;
+	}
+}
+
+@media only screen and (min-width:768px) and (max-width:1024px){
+	.navbar-nav {
+		float: right;
+	}
+	.wrapper{
+		width:100%;
+		height:auto;
+		margin:0 auto;
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	p {
+		font-size: 16px;
+		line-height: 25px;
+	}
+	.navbar-default .navbar-nav>li {
+		font-size: 12px;
+		margin-left: 0px; 
+    }
+	.navbar-default .navbar-nav>li>a {
+		padding: 10px 15px;
+	}
+	.logo-margin {
+		margin-top: 10px;
+	}
+	.navbar {
+		margin-bottom: 10px;
+	}
+	.navbar-brand img {
+		width: 230px;
+	}
+	.section-padding-bottom {
+		padding-bottom: 40px;
+	}
+	.section-padding-top {
+		padding-top: 40px;
+	}
+	.banner-title {
+		font-size: 25px;
+		margin-top: 25px;
+	}
+	.banner-contain {
+		margin-top: 5px;
+	}
+	.skew-border {
+		border: 1px solid #f5831f;
+	}
+	.banner-link {
+		font-size: 13px;
+		padding: 12px 15px;
+	}
+	.banner-link {
+		margin-left: 5px;
+	}
+	.section-title {
+		font-size: 25px;
+	}
+	.gary-strip {
+		margin-top: 12px;
+	}
+	.conatin-margin-top {
+		margin-top: 25px;
+	}
+	.career-contain {
+		font-size: 14px;
+		line-height: 23px;
+	}
+	.career-img-margin {
+		margin-top: 120px;
+	}
+	.graybg-padding {
+		padding: 30px;
+	}
+	.prize {
+		font-size: 26px;
+	}
+	.cancel-prize {
+		margin-top: 5px;
+		font-size: 19px;
+	}
+	.enroll-link{
+		 margin-top: 7px;
+	}
+	.enroll-link a {
+		font-size: 13px;
+		padding: 10px 20px;
+	}
+	.footer-contain {
+		font-size: 15px;
+		width: 100%;
+		line-height: 23px;
+	}
+	.footer-contact-info li {
+		font-size: 14px;
+	}
+	.footer-menu li a,
+	.footer-menu-title a{
+		font-size:14px !important;
+	}
+	.footer-padding {
+		padding-top: 15px;
+		padding-bottom: 15px;
+	}
+	.innerpage-title {
+		font-size: 25px;
+	}
+	.feature-contain {
+		font-size: 15px;
+	}
+	.specialization-box {
+		padding: 70px 50px 0px 50px;
+	}
+	.specialization-box-title {
+		font-size: 16px;
+	}
+	.specialization-box-contain {
+		font-size: 15px;
+		margin-top: 5px;
+	}
+	.innerpage-banner-title {
+		font-size: 33px;
+	}
+	.beginners-header-margin {
+		margin-top: 75px;
+	}
+	.nav-scrolling {
+		border-bottom: solid 0px #c7c8ca; 
+	}
+	.navbar-custom .navbar-nav>li>a {
+		padding: 10px 20px 0px 0px;
+	}
+}
