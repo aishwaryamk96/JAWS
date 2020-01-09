@@ -373,7 +373,13 @@
 				}
 
 				// Send Emails
+				log_activity("payment.email", $bundle_details);
+    			if (!empty($bundle_details["platform_id"]) && $bundle_details["platform_id"] == 2) {
+				$template_email .= ".edunxt";
+				}
+				else{
 				$template_email = "subs.init.success";
+				}
 
                 if(!empty($receipt_data) ){
 

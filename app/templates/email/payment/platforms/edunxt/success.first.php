@@ -195,9 +195,17 @@
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 12px;" align="center">
-                                                                                You have been provisionally admitted on the basis of MERIT to the 11-month <b>Postgraduate Diploma Program in Data Science </b>, awarded by Manipal Academy of Higher Education (MAHE).
+                                                                                You have been provisionally admitted on the basis of MERIT to the 11-month <b>Postgraduate Diploma Program in Data Science</b>, awarded by Manipal Academy of Higher Education (MAHE).
                                                                                 </td>
                                                                             </tr>
+
+                                                                            <tr>
+                                                                             <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 15px; padding-bottom: 20px;" align="center">
+                                                                                 Please note that the <b>final confirmation of admission is subject to physical document verification.</b> Kindly ensure to carry all the documents as stated in Annexure 3.0 (originals as well as one set of self-attested photocopies). <br><b>
+                                                                                 Please note – it is mandatory to submit a self-attested copy of your PAN card and AADHAAR card.</b>                  </td>
+                                                                            </tr>
+                                                                            
+                                                                            
                                                                             <tr>
                                                                                 <td class="p1 p1-cta" style="color: #333333; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px;" align="center">We have received your payment of <b><?php echo ((strcmp(strtolower($GLOBALS["content"]["emailer"]["currency"]), "inr") == 0) ? '&#8377;' : '&#36;' ).number_format(intval($GLOBALS["content"]["emailer"]["sum"])); ?></b> for:
                                                                                 </td>
@@ -733,11 +741,7 @@
                                                                     <![endif]-->
                                                             <table border="0" cellpadding="0" cellspacing="0" class="t10of12 basetable" align="left" style="border: none; border-collapse: collapse; border-spacing: 0; max-width: 672px; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
                                                                     
-                                                                            <tr>
-                                                                            <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 15px; padding-bottom: 20px;" align="center"
-                                                                                 Please note that the <b> final confirmation of admission is subject to physical document verification.</b> Kindly ensure to carry all the documents as stated in Annexure 3.0 (originals as well as one set of self-attested photocopies).<b> Please note – it is mandatory to submit a self-attested copy of your PAN card and AADHAAR card.</b>                  </td>
-                                                                                </tr>
-
+                                                                          
                                                                             <tr>
                                                                                 <td class="h1" style="color: #00A8E1; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 20px;" align="center">Happy Learning!</td>
                                                                             </tr>
