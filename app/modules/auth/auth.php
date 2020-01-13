@@ -18,7 +18,7 @@
 
 	// Prevent exclusive access
 	if (!defined("JAWS")) {
-		header('Location: https://www.jigsawacademy.com/index.php');
+		header('Location: '.WEB_URL.'/index.php');
 		die();
 	}
 
