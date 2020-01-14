@@ -1,3 +1,4 @@
 /external/
 /media/
 app/config/db.php
+app/config/config.php
