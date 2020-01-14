@@ -470,12 +470,13 @@ angular.module('jaws')
 
         $scope.getInstlFees = function () {
             var fees = 0, feesUSD = 0, flag = false;;
-
+            console.log("a"+defaultSettings.instalment_fees.inr);
+            console.log("installment Total" + $scope.instls.length);
             $scope.instls.forEach(function (instl, i) {
                 /*if (instl.due > 15) {*/
                 if (instl.due > 7) {
-                    fees += defaultSettings.instalment_fees.inr;
-                    feesUSD += defaultSettings.instalment_fees.usd;
+                    //fees += defaultSettings.instalment_fees.inr;
+                    //feesUSD += defaultSettings.instalment_fees.usd;
                     flag = true;
                 }
             });

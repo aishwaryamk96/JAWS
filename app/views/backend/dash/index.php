@@ -18,7 +18,7 @@
 
 	// Prevent exclusive access
 	if (!defined("JAWS")) {
-		header('Location: https://www.jigsawacademy.com');
+		header('Location: '.WEB_URL);
 		die();
 	}
 
@@ -57,7 +57,7 @@
 	load_module('course');
 
 	// Proceed - Prep
-	$jaws_path = 'https://'.$_SERVER['SERVER_NAME'].'/'.JAWS_PATH_LOCAL.'/';
+	$jaws_path = JAWS_URL.'/';
 	$jaws_path_tpl = $jaws_path."app/templates/jaws/backend/dash/";
 	$jaws_path_api = $jaws_path."webapi/backend/dash/";
 	$jaws_path_api_rest = $jaws_path."webapi/backend/dash/";
