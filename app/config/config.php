@@ -7,7 +7,7 @@
  */
 
 //URL declartions
-define("APP_ENV", "devuat");
+define("APP_ENV", "dev");
 define("HTTP_PROTOCOL","http");
 define("HTTPS_PROTOCOL","https");
 //for checking the server protocol
@@ -24,8 +24,8 @@ if(APP_ENV == "dev"){
 
 define("SERVER_PROTOCOL",$protocol);
 //@TODO check HTTP_HOST also,for safer side
-define("DOMAIN_TEXT","dev.jigsawacademy.com");
-define("DOMAIN","dev.jigsawacademy.com");
+define("DOMAIN_TEXT","jigsawacademylocal.com");
+define("DOMAIN","jigsawacademylocal.com");
 define("BASEURL",$basePrefix.DOMAIN);
 
 define("WEBSITE_URL", SERVER_PROTOCOL."://". constant("BASEURL"));
