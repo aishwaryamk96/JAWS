@@ -5,7 +5,7 @@
 	if (version_compare(PHP_VERSION, '5.3.10', '<')) {
 		die('Your host needs to use PHP 5.3.10 or higher to run JAWS!');
 	}
-
+ 
 	date_default_timezone_set("Asia/Kolkata");
 	error_reporting(0);
 
