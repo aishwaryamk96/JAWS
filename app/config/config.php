@@ -30,10 +30,10 @@ define("BASEURL",$basePrefix.DOMAIN);
 
 define("WEBSITE_URL", SERVER_PROTOCOL."://". constant("BASEURL"));
 
-define("ACCOUNTS_HOST","accounts".DOMAIN);
+define("ACCOUNTS_HOST","accounts.".DOMAIN);
 define("ACCOUNTS_URL",SERVER_PROTOCOL."://".ACCOUNTS_HOST);
 
-define("BATCAVE_HOST", "batcave".DOMAIN);
+define("BATCAVE_HOST", "batcave.".DOMAIN);
 define("BATCAVE_URL", SERVER_PROTOCOL."://".BATCAVE_HOST);
 
 define("JAWS_PATH", "jaws");
