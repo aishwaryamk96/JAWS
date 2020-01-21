@@ -39,7 +39,7 @@
         exit;
     }
     
-    $last_app_num = db_query( "SELECT `app_num` FROM `payment`  WHERE app_num LIKE '" . $format . "%' ORDER BY `app_num` DESC LIMIT 1");
+    $last_app_num = db_query( "SELECT `app_num` FROM `payment`  WHERE app_num LIKE '" . $format . "%' ORDER BY `create_date` DESC LIMIT 1");
     if(!empty($last_app_num)){
         $last_app_num = intval(substr($last_app_num[0]['app_num'], 6));
         $last_app_num++;
