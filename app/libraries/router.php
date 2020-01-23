@@ -142,6 +142,11 @@
 		}
 
 	}
+        
+        
+        function jawsResponse($result){
+            return json_encode($result);
+        }
 
 
 ?>

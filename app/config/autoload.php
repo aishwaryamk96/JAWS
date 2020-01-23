@@ -24,7 +24,8 @@
 
     // Load essential stuff
     // Do not load config files here - All config files are loaded automatically !
-
+ 
+    load_library("common");
     load_library("db");
     load_library("hook");
     load_library("router");

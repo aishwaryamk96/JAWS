@@ -214,4 +214,37 @@
 		}
 	}
 
+        //function to get the total count of the query
+        function db_count($query, $fetch_mode = -1) {
+
+		try {
+                        $res = $GLOBALS["jaws_db"]["db"]->query($query);
+			set_fetch_mode($res, $fetch_mode);
+			return $res->rowCount();
+		}
+		catch (PDOException $e) {
+			$GLOBALS["jaws_db"]["error"] = $e->getMessage();
+			return false;
+		}
+
+	}
+
+        // This will query the DB and return a result with certain
+        // limit and offset
+	function db_select_query($query, $limitsArr, $fetch_mode = -1) {
+
+		try {
+                        $limit = " LIMIT ".$limitsArr['offset'].",".$limitsArr['limit'];
+                        $sqlQuery = $query.$limit;
+                        $res = $GLOBALS["jaws_db"]["db"]->query($sqlQuery);
+			set_fetch_mode($res, $fetch_mode);
+			return $res->fetchAll();
+		}
+		catch (PDOException $e) {
+			$GLOBALS["jaws_db"]["error"] = $e->getMessage();
+			return false;
+		}
+
+	}
+
 ?>
