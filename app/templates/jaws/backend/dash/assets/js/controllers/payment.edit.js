@@ -511,6 +511,23 @@ angular.module('jaws')
             });
         };
 
+
+        $scope.getInstallmentDate = function(index){
+            
+            var today = new Date();
+            var date1 = new Date($scope.instls[index].due_date);
+            if(date1 >= today){
+                var date2 = new Date(today);
+                var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+                var dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                $scope.instls[index].due = dayDifference; 
+            }else{
+                $scope.instls[index].due = defaultSettings.instalment_date; 
+            }
+                
+      }
+
+
         $scope.instlFees = function() {
             // $scope.instl_fees = $scope.instl_fees_amt;
             defaultSettings.instalment_fees.inr = $scope.instl_fees_amt;
