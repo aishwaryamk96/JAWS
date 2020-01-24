@@ -91,7 +91,39 @@
 			</div>
 		</div>
 	</div>
+	<!-- Start Pagination-->
+	<div style="margin-top: 21px;">
+		<nav class="mb-5">
+			<ul class="pagination justify-content-center" ng-show="totalRecords > resultsPerPage">
+				<li class="page-item d-flex flex-column justify-content-center" ng-show="currentPage>1" title="First Page">
+					<span class="page-link" href="#" aria-label="Previous" ng-click="pageChange(1)">
+						<i class="fas fa-angle-double-left"></i>
+					</a>
+				</li>
+				<li class="page-item d-flex flex-column justify-content-center" ng-show="currentPage>1" title="Previous Page">
+					<span class="page-link" href="#" aria-label="Previous" ng-click="pageChange(currentPage - 1)">
+						<i class="fas fa-angle-left"></i>
+					</a>
+				</li>
+				<li class="page-item {{n==currentPage ? 'active' : ''}}" ng-repeat="n in range(1, totalPages) | filter: pagesByRange">
+					<span class="page-link" href="#" ng-click="pageChange(n)">{{n}}</span>
+				</li>
+				<li class="page-item d-flex flex-column justify-content-center" ng-show="currentPage<totalPages" title="Next Page">
+					<span class="page-link" href="#" aria-label="Next" ng-click="pageChange((currentPage) + (1))">
+						<i class="fas fa-angle-right"></i>
+					</span>
+				</li>
+				<li class="page-item d-flex flex-column justify-content-center" ng-show="currentPage<totalPages" title="Last Page">
+					<span class="page-link" href="#" aria-label="Previous" ng-click="pageChange(totalPages)">
+						<i class="fas fa-angle-double-right"></i>
+					</a>
+				</li>
+			</ul>
+		</nav>
+		</div>
+		<!-- End Pagination -->
 	<div class="card">
+		
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -105,8 +137,8 @@
 				</tr>
 			</thead>
 			<tbody ng-repeat="app in applications | filter:filter.filter | orderBy: '-submitted_on'">
-				<tr>
-					<th>{{$index + 1}}</th>
+				<tr> 	
+					<th>{{itemsPerPage *(currentPage-1)+$index+1}}</th>
 					<td>
 						<div class="d-flex flex-column">
 							<label>{{app.submitted_on | date: 'dd MMM yyyy, HH:mm'}}</label>
@@ -164,6 +196,37 @@
 			</tbody>
 		</table>
 	</div>
+	<!-- Start Pagination-->
+	<div style="margin-top: 21px;">
+		<nav class="mb-5">
+			<ul class="pagination justify-content-center" ng-show="totalRecords > resultsPerPage">
+				<li class="page-item d-flex flex-column justify-content-center" ng-show="currentPage>1" title="First Page">
+					<span class="page-link" href="#" aria-label="Previous" ng-click="pageChange(1)">
+						<i class="fas fa-angle-double-left"></i>
+					</a>
+				</li>
+				<li class="page-item d-flex flex-column justify-content-center" ng-show="currentPage>1" title="Previous Page">
+					<span class="page-link" href="#" aria-label="Previous" ng-click="pageChange(currentPage - 1)">
+						<i class="fas fa-angle-left"></i>
+					</a>
+				</li>
+				<li class="page-item {{n==currentPage ? 'active' : ''}}" ng-repeat="n in range(1, totalPages) | filter: pagesByRange">
+					<span class="page-link" href="#" ng-click="pageChange(n)">{{n}}</span>
+				</li>
+				<li class="page-item d-flex flex-column justify-content-center" ng-show="currentPage<totalPages" title="Next Page">
+					<span class="page-link" href="#" aria-label="Next" ng-click="pageChange(currentPage + 1)">
+						<i class="fas fa-angle-right"></i>
+					</span>
+				</li>
+				<li class="page-item d-flex flex-column justify-content-center" ng-show="currentPage<totalPages" title="Last Page">
+					<span class="page-link" href="#" aria-label="Previous" ng-click="pageChange(totalPages)">
+						<i class="fas fa-angle-double-right"></i>
+					</a>
+				</li>
+			</ul>
+		</nav>
+		</div>
+		<!-- End Pagination -->
 </div>
 <div class="modal fade" id="application" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-lg" role="document">
