@@ -608,7 +608,7 @@ angular.module("batcave", ["ngRoute"])
 	})
 	.directive('pagingControl',function(){
         return {
-          templateUrl: VIEWS + "/payments/applications/pagination.html",
+          templateUrl: VIEWS + "/pagination.html",
      }
     })
 	.run(['$rootScope', '$window', '$location', 'AuthService', function($rootScope, $window, $location, AuthService) {
@@ -2197,7 +2197,7 @@ angular.module("batcave", ["ngRoute"])
 				return text && form_name && lead_status && enroll_status;
 			}
 		};
-		$scope.apiResponse = function(response){
+		$scope.setPaginationParams = function(response){
 			$scope.totalPages = response.data.totalPages;
 			$scope.applications = response.data.data;
 			$scope.currentPage = parseInt(response.data.page);
@@ -2209,7 +2209,7 @@ angular.module("batcave", ["ngRoute"])
 			alert("Something went wrong... Retrying after a minute.");
 		}
 		else {
-			$scope.apiResponse(response);
+			$scope.setPaginationParams(response);
 		}
 		
 		/****************Ritesh Pagination******************/
@@ -2243,7 +2243,7 @@ angular.module("batcave", ["ngRoute"])
 			$scope.apiCall($scope.currentPage)
 			.then(function(response) { console.log($scope.currentPage);
 				$window.layoutOverlay.hide();
-				$scope.apiResponse(response);
+				$scope.setPaginationParams(response);
 				}, function(err) {
 					alert("Something went wrong... Retrying after a minute.");
 					$window.location.reload();
