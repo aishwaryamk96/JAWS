@@ -247,7 +247,7 @@ angular.module("batcave", ["ngRoute"])
 				controller: "applicationsCtrl",
 				resolve: {
 					response: function(applicationsService) {
-						return applicationsService.all(1);
+						return applicationsService.all();
 					}
 				}
 			})
@@ -489,10 +489,10 @@ angular.module("batcave", ["ngRoute"])
 	})
 	.factory("applicationsService", function($http) {
 		return {
-			all: function(value) { 
+			all: function(currentPage) { 
 				var config = {
 					params: {
-						page: value
+						page: (currentPage ? currentPage: 1)
 					}
 				};
 				return $http.get(API + "/payments/tracking/applications",config);
@@ -606,6 +606,11 @@ angular.module("batcave", ["ngRoute"])
 			}
 		}
 	})
+	.directive('pagingControl',function(){
+        return {
+          templateUrl: VIEWS + "/payments/applications/pagination.html",
+     }
+    })
 	.run(['$rootScope', '$window', '$location', 'AuthService', function($rootScope, $window, $location, AuthService) {
 		$rootScope.initialized = false;
 		AuthService.authenticate(true, function() {
@@ -2179,11 +2184,6 @@ angular.module("batcave", ["ngRoute"])
 	})
 	.controller("applicationsCtrl", function($rootScope, $scope, response, applicationsService,$window, $timeout) {
 		$rootScope.title = "Applications";
-		$scope.calrange = 1;
-		$scope.totalPagesresponse='';
-		$scope.page='';
-		$scope.totalRecords='';
-
 		$scope.filter = {
 			text: "",
 			form_name: "all",
@@ -2197,25 +2197,25 @@ angular.module("batcave", ["ngRoute"])
 				return text && form_name && lead_status && enroll_status;
 			}
 		};
-		$scope.apiresponse = function(response){
-			$scope.totalPagesresponse = response.data.totalPages;
+		$scope.apiResponse = function(response){
+			$scope.totalPages = response.data.totalPages;
 			$scope.applications = response.data.data;
 			$scope.currentPage = parseInt(response.data.page);
 			$scope.totalRecords = response.data.totalRecords;
 		}
+
+
 		if (!!response.data.error) {
 			alert("Something went wrong... Retrying after a minute.");
 		}
 		else {
-			$scope.apiresponse(response);
+			$scope.apiResponse(response);
 		}
-		
 		
 		/****************Ritesh Pagination******************/
 		$scope.resultsPerPage = $scope.applications.length;
 		($scope.resultsPerPageChange = function() {
-			$scope.totalPages = $scope.totalPagesresponse;
-			
+			$scope.totalPages = $scope.totalPages;
 		})();
 		$scope.itemsPerPage = 100;
 		$scope.pagesByRange = function(val) {
@@ -2233,7 +2233,6 @@ angular.module("batcave", ["ngRoute"])
 		}
 		$scope.range = function(min, max) {
 			var arr = [];
-			max = Math.ceil(max);
 			for (var i = min; i <= max; i++)
 				arr.push(i);
 			return arr;
@@ -2241,16 +2240,17 @@ angular.module("batcave", ["ngRoute"])
 		$scope.pageChange = function(pageNum) {  
 			$window.layoutOverlay.show(true);
 			$scope.currentPage = pageNum;
-			$scope.apicall($scope.currentPage)
+			$scope.apiCall($scope.currentPage)
 			.then(function(response) { console.log($scope.currentPage);
 				$window.layoutOverlay.hide();
-				$scope.apiresponse(response);
+				$scope.apiResponse(response);
 				}, function(err) {
 					alert("Something went wrong... Retrying after a minute.");
+					$window.location.reload();
 				});			
 		}	
 
-		$scope.apicall = function(pageNum){
+		$scope.apiCall = function(pageNum){
 			return applicationsService.all(pageNum);
 		}
 
