@@ -16,6 +16,9 @@
 
 	$unrestricted = auth_session_is_allowed("applications.get.adv");
 
+        //get offset and limit
+        $pageResult = getPaginationDetails('GET');
+
 	$form_name_mapping = [
 		"uc-apply" => ["(123, 122)", "PGPDM"],
 		"cyber-apply" => ["(135)", "Cyber Security"],
@@ -43,8 +46,14 @@
 
 	$return = [];
 	$pay_ids = [];
-	$payments = db_query("SELECT p.user_id, p.app_num, p.sum_total, a.*, p.pay_id, u.name, u.email, u.phone, s.combo, p.status, p.create_date, p.currency, um.city, ag.email AS agent_email, ag.name AS agent_name, cl.crm FROM payment AS p LEFT JOIN application AS a ON a.pay_id = p.pay_id INNER JOIN subs AS s ON s.pay_id = p.pay_id INNER JOIN user AS u ON u.user_id = p.user_id INNER JOIN user_meta AS um ON um.user_id = u.user_id LEFT JOIN user AS ag ON ag.user_id = a.agent_id LEFT JOIN crm_leads AS cl ON cl.email = u.email $join WHERE s.combo IN ('150,2', '239,2', '219,2', '249,2') AND p.create_date >= '2019-01-01' $where ORDER BY p.pay_id DESC;");
-	foreach ($payments as $pay) {
+
+        //get the TotalCount of results and query results
+        $query = "SELECT p.user_id, p.app_num, p.sum_total, a.*, p.pay_id, u.name, u.email, u.phone, s.combo, p.status, p.create_date, p.currency, um.city, ag.email AS agent_email, ag.name AS agent_name, cl.crm FROM payment AS p LEFT JOIN application AS a ON a.pay_id = p.pay_id INNER JOIN subs AS s ON s.pay_id = p.pay_id INNER JOIN user AS u ON u.user_id = p.user_id INNER JOIN user_meta AS um ON um.user_id = u.user_id LEFT JOIN user AS ag ON ag.user_id = a.agent_id LEFT JOIN crm_leads AS cl ON cl.email = u.email $join WHERE s.combo IN ('150,2', '239,2', '219,2', '249,2') AND p.create_date >= '2019-01-01' $where ORDER BY p.pay_id DESC";
+
+	$countResults = db_count($query);
+        $payments = db_select_query($query, $pageResult);
+
+        foreach ($payments as $pay) {
 
 		$pay_ids[] = $pay["pay_id"];
 		$pay["form_submit"] = json_decode($pay["form_submit"] ?? "[]", true);
@@ -133,6 +142,11 @@
 
 	}
 
-	die(json_encode($return));
 
+        $result['totalPages'] = ceil($countResults / ITEMS_PER_PAGE);
+        $result['page'] = $pageResult['page'];
+        $result['totalRecords'] = $countResults;
+        $result['data'] = $return;
+
+        die(jawsResponse($result));
 ?>
