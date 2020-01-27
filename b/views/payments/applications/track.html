@@ -91,7 +91,12 @@
 			</div>
 		</div>
 	</div>
+	<!-- Start Pagination-->
+	<paging-control ></paging-control>
+
+		<!-- End Pagination -->
 	<div class="card">
+		
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -105,8 +110,8 @@
 				</tr>
 			</thead>
 			<tbody ng-repeat="app in applications | filter:filter.filter | orderBy: '-submitted_on'">
-				<tr>
-					<th>{{$index + 1}}</th>
+				<tr> 	
+					<th>{{itemsPerPage *(currentPage-1)+$index+1}}</th>
 					<td>
 						<div class="d-flex flex-column">
 							<label>{{app.submitted_on | date: 'dd MMM yyyy, HH:mm'}}</label>
@@ -164,6 +169,9 @@
 			</tbody>
 		</table>
 	</div>
+	<!-- Start Pagination-->
+	<paging-control ></paging-control>
+		<!-- End Pagination -->
 </div>
 <div class="modal fade" id="application" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-lg" role="document">

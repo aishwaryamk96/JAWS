@@ -29,7 +29,8 @@ function getPaginationDetails($method = "GET"){
         case "GET":
         default:
             $queryParams = getQueryParams();
-            if(count($queryParams) > 0 && isset($queryParams['page']) && is_int($queryParams['page'])){
+           
+            if(count($queryParams) > 0 && isset($queryParams['page']) && is_numeric($queryParams['page'])){
                 $pageResult['page'] = $queryParams['page'];
             }
             $pageResult['offset'] = ( $pageResult['page'] - 1) * 100;

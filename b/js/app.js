@@ -489,8 +489,13 @@ angular.module("batcave", ["ngRoute"])
 	})
 	.factory("applicationsService", function($http) {
 		return {
-			all: function() {
-				return $http.get(API + "/payments/tracking/applications");
+			all: function(currentPage) { 
+				var config = {
+					params: {
+						page: (currentPage ? currentPage: 1)
+					}
+				};
+				return $http.get(API + "/payments/tracking/applications",config);
 			},
 			find: function($email) {
 				return $http.post(API + "/payments/tracking/applications", {email: email});
@@ -601,6 +606,11 @@ angular.module("batcave", ["ngRoute"])
 			}
 		}
 	})
+	.directive('pagingControl',function(){
+        return {
+          templateUrl: VIEWS + "/pagination.html",
+     }
+    })
 	.run(['$rootScope', '$window', '$location', 'AuthService', function($rootScope, $window, $location, AuthService) {
 		$rootScope.initialized = false;
 		AuthService.authenticate(true, function() {
@@ -2172,7 +2182,7 @@ angular.module("batcave", ["ngRoute"])
 			return date.getFullYear() + "-" + format(date.getMonth() + 1) + "-" + format(date.getDate());
 		}
 	})
-	.controller("applicationsCtrl", function($rootScope, $scope, response, applicationsService, $timeout) {
+	.controller("applicationsCtrl", function($rootScope, $scope, response, applicationsService,$window, $timeout) {
 		$rootScope.title = "Applications";
 		$scope.filter = {
 			text: "",
@@ -2187,29 +2197,67 @@ angular.module("batcave", ["ngRoute"])
 				return text && form_name && lead_status && enroll_status;
 			}
 		};
+		$scope.setPaginationParams = function(response){
+			$scope.totalPages = response.data.totalPages;
+			$scope.applications = response.data.data;
+			$scope.currentPage = parseInt(response.data.page);
+			$scope.totalRecords = response.data.totalRecords;
+		}
+
+
 		if (!!response.data.error) {
 			alert("Something went wrong... Retrying after a minute.");
 		}
 		else {
-			$scope.applications = response.data;
+			$scope.setPaginationParams(response);
 		}
-		// $timeout(_ => {
-		// 	$scope.api();
-		// }, 10000);
-		$scope.api = _ => {
-			applicationsService.all()
-				.then(res => {
-					// if (!!res.data.error) {
-					// 	alert("Something went wrong... Retrying after a minute.");
-					// }
-					// else {
-					// 	$scope.applications = res.data;
-					// }
-					// $timeout(_ => {
-					// 	$scope.api();
-					// }, 10000);
-				}, res => {});
+		
+		/****************Ritesh Pagination******************/
+		$scope.resultsPerPage = $scope.applications.length;
+		($scope.resultsPerPageChange = function() {
+			$scope.totalPages = $scope.totalPages;
+		})();
+		$scope.itemsPerPage = 100;
+		$scope.pagesByRange = function(val) {
+			var currPage = $scope.currentPage;
+			var totalPages = $scope.totalPages;
+			if (currPage < 6) {
+				return (val <= 10 ? true : false);
+			}
+			if (currPage >= 6 && currPage <= totalPages) {
+				return ((currPage - val <= 5 && val - currPage <= 5) ? true : false);
+			}
+			if (currPage > totalPages - 6) {
+				return (val >= totalPages - 10 ? true : false);
+			}
 		}
+		$scope.range = function(min, max) {
+			var arr = [];
+			for (var i = min; i <= max; i++)
+				arr.push(i);
+			return arr;
+		}
+		$scope.pageChange = function(pageNum) {  
+			$window.layoutOverlay.show(true);
+			$scope.currentPage = pageNum;
+			$scope.apiCall($scope.currentPage)
+			.then(function(response) { console.log($scope.currentPage);
+				$window.layoutOverlay.hide();
+				$scope.setPaginationParams(response);
+				}, function(err) {
+					alert("Something went wrong... Retrying after a minute.");
+					$window.location.reload();
+				});			
+		}	
+
+		$scope.apiCall = function(pageNum){
+			return applicationsService.all(pageNum);
+		}
+
+
+		/********************************* */
+		
+		
 		$scope.showApplication = app => {
 			$scope.application = app;
 			$scope.error = "";
