@@ -2182,8 +2182,8 @@ angular.module("batcave", ["ngRoute"])
 			return date.getFullYear() + "-" + format(date.getMonth() + 1) + "-" + format(date.getDate());
 		}
 	})
-	.controller("applicationsCtrl", function($rootScope, $scope, response, applicationsService,$window, $timeout) {
-		$rootScope.title = "Applications";
+	.controller("applicationsCtrl", function($rootScope, $scope, response, applicationsService,$timeout,$window) {
+		$rootScope.title = "Applications"; 
 		$scope.filter = {
 			text: "",
 			form_name: "all",
@@ -2202,6 +2202,7 @@ angular.module("batcave", ["ngRoute"])
 			$scope.applications = response.data.data;
 			$scope.currentPage = parseInt(response.data.page);
 			$scope.totalRecords = response.data.totalRecords;
+			$scope.counter = response.data.counter;
 		}
 
 
@@ -2212,7 +2213,7 @@ angular.module("batcave", ["ngRoute"])
 			$scope.setPaginationParams(response);
 		}
 		
-		/****************Ritesh Pagination******************/
+		/****************Pagination******************/
 		$scope.resultsPerPage = $scope.applications.length;
 		($scope.resultsPerPageChange = function() {
 			$scope.totalPages = $scope.totalPages;

@@ -111,7 +111,10 @@
 			</thead>
 			<tbody ng-repeat="app in applications | filter:filter.filter | orderBy: '-submitted_on'">
 				<tr> 	
-					<th>{{itemsPerPage *(currentPage-1)+$index+1}}</th>
+					<th>
+						
+						{{counter+$index}}
+					</th>
 					<td>
 						<div class="d-flex flex-column">
 							<label>{{app.submitted_on | date: 'dd MMM yyyy, HH:mm'}}</label>
