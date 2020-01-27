@@ -147,6 +147,7 @@
         $result['page'] = $pageResult['page'];
         $result['totalRecords'] = $countResults;
         $result['data'] = $return;
+        $result['counter'] = $pageResult['offset']+1;
 
         die(jawsResponse($result));
 ?>
