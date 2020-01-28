@@ -633,6 +633,19 @@
 
     function getApplicationNumber($subs_id, $format) {
 
+        try{
+            $applicationNumber = getUniqueApplicationId($subs_id, $format);
+            updateApplicationNumber($applicationNumber, $subs_id);
+            
+            return $applicationNumber;
+        }catch(Exception $e){
+            activity_create("critical", "subs.applicationId", "fail", "", "", "", "", "There was DB error!", "logged");
+            
+        }
+        
+        return false;
+        
+        //below code is not needed;will be removed later;
     	if ($format == "P") {
     		return generateApplicationNumber($subs_id, $format);
     	}
