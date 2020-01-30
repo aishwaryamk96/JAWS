@@ -27,7 +27,8 @@
 
 		$dir = "app/config/";
 		$file_list = array_diff(scandir($dir), array('..', '.'));
-		foreach($file_list as $file_name) if (!($file_name == "autoload.php")) require_once "app/config/".$file_name;
+                require_once "app/config/config.php";
+		foreach($file_list as $file_name) if (!($file_name == "autoload.php") && !($file_name == "config.php")) require_once "app/config/".$file_name;
 
 		// Load autoloader files AFTER all other configs are loaded to satisfy dependencies.
 		require_once "app/config/autoload.php";
