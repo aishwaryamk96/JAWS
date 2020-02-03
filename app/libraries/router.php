@@ -111,6 +111,7 @@
 		}
 
 		// load
+               
 		if ($type == "api") load_api($uri);
 		else if ($type == "task") load_task($uri);
 		else load_view($uri);
@@ -141,6 +142,11 @@
 		}
 
 	}
+        
+        
+        function jawsResponse($result){
+            return json_encode($result);
+        }
 
 
 ?>

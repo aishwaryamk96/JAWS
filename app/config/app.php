@@ -18,15 +18,16 @@
 
 	// Prevent exclusive access
 	if (!defined("JAWS")) {
-		header('Location: https://www.jigsawacademy.com');
+		//header('Location: http://www.jigsawacademydev.com');
+                header('Location: '.WEBSITE_URL);
 		die();
 	}
 	
 	// Set application settings
-	define("JAWS_PATH_LOCAL","jaws");
-	define("JAWS_PATH_WEB","https://www.jigsawacademy.com/jaws");
-	define("JAWS_VERSION","2.0");
-
+//	define("JAWS_PATH_LOCAL","jaws");
+//	define("JAWS_PATH_WEB","http://www.jigsawacademydev.com/jaws");
+//	define("JAWS_VERSION","2.0");
+        
 	// JAWS LIVE/TEST Mode
 	// WARNING ! It is Highly recommended that the mode be set to live (true) in the gobal configuration at all times !	
 	// WARNING ! Using Test (false) mode will result in the use of debug mode of the following features -
@@ -41,7 +42,7 @@
 
 	// Email Test Recipients
 	global $jaws_exec_test_email_to;
-	$GLOBALS['jaws_exec_test_email_to'] = "himanshu@jigsawacademy.com";	
+	$GLOBALS['jaws_exec_test_email_to'] = MAILS_TO;	
 
 	
 

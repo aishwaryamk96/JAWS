@@ -184,7 +184,7 @@
                                                                 <td>
                                                                     <![endif]-->
                                                             <table border="0" cellpadding="0" cellspacing="0" class="t10of12 basetable" align="left" style="border: none; border-collapse: collapse; border-spacing: 0; max-width: 672px; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
-                                                                <tr>
+                                                                <tr> 
                                                                     <td style="padding-left: 12px; padding-right: 12px;">
                                                                         <table border="0" cellpadding="0" cellspacing="0" class="basetable" width="100%" align="center" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
                                                                             <tr>
@@ -198,10 +198,9 @@
                                                                                 You have been provisionally admitted on the basis of MERIT to the 11-month <b>Postgraduate Diploma Program in Data Science</b>, awarded by Manipal Academy of Higher Education (MAHE).
                                                                                 </td>
                                                                             </tr>
-
                                                                             <tr>
                                                                              <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 15px; padding-bottom: 20px;" align="center">
-                                                                                 Please note that the <b>final confirmation of admission is subject to physical document verification.</b> Kindly ensure to carry all the documents as stated in Annexure 3.0 (originals as well as one set of self-attested photocopies). <br><b>
+                                                                                 Please note that the <b>final confirmation of admission is subject to physical document verification.</b> Kindly ensure to carry all the documents as stated in Annexure 3.0 as given in the offer letter shared with you (originals as well as one set of self-attested photocopies). <br><b>
                                                                                  Please note – it is mandatory to submit a self-attested copy of your PAN card and AADHAAR card.</b>                  </td>
                                                                             </tr>
                                                                             

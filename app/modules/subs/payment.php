@@ -588,7 +588,7 @@
         }
 
         // find last application number created.
-        $last_app_num = db_query( "SELECT `app_num` FROM `payment`  WHERE app_num LIKE 'P%' ORDER BY `app_num` DESC LIMIT 1");
+        $last_app_num = db_query( "SELECT `app_num` FROM `payment`  WHERE app_num LIKE 'P%' AND app_num IS NOT NULL ORDER BY `create_date`  DESC LIMIT 1");
         if (!empty($last_app_num)) {
             $last_app_num = intval(substr($last_app_num[0]['app_num'], 5));
             $last_app_num++;
@@ -613,7 +613,7 @@
         }
 
         // find last application number created.
-        $last_app_num = db_query( "SELECT `app_num` FROM `payment`  WHERE app_num LIKE 'IP%' ORDER BY `app_num` DESC LIMIT 1");
+        $last_app_num = db_query( "SELECT `app_num` FROM `payment`  WHERE app_num LIKE 'IP%' AND app_num IS NOT NULL ORDER BY `create_date` DESC LIMIT 1");
         if (!empty($last_app_num)) {
             $last_app_num = intval(substr($last_app_num[0]['app_num'], 6));
             $last_app_num++;
@@ -633,6 +633,19 @@
 
     function getApplicationNumber($subs_id, $format) {
 
+        try{
+            $applicationNumber = getUniqueApplicationId($subs_id, $format);
+            updateApplicationNumber($applicationNumber, $subs_id);
+            
+            return $applicationNumber;
+        }catch(Exception $e){
+            activity_create("critical", "subs.applicationId", "fail", "", "", "", "", "There was DB error!", "logged");
+            
+        }
+        
+        return false;
+        
+        //below code is not needed;will be removed later;
     	if ($format == "P") {
     		return generateApplicationNumber($subs_id, $format);
     	}

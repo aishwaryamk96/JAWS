@@ -470,12 +470,13 @@ angular.module('jaws')
 
         $scope.getInstlFees = function () {
             var fees = 0, feesUSD = 0, flag = false;;
-
+            console.log("a"+defaultSettings.instalment_fees.inr);
+            console.log("installment Total" + $scope.instls.length);
             $scope.instls.forEach(function (instl, i) {
                 /*if (instl.due > 15) {*/
                 if (instl.due > 7) {
-                    fees += defaultSettings.instalment_fees.inr;
-                    feesUSD += defaultSettings.instalment_fees.usd;
+                    //fees += defaultSettings.instalment_fees.inr;
+                    //feesUSD += defaultSettings.instalment_fees.usd;
                     flag = true;
                 }
             });
@@ -509,6 +510,23 @@ angular.module('jaws')
                 $scope.editSum[i] = ($scope.currencyUSD) ? sumUSD.toFixed() : sum.toFixed();
             });
         };
+
+
+        $scope.getInstallmentDate = function(index){
+            
+            var today = new Date();
+            var date1 = new Date($scope.instls[index].due_date);
+            if(date1 >= today){
+                var date2 = new Date(today);
+                var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+                var dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                $scope.instls[index].due = dayDifference; 
+            }else{
+                $scope.instls[index].due = defaultSettings.instalment_date; 
+            }
+                
+      }
+
 
         $scope.instlFees = function() {
             // $scope.instl_fees = $scope.instl_fees_amt;

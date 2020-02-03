@@ -33,15 +33,15 @@
 		<meta name="description" content="The Online School of Analytics">
 		<meta name="author" content="BadGuppy">
 		<title>Jigsaw Academy<?php echo (isset($GLOBALS["content"]["title"]) ? " - ".$GLOBALS["content"]["title"] : ""); ?></title>
-		<link rel="icon" type="image/png" href="<?php echo "https://".$_SERVER["SERVER_NAME"]."/".JAWS_PATH_LOCAL.'/media/jaws/frontend/images/favicon.png'; ?>">
+		<link rel="icon" type="image/png" href="<?php echo JAWS_URL.'/media/jaws/frontend/images/favicon.png'; ?>">
 		
 		<script   src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-		<?php if (isset($GLOBALS["content"]["scripts"])) { foreach($GLOBALS["content"]["scripts"] as $script_url) {?><script src="<?php echo "https://".$_SERVER["SERVER_NAME"]."/".JAWS_PATH_LOCAL."/".$script_url; ?>"></script> <?php } } ?>
+		<?php if (isset($GLOBALS["content"]["scripts"])) { foreach($GLOBALS["content"]["scripts"] as $script_url) {?><script src="<?php echo JAWS_URL."/".$script_url; ?>"></script> <?php } } ?>
 
 		<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">-->
-		<link rel="stylesheet" href="<?php echo "https://".$_SERVER["SERVER_NAME"]."/".JAWS_PATH_LOCAL.'/common/fa/css/font-awesome.css'; ?>">
-		<?php if (isset($GLOBALS["content"]["styles"])) { foreach($GLOBALS["content"]["styles"] as $style_url) { ?><link rel="stylesheet" href="<?php echo "https://".$_SERVER["SERVER_NAME"]."/".JAWS_PATH_LOCAL."/".$style_url; ?>"> <?php } } ?>			
+		<link rel="stylesheet" href="<?php echo JAWS_URL.'/common/fa/css/font-awesome.css'; ?>">
+		<?php if (isset($GLOBALS["content"]["styles"])) { foreach($GLOBALS["content"]["styles"] as $style_url) { ?><link rel="stylesheet" href="<?php echo JAWS_URL."/".$style_url; ?>"> <?php } } ?>			
 
 		<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 		<link href='https://fonts.googleapis.com/css?family=Lato:400,300' rel='stylesheet' type='text/css'>

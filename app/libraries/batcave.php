@@ -10,12 +10,13 @@
 		}
 		else {
 
-			define("BATCAVE", "https://batcave.jigsawacademy.com");
-			define("API_ROOT", "/btcapi");
+			//define("BATCAVE", "http://batcave.jigsawacademydev.com");
+                        define("BATCAVE", BATCAVE_URL);
+			define("API_ROOT", BATCAVE_API);
 
 		}
 
-		session_set_cookie_params(0, "/", ".jigsawacademy.com", true, true);
+		session_set_cookie_params(0, "/", DOMAIN, false, true);
 		auth_session_init();
 
 		load_module("batcave");
@@ -136,9 +137,9 @@
 		$css = $assets."/css";
 		$views = $assets."/views";
 
-		if ($_SERVER["HTTP_HOST"] == "accounts.jigsawacademy.com") {
+		if ($_SERVER["HTTP_HOST"] == ACCOUNTS_HOST) {
 
-			$ru = $_GET["ru"] ?? "https://www.jigsawacademy.com";
+			$ru = $_GET["ru"] ?? WEBSITE_URL;
 			if (isset($_SESSION["user"])) {
 				header("Location: ".$ru);
 			}
@@ -153,7 +154,8 @@
 		else {
 
 			if (!isset($_SESSION["user"])) {
-				header("Location: ".($_GET["ru"] ?? "https://accounts.jigsawacademy.com/?ru=".urlencode("https://batcave.jigsawacademy.com".$_SESSION["REQUEST_URI"])));
+//				header("Location: ".($_GET["ru"] ?? "http://accounts.jigsawacademydev.com/?ru=".urlencode("http://batcave.jigsawacademydev.com".$_SESSION["REQUEST_URI"])));
+                            header("Location: ".($_GET["ru"] ?? ACCOUNTS_URL."/?ru=".urlencode(BATCAVE_URL.$_SESSION["REQUEST_URI"])));
 			}
 			else {
 				require_once "b/views/batcave.php";

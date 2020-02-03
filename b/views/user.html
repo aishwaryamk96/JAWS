@@ -222,7 +222,7 @@ $(document).on("click", ".hover-anchor", function() {
 			<div class="card text-center mb-3 {{log.context_type=='subs' ? 'hover-anchor' : ''}}" ng-repeat="log in logs" data-scroll="{{log.context_type=='subs' ? '#subs-' + log.context_id : ''}}" data-highlight="highlight">
 				<div class="card-header {{logClasses[log.category_id]}}">{{log.category}}</div>
 				<div class="card-body pb-0">
-					<p class="card-title" style="white-space: pre;">{{log.description}}</p>
+					<p class="card-title" style="white-space: normal;">{{log.description}}</p>
 					<p class="card-text text-muted py-2">{{log.name}}</p>
 				</div>
 				<div class="card-footer text-muted">{{log.created_at}}</div>
