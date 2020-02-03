@@ -156,7 +156,10 @@
 
 	// Log activity
 	function activity_log() {
-
+            
+            if(APP_ENV == "dev"){
+                return true;
+            }
 		// Load stuff
 		load_plugin("mongodb");
 		load_plugin("predis");

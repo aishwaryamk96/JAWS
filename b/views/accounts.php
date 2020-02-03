@@ -4,7 +4,7 @@
 	<meta charset="utf-8"></meta>
 	<title>Login to Jigsaw Academy</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
-	<meta name="google-signin-client_id" content="659519706302-a3klkag43u3dsvkja0k8h86f9ll61a6e"></meta>
+	<meta name="google-signin-client_id" content="<?php echo JAWS_AUTH_SOCIAL_GP_ID?>"></meta>
 	<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">

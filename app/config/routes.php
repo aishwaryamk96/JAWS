@@ -18,7 +18,7 @@
 
 	// Prevent exclusive access
 	if (!defined("JAWS")) {
-		header('Location: https://www.jigsawacademy.com');
+		header('Location: '.WEBSITE_URL);
 		die();
 	}
 
@@ -30,10 +30,12 @@
 	// -------------------------------
 
 	if (!isset($_SERVER["HTTP_HOST"])) {
-		$_SERVER["HTTP_HOST"] = "www.jigsawacademy.com";
+		$_SERVER["HTTP_HOST"] =  BASEURL;
 	}
-
-	if ($_SERVER["HTTP_HOST"] == "www.jigsawacademy.com" || $_SERVER["HTTP_HOST"] == "jigsawacademy.com") {
+        
+       
+	if ($_SERVER["HTTP_HOST"] == BASEURL ) { //|| $_SERVER["HTTP_HOST"] == DOMAIN_TEXT
+                        
 		// Common System Pages
 		$jaws_routes[""] = "view/backend/dash/index";	// Default page / Home page - JAWS DASH
 		$jaws_routes["404"] = "view/common/404";		// 404 page
@@ -269,7 +271,7 @@
 		$jaws_routes["mcube-response"] = "webapi/mcube.response";
 
 	}
-	else if ($_SERVER["HTTP_HOST"] == "batcave.jigsawacademy.com") {
+	else if ($_SERVER["HTTP_HOST"] == BATCAVE_HOST) {
 
 	}
 	else if ($_SERVER["HTTP_HOST"] == "chat.jigsawacademy.com") {

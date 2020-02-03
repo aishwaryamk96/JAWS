@@ -44,7 +44,7 @@
 
     	// Load Config
 		$config = array(
-		"base_url" => "https://".$_SERVER["SERVER_NAME"]."/".JAWS_PATH_LOCAL."/hybridauth/",
+		"base_url" => JAWS_URL."/hybridauth/",
 		"providers" => array(
 			"Google" => array(
 				"force" => false,
