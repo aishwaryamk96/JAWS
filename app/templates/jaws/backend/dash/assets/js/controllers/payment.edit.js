@@ -262,13 +262,15 @@ angular.module('jaws')
         $scope.fullstack_selected = {
             'name': ''
         };
+        
         $scope.fullstackSelect = function (index, bundle_id, batch_id) {
             $scope.fullstack_selected = {
                 'name': ''
             };
+            $scope.fullstackNoOfCourseSelected = [];
             $scope.fullstacks.forEach(function (fullstack, i) {
                 $scope.fullstacks[i].selected = false;
-                if (index != -1 && fullstack.bundle_id == bundle_id && fullstack.batch_id == batch_id) {
+                if (index != -1 && fullstack.bundle_id == bundle_id && fullstack.batch_id == batch_id) { 
                     $scope.fullstacks[i].selected = true;
                     $scope.fullstack_selected.name = fullstack.name;
                     $scope.fullstack_selected.price_inr = fullstack.price_inr;
@@ -276,7 +278,8 @@ angular.module('jaws')
                     $scope.fullstack_selected.batch_name = fullstack.meta.name;
                     $scope.fullstack_selected.bundle_id = fullstack.bundle_id;
                     $scope.fullstack_selected.combo = fullstack.combo;
-                    $scope.fullstack_selected.batch_id = fullstack.batch_id
+                    $scope.fullstack_selected.batch_id = fullstack.batch_id;
+                    $scope.fullstackNoOfCourseSelected.push($scope.fullstack_selected);  
                 }
             })
             $scope.getWorth();

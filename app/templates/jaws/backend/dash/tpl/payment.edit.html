@@ -39,7 +39,7 @@
                     <li class="{{fullstacks.length>0 ? 'active' : ''}}">
                         <a data-toggle="tab" pg-tab="" href="#tab-fullstacks" aria-expanded="true">
                             <span>Full stacks&nbsp;
-                                <span ng-if='fullstack_selected.length>0'>({{fullstack_selected.length | number:0}})</span>
+                                <span ng-if='fullstackNoOfCourseSelected.length>0'>({{fullstackNoOfCourseSelected.length | number:0}})</span>
                             </span>
                         </a>
                     </li>
@@ -67,11 +67,11 @@
                             <span>Programs</span>
                         </a>
                     </li>
-                    <li class=''>
+                    <!-- <li class=''>
                         <a data-toggle="tab" pg-tab="" href="#tab-misc" aria-expanded="false">
                             <span>Miscellaneous</span>
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
 
                 <div class="nav-tab-dropdown cs-wrapper full-width p-t-10 visible-xs visible-sm">
@@ -102,9 +102,9 @@
                                 <li data-option="" data-value="#tab-programs">
                                     <span>Programs</span>
                                 </li>
-                                <li data-option="" data-value="#tab-misc">
+                                <!-- <li data-option="" data-value="#tab-misc">
                                     <span>Miscellaneous</span>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                         <select class="cs-select cs-skin-slide full-width" data-init-plugin="cs-select">
@@ -119,7 +119,7 @@
                             </option>
                             <option value="#tab-bootcamps">Bootcamps</option>
                             <option value="#tab-programs">Programs</option>
-                            <option value="#tab-misc">Miscellaneous</option>
+                            <!-- <option value="#tab-misc">Miscellaneous</option> -->
                         </select>
                         <div class="cs-backdrop"></div>
                     </div>
