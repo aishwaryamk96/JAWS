@@ -31,7 +31,7 @@
 			foreach ($batches as $batch) {
 
 				$start_date = date_create_from_format("Y-m-d", $batch["start_date"]);
-				if ($today->diff($start_date)->format("%r%a") < -10) {
+				if ($today->diff($start_date)->format("%r%a") < -BATCHES_PERIOD) {
 					$batch["no_show"] = true;
 				}
 				$batch["meta"] = json_decode($batch["meta"], true);

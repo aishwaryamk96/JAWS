@@ -7,3 +7,4 @@
  */
 
 define("ITEMS_PER_PAGE", 100);
+define("BATCHES_PERIOD", 30);
