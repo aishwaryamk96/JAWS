@@ -288,7 +288,7 @@ angular.module('jaws')
         $scope.$watch('discount', function (value) {
             $scope.upPrice(value);
         });
-
+ 
         $scope.populateElective = function (index) {
             /* if (index != -1 && $scope.specializations[index].electives) {
                 angular.element(document.querySelector('#initiateElective')).click();
