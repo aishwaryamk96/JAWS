@@ -171,6 +171,7 @@ angular.module('jaws')
             };
             $scope.newBootcamp.forEach(function (batch, i) {
                 $scope.newBootcamp[i].selected = false;
+                $scope.noOfCampSelected= [];
                 if (batch.bundle_id == bundle_id && batch.id == batch_id && index != -1) {
                     $scope.newBootcamp[i].selected = true;
                     $scope.bootcamp_selected.bundle_id = bundle_id;
@@ -183,6 +184,7 @@ angular.module('jaws')
                     $scope.bootcamp_selected.price_usd = batch.price_usd;
                 }
             })
+            $scope.noOfCampSelected.push($scope.bootcamp_selected);
             $scope.getWorth();
         };
 
@@ -220,6 +222,7 @@ angular.module('jaws')
             };
             $scope.programs.forEach(function (program, i) {
                 $scope.programs[i].selected = false;
+                $scope.noOfProgramSelected= [];
                 if (index != -1 && program.bundle_id == bundle_id && program.batch_id == batch_id) {
                     $scope.programs[i].selected = true;
                     $scope.program_selected.name = program.name;
@@ -229,8 +232,10 @@ angular.module('jaws')
                     $scope.program_selected.bundle_id = program.bundle_id;
                     $scope.program_selected.combo = program.combo;
                     $scope.program_selected.batch_id = program.batch_id
+                   
                 }
             })
+            $scope.noOfProgramSelected.push($scope.program_selected);
             $scope.getWorth();
         };
 

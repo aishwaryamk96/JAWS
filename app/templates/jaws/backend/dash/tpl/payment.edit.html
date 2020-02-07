@@ -59,12 +59,17 @@
                     </li>
                     <li class=''>
                         <a data-toggle="tab" pg-tab="" href="#tab-bootcamps" aria-expanded="false">
-                            <span>Bootcamps</span>
+                            <span>Bootcamps&nbsp; 
+                                <span ng-if='noOfCampSelected.length>0'>({{noOfCampSelected.length | number:0}})</span>
+                            </span>
                         </a>
                     </li>
                     <li class=''>
                         <a data-toggle="tab" pg-tab="" href="#tab-programs" aria-expanded="false">
-                            <span>Programs</span>
+                            <span>Programs&nbsp;
+                                <span ng-if='noOfProgramSelected.length>0'>({{noOfProgramSelected.length | number:0}})</span>
+
+                            </span>
                         </a>
                     </li>
                     <!-- <li class=''>
