@@ -15,7 +15,7 @@ define("INACTIVE", 0);
 //lead square
 define("LS_CORPORATE", "corporate");
 define("LS_RETAIL", "retail");
-define("LS_RETAIL", "retail_new");
+define("LS_RETAIL_NEW", "retail_new");
 $lsNewKeyMapping = [
     "lead_id" => "ProspectID",
     "email" => "EmailAddress",
