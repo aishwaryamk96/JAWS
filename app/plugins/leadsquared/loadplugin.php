@@ -393,7 +393,7 @@
 			else {
 
 				define("AccessKey", "u\$r6daf2e31c28ab58d15cb696d4e0f6a43");
-				define("SecretKey", "95c34e5756021c31bc0ded96a0fafd70320cd9a2");
+                                define("SecretKey", "95c34e5756021c31bc0ded96a0fafd70320cd9a2");
 
 			}
 
@@ -430,10 +430,10 @@
 			}
 
 			if (($response = json_decode(ls_api($api_url, $payload, $lead["email"]), true)) === false) {
-				return false;
+				//return false;
 			}
 			if (empty($response["Status"]) || $response["Status"] != "Success" || empty($response["Message"]["Id"])) {
-				return false;
+				//return false;
 			}
 
 			$leadIdCrm = $response["Message"]["RelatedId"];
@@ -441,6 +441,9 @@
 			// 	db_exec("INSERT INTO ls_leads (email, lead_id) VALUES (".db_sanitize($lead["email"].", ".db_sanitize($leadIdCrm).");");
 			// }
 
+                        //case of new Account functionality
+                        newLsAccountUpdates($lead, $new);
+                        
 			if ($new) {
 				update_lead_info($lead["email"], $lead["phone"] ?? "", $leadIdCrm, []);
 			}
@@ -524,11 +527,11 @@
 
 	}
 
-	function ls_api($api_url, $data, $id, $params = []) {
+	function ls_api($api_url, $data, $id, $params = [],$newConfig = FALSE) {
 
 		$ch = curl_init();
 
-		curl_setopt($ch, CURLOPT_URL, api_url_construct($api_url, $params));
+		curl_setopt($ch, CURLOPT_URL, api_url_construct($api_url, $params, $newConfig));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
 		if (!empty($data)) {
@@ -542,16 +545,23 @@
 
 		curl_close($ch);
 
+                if($newConfig){
+                    db_exec("INSERT INTO ls_new_api (email, request, response) VALUES (".db_sanitize($id).", ".db_sanitize(json_encode($data)).", ".db_sanitize(json_encode($response)).");");
+                }
 		db_exec("INSERT INTO ls_api (email, request, response) VALUES (".db_sanitize($id).", ".db_sanitize(json_encode($data)).", ".db_sanitize(json_encode($response)).");");
 
 		return $response;
 
 	}
 
-	function api_url_construct($api_url, $params = []) {
+	function api_url_construct($api_url, $params = [], $apiNewConfig = false) {
 
-		$url = Domain.$api_url."?accessKey=".AccessKey."&secretKey=".SecretKey;
-
+                if($apiNewConfig == true){
+                    $url = Domain.$api_url."?accessKey=".LS_ACCOUNT_RETAIL_NEW_ACCESS."&secretKey=".LS_ACCOUNT_RETAIL_NEW_SECRET;
+                }else{
+                    $url = Domain.$api_url."?accessKey=".AccessKey."&secretKey=".SecretKey;
+                }
+                
 		$extra_params = [];
 		foreach ($params as $key => $value) {
 			$extra_params[] = $key."=".$value;
@@ -843,5 +853,54 @@
 		return json_decode(ls_api("LeadManagement.svc/RetrieveTaskByLeadId", [], $lead_id, ["leadId" => $lead_id]), true);
 
 	}
+        
+        function newLsAccountUpdates($lead, $new){
+            
+            $newApiurl = 'LeadManagement.svc/Lead.Capture';
+            
+            $payload = []; $keyMapping = LS_KEY_MAPPING;
+            foreach ($lead as $key => $value) {
 
+                    if (empty(trim($value))) {
+                            continue;
+                    }
+
+                    if (isset($keyMapping[$key])) {
+                            $payload[] = ["Attribute" => $keyMapping[$key], "Value" => $value];
+                    }
+                    elseif (strpos($key, "mx_") === 0) {
+                            $payload[] = ["Attribute" => $key, "Value" => $value];
+                    }
+
+            }
+            if (($response = json_decode(ls_api($newApiurl, $payload, $lead['email'],[],true), true)) === false) {
+                    //return false;
+            }
+            if (empty($response["Status"]) || $response["Status"] != "Success" || empty($response["Message"]["Id"])) {
+                    //return false;
+            }
+
+            $leadIdCrm = $response["Message"]["RelatedId"];
+            
+            if ($new) {
+                    update_lead_info_new($lead["email"], $lead["phone"] ?? "", $leadIdCrm, []);
+            }
+            
+        }
+        
+        function update_lead_info_new($email, $phone, $lead_id, $lead_data = []) {
+
+		if (!empty(find_lead($email, $lead_id))) {
+			return;
+		}
+
+		$email = db_sanitize($email);
+		$phone = db_sanitize($phone);
+		$lead_id = db_sanitize($lead_id);
+		$lead_data = db_sanitize(json_encode($lead_data));
+
+		db_exec("INSERT INTO ls_leads_new (email, phone, lead_id, lead_data) VALUES (".$email.", ".$phone.", ".$lead_id.", ".$lead_data.");");
+
+	}
+        
 ?>
