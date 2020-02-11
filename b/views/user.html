@@ -32,6 +32,11 @@ $(document).on("click", ".hover-anchor", function() {
 	);
 });
 </script>
+<style>
+.select2{
+	width:741px !important;
+}
+</style>
 <div class="d-flex flex-column">
 	<div class="d-flex justify-content-around py-3 header {{jlc.status()}} position-relative" title="{{jlc.status() == '' ? '' : 'Account is disabled on JLC'}}">
 		<button class="btn btn-danger bmd-btn-fab edit-profile" ng-if="user_can('edit', 'user')" ng-click="showProfile()">
@@ -458,7 +463,7 @@ $(document).on("click", ".hover-anchor", function() {
 			<div class="modal-body">
 				<form name="subscription">
 					<div class="form-group">
-						<select class="form-control" ng-model="editableSubs.bundle_id" ng-change="bundleChange()" ng-attr-disabled="{{!editableSubs.editable ? 'true' : 'false'}}">
+						<select class="form-control"  select2=""  ng-model="editableSubs.bundle_id" ng-change="bundleChange()" ng-attr-disabled="{{!editableSubs.editable ? 'false' : 'true'}}">
 							<option value="0">None</option>
 							<optgroup label="Specializations"></optgroup>
 							<option ng-repeat="(id, bundle) in bundles.specializations" value="{{id}}">{{bundle.name}}</option>
