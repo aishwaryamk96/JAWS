@@ -17,17 +17,18 @@
 */
 
 	// Prevent exclusive access
-	if (!defined("JAWS")) {
-		header('Location: https://www.jigsawacademy.com');
+	if (!defined("JAWS")) { 
+		header('Location: '.WEBSITE_URL);
 		die();
 	}
 
 	load_module("leads");
 	load_library("setting");
-
+        
 	$leads_compile_lock = setting_get("leads.compile.task.is_running");
 	if (strcasecmp($leads_compile_lock, "false") == 0)
 	{
+           
 
 		setting_set("leads.compile.task.is_running", "true");
 		//$time_start = microtime(true);

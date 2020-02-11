@@ -157,7 +157,7 @@
 	// Log activity
 	function activity_log() {
             
-            if(APP_ENV == "dev"){
+            if(APP_ENV == "dev" || APP_ENV == "devuat"){
                 return true;
             }
 		// Load stuff
