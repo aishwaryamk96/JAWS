@@ -11,8 +11,6 @@
 
 	$loaded_plugins = [];
 
-        $wherePlatformQry = " AND b.platform_id NOT IN (1,2)";
-        
 	$subscriptions = db_query(
 		"SELECT
 			s.*, m.*,
@@ -37,7 +35,7 @@
 			ON p.id = b.platform_id
 		WHERE
 			s.status = 'pending'
-			".$wherePlatformQry
+			AND b.platform_id != 1;"
 	);
 
 	foreach ($subscriptions as $subs) {
