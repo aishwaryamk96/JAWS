@@ -617,7 +617,6 @@ angular.module("batcave", ["ngRoute"])
 		  restrict: 'AC',
 		  require: 'ngModel',
 		  link: function(scope, element, attrs) {
-			console.log(attrs);
 			$timeout(function() {
 			  element.select2();
 			  element.select2Initialized = true;
