@@ -21,8 +21,8 @@
 				if (!$batch["visible"]) {
 					$batch["no_show"] = true;
 				}
-				if ($today->diff($start_date)->format("%r%a") < - BATCHES_PERIOD) {
-					// $batch["no_show"] = true;
+				if ($today->diff($start_date)->format("%r%a") < -BATCHES_PERIOD) {
+					 $batch["no_show"] = true;
 				}
 				$batch["meta"] = json_decode($batch["meta"], true);
 
