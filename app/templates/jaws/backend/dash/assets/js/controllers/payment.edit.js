@@ -805,10 +805,11 @@ angular.module('jaws')
             if (typeof reload == "undefined") reload = true;
 
             var instl_arr = [], combo = [], combo_free = [], courses_amount = { inr: 0, usd: 0, combo_inr: 0, combo_usd: 0 }, unselect_bundle = [], spec_combo = [];
-
+            var individual_course =[];//JA-54 changes
+             
             $scope.courses.forEach(function (course, i) {
+                                
                 if ((course.selected) && (!course.free)) {
-
                     courses_amount.inr += Number(course.premium ? course.il_price_inr : course.sp_price_inr);
 
                     courses_amount.usd += Number(course.premium ? course.il_price_usd : course.sp_price_usd);
@@ -817,11 +818,16 @@ angular.module('jaws')
 
                     courses_amount.combo_usd += Number(course.premium ? course.il_price_usd_alt : course.sp_price_usd_alt);
 
+                    //JA-54 starts
+                    // including the selected -individual-course into separate array
                     if (course.premium) {
                         combo.push(course.course_id + ',1');
+                        individual_course.push(course.course_id + ',1');
                     } else {
                         combo.push(course.course_id + ',2');
+                        individual_course.push(course.course_id + ',2');
                     }
+                    //JA-54 ends
                 } else if ((course.selected) && (course.free)) {
                     if (course.premium) {
                         combo_free.push(course.course_id + ',1');
@@ -830,7 +836,7 @@ angular.module('jaws')
                     }
                 }
             });
-
+            
             var offUSD = Math.ceil($scope.worthUSD * ((100 - $scope.discount) / 100));
             var offINR = Math.ceil($scope.worth * ((100 - $scope.discount) / 100));
             var totalUSD = Math.ceil(($scope.worthUSD * ((100 - $scope.discount) / 100)) + $scope.instl_fees_USD);
@@ -851,7 +857,7 @@ angular.module('jaws')
             });
 
             var creator_token = "",
-                combo = combo.join(';'),
+                combo = combo.join(';'),individual_course = individual_course.join(';'), //JA-54 changes
                 combo_free = combo_free.join(';'),
                 currency = ($scope.currencyUSD) ? "usd" : "inr",
                 sum_basic = ($scope.currencyUSD) ? Math.ceil($scope.worthUSD) : Math.ceil($scope.worth),
@@ -880,6 +886,7 @@ angular.module('jaws')
                 'package': {
                     'combo': combo,
                     'combo_free': combo_free,
+                    'individual_course': individual_course,//JA-54 changes
                     'currency': currency,
                     'sum_basic': sum_basic,
                     'sum_offered': sum_offered,
@@ -915,7 +922,7 @@ angular.module('jaws')
                     'course_start_date': $scope.course_start,
                 }
             };
-
+            
             if ($scope.spec_selected.length > 0) {
                 save['package']['bundle_id'] = $scope.spec_selected[0].bundle_id;
                 save['package']['data_bundle_price'] = ($scope.currencyUSD) ? Math.ceil($scope.spec_selected[0].price_usd) : Math.ceil($scope.spec_selected[0].price_inr);
