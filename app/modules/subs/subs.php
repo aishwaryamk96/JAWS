@@ -299,9 +299,6 @@
 
 		}
                 
-                
-                print_r($content);
-                die;
 		// Email and SMS
 		if ($notify_user) {
 
