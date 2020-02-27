@@ -68,8 +68,9 @@
 			"data_instalment_fees_usd" => $package_info["data_instalment_fees_usd"],
 			"data_kform_version" => $package_info["data_kform_version"],
 			"data_bundle_unselect" => $package_info["data_bundle_unselect"],
-            "course_start_date" => $package_info["course_start_date"] ?? false,
-            "user_state" => $package_info["data_user_state"] ?? ""
+                        "course_start_date" => $package_info["course_start_date"] ?? false,
+                        "user_state" => $package_info["data_user_state"] ?? "",
+                        "data_individual_course" => $package_info['individual_course']?? "" //JA-54 one line  changes
 		);
 		$package_info["serialized"] = json_encode($serialized);
 
@@ -82,6 +83,7 @@
 		$package_info["phone"] = db_sanitize($package_info["phone"]);
 		$package_info["combo"] = db_sanitize($package_info["combo"]);
 		$package_info["combo_free"] = db_sanitize($package_info["combo_free"]);
+                $package_info["individual_course"] = db_sanitize($package_info["individual_course"]);//JA-54 one line changes
 		$package_info["currency"] = db_sanitize($package_info["currency"]);
 		$package_info["instl"] = db_sanitize($package_info["instl"]);
 		$package_info["pay_mode"] = db_sanitize($package_info["pay_mode"]);
@@ -96,9 +98,9 @@
 		$package_info["status"] = db_sanitize($package_info["status"]);
         $package_info["serialized"] = db_sanitize($package_info["serialized"]);
         $package_info["receipt_type"] = db_sanitize($package_info["receipt_type"] ?? "retail");
-
-		$query = "INSERT INTO package (".(strlen($package_info["user_id"]) > 0 ? "user_id," : "")." email, name, phone, combo, combo_free, bundle_id, batch_id, currency, sum_basic, sum_offered, sum_total, tax, instl_fees, instl_total, instl, pay_mode, create_date, creator_type, creator_id, creator_comment, approval_require_comment, require_approval_sm, require_approval_pm, status_approval_sm, status_approval_pm, approver_comment_sm, approver_comment_pm, status, serialized, receipt_type) VALUES (".(strlen($package_info["user_id"]) > 0 ? $package_info["user_id"]."," : "").$package_info["email"].",".$package_info["name"].",".$package_info["phone"].",".$package_info["combo"].",".$package_info["combo_free"].",".$package_info["bundle_id"].",".$package_info["batch_id"].",".$package_info["currency"].",".$package_info["sum_basic"].",".$package_info["sum_offered"].",".$package_info["sum_total"].",".$package_info["tax"].",".$package_info["instl_fees"].",".$package_info["instl_total"].",".$package_info["instl"].",".$package_info["pay_mode"].",".$package_info["create_date"].",".$package_info["creator_type"].",".$package_info["creator_id"].",".$package_info["creator_comment"].",".$package_info["approval_require_comment"].",".$package_info["require_approval_sm"].",".$package_info["require_approval_pm"].",".$package_info["status_approval_sm"].",".$package_info["status_approval_pm"].",".$package_info["approver_comment_sm"].",".$package_info["approver_comment_pm"].",".$package_info["status"].",".$package_info["serialized"].", ".$package_info["receipt_type"].");";
-
+                //JA-54 starts
+		$query = "INSERT INTO package (".(strlen($package_info["user_id"]) > 0 ? "user_id," : "")." email, name, phone, combo, combo_free,individual_course, bundle_id, batch_id, currency, sum_basic, sum_offered, sum_total, tax, instl_fees, instl_total, instl, pay_mode, create_date, creator_type, creator_id, creator_comment, approval_require_comment, require_approval_sm, require_approval_pm, status_approval_sm, status_approval_pm, approver_comment_sm, approver_comment_pm, status, serialized, receipt_type) VALUES (".(strlen($package_info["user_id"]) > 0 ? $package_info["user_id"]."," : "").$package_info["email"].",".$package_info["name"].",".$package_info["phone"].",".$package_info["combo"].",".$package_info["combo_free"].",".$package_info["individual_course"].",".$package_info["bundle_id"].",".$package_info["batch_id"].",".$package_info["currency"].",".$package_info["sum_basic"].",".$package_info["sum_offered"].",".$package_info["sum_total"].",".$package_info["tax"].",".$package_info["instl_fees"].",".$package_info["instl_total"].",".$package_info["instl"].",".$package_info["pay_mode"].",".$package_info["create_date"].",".$package_info["creator_type"].",".$package_info["creator_id"].",".$package_info["creator_comment"].",".$package_info["approval_require_comment"].",".$package_info["require_approval_sm"].",".$package_info["require_approval_pm"].",".$package_info["status_approval_sm"].",".$package_info["status_approval_pm"].",".$package_info["approver_comment_sm"].",".$package_info["approver_comment_pm"].",".$package_info["status"].",".$package_info["serialized"].", ".$package_info["receipt_type"].");";
+                //JA-54 ends
 		// Insert the record
 		db_exec($query);
 		$package_id = db_get_last_insert_id();
@@ -134,6 +136,9 @@
 		$subs_info["package_id"] = $package_id;
 		$subs_info["combo"] = $res_package["combo"];
 		$subs_info["combo_free"] = $res_package["combo_free"];
+                //JA-54 starts
+                $subs_info["individual_course"] = $res_package["individual_course"];
+                //JA-54 ends
 		//$subs_info["agent_id"] = $res_package["creator_id"];
 		$subs_info["bundle_id"] = $res_package["bundle_id"];
 		$subs_info["batch_id"] = $res_package["batch_id"];
@@ -495,6 +500,7 @@
 				package.phone,
 				package.combo,
 				package.combo_free,
+                                package.individual_course,
 				package.currency,
 				package.sum_total AS sum,
 				package.creator_type,

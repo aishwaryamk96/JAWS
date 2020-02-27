@@ -29,7 +29,7 @@
 	// This will subscribe a user to a course bundle and create the required payment information in the database
 	// Note: send no start_date if the access is to be given immediately - func will calculate the start_date
 	function subscribe($email, $subs_info, $pay_info, $notify_user = true, $allow_partial = false, $name = "", $return_subs = false, $phone = "") {
-
+           
 		// See if user exists - create if not
 		$user = user_get_by_email($email);
 		if ($user === false) {
@@ -93,7 +93,11 @@
 		// Prep courses
 		$combo_arr = course_get_combo_arr($subs_info["combo"].";".$subs_info["combo_free"]);
 		$combo_arr_free_exclusive = course_get_combo_arr($subs_info["combo_free"]);
+                //JA-54 starts
+                $individual_course_free_exclusive = course_get_combo_arr($subs_info["individual_course"]);
+                //JA-54 ends
 		$course = [];
+                $freeCourseList = $individualCourseList =[];////JA-54 changes
 		$count = 0;
 		$category = [];
 		$application_number_format = "";
@@ -128,13 +132,26 @@
 			$course[$count]["url"] = $course_content["url_web"];
 			$course[$count]["status"] = $res[0]["status"];
 
+                        
 			if (isset($combo_arr_free_exclusive[$course_id])) {
 				$course[$count]["free"] = true;
+                                //JA-54 starts
+                                $freeCourseList[$count]['course_id'] = $course_id;
+                                $freeCourseList[$count]['course_name'] = $res[0]["name"];
+                                //JA-54 ends
 			}
 			else {
 				$course[$count]["free"] = false;
 			}
-
+                        
+                        //JA-54 starts
+                        if (isset($individual_course_free_exclusive[$course_id])) {
+				
+                                $individualCourseList[$count]['course_id'] = $course_id;
+                                $individualCourseList[$count]['course_name'] = $res[0]["name"];
+                                
+                           }
+                        //JA-54 ends
 			$count ++;
 
 		}
@@ -154,7 +171,10 @@
 
 		$content["batch_details"] = $batch_details;
 		$content["bundle_details"] = $bundle_details;
-
+                //JA-54 starts
+                $content["free_course"] = $freeCourseList;
+                $content["individual_course"] = $individualCourseList;
+                //JA-54 ends
 		// Prep email content
 		$content["user_webid"] = $user["web_id"];
 		$content["paylink_id"] = $pay_info["instl"][1]["web_id"];
@@ -170,7 +190,7 @@
 		else {
 			$content["allow_setup"] = false;
 		}
-
+                
 		// Send Emails
 		$template_email = "subs.init.success";
 		$mail_with_receipt = false;
@@ -277,7 +297,7 @@
 			}*/
 
 		}
-
+                
 		// Email and SMS
 		if ($notify_user) {
 
@@ -328,6 +348,11 @@
 		if (!isset($subs_info["combo_free"])) {
 			$subs_info["combo_free"] = "";
 		}
+                //JA-54 starts
+                if (!isset($subs_info["individual_course"])) {
+			$subs_info["individual_course"] = "";
+		}
+                //JA-54 ends
 		if (empty($subs_info["agent_id"])) {
 			$subs_info["agent_id"] = "NULL";
 		}
@@ -411,6 +436,9 @@
 		$end_date = db_sanitize($end_date);
 		$combo = db_sanitize($subs_info["combo"]);
 		$combo_free = db_sanitize($subs_info["combo_free"]);
+                //JA-54 starts
+                $individual_course = db_sanitize($subs_info["individual_course"]);
+                //JA-54 ends
 		$corp = db_sanitize($subs_info["corp"]);
 		$status = db_sanitize($subs_info["status"]);
 		$bundle_id = $subs_info["bundle_id"];
@@ -418,9 +446,10 @@
 		$agent_id = $subs_info["agent_id"];
 		$create_date = db_sanitize(strval(date('Y-m-d H:i:s')));
 
+                //JA-54 starts
 		// create the main record
-		db_exec("INSERT INTO subs (user_id, combo, combo_free, corp, start_date, end_date, access_duration, package_id, status) VALUES (".$user_id.",".$combo.",".$combo_free.",".$corp.",".((strlen($start_date) > 2) ? $start_date : "NULL").",".((strlen($end_date) > 2) ? $end_date : "NULL").",".$access_duration.",".((strlen($subs_info["package_id"]) > 0) ? $subs_info["package_id"] : "NULL").",".$status.");");
-
+		db_exec("INSERT INTO subs (user_id, combo, combo_free, individual_course,corp, start_date, end_date, access_duration, package_id, status) VALUES (".$user_id.",".$combo.",".$combo_free.",".$individual_course.",".$corp.",".((strlen($start_date) > 2) ? $start_date : "NULL").",".((strlen($end_date) > 2) ? $end_date : "NULL").",".$access_duration.",".((strlen($subs_info["package_id"]) > 0) ? $subs_info["package_id"] : "NULL").",".$status.");");
+                //JA-54 ends
 		// get the created subs id
 		$subs_id = db_get_last_insert_id();
 
@@ -441,6 +470,9 @@
 		$subs["corp"] = trim($corp, "'");
 		$subs["combo"] = trim($combo, "'");
 		$subs["combo_free"] = trim($combo_free, "'");
+                //JA-54 starts
+                $subs["individual_course"] = trim($individual_course, "'");
+                //JA-54 ends
 		$subs["start_date"] = trim($start_date, "'");
 		$subs["end_date"] = trim($end_date, "'");
 		$subs["status"] = trim($status, "'");
