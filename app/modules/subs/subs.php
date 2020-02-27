@@ -29,7 +29,6 @@
 	// This will subscribe a user to a course bundle and create the required payment information in the database
 	// Note: send no start_date if the access is to be given immediately - func will calculate the start_date
 	function subscribe($email, $subs_info, $pay_info, $notify_user = true, $allow_partial = false, $name = "", $return_subs = false, $phone = "") {
-
            
 		// See if user exists - create if not
 		$user = user_get_by_email($email);
