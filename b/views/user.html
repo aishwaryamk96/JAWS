@@ -131,7 +131,8 @@ $(document).on("click", ".hover-anchor", function() {
 						</div>
 						<div ng-if="!!subs.start_date">{{subs.start_date}} to {{subs.end_date}} ({{subs.duration}} months)</div>
 					</div>
-					<div class="card-body">
+                                        
+					<div class="card-body" >
 						<div class="justify-content-between pb-2 align-items-center {{subs.platform_id == 1 ? 'd-none' : 'd-flex'}}">
 							<label class="d-flex justify-content-center mb-0 font-weight-bold">
 								<span class="text-info">{{subs.platform_name}}</span>
@@ -140,7 +141,7 @@ $(document).on("click", ".hover-anchor", function() {
 							<button class="btn btn-info" ng-click="platformExport(subs.status, $index)">Export</button>
 						</div>
 						<div class="d-flex justify-content-between pb-2">
-							<label class="d-flex flex-column justify-content-center mb-0 font-weight-bold text-uppercase" ng-if="!subs.pay.app_num">{{subs.enr.length==0 ? 'No ' : ''}}Courses</label>
+							<label class="d-flex flex-column justify-content-center mb-0 font-weight-bold text-uppercase" ng-if="!subs.pay.app_num">{{subs.enr.length==0 ? 'No ' : ''}}Package Courses</label>
 							<div class="d-flex flex-column justify-content-center mb-0" ng-if="!!subs.pay.app_num">
 								<label>Application Number</label><label class="font-weight-bold">{{subs.pay.app_num}}</label>
 							</div>
@@ -172,6 +173,74 @@ $(document).on("click", ".hover-anchor", function() {
 								</tr>
 							</tbody>
 						</table>
+                                            <!-- JA-54 additional course-->
+                                             <div class="d-flex justify-content-between pb-2" ng-if="subs.individual_course">
+							<label class="d-flex flex-column justify-content-center mb-0 font-weight-bold text-uppercase" ng-if="!subs.pay.app_num">Individual Courses</label>
+<!--							<div class="d-flex flex-column justify-content-center mb-0" ng-if="!!subs.pay.app_num">
+								<label>Application Number</label><label class="font-weight-bold">{{subs.pay.app_num}}</label>
+							</div>-->
+<!--							<button class="btn btn-danger" ng-click="subsEdit(subs.status, $index)">Edit</button>-->
+							<!-- <button class="btn btn-danger" ng-click="subsEdit(subs.status, $index)" ng-if="user_can('edit', 'enrollment')">Edit</button> -->
+							<!-- <button class="btn btn-danger" ng-click="subsView(subs.status, $index)" ng-if="!user_can('edit', 'enrollment')">View</button> -->
+					    </div>
+                                            <table class="table" ng-if="subs.individual_course">
+							<tbody>
+								<tr ng-repeat="enr in subs.enr" ng-if="enr.individual">
+									<td class="font-weight-bold">{{$index + 1}}</td>
+									<td class="text-capitalize w-60 pr-5">
+										<div class="d-flex justify-content-between">
+											<a class="mb-0" href="/courses/{{enr.course_id}}" target="_blank">{{enr.name.toLowerCase()}}</a>
+											<i class="fal fa-tasks-alt text-info" ng-click="showAssignments(enr.course_code, enr.name.toLowerCase())"></i>
+										</div>
+									</td>
+									<td class="w-10 pr-3 {{user.progress[enr.course_code] && user.progress[enr.course_code].p==0 ? 'text-danger' : ''}}">
+										<div class="d-flex justify-content-between">
+											<label>{{user.progress[enr.course_code] ? user.progress[enr.course_code].p + '%' : 'NA'}}</label>
+											<i class="fas fa-file-certificate text-success" ng-show="user.progress[enr.course_code] && user.progress[enr.course_code].c!='0'" title="{{user.progress[enr.course_code].c}}"></i>
+										</div>
+									</td>
+									<td class="pl-5 w-30">
+										<div class="d-flex justify-content-between">
+											<label class="mb-0">{{enr.section_name}}</label>
+											<label class="mb-0 d-flex flex-column justify-content-center" style="font-size:90%">{{enr.section_id}}</label>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+                                            <!-- JA-54 ends  additional course--->
+                                             <!-- JA-54 free course starts-->
+                                             <div class="d-flex justify-content-between pb-2" ng-if="subs.combo_free">
+							<label class="d-flex flex-column justify-content-center mb-0 font-weight-bold text-uppercase" ng-if="!subs.pay.app_num">Free Courses</label>
+							
+<!--							<button class="btn btn-danger" ng-click="subsEdit(subs.status, $index)">Edit</button>-->
+							<!-- <button class="btn btn-danger" ng-click="subsEdit(subs.status, $index)" ng-if="user_can('edit', 'enrollment')">Edit</button> -->
+							<!-- <button class="btn btn-danger" ng-click="subsView(subs.status, $index)" ng-if="!user_can('edit', 'enrollment')">View</button> -->
+					    </div>
+                                            <table class="table" ng-if="subs.combo_free">
+							<tbody>
+								<tr ng-repeat="enr in subs.enr" ng-if="enr.complimentary">
+									<td class="font-weight-bold">{{$index + 1}}</td>
+									<td class="text-capitalize w-60 pr-5">
+										<div class="d-flex justify-content-between">
+											<a class="mb-0" href="/courses/{{enr.course_id}}" target="_blank">{{enr.name.toLowerCase()}}</a>
+											<i class="fal fa-tasks-alt text-info" ng-click="showAssignments(enr.course_code, enr.name.toLowerCase())"></i>
+										</div>
+									</td>
+									<td class="w-10 pr-3 {{user.progress[enr.course_code] && user.progress[enr.course_code].p==0 ? 'text-danger' : ''}}">
+										<div class="d-flex justify-content-between">
+											<label>{{user.progress[enr.course_code] ? user.progress[enr.course_code].p + '%' : 'NA'}}</label>
+											<i class="fas fa-file-certificate text-success" ng-show="user.progress[enr.course_code] && user.progress[enr.course_code].c!='0'" title="{{user.progress[enr.course_code].c}}"></i>
+										</div>
+									</td>
+									<td class="pl-5 w-30">
+										<div class="d-flex justify-content-between">
+											<label class="mb-0">{{enr.section_name}}</label>
+											<label class="mb-0 d-flex flex-column justify-content-center" style="font-size:90%">{{enr.section_id}}</label>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+                                            <!-- JA-54 ends  free course--->
 						<div class="bg-light text-uppercase text-primary text-center py-2">Payments</div>
 						<div class="bg-light text-uppercase text-warning text-center py-2" ng-if="!subs.pay.pay_id">No payments data available</div>
 						<table class="table" ng-if="!!subs.pay.pay_id">
