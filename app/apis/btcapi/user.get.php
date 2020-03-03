@@ -141,6 +141,7 @@
 								subs.status,
 								subs.combo,
 								subs.combo_free,
+                                                                subs.individual_course,
 								IF (meta.bundle_id IS NOT NULL, meta.bundle_id, 0) AS bundle_id,
 								IF (meta.bundle_id IS NULL OR meta.bundle_id = 0, 'Custom Combo', bundle.name) AS bundle,
 								IF (bundle.bundle_type IS NOT NULL, bundle.bundle_type, 'custom') AS bundle_type,
@@ -518,6 +519,23 @@
 
 								if (in_array($each_enr["course_id"], $free_courses)) {
 									$each_enr["complimentary"] = true;
+								}
+
+								$each_subs["enr"][] = $each_enr;
+
+							}
+
+						}elseif (!empty($each_subs["individual_course"])) {
+                                                        $each_subs["invidualCourseFlag"] = true;
+							$individualCourses = [];
+							$combo_free = explode(";", $each_subs["individual_course"]);
+							foreach ($combo_free as $course) {
+								$individualCourses[] = explode(",", $course)[0];
+							}
+							foreach ($enr as $each_enr) {
+
+								if (in_array($each_enr["course_id"], $individualCourses)) {
+									$each_enr["individual"] = true;
 								}
 
 								$each_subs["enr"][] = $each_enr;
