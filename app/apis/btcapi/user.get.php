@@ -507,45 +507,57 @@
 							$each_subs["bundle"] = $enr[0]["name"];
 						}
 
+
+                                                $free_courses = [];
+                                                $iCourses = [];
 						/* Identify the complimentary courses */
-						if (!empty($each_subs["combo_free"])) {
+						if (!empty($each_subs["combo_free"]) || !empty($each_subs["individual_course"])) {
 
 							$free_courses = [];
 							$combo_free = explode(";", $each_subs["combo_free"]);
 							foreach ($combo_free as $course) {
 								$free_courses[] = explode(",", $course)[0];
 							}
-							foreach ($enr as $each_enr) {
 
-								if (in_array($each_enr["course_id"], $free_courses)) {
-									$each_enr["complimentary"] = true;
-								}
-
-								$each_subs["enr"][] = $each_enr;
-
+                                                        $iCourses = [];
+							$iC  = explode(";", $each_subs["individual_course"]);
+							foreach ($iC as $icrse) {
+								$iCourses[] = explode(",", $icrse)[0];
 							}
 
-						}elseif (!empty($each_subs["individual_course"])) {
-                                                        $each_subs["invidualCourseFlag"] = true;
-							$individualCourses = [];
-							$combo_free = explode(";", $each_subs["individual_course"]);
-							foreach ($combo_free as $course) {
-								$individualCourses[] = explode(",", $course)[0];
-							}
-							foreach ($enr as $each_enr) {
-
-								if (in_array($each_enr["course_id"], $individualCourses)) {
-									$each_enr["individual"] = true;
-								}
-
-								$each_subs["enr"][] = $each_enr;
-
-							}
+//							foreach ($enr as $each_enr) {
+//
+//								if (in_array($each_enr["course_id"], $free_courses)) {
+//									$each_enr["complimentary"] = true;
+//                                                                        $each_enr["individual"] = false;
+//								}elseif(in_array($each_enr["course_id"], $iCourses)) {
+//									$each_enr["complimentary"] = false;
+//                                                                        $each_enr["individual"] = true;
+//								}
+//
+//								$each_subs["enr"][] = $each_enr;
+//
+//							}
 
 						}
-						else {
-							$each_subs["enr"] = $enr;
+
+						foreach ($enr as $each_enr) {
+
+                                                        if (in_array($each_enr["course_id"], $free_courses)) {
+                                                                $each_enr["complimentary"] = true;
+                                                                $each_enr["individual"] = false;
+                                                        }elseif(in_array($each_enr["course_id"], $iCourses)) {
+                                                                $each_enr["complimentary"] = false;
+                                                                $each_enr["individual"] = true;
+                                                        }else{
+                                                            $each_enr["complimentary"] = false;
+                                                             $each_enr["individual"] = false;
+                                                        }
+
+                                                        $each_subs["enr"][] = $each_enr;
+
 						}
+                                                //$each_subs["enr"] = $enr;
 
 						/* Get welcome call info */
 						$meta = db_query("SELECT

@@ -149,9 +149,9 @@ $(document).on("click", ".hover-anchor", function() {
 							<!-- <button class="btn btn-danger" ng-click="subsEdit(subs.status, $index)" ng-if="user_can('edit', 'enrollment')">Edit</button> -->
 							<!-- <button class="btn btn-danger" ng-click="subsView(subs.status, $index)" ng-if="!user_can('edit', 'enrollment')">View</button> -->
 						</div>
-						<table class="table">
-							<tbody>
-								<tr ng-repeat="enr in subs.enr" class="{{enr.complimentary ? 'bg-light' : ''}}">
+						<table class="table"> 
+		<tbody>
+		<tr ng-repeat="enr in subs.enr" ng-if="!enr.individual && !enr.complimentary">
 									<td class="font-weight-bold">{{$index + 1}}</td>
 									<td class="text-capitalize w-60 pr-5">
 										<div class="d-flex justify-content-between">

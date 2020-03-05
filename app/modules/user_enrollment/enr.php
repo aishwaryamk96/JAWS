@@ -484,14 +484,16 @@
 		}
 
 		$combo = explode(";", $combo);
+
 		foreach ($combo as $course) {
 
 			$course = explode(",", $course)[0];
 			if (!in_array($course, $courses)) {
-				$courses[] = $combo;
+				$courses[] = $course;
 			}
 
 		}
+
 		if (!empty($combo_free)) {
 
 			$combo_free = explode(";", $combo_free);
