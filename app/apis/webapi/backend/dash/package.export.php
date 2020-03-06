@@ -330,7 +330,8 @@
 	foreach ($res as $package) {
 
 		$create_date = date_create_from_format("Y-m-d H:i:s", $package["create_date"]);
-		$package["create_date"] = $create_date->format("d M, Y");
+		$package["create_date"] = $create_date->format("d-M-Y H:i:s");
+
 
 		if (strcmp($package["status"], "executed") != 0) {
 
@@ -381,7 +382,7 @@
 
 						$due_date = strtotime($package["instl"][$icount]["due_date"]);
 						if ($due_date !== false) {
-							$package["instl"][$icount]["due_date"] = date("d M, Y", $due_date);
+							$package["instl"][$icount]["due_date"] = date("d-M-Y H:i:s", $due_date);
 						}
 
 					}
@@ -395,7 +396,22 @@
 
 						$pay_date = strtotime($package["instl"][$icount]["pay_date"]);
 						if ($pay_date !== false) {
-							$package["instl"][$icount]["pay_date"] = date("d M, Y", $pay_date);
+							$package["instl"][$icount]["pay_date"] = date("d-M-Y H:i:s", $pay_date);
+						}
+
+					}
+
+				}
+				catch(Exception $e) {}
+
+                                try {
+
+					if (!empty($package["instl"][$icount]["expire_date"])) {
+
+						$expire_date = strtotime($package["instl"][$icount]["expire_date"]);
+
+						if ($expire_date !== false) {
+							$package["instl"][$icount]["expire_date"] = date("d-M-Y H:i:s", $expire_date);
 						}
 
 					}
@@ -405,19 +421,20 @@
 
 			}
 
-			try {
-
-				if (!empty($package["instl"][0]["expire_date"])) {
-
-					$expire_date = strtotime($package["instl"][0]["expire_date"]);
-					if ($expire_date !== false) {
-						$package["instl"][0]["expire_date"] = date("d M, Y", $expire_date);
-					}
-
-				}
-
-			}
-			catch(Exception $e) {}
+//			try {
+//
+//				if (!empty($package["instl"][0]["expire_date"])) {
+//
+//					$expire_date = strtotime($package["instl"][0]["expire_date"]);
+//
+//					if ($expire_date !== false) {
+//						$package["instl"][0]["expire_date"] = date("d-M-Y H:i:s", $expire_date);
+//					}
+//
+//				}
+//
+//			}
+//			catch(Exception $e) {}
 
 			if (strcmp($package["pay_status"], "pending") == 0) {
 				$package["status"] = "sent";
@@ -522,6 +539,7 @@
     ];
 	$lines = [];
 
+
 	foreach ($response as $package) {
 
 		$combo_str = [];
@@ -546,37 +564,37 @@
 		}
 
 		foreach ($package["instl"] as $instl) {
-			
+
 			$lines[] = [
-                $package["email"], 
-                $package["name"], 
-                $package["phone"], 
-                implode("+", $combo_str), 
-                implode("+", $combo_free_str), 
-                (!empty($package["bundle_id"]) ? $bundles[$package["bundle_id"]] : ""), 
-                $package["currency"], 
+                $package["email"],
+                $package["name"],
+                $package["phone"],
+                implode("+", $combo_str),
+                implode("+", $combo_free_str),
+                (!empty($package["bundle_id"]) ? $bundles[$package["bundle_id"]] : ""),
+                $package["currency"],
                 $package["sum_basic"],
-                $package["sum_offered"], 
-                $package["sum_total"], 
-                $package["instl_total"], 
-                $package["pay_mode"], 
-                $package["create_date"], 
-                $package["agent_name"], 
-                (!empty($package["sm_name"]) ? $package["sm_name"] : "#N/A"), 
-                ucwords($package["status_approval_sm"]), 
-                (!empty($package["pm_name"]) ? $package["pm_name"] : "#N/A"), 
-                ucwords($package["status_approval_pm"]), 
-                ucwords($package["status"]), 
-                /*$line.*/$instl["instl_count"], 
-                $instl["sum"], 
-                (!empty($instl["pay_date"]) ? $instl["pay_date"] : ""), 
-                (!empty($instl["due_date"]) ? $instl["due_date"] : ""), 
-                (!empty($instl["due_days"]) ? $instl["due_days"] : ""), 
-                (!empty($instl["pay_mode"]) ? $instl["pay_mode"] : ""), 
-                (!empty($instl["payinstl_status"]) ? $instl["payinstl_status"] : ""), 
-                (!empty($instl["gateway_name"]) ? $instl["gateway_name"] : ""), 
-                (!empty($instl["gateway_reference"]) ? $instl["gateway_reference"] : ""), 
-                (!empty($instl["expire_date"]) ? $instl["expire_date"] : ""), 
+                $package["sum_offered"],
+                $package["sum_total"],
+                $package["instl_total"],
+                $package["pay_mode"],
+                $package["create_date"],
+                $package["agent_name"],
+                (!empty($package["sm_name"]) ? $package["sm_name"] : "#N/A"),
+                ucwords($package["status_approval_sm"]),
+                (!empty($package["pm_name"]) ? $package["pm_name"] : "#N/A"),
+                ucwords($package["status_approval_pm"]),
+                ucwords($package["status"]),
+                /*$line.*/$instl["instl_count"],
+                $instl["sum"],
+                (!empty($instl["pay_date"]) ? $instl["pay_date"] : ""),
+                (!empty($instl["due_date"]) ? $instl["due_date"] : ""),
+                (!empty($instl["due_days"]) ? $instl["due_days"] : ""),
+                (!empty($instl["pay_mode"]) ? $instl["pay_mode"] : ""),
+                (!empty($instl["payinstl_status"]) ? $instl["payinstl_status"] : ""),
+                (!empty($instl["gateway_name"]) ? $instl["gateway_name"] : ""),
+                (!empty($instl["gateway_reference"]) ? $instl["gateway_reference"] : ""),
+                (!empty($instl["expire_date"]) ? $instl["expire_date"] : ""),
                 (!empty($instl["receipt"]) ? $instl["receipt"] : "")
             ];
 		}
