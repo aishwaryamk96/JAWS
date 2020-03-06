@@ -28,29 +28,31 @@
     load_module("subs");
 
     // Start with subscriptions for which the freeze period is approaching
-    $res_to_freeze = db_query("SELECT subs_id FRom subs WHERE freeze_date=CURDATE();");
-    if ($res_to_freeze)
-    {
-    	foreach ($res_to_freeze as $each_subs)
-    	{
-    		subs_update_status($each_subs["subs_id"], "frozen");
-    		db_exec("UPDATE user_enrollment SET sis_status='na' WHERE subs_id=".$each_subs["subs_id"]);
-    	}
-    }
-
-    // Pick those to unfreeze today
-    $res_to_unfreeze = db_query("SELECT subs_id FROM subs WHERE unfreeze_date=CURDATE();");
-    if ($res_to_unfreeze)
-    {
-    	foreach ($res_to_unfreeze as $each_subs)
-    	{
-    		subs_update_status($each_subs["subs_id"], "active");
-    		db_exec("UPDATE user_enrollment SET sis_status='na' WHERE subs_id=".$each_subs["subs_id"]);
-    	}
-    }
+//    $res_to_freeze = db_query("SELECT subs_id FRom subs WHERE freeze_date=CURDATE();");
+//    if ($res_to_freeze)
+//    {
+//    	foreach ($res_to_freeze as $each_subs)
+//    	{
+//    		subs_update_status($each_subs["subs_id"], "frozen");
+//    		db_exec("UPDATE user_enrollment SET sis_status='na' WHERE subs_id=".$each_subs["subs_id"]);
+//    	}
+//    }
+//
+//    // Pick those to unfreeze today
+//    $res_to_unfreeze = db_query("SELECT subs_id FROM subs WHERE unfreeze_date=CURDATE();");
+//    if ($res_to_unfreeze)
+//    {
+//    	foreach ($res_to_unfreeze as $each_subs)
+//    	{
+//    		subs_update_status($each_subs["subs_id"], "active");
+//    		db_exec("UPDATE user_enrollment SET sis_status='na' WHERE subs_id=".$each_subs["subs_id"]);
+//    	}
+//    }
 
     // Pick those to set to alumni
-    $res_to_alumni = db_query("SELECT subs_id FROM subs WHERE end_date_ext<=CURDATE();");
+    $res_to_alumni = db_query("SELECT subs_id , end_date_ext FROM subs WHERE end_date_ext<=CURDATE() order by subs_id desc");
+    
+    
     if ($res_to_alumni)
     {
     	foreach ($res_to_alumni as $each_subs)
