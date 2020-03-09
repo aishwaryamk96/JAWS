@@ -754,6 +754,30 @@ angular.module('jaws')
                 });
 
             },
+            editInstl:function(instl,pkg){
+                $scope.action.pkg = pkg;
+                $scope.action.instl = instl;
+                $scope.action.busy("notify");
+                let sendData = {
+                    'context': 'edit_package',
+                    'email': $scope.packages[$scope.action.pkg].lead.email,
+                    'sub_id': $scope.packages[$scope.action.pkg].subs_id,
+                    'pay_id': $scope.packages[$scope.action.pkg].pay_id,
+                    'instl': Number($scope.action.instl) + Number(1),
+                    'edit_type': 'edit',
+                    'new_amount':1000,
+                    'new_date': "2020-03-30"
+                };
+                $http({
+                    url: _JAWS_PATH + "webapi/backend/dash/edit-installment", method: "POST", data: sendData
+                }).then(function (response) {
+                    $(".modal").modal('hide');
+                    $timeout(function () {
+                        $scope.action.free(response.data.message, response.data.status ? "success" : "danger");
+                    }, 100);
+                });
+                
+            },
             disable: function () {
                 if (!$scope.user_state) {
                     $("#error_msg").html('Please provide user\'s state. In case of USD, please select Other');
