@@ -22,6 +22,8 @@
 		die();
 	}
 
-	define("JAWS_AUTH_EMAIL_SENDGRID_KEY","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");
+	//ja-106 starts
+	//removing the sendgrid crendetials
+	//ja-106 ends
 
 ?>
