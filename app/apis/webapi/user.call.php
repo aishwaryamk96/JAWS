@@ -28,19 +28,27 @@
 		die(json_encode(["msg" => "Batcave does not know your phone number.\nPlease add your phone number in your profile before you can call a student.\nMention error code: 1"]));
 	}
 
-	if (empty($_GET["user"]) || !is_numeric($_GET["user"])) {
+	
+        if (empty($_GET["userMobile"]) || !is_numeric($_GET["userMobile"])) {
 		die(json_encode(["msg" => "Something went wrong...\nPlease contact IT for this issue.\nMention error code: 2"]));
 	}
 
-	$user = db_query("SELECT phone FROM user WHERE user_id = ".db_sanitize($_GET["user"]));
-	if (empty($user)) {
+        $connectingPhone ='';
+//        if(!empty($_GET["user"])){
+//            $user = db_query("SELECT phone FROM user WHERE user_id = ".db_sanitize($_GET["user"]));
+//            $connectingPhone = $user[0]["phone"];
+//        }elseif($_GET["userMobile"]){
+            $connectingPhone = $_GET["userMobile"];
+        //}
+        
+	if (empty($connectingPhone)) {
 		die(json_encode(["msg" => "Something went wrong...\nPlease contact IT for this issue.\nMention error code: 3"]));
 	}
 
 	load_plugin("exotel");
 
-	connect_call_mcube($_SESSION["user"]["phone"], $user[0]["phone"], "09243522277");
+	connect_call_mcube($_SESSION["user"]["phone"], $connectingPhone, "09243522277");
 
-	die(json_encode(["msg" => "Connecting to ".$user[0]["phone"]."..."]));
+	die(json_encode(["msg" => "Connecting to ".$connectingPhone."..."]));
 
 ?>
