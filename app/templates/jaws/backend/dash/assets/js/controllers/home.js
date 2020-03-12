@@ -13,7 +13,7 @@ angular.module('jaws')
 
 
         $scope.initiateCall = function() {
-
+                    if($scope.userMbl != '') {    
 			if (!confirm("Are you sure you want to connect to "+$scope.userMbl+"?")) {
 				return;
 			}
@@ -31,6 +31,6 @@ angular.module('jaws')
 						}
 					}
 				);
-		}
+		} }
 
     }]);
