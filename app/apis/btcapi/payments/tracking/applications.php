@@ -107,11 +107,12 @@
 
 		}
 
-		$crm = json_decode($pay["crm"], true);
+                 $crm = json_decode($pay["crm"], true);
 		$pay["form_submit"]["Lead Created On"] = $crm["CreatedOn"];
 		$pay["form_submit"]["Lead Source"] = $crm["Source"];
 		$pay["form_submit"]["Lead Lead Source"] = $crm["mx_Source"];
 		$pay["form_submit"]["Lead Sub Source"] = $crm["mx_Sub_Source"];
+                $pay["crm"]=json_decode($pay["crm"], true);
 
 		$return[] = $pay;
 
@@ -119,7 +120,8 @@
 
 	$pay_ids = implode(", ", $pay_ids);
 
-	$apps = db_query("SELECT *, 'pending' AS status, cl.crm FROM application AS a LEFT JOIN crm_leads AS cl ON cl.email = a.email LEFT JOIN crm_leads AS cl ON cl.email = a.email WHERE a.partial = 1 AND a.full_submit = 0 OR a.partial = 0 AND a.pay_id NOT IN ($pay_ids) ORDER BY id DESC LIMIT 100;");
+	$apps = db_query("SELECT *, 'pending' AS status, cl.crm FROM application AS a LEFT JOIN crm_leads AS cl ON cl.email = a.email WHERE a.partial = 1 AND a.full_submit = 0 OR a.partial = 0 AND a.pay_id NOT IN ($pay_ids) ORDER BY a.id DESC LIMIT 100;");
+//         $return =[];
 	foreach ($apps as $app) {
 
 		$app["form_submit"] = json_decode($app["form_submit"], true);
@@ -132,22 +134,40 @@
 		$submitted_on = date_create_from_format("Y-m-d H:i:s", $app["form_submit"]["submitted_on"]);
 		$app["form_submit"]["submitted_on"] = $submitted_on->format("c");
 
-		$crm = json_decode($app["crm"], true);
+//		$app["crm"] = json_decode($app["crm"], true);// array();
+                $crm = json_decode($app["crm"], true);
 		$app["form_submit"]["Lead Created On"] = $crm["CreatedOn"];
 		$app["form_submit"]["Lead Source"] = $crm["Source"];
 		$app["form_submit"]["Lead Lead Source"] = $crm["mx_Source"];
 		$app["form_submit"]["Lead Sub Source"] = $crm["mx_Sub_Source"];
+		//production issue Mar11,2020 : application pgae not working
+		$app["crm"] = json_decode($app["crm"], true);// array(); 
 
 		$return[] = $app;
 
 	}
 
-
-        $result['totalPages'] = ceil($countResults / ITEMS_PER_PAGE);
-        $result['page'] = $pageResult['page'];
-        $result['totalRecords'] = $countResults;
-        $result['data'] = $return;
-        $result['counter'] = $pageResult['offset']+1;
-
-        die(jawsResponse($result));
+       
+       $result["totalPages"] = ceil($countResults / ITEMS_PER_PAGE);
+         $result["page"] = $pageResult['page'];
+        $result["totalRecords"] = $countResults;
+        $result["data"] = $return;
+        $result["counter"] = $pageResult['offset']+1;
+die(json_encode($result));
+//try{ echo "HelloInside";
+//if( json_encode($result) === false ) {
+  //  echo( json_last_error() );
+    //      }}catch(Exception $e){ echo $e->getMessage();}
+//       print_r($result);die; 
+//json_encode(array_map('utf8_encode', $arr))
+//print_r($return);die;
+ try { 
+         $da = json_encode(array_map('utf8_encode', $return));
+	echo $da;
+}catch(Exception $e){
+ 
+    print_r($e);die;
+}
+die;
+//        die(json_encode($result));
 ?>
