@@ -458,7 +458,7 @@ $(document).on("click", ".hover-anchor", function() {
 			<div class="modal-body">
 				<form name="subscription">
 					<div class="form-group">
-						<select class="form-control" ng-model="editableSubs.bundle_id" ng-change="bundleChange()" ng-attr-disabled="{{!editableSubs.editable ? 'true' : 'false'}}">
+						<select class="form-control select2-user"  select2=""  ng-model="editableSubs.bundle_id" ng-change="bundleChange()" ng-attr-disabled="{{!editableSubs.editable ? 'false' : 'true'}}">
 							<option value="0">None</option>
 							<optgroup label="Specializations"></optgroup>
 							<option ng-repeat="(id, bundle) in bundles.specializations" value="{{id}}">{{bundle.name}}</option>
@@ -470,7 +470,7 @@ $(document).on("click", ".hover-anchor", function() {
 					</div>
 					<div class="form-group" ng-if="batches.type!='none'">
 						<label for="specializationBatch">Batch</label>
-						<select class="form-control" id="specializationBatch" ng-model="editableSubs.batch" ng-change="batchChange()" ng-attr-disabled="{{!editableSubs.editable ? 'true' : 'false'}}">
+						<select class="form-control select2-user" select2=""  id="specializationBatch" ng-model="editableSubs.batch" ng-change="batchChange()" ng-attr-disabled="{{!editableSubs.editable ? 'true' : 'false'}}">
 							<option ng-repeat="(i, b) in batches.l" value="{{i}}" ng-disabled="{{i==0}}">{{b}}</option>
 						</select>
 					</div>
