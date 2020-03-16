@@ -606,6 +606,68 @@
 				if (strcmp($res["status"], "inactive") == 0) {
 					db_exec("UPDATE subs SET status='pending' WHERE subs_id=".$subs_id.";");
 				}
+                                
+                                
+                                if (empty($res["end_date"])) {
+
+						$access_duration = $res['access_duration'] ?? course_get_duration($res["combo"], $res["combo_free"], $res["bundle_id"] ?? "");
+
+						if (empty($res["start_date"])) {
+							$res["start_date"] = new DateTime;
+						}
+						else {
+
+							$today = new DateTime;
+							$res["start_date"] = date_create_from_format("Y-m-d H:i:s", $res["start_date"]);
+							if ($res["start_date"] < $today) {
+								$res["start_date"] = $today;
+							}
+
+						}
+
+						$interval = "P".$access_duration."M";
+						$res["end_date"] = (clone $res["start_date"])->add(new DateInterval($interval));
+
+						if (!empty($res_meta["batch_id"])) {
+
+							$res_batch = db_query("SELECT * FROM bootcamp_batches WHERE id = ".db_sanitize($res_meta["batch_id"]).";");
+							if (!empty($res_batch)) {
+
+								if (($end_date_defined = date_create_from_format("Y-m-d", $res_batch[0]["end_date"])) !== false) {
+
+									if ($end_date_defined > $res["start_date"]) {
+										$res["end_date"] = $end_date_defined;
+									}
+
+								}
+
+							}
+
+						}
+						else if (!empty($res_meta["bundle_id"])) {
+
+							$res_subs_meta = db_query("SELECT batch_end_date FROM course_bundle WHERE bundle_id = ".db_sanitize($res_meta["bundle_id"]).";");
+							if (!empty($res_subs_meta)) {
+
+								$res_subs_meta = $res_subs_meta[0];
+								if (!empty($res_subs_meta["batch_end_date"])) {
+
+									if (($end_date_defined = date_create_from_format("Y-m-d", $res_subs_meta["batch_end_date"])) !== false) {
+										$res["end_date"] = $end_date_defined;
+									}
+
+								}
+
+							}
+
+						}
+
+						$start_date = db_sanitize($res["start_date"]->format("Y-m-d H:i:s"));
+						$end_date = db_sanitize($res["end_date"]->format("Y-m-d H:i:s"));
+
+						db_query("UPDATE subs SET start_date = $start_date, end_date = $end_date WHERE subs_id = $subs_id;");
+
+					}
 
 			}
 
