@@ -54,3 +54,6 @@
 .hover-btn:hover button:not(.no-soc) {
 	display: block!important;
 }
+.select2-user{
+	width:741px !important;
+}
