@@ -21,7 +21,7 @@
 			b.name AS bundle_name,
 			bb.code AS batch_code,
 			bb.meta AS batch_meta,
-			bb.exported AS batch_exported,b.platform_id
+			bb.exported AS batch_exported,b.platform_id,
 			p.plugin
 		FROM
 			subs AS s
