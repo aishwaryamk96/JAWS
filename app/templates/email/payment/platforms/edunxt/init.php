@@ -429,7 +429,8 @@
                                                                                         <span style="font-size: 9px;display: block;">
                                                                                             Due in ( days from inital )
                                                                                         </span>
-                                                                                        <?php echo strval($due_days_tol)." Days"; ?>
+                                                                                        <!-- JA-91 start -->
+                                                                                        <?php echo intval($GLOBALS["content"]["emailer"]["payment"]["instl"][$count]["due_days"])." Days"; ?><!-- JA-91 ends -->
                                                                                     </td>
                                                                                 </tr>
                                                                             </table>
