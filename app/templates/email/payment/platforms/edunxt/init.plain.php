@@ -69,7 +69,7 @@ You have opted to finance your enrollment in installments. We would like to conf
 	while($count <= intval($GLOBALS["content"]["emailer"]["payment"]["instl_total"])) {
 
 		// Due Days Calc
-		if ($count > 1) $due_days_tol += intval($GLOBALS["content"]["emailer"]["payment"]["instl"][$count]["due_days"]);
+		if ($count > 1) $due_days_tol = intval($GLOBALS["content"]["emailer"]["payment"]["instl"][$count]["due_days"]);
 
 	?>
 :::::::::::::::::::::::::::::::::::::::::::::::
