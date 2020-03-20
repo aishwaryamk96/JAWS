@@ -47,3 +47,13 @@ $lsNewKeyMapping = [
 ];
 
 define('LS_KEY_MAPPING', $lsNewKeyMapping);
+
+//LS Dashboard status
+//leads_basic
+define('BASIC_PROCESSED', 1);
+define('COMPILED_NEW', 1);
+define('COMPILED_API', 2);
+define('COMPILED_SUCCESS', 3);
+define('COMPILED_FAILURE', 4);
+define('COMPILED_NO_RESPONSE', 5);
+define('OLD_LEAD', 9);
