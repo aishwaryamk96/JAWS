@@ -34,7 +34,8 @@
 
 			$this->lmsUrl = "lms_url";
 			$this->lmsDevKey = "lms_dev_key";
-			if (!$GLOBALS["jaws_exec_live"]) {
+                        //JA-54 changes - select sandbox JLC in case dev or uat environment
+			if (!$GLOBALS["jaws_exec_live"] || APP_ENV != "prod" ) { 
 
 				$this->lmsUrl .= "_debug";
 				$this->lmsDevKey .= "_debug";

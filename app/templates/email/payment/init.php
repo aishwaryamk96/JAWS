@@ -156,23 +156,23 @@
                                                                             </tr><!-- JA-54 -->
                                                                             <?php if(!empty($GLOBALS['content']['emailer']['bundle_details'])){ ?>
                                                                             <tr>
-                                                                                <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 10px;" align="center">You have enrolled in 
-<!--<b><?php echo $GLOBALS['content']['emailer']['bundle_details']['name']; ?></b>.-->
+                                                                                <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 10px;" align="center">You have enrolled in :
+<!--<b><?php //echo $GLOBALS['content']['emailer']['bundle_details']['name']; ?></b>.-->
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 10px;" align="center">
-<?php if(isset($GLOBALS['content']['emailer']['bundle_details']['name'])) { ?>
+<?php //if(isset($GLOBALS['content']['emailer']['bundle_details']['name'])) { ?>
                                 <ul>
                                     <li> <?php echo $GLOBALS['content']['emailer']['bundle_details']['name']; ?>  </li>
                                     <?php foreach($GLOBALS['content']['emailer']['free_course'] as $idx => $fCourse){ ?>
-                                    <li> <?php echo $fCourse['name'];?> </li>
+                                    <li> <?php echo $fCourse['course_name'];?> </li>
                                      <?php } ?>
                                     <?php foreach($GLOBALS['content']['emailer']['individual_course'] as $idx => $iCourse){ ?>
-                                    <li> <?php echo $iCourse['name'];?> </li>
+                                    <li> <?php echo $iCourse['course_name'];?> </li>
                                      <?php } ?>
                                 </ul>                                                   
-        <?php } ?> <!-- JA-54 -->
+        <?php //} ?> <!-- JA-54 -->
                                                                                 </td>
                                                                             </tr>
                                                                             
