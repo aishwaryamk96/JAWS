@@ -36,7 +36,19 @@ Thank you for choosing to upskill with Jigsaw Academy!
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 <?php if(!empty($GLOBALS['content']['emailer']['bundle_details'])){ ?>
-    You have enrolled in <?php echo $GLOBALS['content']['emailer']['bundle_details']['name']; ?>.
+You have enrolled in :
+
+<?php echo $GLOBALS['content']['emailer']['bundle_details']['name']; ?>
+<?php foreach($GLOBALS['content']['emailer']['free_course'] as $idx => $fCourse){ ?>
+
+----------------------------------------------
+<?php echo $fCourse['course_name'];?>
+<?php } ?>
+<?php foreach($GLOBALS['content']['emailer']['individual_course'] as $idx => $iCourse){ ?>
+
+----------------------------------------------
+<?php echo $iCourse['course_name'];?>
+<?php } ?>
 <?php } else { ?>
 Below is your list of courses:
 
