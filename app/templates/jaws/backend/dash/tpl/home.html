@@ -9,6 +9,10 @@
     </ul>
     <!-- END BREADCRUMB -->
     <h3 class="page-title">Hello, <b>{{fname}}</b></h3>
+    
+    <div>
+        <input class="col-sm-4" type="number" ng-model="userMbl" name="userMbl" id="userMbl" placeholder="Enter mobile number with extension" ng-value =""/><button class="dropdown-item" ng-click="initiateCall()">Call</button>
+    </div>
     <div class=" hidden-lg  mobile-link-view">
         <a ui-sref="app.payment.edit">New Payment</a>
         <br/>

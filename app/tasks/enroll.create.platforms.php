@@ -11,7 +11,9 @@
 
 	$loaded_plugins = [];
 
-        $wherePlatformQry = " AND b.platform_id NOT IN (1,2)";
+        //JA-14 changes starts
+        $wherePlatformQry = " AND b.platform_id NOT IN (1)";
+        //JA-14 changes ends
         
 	$subscriptions = db_query(
 		"SELECT
@@ -19,7 +21,7 @@
 			b.name AS bundle_name,
 			bb.code AS batch_code,
 			bb.meta AS batch_meta,
-			bb.exported AS batch_exported,
+			bb.exported AS batch_exported,b.platform_id,
 			p.plugin
 		FROM
 			subs AS s
@@ -37,7 +39,7 @@
 			ON p.id = b.platform_id
 		WHERE
 			s.status = 'pending'
-			".$wherePlatformQry
+			".$wherePlatformQry //JA-14 changes ends
 	);
 
 	foreach ($subscriptions as $subs) {
@@ -55,8 +57,13 @@
 		}
 
 		create_enrollments($subs);
-		$plugin = new $class;
-		$plugin->export_subs($subs);
+                
+                //JA-14 changes starts
+                if($subs['platform_id'] != 2){ 
+                    $plugin = new $class;
+                    $plugin->export_subs($subs);
+                }
+                //JA-14 changes ends
 
 	}
 

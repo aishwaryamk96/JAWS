@@ -90,3 +90,31 @@ function getCourseApplicationFormat($courseId){
     
     return false;
 }
+
+/**
+ * JA-113
+ * @param type $leadId
+ * @param type $status
+ * @param type $compiledFlag
+ * @throws Exception
+ */
+function updateLeadStatus($leadId, $status = 0, $compiledFlag = 0){
+    
+    switch($compiledFlag){
+        case 1 :
+            $table = "user_leads_basic_compiled";
+            break;
+        case 0 :
+            $table = "user_leads_basic";
+            
+        break;
+    }
+    
+    try{
+        //update status in table
+        db_exec(" UPDATE ".$table." SET status = " . db_sanitize($status) . " WHERE lead_id = " . $leadId . ";");
+    }catch(Exception $e){
+        throw new Exception("There was database error");
+    }
+}
+//JA-113 ends

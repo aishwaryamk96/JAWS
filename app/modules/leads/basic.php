@@ -317,6 +317,9 @@
 
 			foreach ($res_leads as $lead)
 			{
+                                //JA-113 changes
+                                updateLeadStatus($lead['lead_id'],BASIC_PROCESSED);
+                                //JA-113 ends
 				$rec = array();
 				$rec["user_id"] = "";
 				$rec["meta"] = $lead["meta"];

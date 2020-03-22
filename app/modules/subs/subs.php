@@ -602,11 +602,13 @@
 
 			else if (strcmp($status, "pending") == 0) {
 
-				// status can only be changed to "pending" if the current status is "inactive"
+				// status can only be changed to "pending" if the current status is "inactive"                                
 				if (strcmp($res["status"], "inactive") == 0) {
 					db_exec("UPDATE subs SET status='pending' WHERE subs_id=".$subs_id.";");
+                                        //JA-80 starts
+                                        updateSubsDates($res, $res_meta, $subs_id);
+                                        //JA -80 ends
 				}
-
 			}
 
 			else if (strcmp($status, "frozen") == 0) {
@@ -682,5 +684,88 @@
 		return $subs_arr;
 
 	}
+        
+        
+/**
+ * JA-80 changes
+ * @param type $res
+ * @param type $res_meta
+ * 
+ * Function to add the start date / end date to a subscription
+ * Access duration is considered as number of days
+ */
+        
+    function updateSubsDates($res, $res_meta, $subs_id){
+
+        if (empty($res["end_date"])) {
+
+            $access_duration = $res['access_duration'] ?? course_get_duration($res["combo"], $res["combo_free"], $res["bundle_id"] ?? "");
+            //echo "Acc".$access_duration;
+            if (empty($res["start_date"])) {
+                    $res["start_date"] = new DateTime;
+            }
+            else {
+
+                    $today = new DateTime;
+                    $res["start_date"] = date_create_from_format("Y-m-d H:i:s", $res["start_date"]);
+                    if ($res["start_date"] < $today) {
+                            $res["start_date"] = $today;
+                    }
+
+            }
+
+            $interval = "P".$access_duration."D";
+
+            $res["end_date"] = (clone $res["start_date"])->add(new DateInterval($interval));
+//            echo "<pre>------------";
+//            print_r($res);
+//            print_r($res_meta);
+            if (!empty($res_meta["batch_id"])) {
+
+                    $res_batch = db_query("SELECT * FROM bootcamp_batches WHERE id = ".db_sanitize($res_meta["batch_id"]).";");
+                    if (!empty($res_batch)) {
+
+                            if (($end_date_defined = date_create_from_format("Y-m-d", $res_batch[0]["end_date"])) !== false) {
+
+                                    if ($end_date_defined > $res["start_date"]) { //echo 1;die;
+                                            $res["end_date"] = $end_date_defined;
+                                    }
+
+                            }
+
+                    }
+
+            }
+            else if (!empty($res_meta["bundle_id"])) {
+
+                    $res_subs_meta = db_query("SELECT batch_end_date FROM course_bundle WHERE bundle_id = ".db_sanitize($res_meta["bundle_id"]).";");
+                    if (!empty($res_subs_meta)) {
+                           // echo "---1111;"; print_r($res_subs_meta);die;
+                            $res_subs_meta = $res_subs_meta[0];
+                            if (!empty($res_subs_meta["batch_end_date"])) {
+                                // echo "---2222222;";
+
+                                    if (($end_date_defined = date_create_from_format("Y-m-d", $res_subs_meta["batch_end_date"])) !== false) {
+                                            $res["end_date"] = $end_date_defined;
+                                    }
+
+                            }
+
+                    }
+
+            }
+//            echo "Afain***************************888888";
+//            print_r($res);
+            $start_date = db_sanitize($res["start_date"]->format("Y-m-d H:i:s"));
+            $end_date = db_sanitize($res["end_date"]->format("Y-m-d H:i:s"));
+            
+//            echo "End data".$end_date;
+//            echo "<!---------->";
+//            echo "UPDATE subs SET start_date = $start_date, end_date = $end_date WHERE subs_id = $subs_id;";die;
+
+            db_query("UPDATE subs SET start_date = $start_date, end_date = $end_date WHERE subs_id = $subs_id;");
+
+        }
+    }
 
 ?>
