@@ -183,10 +183,7 @@ angular.module('jaws')
                         }
                     }
                 })
-
             /*********Start JA-113 : LS Dashboard****** */ 
-         
-
             .state('app.lsdashboard', {
                 url: "/lsdashboard",
                 templateUrl: _JAWS_PATH_TPL + "tpl/ls.dashboard.html" + _JAWS_DEV_APPEND,

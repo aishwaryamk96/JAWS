@@ -10,27 +10,23 @@ angular.module('jaws')
       $scope.leadList="1";   
       $scope.allResponse = ''; 
       $scope.leadStatusArr = [];
-      $scope.leadcount = "";
-
-       $scope.loadLsDashboard = function(leadStatus, leadTable, leadList=''){
-
-         var param = {
+      $scope.leadCount = "";
+      $scope.leadListArr = [{"id":"0","name":"Count"},{"id":"1","name":"List"},{"id":"2","name":"Both"}];     
+      $scope.loadLsDashboard = function(leadStatus, leadTable, leadList=''){
+         var param = {  
                         params:{
                         "leadStatus": leadStatus,
                         "leadTable": leadTable,
                         "leadList":leadList
                       }
-                    }  
+                    };  
            $http.get(_JAWS_PATH_API + 'lsDashboard', param).then(function (response) {
                 
                 $scope.allResponse  = response.data.data.list;
-                $scope.leadcount = response.data.data.count;
-                console.log($scope.allResponse);
+                $scope.leadCount = response.data.data.count;
             });
        }
       
-
-
      $scope.leadSelectTable = function (){
         
         if($scope.leadTable == 'basic'){
@@ -40,28 +36,22 @@ angular.module('jaws')
          }else{
             $scope.leadStatus='1';
             $scope.leadStatusArr = [{'id':'1','name':'New'},{'id':'2','name':'API requeste'},{'id':'3','name':'Success'},{'id':'4','name':'Failure'},{'id':'9','name':'Old Data'}];
-         }
-         
+         }         
          $scope.loadLsDashboard($scope.leadStatus,$scope.leadTable,$scope.leadList); 
      }
-
-     
      $scope.selectLeadStatus = function (){
 
         $scope.loadLsDashboard($scope.leadStatus,$scope.leadTable,$scope.leadList);
      }
-
      $scope.selectLeadList = function(){
       
         $scope.loadLsDashboard($scope.leadStatus,$scope.leadTable,$scope.leadList);
     }
-
      if($scope.leadTable == 'basic'){
         $scope.leadStatusArr = [{'id':'0','name':'New Data'},{'id':'1','name':'Process'},{'id':'9','name':'Old Data'}];
      }else{
         $scope.leadStatusArr = [{'id':'1','name':'New'},{'id':'2','name':'API requeste'},{'id':'3','name':'Success'},{'id':'4','name':'Failure'},{'id':'9','name':'Old Data'}];
-     }
-      
+     }      
      $scope.loadLsDashboard($scope.leadStatus,$scope.leadTable,$scope.leadList);
 
 

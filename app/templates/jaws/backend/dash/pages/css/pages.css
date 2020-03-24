@@ -1112,6 +1112,9 @@ body.rtl [class*="col-"] {
 }
 .page-title {
   margin-top: 0px;
+  /* Start JA-113: LS Dashboard */
+  display:inline-block; 
+  /* End JA-113: LS Dashboard */
 }
 /* Breadcrumbs
 ------------------------------------
@@ -13913,6 +13916,10 @@ Main components
   }
   .search-ls-section{
     margin-left: 134px;
+  }
+  .select-filter-lsd{
+    margin-left: 17px; 
+    width: 123px;
   }
 /* End JA-113 : LS Dashboard */ 
 /*** Custom code ***/
