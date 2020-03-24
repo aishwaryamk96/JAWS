@@ -10,7 +10,7 @@
                     <a class="active" ui-sref='app.aform'>LS Dashboard</a>
                 </li>
             </ul>
-            <h3  class="page-title">LS Dashboard</h3>
+            <h3  class="page-title page-title-lsd">LS Dashboard</h3>
             <br/>
         </div>
     </div>
@@ -45,16 +45,18 @@
                     </select>     
              </div> 
             </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="sel1">Total Count :   {{leadCount}} </label>     
+             </div> 
+            </div>
       </div>
     </div>    
     <div class="table-wrapper-scroll-y my-custom-scrollbar">
     <table class="table table-bordered table-striped mb-0">
         <thead>
           <tr>
-            <th>Lead ID</th>
-            <th>Lead Name</th>
-            <th>Lead Phone</th>
-            <th>Lead Date</th>
+            <th ng-repeat="header in pageHeader">{{header.name}}</th>
           </tr>
         </thead>
         <tbody>
