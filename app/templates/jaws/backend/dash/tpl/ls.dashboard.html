@@ -1,0 +1,109 @@
+
+<!-- Start JA-113 : LS Dashboard -->
+<div class="jumbotron" data-pages="parallax">
+    <div class="container-fluid container-fixed-lg">
+        <div class="inner" style="transform: translateY(0px); opacity: 1;">
+            <ul class="breadcrumb">
+                <li>
+                    <a ui-sref='app.home'>JAWS</a>
+                </li>
+                <li>
+                    <a class="active" ui-sref='app.aform'>LS Dashboard</a>
+                </li>
+            </ul>
+
+            <h3 style='display:inline-block;' class="page-title">LS Dashboard</h3>
+            <br/>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="container-fluid container-fixed-lg dataTables_wrapper form-inline no-footer" >
+    <div class="container search-ls-section">
+        <div class="row">
+                <div class="col-md-3">
+                <div class="form-group">
+                    <label for="sel1">Lead Table </label>
+                    <select class="form-control" id="sel1"  ng-model="leadTable" ng-change="leadSelectTable()" style="margin-left: 17px; width: 123px;">
+                      
+                      <option value="basic">Basic</option>
+                      <option value="compiled">Compiled</option>
+                    </select>
+                  
+             </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="sel1">Lead Status </label>
+                    <select class="form-control" id="sel1"ng-model="leadStatus" ng-change="selectLeadStatus()" style="margin-left: 17px; width: 123px;">
+                     
+                      <option ng-repeat="item in leadStatusArr" value="{{item.id}}">{{item.name}}</option>
+                      
+                    </select>
+                
+             </div>
+            </div>
+            
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="sel1">Lead List </label>
+                    <select class="form-control" id="sel1" ng-model="leadList" ng-change="selectLeadList()" style="margin-left: 17px; width: 123px;">
+                      <option value="0">Count </option>
+                      <option value="1">List</option>
+                      <option value="2">Both</option>
+                    </select>
+                 
+             </div> 
+            </div>
+
+
+
+            </div>
+    </div>
+
+    
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-bordered table-striped mb-0">
+        <thead>
+          <tr>
+            <th>Lead ID</th>
+            <th>Lead Name</th>
+            <th>Lead Phone</th>
+            <th>Lead Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="result in allResponse">
+            <td>{{result.leadId}}</td>
+            <td>{{result.leadName}}</td>
+           
+            <td>{{result.leadPhone}}</td>
+            <td>{{result.leadDate}}</td>
+          </tr>
+          
+
+          <tr ng-show="allResponse.length==0">
+            <td colspan="4">
+               <p class="text-center"> No Record Found   </p> 
+            </td>
+          </tr>
+          <tr ng-if="leadList==0">
+            <td colspan="4">
+               <p class="text-center"> Total Count is: {{leadcount}} </p> 
+            </td>
+          </tr>
+
+         
+        </tbody>
+      </table>
+    </div>
+    
+
+</div>
+<br/>
+
+
+
+
+

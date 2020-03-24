@@ -182,7 +182,28 @@ angular.module('jaws')
                             return $http.get(_JAWS_PATH_API + 'bootcamps.get.all').then(function (response) { return response.data; });
                         }
                     }
-                });
+                })
 
+            /*********Start JA-113 : LS Dashboard****** */ 
+         
+
+            .state('app.lsdashboard', {
+                url: "/lsdashboard",
+                templateUrl: _JAWS_PATH_TPL + "tpl/ls.dashboard.html" + _JAWS_DEV_APPEND,
+                controller: 'CtrlLsDashboard',
+                resolve: {
+                    deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        return $ocLazyLoad.load([], {
+                            insertBefore: '#lazyload_placeholder'
+                        })
+                            .then(function () {
+                                return $ocLazyLoad.load([
+                                    _JAWS_PATH_TPL + 'assets/js/controllers/ls.dashboard.js' + _JAWS_DEV_APPEND
+                                ]);
+                            });
+                    }]
+                }
+            })
+            /*********End JA-113 : LS Dashboard******* */
         }
     ]);
