@@ -12,6 +12,8 @@ angular.module('jaws')
       $scope.leadBasicStatusArr = [{'id':'0','name':'New Data'},{'id':'1','name':'Process'},{'id':'9','name':'Old Data'}];
       $scope.leadCompiledStatusArr = [{'id':'1','name':'New'},{'id':'2','name':'API requeste'},{'id':'3','name':'Success'},{'id':'4','name':'Failure'},{'id':'9','name':'Old Data'}];
       $scope.pageHeader = [{"id":0,"name":"Lead ID"},{"id":0,"name":"Lead Name"},{"id":0,"name":"Lead Phone"},{"id":0,"name":"Lead Date"}];
+      $scope.leadStatusArr = $scope.leadBasicStatusArr;
+
       $scope.loadLsDashboard = function(leadStatus, leadTable, leadList=''){
          var param = {  
                         params:{
@@ -42,13 +44,7 @@ angular.module('jaws')
      $scope.selectLeadList = function(){
 
         $scope.loadLsDashboard($scope.leadStatus,$scope.leadTable,$scope.leadList);
-    }
-     if($scope.leadTable == 'basic'){
-        $scope.leadStatusArr = $scope.leadBasicStatusArr;
-     }else{
-        $scope.leadStatusArr = $scope.leadCompiledStatusArr;
-     }      
+    }   
      $scope.loadLsDashboard($scope.leadStatus,$scope.leadTable,$scope.leadList);
-
     }]);
    /*  End JA-113 : LS Dashboard */
