@@ -50,7 +50,7 @@ and open the template in the editor.
     text-align: center!important;
 }
 .instlEditData .slider{
-    color : red;
+    background: red!important;
     margin-top: 0.5em !important;
 /*    margin-left: 3em;
     margin-right: 2em;*/
