@@ -19,7 +19,7 @@ $leadStatus = $_GET['leadStatus'];
 $leadTable = $_GET['leadTable'];
 $leadList = $_GET['leadList'];
 
-if(empty($leadTable) || empty($leadStatus)){
+if(empty($leadTable) || $leadStatus==''){
     header("HTTP/1.1 400 Bad Request");
     die;
 }
