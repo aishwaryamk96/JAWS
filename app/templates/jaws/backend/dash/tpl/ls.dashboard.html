@@ -39,7 +39,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="sel1">Lead List </label>
-                    <select class="form-control select-filter-lsd" id="sel1" ng-model="leadList" ng-change="selectLeadList()">
+                    <select class="form-control select-filter-lsd" id="sel1" ng-model="leadList" ng-change="selectLeadStatus()">
                         <option ng-repeat="list in leadListArr" value="{{list.id}}">
                             {{list.name}}</option>
                     </select>     
