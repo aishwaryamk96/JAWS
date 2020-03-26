@@ -115,7 +115,18 @@
         background-color: #788195 !important;
     }
 </style>
-
+<!--<style>
+    .one-line-btn{
+        padding: 7px; border-radius: 5px!important;
+    }
+    .one-line-btn-mg{
+        margin: 0 7px!important;line-height: 19px!important;
+    }
+    .instlAction div{
+        display: inline-block;
+    }
+</style>-->
+<link href="http://www.jigsawacademydev.com/jaws/app/templates/jaws/backend/dash/assets/css/editInstallment.css" rel="stylesheet" type="text/css">
 
 <div class="jumbotron" data-pages="parallax">
     <div class="container-fluid container-fixed-lg">
@@ -316,7 +327,7 @@
                 <th class="sorting col-md-3" ng-class="{'sorting_asc': (table.sort.key=='sort_0') && !table.sort.flip,'sorting_desc': (table.sort.key=='sort_0') && table.sort.flip}"
                     ng-click="table.sort.apply('0')" tabindex="0" rowspan="1" colspan="1">Lead</th>
                 <th class="sorting col-md-4" ng-class="{'sorting_asc': (table.sort.key=='sort_1') && !table.sort.flip,'sorting_desc': (table.sort.key=='sort_1') && table.sort.flip}"
-                    ng-click="table.sort.apply('1')" tabindex="0" rowspan="1" colspan="1">Courses</th>
+                    ng-click="table.sort.apply('1')" tabindex="0" rowspan="1" colspan="2">Courses</th>
                 <th class="sorting col-md-1" ng-class="{'sorting_asc': (table.sort.key=='sort_2') && !table.sort.flip,'sorting_desc': (table.sort.key=='sort_2') && table.sort.flip}"
                     ng-click="table.sort.apply('2')" tabindex="0" rowspan="1" colspan="1">Total</th>
                 <th class="sorting col-md-1" ng-class="{'sorting_asc': (table.sort.key=='sort_3') && !table.sort.flip,'sorting_desc': (table.sort.key=='sort_3') && table.sort.flip}"
@@ -347,7 +358,7 @@
                     </p>
                 </td>
 
-                <td class="v-align-middle col-sm-height col-middle" colspan="1" style="padding: 5px 0px 5px 10px;">
+                <td class="v-align-middle col-sm-height col-middle" colspan="2" style="padding: 5px 0px 5px 10px;">
                     <span class="bundle_name" style="display: block;" ng-if="pkg.bundle">
                         <span style="text-transform: capitalize;">{{pkg.bundle_type}}</span> -
                         <b>{{pkg.bundle}}</b>
@@ -413,13 +424,126 @@
                 </td>
 
             </tr>
+            <tr class="row-details" ng-show="(instlAction.edit==true)&&(instlAction.instl== $index)" >
+                <td colspan="11" style='background-color: #fcc183!important;'>
+<!--                    <div class="col-md-12 instlAction" ng-if="pkg.instl.length > 1">
+                        <div class="iAction editInstl">
+                            <button type="button" href="#modal-disable" data-toggle="modal" ng-click="action.preDisable(pkgIndex, $index)" ng-if="permissions.approver" title="Edit" class="btn btn-primary one-line-btn one-line-btn-mg"> <i class="fa fa-fw fa-pencil"></i>Edit</button>
+                        </div>
+                        <div class="iAction mergeInstl">
+                            <button type="button" href="#modal-disable" data-toggle="modal" ng-click="action.preDisable(pkgIndex, $index)" ng-if="permissions.approver" title="Edit" class="btn btn-complete one-line-btn one-line-btn-mg"> <i class="fa fa-fw fa-compress"></i>Merge</button>
+                        </div>
+                        <div class=" iActionsplitInstl"></div>
 
-            <tr class="row-details" ng-show="table.expand == ($index + table.pages.rows.start)" ng-repeat-end>
+
+                    </div>-->
+                    <div  class="col-md-12 editInstl" ng-if="pkg.instl.length > 1" id="editInstl" >
+                        <div class="col-md-12 instlEditHeadersDiv">
+                            <div class="col-md-1 instlEditHeader ">
+                                <span>Installment</span>
+                            </div>
+                            <div class="col-md-4 instlEditHeader"><span>Amount</span></div>
+                            <div class="col-md-5 instlEditHeader"><span>Date</span></div>
+                            <div class="col-md-1 instlEditHeader"><span>Action</span></div>
+                        </div>
+                        <div ng-repeat="instl in pkg.instl" class="col-md-12 instlEditDataDiv">
+                            <div class="col-md-1 instlEditData">
+                                    <span>{{$index + 1}}<sup>{{ordinal($index + 1)}}</sup></span>                                       </div>
+                            <div class="col-md-4 instlEditData">
+                                <span class="col-md-4"> Current : <span class="">{{instl.sum}}</span></span>
+                                <input ng-if="!instl.pay_date" class="col-md-6" type="text" name="amnt" value=""/>
+                                <span ng-if="instl.pay_date" class="col-md-6 bold">Paid</span>
+                            </div>
+                            <div class="col-md-5 instlEditData">
+<!--                                    <input  class="col-md-11" type="text" name="amnt" value=""/>-->
+<!--                               <div class="col-sm-3 col-sm-height col-middle sm-padding-15 " style='text-align: center!important;'>-->
+                                <div class="col-md-4 instCtDate" ng-if="!instl.pay_date">
+                                    <span class="col-md-12"> Due Days : <span class="">{{instl.due_days}}</span></span>
+                                    <span class="col-md-12"> Date: <span class="">{{instl.due_date.date}}</span></span>
+                                </div>
+                                <div class="col-md-8" ng-if="!instl.pay_date">
+                                    <div class="col-md-5">
+                                        <div slider class="col-md-10 slider m-b-10 bg-master" ng-model='instl[$index+1].due' start=1 end={{max_due_date}} step=1></div>
+                                    <h5 class="col-md-10  font-montserrat all-caps small no-margin hint-text bold" style='margin-bottom: 5px!important'>{{instl[$index+1].due
+                            | number}} Days</h5>
+                                    
+                                    </div>
+                                    <div class="col-md-6 input-group date" ui-jq="datepicker">
+                                            <input type="text" class="col-md-5 form-control input-sm" value="12-02-2012" name="due_date" ng-model="instl[$index+1].due_date" ng-change="getInstallmentDate($index+1)">
+                                            <div class="input-group-addon"><span class="glyphicon glyphicon-th"></span>
+                                            </div>
+                                    </div>
+                                </div>
+                             </div>
+                            <div class="col-md-1 instlEditData"></div>
+                        </div>
+                        <div class="col-md-12 instlEditDataDiv">
+                            <div class="col-md-1 instlEditData"></div>
+                                    
+                            <div class="col-md-5 instlEditData">
+                                <span> Total : </span><span>{{pkg.sum_total}}</span>
+                                
+                            </div>
+                            <div class="col-md-6 instlEditData"> </div>
+                        </div>
+                        <div class="col-md-12 instlAction instlActionBtn">
+                            <div class="iAction editInstl">
+                                <button type="button" ng-click="instlAction.edit=false;instlAction.instl=-1" ng-if="permissions.approver" title="Cancel" class="btn btn-yellow one-line-btn one-line-btn-mg"> <i class="fa fa-fw fa-ban"></i>Cancel</button>
+                                <button type="button" ng-click="" title="Save" class="btn btn-yellow one-line-btn one-line-btn-mg"> <i class="fa fa-fw fa-bookmark"></i>Save</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </td>
+            </tr>
+
+            <tr class="row-details" ng-show="(table.expand == ($index + table.pages.rows.start))&&(!instlAction.edit)" ng-repeat-end>
                 <td colspan="1" style='background-color: rgb(235,235,235)!important;'>
+                    <div class="col-md-12 instlAction" ng-if="pkg.instl.length > 1">
+                        <div class="iAction ">
+                            <button type="button" ng-click="instlAction.edit=true;instlAction.instl=$index" ng-if="permissions.approver" title="Edit" class="btn btn-primary one-line-btn one-line-btn-mg"> <i class="fa fa-fw fa-pencil"></i>Edit</button>
+                        </div>
+<!--                        <div class="iAction mergeInstl">
+                            <button type="button" href="#modal-disable" data-toggle="modal" ng-click="action.preDisable(pkgIndex, $index)" ng-if="permissions.approver" title="Edit" class="btn btn-complete one-line-btn one-line-btn-mg"> <i class="fa fa-fw fa-compress"></i>Merge</button>
+                        </div>-->
+<!--                        <div class=" iActionsplitInstl"></div>-->
 
+
+                    </div>
+<!--                    <div  class="col-md-12 editInstl" ng-if="pkg.instl.length > 1" id="editInstl" >
+                        <div class="col-md-12 instlEditHeadersDiv">
+                            <div class="col-md-2 instlEditHeader ">
+                                <span>Installment</span>
+                            </div>
+                            <div class="col-md-5 instlEditHeader"><span>Amount</span></div>
+                            <div class="col-md-5 instlEditHeader"><span>Date</span></div>
+                        </div>
+                        <div ng-repeat="instl in pkg.instl" class="col-md-12 instlEditDataDiv">
+                            <div class="col-md-2 instlEditHeader">
+                                    <span>{{$index + 1}}<sup>{{ordinal($index + 1)}}</sup></span></div>
+                            <div class="col-md-5 instlEditHeader">
+                                    <input class="col-md-11" type="text" name="amnt" value=""/></div>
+                            <div class="col-md-5 instlEditHeader">
+                                    <input  class="col-md-11" type="text" name="amnt" value=""/></div>
+                                <div class="col-sm-3 col-sm-height col-middle sm-padding-15 " style='text-align: center!important;'>
+                                    <h5 class="font-montserrat all-caps small no-margin hint-text bold" style='margin-bottom: 5px!important'>{{instls[$index+1].due
+                            | number}} Days</h5>
+                                    <div slider class="m-b-10 bg-master" ng-model='instls[$index+1].due' start=1 end={{max_due_date}} step=1></div>
+                                    <div class="input-group date" ui-jq="datepicker">
+                                            <input type="text" class="form-control input-sm" value="12-02-2012" name="due_date" ng-model="instls[$index+1].due_date" ng-change="getInstallmentDate($index+1)">
+                                            <div class="input-group-addon"><span class="glyphicon glyphicon-th"></span>
+                                            </div>
+                                    </div>
+                                </div>
+
+                        </div>
+                            
+                        
+                    </div>-->
+                    
                 </td>
 
-                <td colspan="5">
+                <td colspan="6">
                     <table class="table table-inline" style='margin-top: 0px; margin-bottom: 0px;'>
                         <tbody>
                             <tr ng-repeat="instl in pkg.instl">
@@ -427,9 +551,9 @@
 <!--                                    <button type="button" href="#editInstlment" data-toggle="modal" ng-click="action.preDisable(pkgIndex, $index)" ng-if="permissions.approver && !instl.pay_date"
                                             title="Edit" class="" style="background-color: #40D9CA !important;border-color: #40D9CA !important;font-weight: bolder;color: white;border: 1px solid;margin: 6px;">
                                             <i class="fa fa-fw fa-pencil"></i></button>-->
-<i title="Edit installment" ng-class="{'text-white': paid}" ng-show="permissions.approver && !instl.pay_date" class="fa fa-fw fa-pencil hint-text instledit" ng-click="action.editInstl($index,pkgIndex)" style=""></i><!--ng-click="eI = !eI" -->
+<!--<i title="Edit installment" ng-class="{'text-white': paid}" ng-show="permissions.approver && !instl.pay_date" class="fa fa-fw fa-pencil hint-text instledit" ng-click="action.editInstl($index,pkgIndex)" style=""></i>ng-click="eI = !eI" -->
 <span>
-                                        <input type="text" placeholder="" value="" class="edit-sum ng-pristine ng-valid ng-not-empty ng-touched ng-hide"  style="background: rgb(246, 246, 246);" ng-show="eI">
+<!--                                        <input type="text" placeholder="" value="" class="edit-sum ng-pristine ng-valid ng-not-empty ng-touched ng-hide"  style="background: rgb(246, 246, 246);" ng-show="eI">-->
                                     </span>
                                 </td>
                                 <td colspan='1' ng-if="pkg.instl.length == 1">
@@ -478,7 +602,7 @@
                                         <span ng-if="(pkg.status.code != 7) || ($index > 0)">Disabled</span>
                                     </span>
                                     <span ng-if="instl.status == 'enabled'">
-                                        Due</b>&nbsp;{{instl.due_date.is_today ? 'today' : ('on ' + instl.due_date.date)}}
+                                        <b>Due</b>&nbsp;{{instl.due_date.is_today ? 'today' : ('on ' + instl.due_date.date)}}
                                     </span>
                                     <span ng-if="instl.status == 'due'">
                                         <i class='text-warning fa fa-lg fa-exclamation-circle fa-fw'></i>&nbsp;
@@ -523,16 +647,14 @@
                                         <!--
 								-->
                                     </div>
-                                    <div class="btn-group pull-right" ng-if="($index == 0) && (pkg.status.code == 4)">
+                                    <div class="btn-group pull-right" ng-if="($index == 0) && (pkg.status.code == 4)" >
                                         <!--
 									-->
-                                        <button type="button" href="#modal-notify" data-toggle="modal" ng-click="action.preNotify(pkgIndex, $index)" title="Resend"
-                                            class="btn btn-default">
+                                        <button type="button" href="#modal-notify" data-toggle="modal" ng-click="action.preNotify(pkgIndex, $index)" title="Resend" class="btn btn-default one-line-btn">
                                             <i class="fa fa-fw fa-envelope"></i>&nbsp;Resend</button>
                                         <!--
 									-->
-                                        <button type="button" href="#modal-disable" data-toggle="modal" ng-click="action.preDisable(pkgIndex, $index)" ng-if="permissions.approver"
-                                            title="Disable" class="btn btn-danger">
+                                        <button type="button" href="#modal-disable" data-toggle="modal" ng-click="action.preDisable(pkgIndex, $index)" ng-if="permissions.approver" title="Disable" class="btn btn-danger one-line-btn one-line-btn-mg">
                                             <i class="fa fa-fw fa-minus-circle"></i>&nbsp;Disable</button>
                                         <!--
 								-->
@@ -549,16 +671,16 @@
                                         <!--
 								-->
                                     </div>
-                                    <div class="btn-group pull-right" ng-if="(instl.status == 'enabled') || (instl.status == 'due')">
+                                    <div class="btn-group pull-right" ng-if="(instl.status == 'enabled') || (instl.status == 'due')" style="display:inline-flex!important;" >
                                         <!--
 									-->
                                         <button type="button" href="#modal-notify" data-toggle="modal" ng-click="action.preNotify(pkgIndex, $index)" title="Notify"
-                                            class="btn btn-default">
+                                            class="btn btn-default one-line-btn">
                                             <i class="fa fa-fw fa-bell"></i>&nbsp;Notify</button>
                                         <!--
 									-->
                                         <button href="#modal-disable" data-toggle="modal" ng-if="permissions.approver" type="button" ng-click="action.preDisable(pkgIndex, $index)"
-                                            title="Disable" class="btn btn-danger">
+                                            title="Disable" class="btn btn-danger one-line-btn one-line-btn-mg">
                                             <i class="fa fa-fw fa-minus-circle"></i>&nbsp;Disable</button>
                                         <!--
 								-->

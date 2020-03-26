@@ -5,6 +5,15 @@
 angular.module('jaws')
     .controller('CtrlPaymentTrack', ['$scope', '$state', 'courses', 'defaultSettings', 'apiSVC', '$sce', '$timeout', '$http', '$window', 'bootcamps', function ($scope, $state, courses, defaultSettings, apiSVC, $sce, $timeout, $http, $window, bootcamps) {
 
+        //JA-57 starts
+            //edit varaibles
+            $scope.instlAction ={};
+            $scope.instlAction.edit = false;
+            $scope.instlAction.instl = -1;
+            $scope.max_due_date = (defaultSettings.max_due_date) ? defaultSettings.max_due_date : 45;
+
+        //JA-57 ends
+        
         // View
         $scope.app.name = 'JAWS - Track Payments';
 
@@ -606,6 +615,11 @@ angular.module('jaws')
                     $scope.table.expand = -1;
                     $scope.table.pages.paginate();
                     $scope.filter.wait = false;
+                    
+                    //JA-57 starts
+                    $scope.instlAction.edit = false;
+                    $scope.instlAction.instl = -1;
+                    //JA-57 ends
 
                 } catch (err) {
                     console.log('Parse error - ' + err.message);
