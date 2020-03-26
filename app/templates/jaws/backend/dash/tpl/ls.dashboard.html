@@ -1,0 +1,83 @@
+<!-- Start JA-113 : LS Dashboard -->
+<div class="jumbotron" data-pages="parallax">
+    <div class="container-fluid container-fixed-lg">
+        <div class="inner" style="transform: translateY(0px); opacity: 1;">
+            <ul class="breadcrumb">
+                <li>
+                    <a ui-sref='app.home'>JAWS</a>
+                </li>
+                <li>
+                    <a class="active" ui-sref='app.aform'>LS Dashboard</a>
+                </li>
+            </ul>
+            <h3  class="page-title page-title-lsd">LS Dashboard</h3>
+            <br/>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="container-fluid container-fixed-lg dataTables_wrapper form-inline no-footer" >
+    <div class="container search-ls-section">
+        <div class="row">
+                <div class="col-md-3">
+                <div class="form-group">
+                    <label for="sel1">Lead Table </label>
+                    <select class="form-control select-filter-lsd" id="sel1"  ng-model="leadTable" ng-change="leadSelectTable()">
+                      <option value="basic">Basic</option>
+                      <option value="compiled">Compiled</option>
+                    </select>                
+             </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group ">
+                    <label for="sel1">Lead Status </label>
+                    <select class="form-control select-filter-lsd" id="sel1"ng-model="leadStatus" ng-change="selectLeadStatus()">              <option ng-repeat="item in leadStatusArr" value="{{item.id}}">
+                        {{item.name}}</option>                      
+                    </select>                
+             </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="sel1">Lead List </label>
+                    <select class="form-control select-filter-lsd" id="sel1" ng-model="leadList" ng-change="selectLeadStatus()">
+                        <option ng-repeat="list in leadListArr" value="{{list.id}}">
+                            {{list.name}}</option>
+                    </select>     
+             </div> 
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="sel1">Total Count :   {{leadCount}} </label>     
+             </div> 
+            </div>
+      </div>
+    </div>    
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-bordered table-striped mb-0">
+        <thead>
+          <tr>
+            <th ng-repeat="header in pageHeader">{{header.name}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="result in allResponse">
+            <td>{{result.leadId}}</td>
+            <td>{{result.leadName}}</td>
+            <td>{{result.leadPhone}}</td>
+            <td>{{result.leadDate}}</td>
+          </tr>        
+          <tr ng-show="leadCount==0 && leadList!=0">
+            <td colspan="4">
+               <p class="text-center"> No Record Found   </p> 
+            </td>
+          </tr>
+          <tr ng-if="leadList==0">
+            <td colspan="4">
+               <p class="text-center"> Total Count is: {{leadCount}} </p> 
+            </td>
+          </tr>   
+        </tbody>
+      </table>
+    </div>
+</div>
+<br/>
