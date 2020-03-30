@@ -7,13 +7,192 @@ angular.module('jaws')
 
         //JA-57 starts
             //edit varaibles
+            var installUpdateUrl = _JAWS_PATH + "webapi/backend/dash/edit-installment";
             $scope.instlAction ={};
             $scope.instlAction.edit = false;
             $scope.instlAction.instl = -1;
+            $scope.instlAction.instlList = '';
             $scope.max_due_date = (defaultSettings.max_due_date) ? defaultSettings.max_due_date : 45;
+            $scope.instls = [];
 
+            $scope.deleteInstl = function(pkg, index){
+
+                if(pkg.instl[index].added){
+                    pkg.instl.splice(index, 1);
+                }else{
+                    if(pkg.instl[index].deleted){
+                        pkg.instl[index].discounted = false;
+                        pkg.instl[index].edited = 2;
+
+                    }else{
+
+                        pkg.instl[index].edited = 1;
+                    }
+                }
+            };
+
+            $scope.discountInstl = function(pkg, index){
+
+               if(pkg.instl[index].discounted){
+                    pkg.instl[index].deleted = false;
+                    pkg.instl[index].edited = 3;
+                }else{
+                    pkg.instl[index].edited = 1;
+                }
+            };
+
+            $scope.addInstl = function(pkg, index){
+                pkg.instl.push({
+                     instl_id : '',
+                     new_amnt:'',
+                     new_duedays : '',
+                     new_date : '',
+                     edited: 4,
+                     added: true,
+                     deleted: false,
+                     discounted:false,
+                     amntAdjst : 0,
+                     subsStart:pkg.subsStart,
+                     subsEnd:pkg.subsEnd,
+                     endDueDays:Number(pkg.instl[1].endDueDays),
+                     startDueDays:Number(pkg.startDueDays)
+                 });
+            };
+
+            $scope.resetInstlAction = function(pkg){
+
+                    pkg.instl.forEach(function (inst, i) {
+                        if( pkg.instl[i].added ==true){
+                            pkg.instl.splice(i, 1); //remove the new instllment
+                        }else{
+                            inst.new_amnt = '';
+                            inst.new_duedays = '';
+                            inst.new_date = '';
+                            inst.edited = (inst.pay_date)? 0 :1;
+                            inst.deleted = false;
+                            inst.discounted = false;
+                            inst.added=false;
+                        }
+                    });
+
+                    $scope.instlAction.edit=false;$scope.instlAction.instl=-1;
+                    $scope.instlAction.instlList='';
+            };
+
+            $scope.updateInstlAmnt = function(pkg,value, index){
+
+                var totalPrice = Number(pkg.pricing.total);
+                var instlPriceTotal = 0;
+
+                pkg.instl.forEach(function (inst, i) {
+                    inst.amntAdjst = 0;
+                    if(inst.pay_date && i < index){
+                        instlPriceTotal+= Number(inst.sum);
+                    }
+                    if(!inst.pay_date && i < index){
+                        instlPriceTotal+= Number(inst.new_amnt);
+                    }
+                    if(i > index){
+                        inst.new_amnt = 0;
+                    }
+                    if(i >= index){
+                        instlPriceTotal+= Number(inst.new_amnt);
+                    }
+                });
+                pkg.instlSum = 0;
+                var remaingInstlLength = (pkg.instl.length - 1) - index;
+                var priceDiff = totalPrice - instlPriceTotal;
+                if(priceDiff < 0){
+                    pkg.extraAmnt = priceDiff;
+                }
+
+                var perInstlNewPrice = (remaingInstlLength>0 )? (priceDiff/remaingInstlLength) : priceDiff;
+
+                pkg.instl.forEach(function (inst, i) {
+                    if( i > index ){
+                        inst.new_amnt = perInstlNewPrice;
+                    }
+                    if( i == (pkg.instl.length - 1)){
+                        if(priceDiff < 0){
+                            inst.new_amnt = Number(inst.new_amnt) + Number(priceDiff);
+                            inst.amntAdjst = 1;
+                        }
+                    }
+                    if(inst.pay_date){
+                        pkg.instlSum+= Number(inst.sum);
+                    }else{
+                        pkg.instlSum+=Number(inst.new_amnt);
+                    }
+                });
+//
+            };
+
+
+                // save package
+                var err = 0;
+                var errIndx = '';
+            $scope.saveInstallmentAction = function (pkg) {
+
+                err= 0; errIndx = '';
+                var updatedInstallment = {};
+
+                updatedInstallment.newInst =[];
+
+                pkg.instl.forEach(function (inst, i) {
+                    // update the key
+                    var key = Number(i) + Number(1);
+                    // create an array
+
+                    if(inst.added == true){
+
+                        if( inst.new_duedays = '' || inst.new_date == ''  || inst.new_amnt =='' ){                                      err= 1;
+                            errIndx = i;
+                            inst.allFields = 1;
+                        }
+                    }
+                        updatedInstallment.newInst[key] = {};
+                        updatedInstallment.newInst[key]['instl_id'] = inst.instl_id;
+                        updatedInstallment.newInst[key]['new_duedays'] = inst.new_duedays;
+                        updatedInstallment.newInst[key]['edited'] = inst.edited;
+                        updatedInstallment.newInst[key]['new_amnt'] = inst.new_amnt;
+                        updatedInstallment.newInst[key]['new_date'] = inst.new_date;
+                        updatedInstallment.newInst[key]['added'] = inst.added;
+                        updatedInstallment.newInst[key]['deleted'] = inst.deleted;
+                        updatedInstallment.newInst[key]['discounted'] = inst.discounted;
+
+                });
+
+
+                if( err == 1){
+                    //Display errors
+
+                }else{
+                    $scope.isDisabled = true; let msg = "", type = "", timeout = 10000;
+
+                    updatedInstallment.package_id = pkg.package_id;
+                    updatedInstallment.subs_id = pkg.subs_id;
+                    updatedInstallment.pay_id = pkg.pay_id;
+                    updatedInstallment.user_id = pkg.user_id;
+
+                    $http({
+                        url: installUpdateUrl, method: "POST", data: updatedInstallment,
+                    }).then(function (response) {
+                        
+                        $scope.instlAction.edit=false;
+                        $scope.instlAction.instl=-1;
+                        $scope.instlAction.instlList='';
+                        if (response.data.status) { type = 'success'; timeout = 4500; }
+                        else { type = 'danger'; timeout = 9000; }
+
+                        $('body').pgNotification({ style: 'bar', position: 'top', timeout: timeout, type: type, message: response.data.message }).show();
+                        $scope.filter.apply();
+                        
+
+                    });
+                }
+            };
         //JA-57 ends
-        
+
         // View
         $scope.app.name = 'JAWS - Track Payments';
 
@@ -363,13 +542,31 @@ angular.module('jaws')
                 var instl_next = parseInt(pkg.instl_next);
                 if (instl_next === 'NaN') instl_next = -1;
 
+                var instlSum = 0;
                 pkg.instl.forEach(function (inst, i) {
+
+                    instlSum+= Number(inst.sum);
                     instl.push({
                         due_date: inst.due_date,
                         due_days: inst.due_days,
                         sum: inst.sum,
                         instl_fees: inst.instl_fees,
-
+                        //JA-57 changes starts
+                        instl_count : i+1,
+                        instl_id : (inst.instl_id)? inst.instl_id:'',
+                        edited : (inst.pay_date)? 0 :1,
+                        deleted :'',discounted:'',
+                        added:'',
+                        new_amnt : '',
+                        new_duedays : '',
+                        new_date : '',
+                        amntAdjst : 0,
+                        subsStart:pkg.start_date,
+                        subsEnd:pkg.end_date,
+                        endDueDays:Number(pkg.access_duration),
+                        startDueDays:Number(pkg.startDue),
+                        allFields : 0,
+                        //JA-57 changes ends
                         link: {
                             web_id: inst.web_id,
                             status: inst.paylink_status
@@ -429,7 +626,14 @@ angular.module('jaws')
                     sort_5: pkg.create_date.epoch,
                     sort_6: pkg.agent_name,
                     sort_7: pkg.status,
-
+                    //JA-57 changes
+                    user_id:pkg.user_id,
+                    instlSum:instlSum,
+                    subsStart:pkg.start_date,
+                    subsEnd:pkg.end_date,
+                    endDueDays:Number(pkg.access_duration),
+                    startDueDays:Number(pkg.startDue),
+                    //JA-57 changes
                     lead: {
                         name: pkg.name,
                         email: pkg.email,
@@ -615,7 +819,7 @@ angular.module('jaws')
                     $scope.table.expand = -1;
                     $scope.table.pages.paginate();
                     $scope.filter.wait = false;
-                    
+
                     //JA-57 starts
                     $scope.instlAction.edit = false;
                     $scope.instlAction.instl = -1;
@@ -790,7 +994,7 @@ angular.module('jaws')
                         $scope.action.free(response.data.message, response.data.status ? "success" : "danger");
                     }, 100);
                 });
-                
+
             },
             disable: function () {
                 if (!$scope.user_state) {

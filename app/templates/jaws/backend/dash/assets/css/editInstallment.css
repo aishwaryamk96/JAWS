@@ -3,58 +3,114 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
+
+
 /*
     Created on : Mar 22, 2020, 6:45:11 PM
-    Author     : techjini
+    Author     : DDL - Techjini
 */
-.one-line-btn{
-    padding: 7px; border-radius: 5px!important;
+
+.one-line-btn {
+	padding: 7px;
+	border-radius: 5px!important;
 }
-.one-line-btn-mg{
-    margin: 0 7px!important;line-height: 19px!important;
+
+.one-line-btn-mg {
+	margin: 0 7px!important;
+	line-height: 19px!important;
 }
-.instlAction div{
-    display: inline-block;
+
+.instlAction div {
+	display: inline-block;
 }
-.editInstl{
-    margin: 0!important;
-    padding-left: 0!important;
-    /* text-align: left; */
-    background-color: rgb(235,235,235)!important;
-    margin: 0!important;
-    padding: 0!important;
+
+.editInstl {
+	margin: 0!important;
+	padding-left: 0!important;
+	/* text-align: left; */
+	background-color: rgb(235, 235, 235)!important;
+	margin: 0!important;
+	padding: 0!important;
 }
-.instlEditHeadersDiv, .instlEditDataDiv{padding: 0!important;
-                                        /*    border: 1px solid;*/
-                                        margin: 0!important;
-                                        /* width: 104%; */
-                                        height: 50px;
-                                        text-align: left;}
-.instlEditHeadersDiv{
-    font-size: 14px;
-    font-weight: bold;
-    border-bottom: 2px solid;
+
+.instlEditHeadersDiv,
+.instlEditDataDiv {
+	padding: 0!important;
+	/*    border: 1px solid;*/
+	margin: 0!important;
+	/* width: 104%; */
+	height: 35px;
+	text-align: left;
 }
-.instlEditHeader , .instlEditData{
-    text-align: center;
-    margin: auto;
-    padding: 13px 0;
+
+.instlEditHeadersDiv {
+	font-size: 14px;
+	font-weight: bold;
+	border-bottom: 2px solid;
 }
-.instlEditDataDiv{height: 72px!important;border-bottom: 1px solid #626262;}
-.instlActionBtn{
-    margin: 1.5em 0;
-    text-align: center;
+
+.instlEditHeader,
+.instlEditData {
+	text-align: center;
+	margin: auto;
+	padding: 8px 0;
 }
-.instlEditData h5{
-    margin-bottom: 5px!important;
-    text-align: center!important;
+
+.instlPaidData {
+	height: 45px!important;
 }
-.instlEditData .slider{
-    background: red!important;
-    margin-top: 0.5em !important;
-/*    margin-left: 3em;
+
+.instlEditDataDiv {
+	height: 72px!important;
+	border-bottom: 1px solid #626262;
+}
+
+.instlTotal {
+	height: 40px!important;
+}
+
+.instlActionBtn {
+	margin: 1em 0;
+	text-align: center;
+}
+
+.instlEditData h5 {
+	margin-bottom: 5px!important;
+	text-align: center!important;
+}
+
+.instlEditData .slider {
+	background: red!important;
+	margin-top: 0.5em !important;
+	/*    margin-left: 3em;
     margin-right: 2em;*/
 }
-.instCtDate{
-    
+
+.instCtDate {}
+
+.instlDeleted {
+	background-color: lightgrey!important;
+}
+
+[disabled] .slider .noUi-handle {
+	background-color: lightslategrey;
+}
+
+.instlAlert {
+	color: red!important;
+	font-size: 10px!important;
+	margin-top: 5px!important;
+}
+
+.checkbox label.instlDiscount::after {
+	left: 1.2px!important;
+	top: 0.2px!important;
+}
+
+.pad-none {
+	padding: 0!important;
+}
+
+.padTop {
+	padding: 8px!important;
 }

@@ -288,6 +288,8 @@
 	// END: Where team=
 
 	// Initialize Query
+        //JA-57 changes-
+        // added line : "CAST(subs.access_duration AS UNSIGNED) as access_duration,subs.start_date,subs.end_date,"
 	$query = "SELECT
 				package.package_id,
 				package.user_id,
@@ -321,7 +323,7 @@
 				approver_pm.name AS approver_pm,
 				package.status,
 				package.expire_date,
-				subs.subs_id,
+				subs.subs_id,CAST(subs.access_duration AS UNSIGNED) as access_duration,subs.start_date,subs.end_date,
 				payment.pay_id, payment.status AS pay_status,
                 package.receipt_type,
                 payment.app_num
@@ -381,8 +383,9 @@
 		}
 
 		else if (strcmp($package["status"], "executed") == 0) {
-
+                        //JA-57 changes ends - added " instl.instl_id"
 			$query = "SELECT
+                                        instl.instl_id,
 					instl.pay_date,
 					instl.due_date,
 					instl.due_days,
@@ -401,17 +404,24 @@
 					payment_link AS link
 						ON link.instl_id = instl.instl_id
 				WHERE
-					instl.pay_id = ".$package["pay_id"]."
+					instl.pay_id = ".$package["pay_id"]." AND instl.instl_edited != 2 
 				ORDER BY
 					instl.instl_id ASC";
-
+                        
+                        //JA-57 changes ends - added " AND instl.instl_edited != 2"
+                        
 			$res_instl = db_query($query);
 			$package["instl"] = $res_instl;
 
 			for ($icount = 0; $icount < count($package["instl"]); $icount++) {
-
+                                //JA-57 changes start
+                                if (!empty($package["instl"][$icount]["pay_date"])) {
+                                    $package["lastPayDate"] = $package["instl"][$icount]["pay_date"];
+                                }
+                                //JA-57 changes ends        
 				try {
 
+                                        
 					if (!empty($package["instl"][$icount]["due_date"])) {
 
 						$due_date = strtotime($package["instl"][$icount]["due_date"]);
@@ -523,7 +533,14 @@
 		$package["sum_total"] = intval($package["sum_total"]);
 		$package["instl_total"] = intval($package["instl_total"]);
 		$package["instl_fees"] = intval($package["instl_fees"]);
+                
+                //JA-57 changes
+                $lastPayDate = new DateTime(($package["lastPayDate"]));
+                $today = new DateTime();
 
+                $package['startDue']= ($today->diff($lastPayDate)->format("%a"))+1;
+                
+                //JA-57 ends
 		if(!empty($package['bundle_id'])){
 			$bundle = db_query("SELECT bundle_type, name FROM `course_bundle` WHERE bundle_id = " . db_sanitize($package['bundle_id']) . ";");
 			$package["bundle_details"] = $bundle[0];
