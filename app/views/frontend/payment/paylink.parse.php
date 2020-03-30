@@ -90,6 +90,9 @@
 	$transaction_info['extra']['web_id'] = $paylink_web_id;
 	$transaction_info['user_state'] = $user_meta['state'];
 
+        //JA-120 changes
+        $pgInfo = [];
+        //JA-120 
 	$spl_bundles = [65];
 	$spl_transaction_desc = "";
 
@@ -104,9 +107,13 @@
     
     if (!empty($subs_info["meta"]["bundle_id"])) {
 
-        $bundle = db_query("SELECT name FROM course_bundle WHERE bundle_id = ".$subs_info["meta"]["bundle_id"]);
+        $bundle = db_query("SELECT * FROM course_bundle WHERE bundle_id = ".$subs_info["meta"]["bundle_id"]);
         if (!empty($bundle)) {
            $transaction_info['extra']['desc'] = $bundle[0]["name"];
+           //JA-120 starts
+           $pgInfo['rpay_acc_flag'] = $bundle[0]["rpay_acc_flag"];
+           $paylink_info['rpay_acc_flag'] = $bundle[0]["rpay_acc_flag"];
+           //JA-120 ends
         }
 
     }
@@ -116,14 +123,24 @@
 
 	// Prep Feed
 	$combo_str = $subs_info["combo"].";".$subs_info["combo_free"];
-    $combo_arr = course_get_combo_arr($combo_str);
+        $combo_arr = course_get_combo_arr($combo_str);
 	$feed_course;
 
+        //JA-120 changes
+        
+        //JA-120 ends
     foreach($combo_arr as $course_id => $learn_mode) {
         $res = db_query("SELECT * FROM course WHERE course_id=".$course_id." LIMIT 1;");
+        
+         //JA-120 changes
+        if(empty($subs_info["meta"]["bundle_id"])){
+             $pgInfo['rpay_acc_flag'] = $res[0]['rpay_acc_flag'];
+             $paylink_info['rpay_acc_flag'] = $res[0]["rpay_acc_flag"];
+        }
+         //JA-120 changes
         if (!isset($res[0]["name"])) continue;
 		$feed_course[$res[0]["name"]] = ((strcmp($learn_mode, "1") == 0)? "Premium" : "Regular");
-    }
+        }
 
 	$feed_msg_user = [
 		$user["email"].(empty($user["phone"]) ? "" : " (".$user["phone"].")"),
@@ -140,7 +157,9 @@
 	$GLOBALS["content"]['transaction_info'] = $transaction_info;
     $GLOBALS["content"]['paylink_id'] = $paylink_info["paylink_id"];
     $GLOBALS["content"]['paylink_info'] = $paylink_info;
-
+    //JA-120 changes
+    $GLOBALS["content"]['gateway_info'] = $pgInfo;
+    //JA-120 ends
 	// check if payment gateway selection is needed or not.
     // show payment gateway selection if paying in INR not for USD.
     $show_payment_gateway_selection = false; 
@@ -206,6 +225,7 @@
                 // website should not have neft payment
                 load_template("jaws/frontend", "pg.select.neft");
             } else {
+                    
                 load_template("jaws/frontend", "pg.select");
             }
 			exit;
