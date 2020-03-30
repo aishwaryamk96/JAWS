@@ -143,7 +143,8 @@
             let data = {
                 'amount' : '<?php echo floatval($ti['sum']).'00'; ?>',
                 'currency' : '<?php echo strtoupper($currency); ?>',
-                'receipt' : '<?php echo $ti['invoice_id']; ?>'
+                'receipt' : '<?php echo $ti['invoice_id']; ?>',
+                'rpay_acc_flag' : '<?php echo $rpayAccPlag; ?>'
             };
 
             async function getOrderID(){
