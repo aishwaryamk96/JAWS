@@ -445,7 +445,7 @@
                                 <input ng-disabled="instl.deleted" ng-if="!instl.pay_date" class="col-md-5" type="text" name="new_amnt" ng-model="instl.new_amnt" ng-blur="updateInstlAmnt(pkg,instl.new_amnt,$index)" />
                                 <span ng-if="instl.pay_date" class="col-md-5 bold">Paid</span>
                                 <span ng-if="instl.amntAdjst" class="col-md-12 instlAlert">Amount is adjusted for Total Sum</span>
-                                <span ng-if="instl.deleted" class="col-md-12 instlAlert">This installment is set to be deleted. Uncheck "Deleted" to enable editing.</span>
+<!--                                <span ng-if="instl.deleted" class="col-md-12 instlAlert">This installment is set to be deleted. Uncheck "Deleted" to enable editing.</span>-->
                                  <span ng-if="instl.allFields" class="col-md-12 instlAlert">All fields in this new installment are mandatory.</span>
                             </div>
                             <div class="col-md-5 instlEditData pad-none ">
