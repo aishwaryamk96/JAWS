@@ -458,7 +458,7 @@
                                 </div>
                                 <div class="col-md-8 pad-none" ng-if="!instl.pay_date">
                                     <div class="col-md-5">
-                                        <div slider ng-disabled="instl.deleted"  class="col-md-12 slider m-b-10 bg-master"  ng-model='instl.new_duedays' start=6 end={{instl.endDueDays}} step=5 ng-click="setSliderdate(instl.new_duedays,instl.due_date.date,$index,pkg)"></div>
+                                        <div slider ng-disabled="instl.deleted"  class="col-md-12 slider m-b-10 bg-master"  ng-model='instl.new_duedays' start=6 end={{instl.endDueDays}} step=5 ng-click="setSliderDate(instl.new_duedays,instl.due_date.date,$index,pkg)"></div>
                                     <h5 class="col-md-12  font-montserrat all-caps small no-margin hint-text bold" name="new_duedays"  ng-model="instl.new_duedays" style='margin-bottom: 5px!important'>{{instl.new_duedays | number}} Days</h5>
                                     
                                     </div>
@@ -499,7 +499,7 @@
                             <div class="col-md-3 iAction editInstl"> <button type="button" ng-click="addInstl(pkg);" ng-if="permissions.approver" title="Add Installment" class="btn btn-success one-line-btn one-line-btn-mg"> <i class="fa fa-fw fa-plus-circle"></i>Add Installment</button></div>
                             <div class="col-md-8 iAction editInstl" ng-if="permissions.approver">
                                 
-                                <button type="button" ng-click="saveInstallmentAction(pkg)"  title="Save Installments" class="btn btn-yellow one-line-btn one-line-btn-mg" ng-disabled="editButtonSave!=false"> <i class="fa fa-fw fa-bookmark"></i>Save</button>
+                                <button type="button" ng-click="saveInstallmentAction(pkg)"  title="Save Installments" class="btn btn-yellow one-line-btn one-line-btn-mg" ng-disabled="editButtonDisabled!=false"> <i class="fa fa-fw fa-bookmark"></i>Save</button>
                                 
                                 <button type="button" ng-click="resetInstlAction(pkg);" ng-if="permissions.approver" title="Cancel" class="btn btn-yellow one-line-btn one-line-btn-mg"> <i class="fa fa-fw fa-ban"></i>Cancel</button>
                             </div>

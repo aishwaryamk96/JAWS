@@ -78,7 +78,7 @@ angular.module('jaws')
                     $scope.instlAction.edit=false;$scope.instlAction.instl=-1;
                     $scope.instlAction.instlList='';
             };
-            $scope.editButtonSave = true;
+            $scope.editButtonDisabled = true;
             $scope.updateInstlAmnt = function(pkg,value, index){
                 if(value!=''){
                     var totalPrice = Number(pkg.pricing.total);
@@ -124,7 +124,7 @@ angular.module('jaws')
                             pkg.instlSum+=Number(inst.new_amnt);
                         }
                     });
-                    $scope.editButtonSave = false;
+                    $scope.editButtonDisabled = false;
                  }
 //
         };
@@ -1160,24 +1160,18 @@ angular.module('jaws')
         $scope.filter.apply();
 
         /* Start JA-57 */
-        $scope.setSliderdate = function(days,date,index,pkg){ 
+        $scope.setSliderDate = function(days,date,index,pkg){ 
            if(date!=undefined){
-                var dates = new Date(date);
-                dates.setDate(dates.getDate() + parseInt(days));
-                var dt = $filter('date')(dates, "MM-dd-yyyy");
+                var formatedDate = new Date(date);
            }else{ 
-                var dates = new Date();
-                dates.setDate(dates.getDate() + parseInt(days));
-                var dt = $filter('date')(dates, "MM-dd-yyyy"); 
-           }            
-            pkg.instl.forEach(function (inst, i) {
-
-                if(i==index){
-                    inst.new_date = dt;
-                }
-              
+                var formatedDate = new Date();
+           }
+           formatedDate.setDate(formatedDate.getDate() + parseInt(days));
+           var updatedDate = $filter('date')(formatedDate, "MM-dd-yyyy");            
+           pkg.instl.forEach(function (inst, i) {
+                pkg.instl[index].new_date = updatedDate;
             });
-            $scope.editButtonSave = false;
+            $scope.editButtonDisabled = false;
         }
      /* End JA-57 */
 
