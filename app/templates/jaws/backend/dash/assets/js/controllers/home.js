@@ -13,7 +13,7 @@ angular.module('jaws')
 
 
         $scope.initiateCall = function() {
-                    if($scope.userMbl != '') {    
+                    if($scope.userMbl != '' && $scope.userMbl != null) {    
 			if (!confirm("Are you sure you want to connect to "+$scope.userMbl+"?")) {
 				return;
 			}

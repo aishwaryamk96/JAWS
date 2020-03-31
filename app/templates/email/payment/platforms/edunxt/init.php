@@ -384,7 +384,7 @@
                                                     <?php while($count <= intval($GLOBALS["content"]["emailer"]["payment"]["instl_total"])) {
                                                         // Due Days Calc
                                                         if ($count > 1) {
-                                                            $due_days_tol += intval($GLOBALS["content"]["emailer"]["payment"]["instl"][$count]["due_days"]);
+                                                            $due_days_tol = intval($GLOBALS["content"]["emailer"]["payment"]["instl"][$count]["due_days"]);
                                                         }
                                                     ?>
                                                     <?php if ($count > 1) { ?>
