@@ -1166,11 +1166,9 @@ angular.module('jaws')
            }else{ 
                 var formatedDate = new Date();
            }
-           formatedDate.setDate(formatedDate.getDate() + parseInt(days));
-           var updatedDate = $filter('date')(formatedDate, "MM-dd-yyyy");            
-           pkg.instl.forEach(function (inst, i) {
-                pkg.instl[index].new_date = updatedDate;
-            });
+            formatedDate.setDate(formatedDate.getDate() + parseInt(days));
+            var updatedDate = $filter('date')(formatedDate, "MM-dd-yyyy");            
+            pkg.instl[index].new_date = updatedDate;
             $scope.editButtonDisabled = false;
         }
      /* End JA-57 */
