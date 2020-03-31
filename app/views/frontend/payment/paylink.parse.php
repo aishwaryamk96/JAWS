@@ -112,6 +112,7 @@
            $transaction_info['extra']['desc'] = $bundle[0]["name"];
            //JA-120 starts
            $pgInfo['rpay_acc_flag'] = $bundle[0]["rpay_acc_flag"];
+           $pgInfo['show_pg_selection'] = false;
            $paylink_info['rpay_acc_flag'] = $bundle[0]["rpay_acc_flag"];
            //JA-120 ends
         }
@@ -135,6 +136,7 @@
          //JA-120 changes
         if(empty($subs_info["meta"]["bundle_id"])){
              $pgInfo['rpay_acc_flag'] = $res[0]['rpay_acc_flag'];
+             $pgInfo['show_pg_selection'] = false;
              $paylink_info['rpay_acc_flag'] = $res[0]["rpay_acc_flag"];
         }
          //JA-120 changes
