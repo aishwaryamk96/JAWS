@@ -50,7 +50,7 @@
 
     // $GLOBALS['jaws_exec_live'] = false;
     $show_ebs = true;
-    if($pi["receipt_type"] == "pgpdm" || $pi["receipt_type"] == "ipba"){
+    if($pi["receipt_type"] == "pgpdm" || $pi["receipt_type"] == "ipba" ){
         $show_ebs = false;
     }
 
@@ -65,6 +65,9 @@
     
     //JA-120 changes
     $rpayAccPlag = $GLOBALS["content"]['gateway_info']['rpay_acc_flag'];
+    if($rpayAccPlag == 1 || $rpayAccPlag == true){
+        $show_ebs = false;
+    }
     if($rpayAccPlag == 1 || $rpayAccPlag == true){
         $rpayKey = constant('RZPY_NEW_ACC_KEY_'.((APP_ENV == "prod") ? "LIVE" : "TEST")); 
     }else{

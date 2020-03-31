@@ -12,7 +12,6 @@
 
 	function response_parse($paylink_info) {
 
-                echo "--------------";print_r(" IN paylink parse");die;
 		$response = $_POST;
 
 		$api_key = constant('JAWS_PAYMENT_GATEWAY_RZPY_KEY_'.($GLOBALS['jaws_exec_live'] ? "LIVE" : "TEST"));
