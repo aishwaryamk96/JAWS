@@ -13,7 +13,8 @@ angular.module('jaws')
 			layout: {
 				menuPin: false,
 				menuBehind: false,
-				theme: _JAWS_PATH_TPL + 'pages/css/pages.css'
+				theme: _JAWS_PATH_TPL + 'pages/css/pages.css',
+				editInstallment: _JAWS_PATH_TPL + 'assets/css/editInstallment.css'
 			},
 			author: 'BadGuppy',
 			jawsPath: _JAWS_PATH,

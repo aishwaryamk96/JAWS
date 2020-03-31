@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('jaws')
-    .controller('CtrlPaymentTrack', ['$scope', '$state', 'courses', 'defaultSettings', 'apiSVC', '$sce', '$timeout', '$http', '$window', 'bootcamps', function ($scope, $state, courses, defaultSettings, apiSVC, $sce, $timeout, $http, $window, bootcamps) {
+    .controller('CtrlPaymentTrack', ['$scope', '$state', 'courses', 'defaultSettings', 'apiSVC', '$sce', '$timeout', '$http', '$window', 'bootcamps','$filter', function ($scope, $state, courses, defaultSettings, apiSVC, $sce, $timeout, $http, $window, bootcamps,$filter) {
 
         //JA-57 starts
             //edit varaibles
@@ -78,54 +78,56 @@ angular.module('jaws')
                     $scope.instlAction.edit=false;$scope.instlAction.instl=-1;
                     $scope.instlAction.instlList='';
             };
-
+            $scope.editButtonDisabled = true;
             $scope.updateInstlAmnt = function(pkg,value, index){
+                if(value!=''){
+                    var totalPrice = Number(pkg.pricing.total);
+                    var instlPriceTotal = 0;
 
-                var totalPrice = Number(pkg.pricing.total);
-                var instlPriceTotal = 0;
-
-                pkg.instl.forEach(function (inst, i) {
-                    inst.amntAdjst = 0;
-                    if(inst.pay_date && i < index){
-                        instlPriceTotal+= Number(inst.sum);
-                    }
-                    if(!inst.pay_date && i < index){
-                        instlPriceTotal+= Number(inst.new_amnt);
-                    }
-                    if(i > index){
-                        inst.new_amnt = 0;
-                    }
-                    if(i >= index){
-                        instlPriceTotal+= Number(inst.new_amnt);
-                    }
-                });
-                pkg.instlSum = 0;
-                var remaingInstlLength = (pkg.instl.length - 1) - index;
-                var priceDiff = totalPrice - instlPriceTotal;
-                if(priceDiff < 0){
-                    pkg.extraAmnt = priceDiff;
-                }
-
-                var perInstlNewPrice = (remaingInstlLength>0 )? (priceDiff/remaingInstlLength) : priceDiff;
-
-                pkg.instl.forEach(function (inst, i) {
-                    if( i > index ){
-                        inst.new_amnt = perInstlNewPrice;
-                    }
-                    if( i == (pkg.instl.length - 1)){
-                        if(priceDiff < 0){
-                            inst.new_amnt = Number(inst.new_amnt) + Number(priceDiff);
-                            inst.amntAdjst = 1;
+                    pkg.instl.forEach(function (inst, i) {
+                        inst.amntAdjst = 0;
+                        if(inst.pay_date && i < index){
+                            instlPriceTotal+= Number(inst.sum);
                         }
+                        if(!inst.pay_date && i < index){
+                            instlPriceTotal+= Number(inst.new_amnt);
+                        }
+                        if(i > index){
+                            inst.new_amnt = 0;
+                        }
+                        if(i >= index){
+                            instlPriceTotal+= Number(inst.new_amnt);
+                        }
+                    });
+                    pkg.instlSum = 0;
+                    var remaingInstlLength = (pkg.instl.length - 1) - index;
+                    var priceDiff = totalPrice - instlPriceTotal;
+                    if(priceDiff < 0){
+                        pkg.extraAmnt = priceDiff;
                     }
-                    if(inst.pay_date){
-                        pkg.instlSum+= Number(inst.sum);
-                    }else{
-                        pkg.instlSum+=Number(inst.new_amnt);
-                    }
-                });
+
+                    var perInstlNewPrice = (remaingInstlLength>0 )? (priceDiff/remaingInstlLength) : priceDiff;
+
+                    pkg.instl.forEach(function (inst, i) {
+                        if( i > index ){
+                            inst.new_amnt = perInstlNewPrice;
+                        }
+                        if( i == (pkg.instl.length - 1)){
+                            if(priceDiff < 0){
+                                inst.new_amnt = Number(inst.new_amnt) + Number(priceDiff);
+                                inst.amntAdjst = 1;
+                            }
+                        }
+                        if(inst.pay_date){
+                            pkg.instlSum+= Number(inst.sum);
+                        }else{
+                            pkg.instlSum+=Number(inst.new_amnt);
+                        }
+                    });
+                    $scope.editButtonDisabled = false;
+                 }
 //
-            };
+        };
 
 
                 // save package
@@ -1157,4 +1159,18 @@ angular.module('jaws')
         $scope.packages = [];
         $scope.filter.apply();
 
-    }]);
+        /* Start JA-57 */
+        $scope.setSliderDate = function(days,date,index,pkg){ 
+           if(date!=undefined){
+                var formatedDate = new Date(date);
+           }else{ 
+                var formatedDate = new Date();
+           }
+            formatedDate.setDate(formatedDate.getDate() + parseInt(days));
+            var updatedDate = $filter('date')(formatedDate, "MM-dd-yyyy");            
+            pkg.instl[index].new_date = updatedDate;
+            $scope.editButtonDisabled = false;
+        }
+     /* End JA-57 */
+
+}]);
