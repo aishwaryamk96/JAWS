@@ -19,21 +19,16 @@ $leadStatus = $_GET['leadStatus'];
 $leadTable = $_GET['leadTable'];
 $leadList = $_GET['leadList'];
 
-if(empty($leadTable) || $leadStatus==''){
+if(empty($leadTable) || !is_numeric($leadStatus)){ 
     header("HTTP/1.1 400 Bad Request");
     die;
 }
 
-if((!(isset($leadStatus) &&  ($leadStatus < 0)) ) || (!($leadTable) &&  !is_string($leadTable))){
-    header("HTTP/1.1 400 Bad Request", '', 400);
-    die;
+if(((isset($leadStatus) &&  ($leadStatus < 0)) ) || (!($leadTable) &&  !is_string($leadTable))){
+    
+   header("HTTP/1.1 400 Bad Request");
+   die;
 }
-
-if(!empty($leadTable) || !is_int($leadStatus)){
-    header("HTTP/1.1 400 Bad Request");
-    die;
-}
-
 //get offset and limit
 //$pageResult = getPaginationDetails('GET');
 
