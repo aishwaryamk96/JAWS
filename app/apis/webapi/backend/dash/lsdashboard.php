@@ -67,10 +67,12 @@ function getLeadData($leadTable, $leadStatus, $leadList){
     }
     
     $arrLeadList = [];
-    $arrLeadList = db_query("SELECT l.lead_id as leadId, l.user_id as userId,l.email as leadEmail, l.name as leadName, l.phone as leadPhone, l.create_date as leadDate FROM ".$strTableName. " WHERE l.status = ".$leadStatus." AND l.create_date BETWEEN ( NOW() - INTERVAL 30 DAY) AND NOW() "
-            ." ORDER BY l.create_date DESC");
+    $arrLeadList = db_query("SELECT l.lead_id as leadId, l.user_id as userId,l.email as leadEmail, l.name as leadName, l.phone as leadPhone, l.create_date as leadDate FROM ".$strTableName. " WHERE l.status = ".$leadStatus." AND l.create_date BETWEEN ( NOW() - INTERVAL 30 DAY) AND NOW() ORDER BY l.create_date DESC");
     
+    //echo ("SELECT l.lead_id as leadId, l.user_id as userId,l.email as leadEmail, l.name as leadName, l.phone as leadPhone, l.create_date as leadDate FROM ".$strTableName. " WHERE l.status = ".$leadStatus." AND l.create_date BETWEEN ( NOW() - INTERVAL 30 DAYS) AND NOW() ORDER BY l.create_date DESC");die;
+//            ." ORDER BY l.create_date DESC");die;
     
+       
     $arrLeadResult=[];
     switch($leadList){
         case 1:            
