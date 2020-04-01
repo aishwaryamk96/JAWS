@@ -13900,4 +13900,26 @@ Main components
 .mobile-link-view a{
   padding: 10px;
 }
+
+/* Start JA-113 : LS Dashboard */
+.my-custom-scrollbar {
+  position: relative;
+  height: 400px;
+  overflow: auto;
+  }
+  .table-wrapper-scroll-y {
+  display: block;
+  margin-top: 30px
+  }
+  .search-ls-section{
+    margin-left: 134px;
+  }
+  .select-filter-lsd{
+    margin-left: 17px; 
+    width: 123px;
+  }
+  .page-title-lsd{
+    display:inline-block; 
+  }
+/* End JA-113 : LS Dashboard */ 
 /*** Custom code ***/
