@@ -126,8 +126,7 @@
         display: inline-block;
     }
 </style>-->
-<link href="https://dev.jigsawacademy.com/jaws/app/templates/jaws/backend/dash/assets/css/editInstallment.css" rel="stylesheet" type="text/css">
-
+<link  ng-href="{{app.layout.editInstallment}}" rel="stylesheet" type="text/css" />
 <div class="jumbotron" data-pages="parallax">
     <div class="container-fluid container-fixed-lg">
         <div class="inner" style="transform: translateY(0px); opacity: 1;">
@@ -436,6 +435,7 @@
                             <div class="col-md-5 instlEditHeader"><span>Date</span></div>
                             <div class="col-md-1 instlEditHeader"><span>Action</span></div>
                         </div>
+                        
                         <div ng-repeat="instl in pkg.instl" ng-class="{instlDeleted: instl.deleted}" class="col-md-12 instlEditDataDiv pad-none padTop">
                             <div class="col-md-1 instlEditData">
                                     <span>{{$index + 1}}<sup>{{ordinal($index + 1)}}</sup></span> 
@@ -445,7 +445,7 @@
                                 <input ng-disabled="instl.deleted" ng-if="!instl.pay_date" class="col-md-5" type="text" name="new_amnt" ng-model="instl.new_amnt" ng-blur="updateInstlAmnt(pkg,instl.new_amnt,$index)" />
                                 <span ng-if="instl.pay_date" class="col-md-5 bold">Paid</span>
                                 <span ng-if="instl.amntAdjst" class="col-md-12 instlAlert">Amount is adjusted for Total Sum</span>
-                                <span ng-if="instl.deleted" class="col-md-12 instlAlert">This installment is set to be deleted. Uncheck "Deleted" to enable editing.</span>
+<!--                                <span ng-if="instl.deleted" class="col-md-12 instlAlert">This installment is set to be deleted. Uncheck "Deleted" to enable editing.</span>-->
                                  <span ng-if="instl.allFields" class="col-md-12 instlAlert">All fields in this new installment are mandatory.</span>
                             </div>
                             <div class="col-md-5 instlEditData pad-none ">
@@ -457,12 +457,13 @@
                                 </div>
                                 <div class="col-md-8 pad-none" ng-if="!instl.pay_date">
                                     <div class="col-md-5">
-                                        <div slider ng-disabled="instl.deleted"  class="col-md-12 slider m-b-10 bg-master"  ng-model='instl.new_duedays' start=0 end={{instl.endDueDays}} step=5></div>
+                                        <div slider ng-disabled="instl.deleted"  class="col-md-12 slider m-b-10 bg-master"  ng-model='instl.new_duedays' start=6 end={{instl.endDueDays}} step=5 ng-click="setSliderDate(instl.new_duedays,instl.due_date.date,$index,pkg)"></div>
                                     <h5 class="col-md-12  font-montserrat all-caps small no-margin hint-text bold" name="new_duedays"  ng-model="instl.new_duedays" style='margin-bottom: 5px!important'>{{instl.new_duedays | number}} Days</h5>
                                     
                                     </div>
+                                    {{instl.due_date.date}}
                                     <div class="col-md-6 input-group date" ui-jq="datepicker">
-                                            <input ng-disabled="instl.deleted"  type="text" class="col-md-5 form-control input-sm" value="12-02-2012" name="new_date" ng-model="instl.new_date" >
+                                        <input ng-disabled="instl.deleted"  type="text" class="col-md-5 form-control input-sm" value="12-02-2012" name="new_date" ng-model="instl.new_date" >
                                             <div ng-disabled="instl.deleted" class="input-group-addon"><span  class="glyphicon glyphicon-th"></span>
                                             </div>
                                     </div>
@@ -495,9 +496,10 @@
                         </div>
                         <div class="col-md-12 instlAction instlActionBtn">
                             <div class="col-md-3 iAction editInstl"> <button type="button" ng-click="addInstl(pkg);" ng-if="permissions.approver" title="Add Installment" class="btn btn-success one-line-btn one-line-btn-mg"> <i class="fa fa-fw fa-plus-circle"></i>Add Installment</button></div>
-                            <div class="col-md-8 iAction editInstl">
+                            <div class="col-md-8 iAction editInstl" ng-if="permissions.approver">
                                 
-                                <button type="button" ng-click="saveInstallmentAction(pkg)" ng-if="permissions.approver" title="Save Installments" class="btn btn-yellow one-line-btn one-line-btn-mg" > <i class="fa fa-fw fa-bookmark"></i>Save</button>
+                                <button type="button" ng-click="saveInstallmentAction(pkg)"  title="Save Installments" class="btn btn-yellow one-line-btn one-line-btn-mg" ng-disabled="editButtonDisabled!=false"> <i class="fa fa-fw fa-bookmark"></i>Save</button>
+                                
                                 <button type="button" ng-click="resetInstlAction(pkg);" ng-if="permissions.approver" title="Cancel" class="btn btn-yellow one-line-btn one-line-btn-mg"> <i class="fa fa-fw fa-ban"></i>Cancel</button>
                             </div>
                         </div>
@@ -522,7 +524,7 @@
                                 <td colspan='1' ng-if="pkg.instl.length > 1" style="padding: 17px 0;">
                                 </td>
                                 <td colspan='1' ng-if="pkg.instl.length == 1">
-                                    Full Payment
+                                    Full Payment 
                                     <br>
                                     <span ng-if="instl.receipt" title="Receipt Number">
                                         <b>{{instl.receipt}}</b>
