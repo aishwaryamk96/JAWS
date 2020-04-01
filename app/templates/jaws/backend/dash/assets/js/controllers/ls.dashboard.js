@@ -11,7 +11,7 @@ angular.module('jaws')
       $scope.leadListArr = [{"id":"0","name":"Count"},{"id":"1","name":"List"},{"id":"2","name":"Both"}];     
       $scope.leadBasicStatusArr = [{'id':'0','name':'New Data'},{'id':'1','name':'Process'},{'id':'9','name':'Old Data'}];
       $scope.leadCompiledStatusArr = [{'id':'1','name':'New'},{'id':'2','name':'API requeste'},{'id':'3','name':'Success'},{'id':'4','name':'Failure'},{'id':'9','name':'Old Data'}];
-      $scope.pageHeader = [{"id":0,"name":"Lead ID"},{"id":0,"name":"Lead Name"},{"id":0,"name":"Lead Phone"},{"id":0,"name":"Lead Date"}];
+      $scope.pageHeader = [{"id":0,"name":"Lead ID"},{"id":0,"name":"Lead Name"},{"id":0,"name":"Lead Email"},{"id":0,"name":"Lead Phone"},{"id":0,"name":"Lead Date"}];
       $scope.leadStatusArr = $scope.leadCompiledStatusArr;
       $scope.loadLsDashboard = function(){
          var param = {  
