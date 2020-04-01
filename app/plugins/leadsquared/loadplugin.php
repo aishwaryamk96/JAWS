@@ -428,14 +428,33 @@
 				}
 
 			}
-
+                        
+                        
 			if (($response = json_decode(ls_api($api_url, $payload, $lead["email"]), true)) === false) {
 				//return false;
+                            //JA-113 LS API gave no response
+                            //JA-113 - update lead status in compiled table to 5
+                              updateLeadStatus($lead['lead_id'],COMPILED_NO_RESPONSE, 5);
+                            //JA-113 ends
 			}
 			if (empty($response["Status"]) || $response["Status"] != "Success" || empty($response["Message"]["Id"])) {
 				//return false;
+                            //JA-113 there was error in LS response
+                            //JA-113 - update lead status in compiled table to 4
+                              updateLeadStatus($lead['lead_id'],COMPILED_FAILURE, 1);
+                            //JA-113 ends
 			}
-
+                        //JA-113 changes
+                        if (isset($response["Status"]) && $response["Status"] == "Success") {
+				//return false;
+                            //success LS API 
+                            //update lead status in compiled table to 4
+                              updateLeadStatus($lead['lead_id'],COMPILED_FAILURE, 1);
+                            
+			}                        
+                        //JA-113 ends
+                        
+                        
 			$leadIdCrm = $response["Message"]["RelatedId"];
 			// if (empty(db_query("SELECT * FROM ls_leads WHERE email = ".db_sanitize($lead["email"])))) {
 			// 	db_exec("INSERT INTO ls_leads (email, lead_id) VALUES (".db_sanitize($lead["email"].", ".db_sanitize($leadIdCrm).");");
@@ -528,7 +547,10 @@
 	}
 
 	function ls_api($api_url, $data, $id, $params = [],$newConfig = FALSE) {
-
+                
+                //JA-113 - update lead status in compiled table to 2
+                updateLeadStatus($lead['lead_id'],COMPILED_API, 1);
+                //JA-113 -ends
 		$ch = curl_init();
 
 		curl_setopt($ch, CURLOPT_URL, api_url_construct($api_url, $params, $newConfig));
