@@ -321,6 +321,7 @@
                                 updateLeadStatus($lead['lead_id'],BASIC_PROCESSED);
                                 //JA-113 ends
 				$rec = array();
+                                $rec["lead_id"] = $lead['lead_id']; //JA-113 prod issue fix , lead id not passed
 				$rec["user_id"] = "";
 				$rec["meta"] = $lead["meta"];
 				$rec["__tr"] = $lead["__tr"];
@@ -828,8 +829,7 @@
 		}
 
 		$compilation_failure = false;
-
-		// Handle the hook
+                // Handle the hook
 		if (count($leads_arr) > 0) {
 			handle("leads_basic_compile__", $leads_arr);
 		}
