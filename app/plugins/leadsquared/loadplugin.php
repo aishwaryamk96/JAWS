@@ -549,7 +549,7 @@
 	function ls_api($api_url, $data, $id, $params = [],$lead= [],$newConfig = FALSE) {
                 
                 //JA-113 - update lead status in compiled table to 2
-                if($newConfig == FALSE){
+                if($newConfig == FALSE & !empty($lead)){
                     updateLeadStatus($lead['compiledLeadId'],COMPILED_API, 1);
                 }
                 //JA-113 -ends
