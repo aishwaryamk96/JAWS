@@ -11,6 +11,7 @@
 		load_library("url");
 
 		$leads = $leads[0];
+                
 		foreach ($leads as $lead) {
                         
 			$api_url = "LeadManagement.svc/Lead.Capture";
@@ -414,12 +415,15 @@
 			}
 
 			$payload = [];
+                        
 			foreach ($lead as $key => $value) {
 
 				if (empty(trim($value))) {
 					continue;
 				}
-
+                                if($key == 'lead_id'){
+                                    // $payload[]['lead_id']= $lead['lead_id'];
+                                }
 				if (isset($key_mapping[$key])) {
 					$payload[] = ["Attribute" => $key_mapping[$key], "Value" => $value];
 				}
@@ -428,13 +432,12 @@
 				}
 
 			}
-                        
-                        
-			if (($response = json_decode(ls_api($api_url, $payload, $lead["email"]), true)) === false) {
+                                                
+			if (($response = json_decode(ls_api($api_url, $payload, $lead["email"],[],$lead), true)) === false) {
 				//return false;
                             //JA-113 LS API gave no response
                             //JA-113 - update lead status in compiled table to 5
-                              updateLeadStatus($lead['lead_id'],COMPILED_NO_RESPONSE, 5);
+                              updateLeadStatus($lead['lead_id'],COMPILED_NO_RESPONSE, 1);
                             //JA-113 ends
 			}
 			if (empty($response["Status"]) || $response["Status"] != "Success" || empty($response["Message"]["Id"])) {
@@ -535,6 +538,7 @@
 
 		}
 
+               
 		if (($response = json_decode(ls_api($api_url, $payload, $activity["email"]), true)) === false) {
 			return false;
 		}
@@ -546,10 +550,10 @@
 
 	}
 
-	function ls_api($api_url, $data, $id, $params = [],$newConfig = FALSE) {
+	function ls_api($api_url, $data, $id, $params = [],$leadData =[],$newConfig = FALSE) {                
                 
                 //JA-113 - update lead status in compiled table to 2
-                updateLeadStatus($lead['lead_id'],COMPILED_API, 1);
+                updateLeadStatus($leadData['lead_id'],COMPILED_API, 1);
                 //JA-113 -ends
 		$ch = curl_init();
 
@@ -895,7 +899,7 @@
                     }
 
             }
-            if (($response = json_decode(ls_api($newApiurl, $payload, $lead['email'],[],true), true)) === false) {
+            if (($response = json_decode(ls_api($newApiurl, $payload, $lead['email'],[],$lead,true), true)) === false) {
                     //return false;
             }
             if (empty($response["Status"]) || $response["Status"] != "Success" || empty($response["Message"]["Id"])) {
