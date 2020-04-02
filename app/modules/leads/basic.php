@@ -321,6 +321,8 @@
                                 updateLeadStatus($lead['lead_id'],BASIC_PROCESSED);
                                 //JA-113 ends
 				$rec = array();
+                                $rec["lead_id"] = $lead['lead_id']; //JA-113 prod issue fix , lead id not passed
+
 				$rec["user_id"] = "";
 				$rec["meta"] = $lead["meta"];
 				$rec["__tr"] = $lead["__tr"];
@@ -697,7 +699,8 @@
 
 				// Save the data before sanitizing it
 				$data = $rec;
-				$leads_arr[] = $data;
+                                //commented during LS Dashboard JA-113 production issu- status not changed
+				//$leads_arr[] = $data; 
 
 				$leads_data[$rec["email"]] = $lead["create_date"];
 
@@ -787,11 +790,17 @@
 								$rec["meta"].", ".
 								$rec["cookies"].", ".
 								$rec["__tr"].");";
-				db_exec($insert);
-
+				$stat = db_exec($insert);
+                                
+                                $compiledLeadId = db_get_last_insert_id();
 				// Save the last lead_id
 				$last_leads_id = $lead["lead_id"];
 				setting_set("leads_basic_capture_last", $last_leads_id);
+                                
+                                
+                                //JA-113 changes-prod issue
+                                $data['compiledLeadId'] = $compiledLeadId;
+                                $leads_arr[] = $data;
 			}
 			// Save the last lead_id
 			$last_leads_id = $res_leads[count($res_leads) - 1]["lead_id"];
