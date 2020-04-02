@@ -623,8 +623,13 @@
 		$phone = db_sanitize($phone);
 		$lead_id = db_sanitize($lead_id);
 		$lead_data = db_sanitize(json_encode($lead_data));
-
-		db_exec("INSERT INTO ls_leads (email, phone, lead_id, lead_data) VALUES (".$email.", ".$phone.", ".$lead_id.", ".$lead_data.");");
+                
+                
+		$lsLeadFlag = db_exec("INSERT INTO ls_leads (email, phone, lead_id, lead_data) VALUES (".$email.", ".$phone.", ".$lead_id.", ".$lead_data.");");
+                if($lsLeadFlag == false){
+                    activity_create("critical", "lead.cron.status.update", "fail", "",  "", "", "", $lead_id, "logged");
+                    setting_set("leads.compile.task.is_running", "false");
+                }
 
 	}
 
@@ -923,8 +928,11 @@
 		$lead_id = db_sanitize($lead_id);
 		$lead_data = db_sanitize(json_encode($lead_data));
 
-		db_exec("INSERT INTO ls_leads_new (email, phone, lead_id, lead_data) VALUES (".$email.", ".$phone.", ".$lead_id.", ".$lead_data.");");
-
+		$newLsLeadFlag = db_exec("INSERT INTO ls_leads_new (email, phone, lead_id, lead_data) VALUES (".$email.", ".$phone.", ".$lead_id.", ".$lead_data.");");
+                if($newLsLeadFlag == false){
+                    activity_create("critical", "lead.cron.status.update", "fail", "",  "", "", "", $lead_id, "logged");
+                    setting_set("leads.compile.task.is_running", "false");
+                }
 	}
         
 ?>
