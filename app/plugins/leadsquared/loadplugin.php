@@ -573,9 +573,9 @@
 
                 if($newConfig){
                     db_exec("INSERT INTO ls_new_api (email, request, response) VALUES (".db_sanitize($id).", ".db_sanitize(json_encode($data)).", ".db_sanitize(json_encode($response)).");");
-                }
+                }else{
 		db_exec("INSERT INTO ls_api (email, request, response) VALUES (".db_sanitize($id).", ".db_sanitize(json_encode($data)).", ".db_sanitize(json_encode($response)).");");
-
+                }
 		return $response;
 
 	}
