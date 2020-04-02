@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('jaws')
-    .controller('CtrlPaymentEditt', ['$scope', '$state', 'courses', 'specializations', 'defaultSettings', 'apiSVC', '$sce', '$timeout', '$http', '$window', 'packageDetails', 'bootcampDetails', 'programDetails', 'fullstackDetails', function ($scope, $state, courses, specializations, defaultSettings, apiSVC, $sce, $timeout, $http, $window, packageDetails, bootcampDetails, programDetails, fullstackDetails) {
+    .controller('CtrlPaymentEditt', ['$scope', '$state', 'courses', 'specializations', 'defaultSettings', 'apiSVC', '$sce', '$timeout', '$http', '$window', 'packageDetails', 'bootcampDetails', 'programDetails', 'fullstackDetails','$filter', function ($scope, $state, courses, specializations, defaultSettings, apiSVC, $sce, $timeout, $http, $window, packageDetails, bootcampDetails, programDetails, fullstackDetails,$filter) {
 
         $scope.trustAsHtml = function (value) {
             return $sce.trustAsHtml(value);
@@ -534,8 +534,6 @@ angular.module('jaws')
             }
                 
       }
-
-
         $scope.instlFees = function() {
             // $scope.instl_fees = $scope.instl_fees_amt;
             defaultSettings.instalment_fees.inr = $scope.instl_fees_amt;
@@ -543,11 +541,17 @@ angular.module('jaws')
             $scope.getInstlFees();
         }
 
-        $scope.addInstl = function () {
+        $scope.addInstl = function () { 
+            /* Start K Form Slider Date */
+            var formatedDate = new Date();
+            formatedDate.setDate(formatedDate.getDate() + parseInt(defaultSettings.instalment_date));
+            var updatedDate = $filter('date')(formatedDate, "MM-dd-yyyy");
+            /* End K Form Slider Date */
             $scope.instls.push({
                 due: defaultSettings.instalment_date,
                 sum: 0,
-                sumUSD: 0
+                sumUSD: 0,
+                due_date: updatedDate // K Form Slider Date 
             });
 
             watchers.push($scope.$watch('instls[' + ($scope.instls.length - 1) + '].due', function (newVal, oldVal, scope) {
@@ -1010,4 +1014,13 @@ angular.module('jaws')
             });
         };
 
-    }]);
+     /* Start K Form Slider Date */
+      $scope.setSliderDate=function(index,due,instls){ 
+            var formatedDate = new Date();
+            formatedDate.setDate(formatedDate.getDate() + parseInt(due));
+            var updatedDate = $filter('date')(formatedDate, "MM-dd-yyyy");            
+            $scope.instls[index].due_date = updatedDate;
+        }
+    /* End K Form Slider Date */
+
+}]);
