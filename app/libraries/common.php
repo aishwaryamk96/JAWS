@@ -112,7 +112,7 @@ function updateLeadStatus($leadId, $status = 0, $compiledFlag = 0){
     
     try{
         //update status in table
-        db_exec(" UPDATE ".$table." SET status = " . db_sanitize($status) . " WHERE lead_id = " . $leadId . ";");
+       db_exec(" UPDATE ".$table." SET status = " . db_sanitize($status) . " WHERE lead_id = " . $leadId . ";");
     }catch(Exception $e){
         throw new Exception("There was database error");
     }

@@ -434,25 +434,28 @@
 			}
                                                 
 			if (($response = json_decode(ls_api($api_url, $payload, $lead["email"],[],$lead), true)) === false) {
+                           // echo "\n In No response";
 				//return false;
                             //JA-113 LS API gave no response
                             //JA-113 - update lead status in compiled table to 5
-                              updateLeadStatus($lead['lead_id'],COMPILED_NO_RESPONSE, 1);
+                              updateLeadStatus($lead['compiledLeadId'],COMPILED_NO_RESPONSE, 1);
                             //JA-113 ends
 			}
 			if (empty($response["Status"]) || $response["Status"] != "Success" || empty($response["Message"]["Id"])) {
 				//return false;
+                              //  echo "\n In COMPILED FAILURE";
                             //JA-113 there was error in LS response
                             //JA-113 - update lead status in compiled table to 4
-                              updateLeadStatus($lead['lead_id'],COMPILED_FAILURE, 1);
+                              updateLeadStatus($lead['compiledLeadId'],COMPILED_FAILURE, 1);
                             //JA-113 ends
 			}
                         //JA-113 changes
                         if (isset($response["Status"]) && $response["Status"] == "Success") {
 				//return false;
+                              //  echo "\n In COMPILED SUCCESS";
                             //success LS API 
                             //update lead status in compiled table to 4
-                              updateLeadStatus($lead['lead_id'],COMPILED_FAILURE, 1);
+                              updateLeadStatus($lead['compiledLeadId'],COMPILED_SUCCESS, 1);
                             
 			}                        
                         //JA-113 ends
@@ -553,7 +556,9 @@
 	function ls_api($api_url, $data, $id, $params = [],$leadData =[],$newConfig = FALSE) {                
                 
                 //JA-113 - update lead status in compiled table to 2
-                updateLeadStatus($leadData['lead_id'],COMPILED_API, 1);
+                if(!$newConfig){
+                    updateLeadStatus($leadData['compiledLeadId'],COMPILED_API, 1);
+                }
                 //JA-113 -ends
 		$ch = curl_init();
 
