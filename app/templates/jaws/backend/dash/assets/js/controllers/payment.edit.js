@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('jaws')
-    .controller('CtrlPaymentEditt', ['$scope', '$state', 'courses', 'specializations', 'defaultSettings', 'apiSVC', '$sce', '$timeout', '$http', '$window', 'packageDetails', 'bootcampDetails', 'programDetails', 'fullstackDetails','$filter', function ($scope, $state, courses, specializations, defaultSettings, apiSVC, $sce, $timeout, $http, $window, packageDetails, bootcampDetails, programDetails, fullstackDetails,$filter) {
+    .controller('CtrlPaymentEditt', ['$scope', '$state', 'courses', 'specializations', 'defaultSettings', 'apiSVC', '$sce', '$timeout', '$http', '$window', 'packageDetails', 'bootcampDetails', 'programDetails', 'fullstackDetails','$filter','sliderDateChange', function ($scope, $state, courses, specializations, defaultSettings, apiSVC, $sce, $timeout, $http, $window, packageDetails, bootcampDetails, programDetails, fullstackDetails,$filter,sliderDateChange) {
 
         $scope.trustAsHtml = function (value) {
             return $sce.trustAsHtml(value);
@@ -542,16 +542,16 @@ angular.module('jaws')
         }
 
         $scope.addInstl = function () { 
-            /* Start K Form Slider Date */
+            /* Start JA:92 */
             var formatedDate = new Date();
             formatedDate.setDate(formatedDate.getDate() + parseInt(defaultSettings.instalment_date));
             var updatedDate = $filter('date')(formatedDate, "MM-dd-yyyy");
-            /* End K Form Slider Date */
+            /* End JA:92*/
             $scope.instls.push({
                 due: defaultSettings.instalment_date,
                 sum: 0,
                 sumUSD: 0,
-                due_date: updatedDate // K Form Slider Date 
+                due_date: updatedDate // JA:92 
             });
 
             watchers.push($scope.$watch('instls[' + ($scope.instls.length - 1) + '].due', function (newVal, oldVal, scope) {
@@ -1014,13 +1014,10 @@ angular.module('jaws')
             });
         };
 
-     /* Start K Form Slider Date */
-      $scope.setSliderDate=function(index,due,instls){ 
-            var formatedDate = new Date();
-            formatedDate.setDate(formatedDate.getDate() + parseInt(due));
-            var updatedDate = $filter('date')(formatedDate, "MM-dd-yyyy");            
-            $scope.instls[index].due_date = updatedDate;
+     /* Start JA:92 */
+      $scope.setSliderDate=function(index,due){ 
+            $scope.instls[index].due_date = sliderDateChange.setSliderDate(due);
         }
-    /* End K Form Slider Date */
+    /* End JA:92 */
 
 }]);

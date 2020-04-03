@@ -203,4 +203,20 @@ angular.module('jaws')
             })
             /*********End JA-113 : LS Dashboard******* */
         }
-    ]);
+    ])
+/**Start JA-57 and JA-92 */  
+.factory("sliderDateChange", function($filter) {
+    return {
+        setSliderDate: function(days,date) {
+            if(date!=undefined){
+                var formatedDate = new Date(date);
+           }else{ 
+                var formatedDate = new Date();
+           }
+            formatedDate.setDate(formatedDate.getDate() + parseInt(days));
+            var updatedDate = $filter('date')(formatedDate, "MM-dd-yyyy");
+            return updatedDate;
+        }
+    }
+});
+/**End JA-57 and JA-92 */ 

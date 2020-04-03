@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('jaws')
-    .controller('CtrlPaymentTrack', ['$scope', '$state', 'courses', 'defaultSettings', 'apiSVC', '$sce', '$timeout', '$http', '$window', 'bootcamps','$filter', function ($scope, $state, courses, defaultSettings, apiSVC, $sce, $timeout, $http, $window, bootcamps,$filter) {
+    .controller('CtrlPaymentTrack', ['$scope', '$state', 'courses', 'defaultSettings', 'apiSVC', '$sce', '$timeout', '$http', '$window', 'bootcamps','$filter','sliderDateChange', function ($scope, $state, courses, defaultSettings, apiSVC, $sce, $timeout, $http, $window, bootcamps,$filter,sliderDateChange) {
 
         //JA-57 starts
             //edit varaibles
@@ -1161,14 +1161,7 @@ angular.module('jaws')
 
         /* Start JA-57 */
         $scope.setSliderDate = function(days,date,index,pkg){ 
-           if(date!=undefined){
-                var formatedDate = new Date(date);
-           }else{ 
-                var formatedDate = new Date();
-           }
-            formatedDate.setDate(formatedDate.getDate() + parseInt(days));
-            var updatedDate = $filter('date')(formatedDate, "MM-dd-yyyy");            
-            pkg.instl[index].new_date = updatedDate;
+            pkg.instl[index].new_date = sliderDateChange.setSliderDate(days,date)
             $scope.editButtonDisabled = false;
         }
      /* End JA-57 */
