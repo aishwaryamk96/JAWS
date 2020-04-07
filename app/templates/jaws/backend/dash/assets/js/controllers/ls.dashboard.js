@@ -1,7 +1,7 @@
 'use strict';
 /*  Start JA-113 : LS Dashboard */
 angular.module('jaws')
-    .controller('CtrlLsDashboard',['$scope','$http', function($scope,$http) {
+    .controller('CtrlLsDashboard',['$scope','$http','$window', function($scope,$http,$window) {
       $scope.leadStatus='4';
       $scope.leadTable='compiled';
       $scope.leadList="1";   
@@ -13,17 +13,25 @@ angular.module('jaws')
       $scope.leadCompiledStatusArr = [{'id':'1','name':'New'},{'id':'2','name':'API requeste'},{'id':'3','name':'Success'},{'id':'4','name':'Failure'},{'id':'9','name':'Old Data'}];
       $scope.pageHeader = [{"id":0,"name":"Lead ID"},{"id":0,"name":"Lead Name"},{"id":0,"name":"Lead Email"},{"id":0,"name":"Lead Phone"},{"id":0,"name":"Lead Date"}];
       $scope.leadStatusArr = $scope.leadCompiledStatusArr;
-      $scope.loadLsDashboard = function(){
+      $scope.from_date="";
+      $scope.to_date="";
+      $scope.loadLsDashboard = function(currentPage){
          var param = {  
                         params:{
                         "leadStatus": $scope.leadStatus,
                         "leadTable": $scope.leadTable,
-                        "leadList":$scope.leadList
+                        "leadList":$scope.leadList,
+                        "from_date": $scope.from_date, /* Start JA-127 */
+                        "to_date":$scope.to_date, 
+                        "page": (currentPage ? currentPage: 1) /* End JA-127 */
                       }
                     };  
            $http.get(_JAWS_PATH_API + 'lsdashboard', param).then(function (response) {
                 $scope.allResponse  = response.data.data.list;
                 $scope.leadCount = response.data.data.count;
+                /* Start JA-127 */
+                $scope.setPaginationParams(response); 
+                /* End JA-127 */
             });
        }
      $scope.leadSelectTable = function (){
@@ -35,9 +43,47 @@ angular.module('jaws')
         }           
          $scope.loadLsDashboard(); 
      }
-     $scope.selectLeadStatus = function (){
+     $scope.selectLeadStatus = function (){ 
         $scope.loadLsDashboard();
      }
+    /************Start JA-127 *********** */
+    $scope.setPaginationParams = function(response){
+			$scope.totalPages = response.data.data.totalPages;
+			$scope.currentPage = parseInt(response.data.data.page);
+			$scope.totalRecords = response.data.data.totalRecords;
+			$scope.counter = response.data.data.counter;
+    }   
+    $scope.resultsPerPage = $scope.allResponse.length;
+		($scope.resultsPerPageChange = function() {
+			$scope.totalPages = $scope.totalPages;
+		})();
+		$scope.itemsPerPage = 100;
+		$scope.pagesByRange = function(val) {
+			var currPage = $scope.currentPage;
+			var totalPages = $scope.totalPages;
+			if (currPage < 6) {
+				return (val <= 10 ? true : false);
+			}
+			if (currPage >= 6 && currPage <= totalPages) {
+				return ((currPage - val <= 5 && val - currPage <= 5) ? true : false);
+			}
+			if (currPage > totalPages - 6) {
+				return (val >= totalPages - 10 ? true : false);
+			}
+		}
+		$scope.range = function(min, max) {
+			var arr = [];
+			for (var i = min; i <= max; i++)
+				arr.push(i);
+			return arr;
+		}
+		$scope.pageChange = function(pageNum) {  
+      $scope.loadLsDashboard(pageNum);	
+		}	
+		
+   /************End JA-127 *********** */
      $scope.loadLsDashboard();
     }]);
+
+
    /*  End JA-113 : LS Dashboard */

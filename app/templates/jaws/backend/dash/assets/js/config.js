@@ -190,7 +190,7 @@ angular.module('jaws')
                 controller: 'CtrlLsDashboard',
                 resolve: {
                     deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                        return $ocLazyLoad.load([], {
+                        return $ocLazyLoad.load(['datepicker', 'noUiSlider', 'switchery', 'select', 'dataTables', 'autonumeric'], {
                             insertBefore: '#lazyload_placeholder'
                         })
                             .then(function () {
@@ -203,4 +203,11 @@ angular.module('jaws')
             })
             /*********End JA-113 : LS Dashboard******* */
         }
-    ]);
+    ])
+     
+    .directive('pagingControl',function(){
+        return {
+          templateUrl: _JAWS_PATH_TPL + "tpl/pagination.html",
+     }
+    });
+     /************End JA-127 *********** */

@@ -13907,13 +13907,10 @@ Main components
   height: 400px;
   overflow: auto;
   }
-  .table-wrapper-scroll-y {
+  /* .table-wrapper-scroll-y {
   display: block;
   margin-top: 30px
-  }
-  .search-ls-section{
-    margin-left: 134px;
-  }
+  } */
   .select-filter-lsd{
     margin-left: 17px; 
     width: 123px;
@@ -13922,4 +13919,24 @@ Main components
     display:inline-block; 
   }
 /* End JA-113 : LS Dashboard */ 
+
+/* Start JA-127 */
+  .ls-date-filter{
+    width: 119px;
+    margin-left: 20px;
+  }
+  .ls-to-date-filter{
+    margin-left:46px;
+  }
+
+table { border-collapse: collapse;  }
+th, td { background: #fff;  }
+.tableFixHead {
+  overflow: auto;
+}
+.tableFixHead thead th {
+  position: sticky;
+  top: 0;
+}
+/* End JA-127 */
 /*** Custom code ***/

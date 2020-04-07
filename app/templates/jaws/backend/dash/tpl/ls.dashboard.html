@@ -19,7 +19,8 @@
 <div class="container-fluid container-fixed-lg dataTables_wrapper form-inline no-footer" >
     <div class="container search-ls-section">
         <div class="row">
-                <div class="col-md-3">
+          <div class="col-md-12">
+                <div class="col-md-4">
                 <div class="form-group">
                     <label for="sel1">Lead Table </label>
                     <select class="form-control select-filter-lsd" id="sel1"  ng-model="leadTable" ng-change="leadSelectTable()">
@@ -28,7 +29,7 @@
                     </select>                
              </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group ">
                     <label for="sel1">Lead Status </label>
                     <select class="form-control select-filter-lsd" id="sel1"ng-model="leadStatus" ng-change="selectLeadStatus()">              <option ng-repeat="item in leadStatusArr" value="{{item.id}}">
@@ -36,7 +37,7 @@
                     </select>                
              </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="sel1">Lead List </label>
                     <select class="form-control select-filter-lsd" id="sel1" ng-model="leadList" ng-change="selectLeadStatus()">
@@ -45,14 +46,42 @@
                     </select>     
              </div> 
             </div>
-            <div class="col-md-3">
+          </div>
+        </div>
+        <br>
+        <!--  Start JA-127  -->
+          <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="sel1">From Date </label>
+                <div class="input-group date ls-date-filter" ui-jq="datepicker">
+                  <input  type="text" class="col-md-5 form-control input-sm" value="" name="new_date"  ng-model="from_date" ng-change="selectLeadStatus()">
+                      <div  class="input-group-addon"><span  class="glyphicon glyphicon-th"></span>
+                      </div>
+              </div>
+           </div> 
+          </div>  
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="sel1">To Date </label>
+              <div class="input-group date ls-date-filter ls-to-date-filter" ui-jq="datepicker">
+                <input  type="text" class="col-md-5 form-control input-sm" value="" name="new_date"  ng-model="to_date" ng-change="selectLeadStatus()">
+                    <div  class="input-group-addon"><span  class="glyphicon glyphicon-th"></span>
+                    </div>
+            </div>
+         </div>
+        </div>
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="sel1">Total Count :   {{leadCount}} </label>     
              </div> 
             </div>
-      </div>
+      </div> 
+    </div>
     </div>    
-    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <!--  End JA-127  -->
+    <div class="table-wrapper-scroll-y my-custom-scrollbar tableFixHead">
     <table class="table table-bordered table-striped mb-0">
         <thead>
           <tr>
@@ -73,12 +102,18 @@
             </td>
           </tr>
           <tr ng-if="leadList==0">
-            <td colspan="4">
+            <td colspan="5">
                <p class="text-center"> Total Count is: {{leadCount}} </p> 
             </td>
           </tr>   
         </tbody>
       </table>
     </div>
+    <!--  Start JA-127 -->
+    <div class="text-center">
+   <paging-control></paging-control>
+  </div>
+  <!-- Start JA-127  -->
 </div>
+
 <br/>
