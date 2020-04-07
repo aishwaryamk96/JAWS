@@ -21,7 +21,7 @@ angular.module('jaws')
                         "leadList":$scope.leadList
                       }
                     };  
-           $http.get(_JAWS_PATH_API + 'lsDashboard', param).then(function (response) {
+           $http.get(_JAWS_PATH_API + 'lsdashboard', param).then(function (response) {
                 $scope.allResponse  = response.data.data.list;
                 $scope.leadCount = response.data.data.count;
             });
