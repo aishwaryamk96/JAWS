@@ -18,6 +18,8 @@
 $leadStatus = $_GET['leadStatus'];
 $leadTable = $_GET['leadTable'];
 $leadList = $_GET['leadList'];
+$dateFilter['from'] = $_GET['from_date'];
+$dateFilter['to'] = $_GET['to_date'];
 
 if(empty($leadTable) || !is_numeric($leadStatus)){ 
     header("HTTP/1.1 400 Bad Request");
@@ -29,10 +31,11 @@ if(((isset($leadStatus) &&  ($leadStatus < 0)) ) || (!($leadTable) &&  !is_strin
    header("HTTP/1.1 400 Bad Request");
    die;
 }
-//get offset and limit
-//$pageResult = getPaginationDetails('GET');
 
-$arrLeadData = getLeadData($leadTable, $leadStatus, $leadList);
+//get offset and limit
+$pageResult = getPaginationDetails('GET');
+
+$arrLeadData = getLeadData($leadTable, $leadStatus, $leadList,$dateFilter, $pageResult);
 
 sendResponse($arrLeadData, $leadStatus);
 
@@ -56,7 +59,7 @@ function sendResponse($arrLeadData, $leadStatus){
         exit();
 }
 
-function getLeadData($leadTable, $leadStatus, $leadList){
+function getLeadData($leadTable, $leadStatus, $leadList, $dateFilter =[], $pageResult){
     
     switch($leadTable){
         case 'compiled':
@@ -67,23 +70,38 @@ function getLeadData($leadTable, $leadStatus, $leadList){
     }
     
     $arrLeadList = [];
-    $arrLeadList = db_query("SELECT l.lead_id as leadId, l.user_id as userId,l.email as leadEmail, l.name as leadName, l.phone as leadPhone, l.create_date as leadDate FROM ".$strTableName. " WHERE l.status = ".$leadStatus." AND l.create_date BETWEEN ( NOW() - INTERVAL 30 DAY) AND NOW() "
-            ." ORDER BY l.create_date DESC");
+    $datePeriodQuery = " DATE(l.create_date) BETWEEN ( NOW() - INTERVAL 30 DAY) AND NOW() ";
+    if(!empty($dateFilter['from']) && !empty($dateFilter['to']) ){
+        $datePeriodQuery = " DATE(l.create_date) BETWEEN '".$dateFilter['from']."' AND '".$dateFilter['to']."'";
+    }
+    $leadListGetQuery = "SELECT l.lead_id as leadId, l.user_id as userId,l.email as leadEmail, l.name as leadName ";
+    $leadListGetQuery .= " , l.phone as leadPhone, l.create_date as leadDate FROM ".$strTableName;
+    $leadListGetQuery .= " WHERE l.status = ".$leadStatus." AND  ".$datePeriodQuery;
+    $leadListGetQuery .= " ORDER BY l.create_date DESC";
     
+    $arrLeadCount = db_count($leadListGetQuery);
+    
+    
+    $arrLeadList = db_select_query($leadListGetQuery, $pageResult);
     
     $arrLeadResult=[];
     switch($leadList){
         case 1:            
         case 2: 
-            $arrLeadResult['count'] = count($arrLeadList);            
+            $arrLeadResult['count'] = $arrLeadCount;            
             $arrLeadResult['list'] = array_values($arrLeadList);
             break;
         case 0: //case only count to be returned
         default:
-            $arrLeadResult['count'] = count($arrLeadList);
+            $arrLeadResult['count'] = $arrLeadCount;
             
             break;
     }
+        
+    $arrLeadResult['totalPages'] = ceil($arrLeadCount / ITEMS_PER_PAGE);
+    $arrLeadResult['page'] = $pageResult['page'];
+    $arrLeadResult['totalRecords'] = $arrLeadCount;
+    $arrLeadResult['counter'] = $pageResult['offset']+1;
     
     return $arrLeadResult;
 }

@@ -421,9 +421,7 @@
 				if (empty(trim($value))) {
 					continue;
 				}
-                                if($key == 'lead_id'){
-                                    // $payload[]['lead_id']= $lead['lead_id'];
-                                }
+
 				if (isset($key_mapping[$key])) {
 					$payload[] = ["Attribute" => $key_mapping[$key], "Value" => $value];
 				}
@@ -432,9 +430,9 @@
 				}
 
 			}
-                                                
+                        
+                        
 			if (($response = json_decode(ls_api($api_url, $payload, $lead["email"],[],$lead), true)) === false) {
-                           // echo "\n In No response";
 				//return false;
                             //JA-113 LS API gave no response
                             //JA-113 - update lead status in compiled table to 5
@@ -553,11 +551,11 @@
 
 	}
 
-	function ls_api($api_url, $data, $id, $params = [],$leadData =[],$newConfig = FALSE) {                
+	function ls_api($api_url, $data, $id, $params = [],$lead= [],$newConfig = FALSE) {
                 
                 //JA-113 - update lead status in compiled table to 2
-                if(!$newConfig){
-                    updateLeadStatus($leadData['compiledLeadId'],COMPILED_API, 1);
+                if($newConfig == FALSE & !empty($lead)){
+                    updateLeadStatus($lead['compiledLeadId'],COMPILED_API, 1);
                 }
                 //JA-113 -ends
 		$ch = curl_init();
@@ -576,10 +574,10 @@
 
 		curl_close($ch);
 
-                if($newConfig){
+                if($newConfig === TRUE){
                     db_exec("INSERT INTO ls_new_api (email, request, response) VALUES (".db_sanitize($id).", ".db_sanitize(json_encode($data)).", ".db_sanitize(json_encode($response)).");");
                 }else{
-		db_exec("INSERT INTO ls_api (email, request, response) VALUES (".db_sanitize($id).", ".db_sanitize(json_encode($data)).", ".db_sanitize(json_encode($response)).");");
+                    db_exec("INSERT INTO ls_api (email, request, response) VALUES (".db_sanitize($id).", ".db_sanitize(json_encode($data)).", ".db_sanitize(json_encode($response)).");");
                 }
 		return $response;
 
@@ -630,8 +628,13 @@
 		$phone = db_sanitize($phone);
 		$lead_id = db_sanitize($lead_id);
 		$lead_data = db_sanitize(json_encode($lead_data));
-
-		db_exec("INSERT INTO ls_leads (email, phone, lead_id, lead_data) VALUES (".$email.", ".$phone.", ".$lead_id.", ".$lead_data.");");
+                
+                
+		$lsLeadFlag = db_exec("INSERT INTO ls_leads (email, phone, lead_id, lead_data) VALUES (".$email.", ".$phone.", ".$lead_id.", ".$lead_data.");");
+                if($lsLeadFlag == false){
+                    activity_create("critical", "lead.cron.status.update", "fail", "",  "", "", "", $lead_id, "logged");
+                    setting_set("leads.compile.task.is_running", "false");
+                }
 
 	}
 
@@ -930,8 +933,11 @@
 		$lead_id = db_sanitize($lead_id);
 		$lead_data = db_sanitize(json_encode($lead_data));
 
-		db_exec("INSERT INTO ls_leads_new (email, phone, lead_id, lead_data) VALUES (".$email.", ".$phone.", ".$lead_id.", ".$lead_data.");");
-
+		$newLsLeadFlag = db_exec("INSERT INTO ls_leads_new (email, phone, lead_id, lead_data) VALUES (".$email.", ".$phone.", ".$lead_id.", ".$lead_data.");");
+                if($newLsLeadFlag == false){
+                    activity_create("critical", "lead.cron.status.update", "fail", "",  "", "", "", $lead_id, "logged");
+                    setting_set("leads.compile.task.is_running", "false");
+                }
 	}
         
 ?>
