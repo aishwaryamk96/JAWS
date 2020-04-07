@@ -789,13 +789,17 @@
 								$rec["meta"].", ".
 								$rec["cookies"].", ".
 								$rec["__tr"].");";
-				db_exec($insert);
+				$stat = db_exec($insert);
+                                
                                 $compiledLeadId = db_get_last_insert_id();
 				// Save the last lead_id
 				$last_leads_id = $lead["lead_id"];
-                                $data['compiledLeadId'] = $compiledLeadId;
 				setting_set("leads_basic_capture_last", $last_leads_id);
-                                $leads_arr[] = $data;
+                                
+                                
+                                //JA-113 changes-prod issue
+                                $data['compiledLeadId'] = $compiledLeadId;
+				$leads_arr[] = $data;
 			}
 			// Save the last lead_id
 			$last_leads_id = $res_leads[count($res_leads) - 1]["lead_id"];
