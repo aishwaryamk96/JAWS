@@ -13907,10 +13907,6 @@ Main components
   height: 400px;
   overflow: auto;
   }
-  /* .table-wrapper-scroll-y {
-  display: block;
-  margin-top: 30px
-  } */
   .select-filter-lsd{
     margin-left: 17px; 
     width: 123px;
@@ -13929,12 +13925,12 @@ Main components
     margin-left:46px;
   }
 
-.tableFixHead table { border-collapse: collapse;  }
-.tableFixHead th, td { background: #fff;  }
-.tableFixHead {
+.lsDash-tableFixHead table { border-collapse: collapse;  }
+.lsDash-tableFixHead th, td { background: #fff;  }
+.lsDash-tableFixHead {
   overflow: auto;
 }
-.tableFixHead thead th {
+.lsDash-tableFixHead thead th {
   position: sticky;
   top: 0;
 }
