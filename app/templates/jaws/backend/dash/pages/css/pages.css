@@ -13921,7 +13921,7 @@ Main components
 /* End JA-113 : LS Dashboard */ 
 
 /* Start JA-127 */
-  .ls-date-filter{
+  .ls-from-date-filter{
     width: 119px;
     margin-left: 20px;
   }
@@ -13929,8 +13929,8 @@ Main components
     margin-left:46px;
   }
 
-table { border-collapse: collapse;  }
-th, td { background: #fff;  }
+.tableFixHead table { border-collapse: collapse;  }
+.tableFixHead th, td { background: #fff;  }
 .tableFixHead {
   overflow: auto;
 }

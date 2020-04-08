@@ -1,7 +1,7 @@
 'use strict';
 /*  Start JA-113 : LS Dashboard */
 angular.module('jaws')
-    .controller('CtrlLsDashboard',['$scope','$http','$window', function($scope,$http,$window) {
+    .controller('CtrlLsDashboard',['$scope','$http','paginationChange', function($scope,$http,paginationChange) { 
       $scope.leadStatus='4';
       $scope.leadTable='compiled';
       $scope.leadList="1";   
@@ -57,25 +57,11 @@ angular.module('jaws')
 		($scope.resultsPerPageChange = function() {
 			$scope.totalPages = $scope.totalPages;
 		})();
-		$scope.itemsPerPage = 100;
 		$scope.pagesByRange = function(val) {
-			var currPage = $scope.currentPage;
-			var totalPages = $scope.totalPages;
-			if (currPage < 6) {
-				return (val <= 10 ? true : false);
-			}
-			if (currPage >= 6 && currPage <= totalPages) {
-				return ((currPage - val <= 5 && val - currPage <= 5) ? true : false);
-			}
-			if (currPage > totalPages - 6) {
-				return (val >= totalPages - 10 ? true : false);
-			}
+      return paginationChange.pagesChange(val,$scope.currentPage,$scope.totalPages);
 		}
-		$scope.range = function(min, max) {
-			var arr = [];
-			for (var i = min; i <= max; i++)
-				arr.push(i);
-			return arr;
+    $scope.range = function(min, max) {
+      return paginationChange.pageRang(min, max);
 		}
 		$scope.pageChange = function(pageNum) {  
       $scope.loadLsDashboard(pageNum);	
