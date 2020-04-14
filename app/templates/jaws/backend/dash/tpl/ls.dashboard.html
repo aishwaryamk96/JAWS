@@ -60,7 +60,7 @@
             <div class="col-md-3">
               <div class="form-group">
                 <label for="sel1">From Date </label>
-                <div class="input-group date ls-from-date-filter" ui-jq="datepicker">
+                <div class="input-group date ls-from-date-filter" ui-jq="datepicker" uib-datepicker-popup="dd-MMM-yyyy" is-open="popup1.opened" datepicker-options="options">
                   <input  type="text" class="col-md-5 form-control input-sm" value="" name="new_date"  ng-model="from_date" ng-change="selectLeadStatus()" >
                       <div  class="input-group-addon"><span  class="glyphicon glyphicon-th"></span>
                       </div>
