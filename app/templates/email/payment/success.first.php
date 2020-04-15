@@ -207,6 +207,21 @@
                                                                                 </td>
                                                                             </tr>
                                                                             <?php } ?>
+                                                                            <!-- JA-54 starts -->
+                                                                            <?php if(!empty($GLOBALS['content']['emailer']['individual_course'])){ foreach($GLOBALS["content"]["emailer"]["individual_course"]  as $idx => $iCourse) { ?>
+                                                                            <tr>
+                                                                                <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 10px;" align="center"><b><?php echo ucwords(strtolower($iCourse['course_name'])); ?></b>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <?php } } ?>
+                                                                            <?php if(!empty($GLOBALS['content']['emailer']['free_course'])){ foreach($GLOBALS["content"]["emailer"]["free_course"]  as $idx => $fCourse) { ?>
+                                                                            <tr>
+                                                                                <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 10px;" align="center"><b><?php echo ucwords(strtolower($fCourse['course_name'])); ?></b>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <?php } } ?>
+                                                                            
+                                                                            <!-- JA-54 ends -->
                                                                         </table>
                                                                     </td>
                                                                 </tr>

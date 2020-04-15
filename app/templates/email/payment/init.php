@@ -160,21 +160,7 @@
 <!--<b><?php //echo $GLOBALS['content']['emailer']['bundle_details']['name']; ?></b>.-->
                                                                                 </td>
                                                                             </tr>
-                                                                            <tr>
-                                                                                <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 10px;" align="center">
-<?php //if(isset($GLOBALS['content']['emailer']['bundle_details']['name'])) { ?>
-                                <ul>
-                                    <li> <?php echo $GLOBALS['content']['emailer']['bundle_details']['name']; ?>  </li>
-                                    <?php foreach($GLOBALS['content']['emailer']['free_course'] as $idx => $fCourse){ ?>
-                                    <li> <?php echo $fCourse['course_name'];?> </li>
-                                     <?php } ?>
-                                    <?php foreach($GLOBALS['content']['emailer']['individual_course'] as $idx => $iCourse){ ?>
-                                    <li> <?php echo $iCourse['course_name'];?> </li>
-                                     <?php } ?>
-                                </ul>                                                   
-        <?php //} ?> <!-- JA-54 -->
-                                                                                </td>
-                                                                            </tr>
+                                                                           
                                                                             
                                                                             <?php } else { ?>
                                                                             <tr>
@@ -186,6 +172,74 @@
                                                                     </td>
                                                                 </tr>
                                                             </table>
+                                                            <!-- Course list -->
+                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
+                                        <tr>
+                                            <td class="outsidegutter" align="left" style="padding: 0 14px 0 14px;">
+                                                <table border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;"
+                                                    class="">
+                                                    <tr>
+                                                        <td>
+                                                            <!--[if (gte mso 9)|(IE)]>
+                                                            <table width="672" align="left" cellpadding="0" cellspacing="0" border="0">
+                                                            <tr>
+                                                                <td>
+                                                                    <![endif]-->
+                                                            <table border="0" cellpadding="0" cellspacing="0" class="t10of12 basetable" align="left" style="border: none; border-collapse: collapse; border-spacing: 0; max-width: 672px; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
+                                                                <tr>
+                                                                    <td style="padding-left: 12px; padding-right: 12px;">
+                                                                        <table border="0" cellpadding="0" cellspacing="0" class="basetable" width="100%" align="center" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
+                                                                             <tr>
+                                                                                <td class="h1" style="color: #00A8E1; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px;" align="center">
+                                                                                    <span style="letter-spacing: 0.5px; text-decoration: none;">
+                                                                                        <?php echo ucwords(strtolower($GLOBALS['content']['emailer']['bundle_details']['name'])); ?>
+                                                                                    </span>
+                                                                                  
+                                                                                </td>
+                                                                            </tr>
+                                                                        <?php foreach($GLOBALS["content"]["emailer"]["free_course"] as $idx => $iCourse) { ?>
+                                                                            <tr>
+                                                                                <td class="h1" style="color: #00A8E1; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px;" align="center">
+                                                                                    <span style="letter-spacing: 0.5px; text-decoration: none;">
+                                                                                        <?php echo ucwords(strtolower($iCourse['course_name'])); ?>
+                                                                                    </span>
+                                                                                   <!--  <a href="<?php //echo $course["url"]; ?>" style="letter-spacing: 0.5px; text-decoration: none;">
+                                                                                        <?php //echo $course["name"]; ?>
+                                                                                    </a> -->
+                                                                                </td>
+                                                                            </tr>
+                                                                        <?php } ?>
+                                                                             <?php foreach($GLOBALS["content"]["emailer"]["individual_course"]  as $idx => $iCourse) { ?>
+                                                                            <tr>
+                                                                                <td class="h1" style="color: #00A8E1; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px;" align="center">
+                                                                                    <span style="letter-spacing: 0.5px; text-decoration: none;">
+                                                                                        <?php echo ucwords(strtolower($iCourse['course_name'])); ?>
+                                                                                    </span>
+                                                                                   <!--  <a href="<?php //echo $course["url"]; ?>" style="letter-spacing: 0.5px; text-decoration: none;">
+                                                                                        <?php //echo $course["name"]; ?>
+                                                                                    </a> -->
+                                                                                </td>
+                                                                            </tr>
+                                                                        <?php } ?>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                            <!--[if (gte mso 9)|(IE)]>
+                                                                </td>
+                                                            </tr>
+                                                            </table>
+                                                            <![endif]-->
+                                                            <!--[if mso]></td>
+                                                            <td>
+                                                            <![endif]-->
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- close Course list -->
                                                             <!--[if (gte mso 9)|(IE)]>
                                                                 </td>
                                                             </tr>
