@@ -158,21 +158,7 @@
                                                                             <tr>
                                                                                 <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 10px;" align="center">You have enrolled in :
 <!--<b><?php //echo $GLOBALS['content']['emailer']['bundle_details']['name']; ?></b>.-->
-                                                                                </td>
-                                                                            </tr>
-                                                                           
-                                                                            
-                                                                            <?php } else { ?>
-                                                                            <tr>
-                                                                                <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px;" align="center">THE COURSES CHOSEN BY YOU ARE:
-                                                                                </td>
-                                                                            </tr>
-                                                                            <?php } ?>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                            <!-- Course list -->
+                                                                                    <!-- Course list -->
                                     <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
                                         <tr>
                                             <td class="outsidegutter" align="left" style="padding: 0 14px 0 14px;">
@@ -240,6 +226,21 @@
                                         </tr>
                                     </table>
                                     <!-- close Course list -->
+                                                                                </td>
+                                                                            </tr>
+                                                                           
+                                                                            
+                                                                            <?php } else { ?>
+                                                                            <tr>
+                                                                                <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px;" align="center">THE COURSES CHOSEN BY YOU ARE:
+                                                                                </td>
+                                                                            </tr>
+                                                                            <?php } ?>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                            
                                                             <!--[if (gte mso 9)|(IE)]>
                                                                 </td>
                                                             </tr>
