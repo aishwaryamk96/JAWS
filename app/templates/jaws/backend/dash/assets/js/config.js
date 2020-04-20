@@ -190,7 +190,7 @@ angular.module('jaws')
                 controller: 'CtrlLsDashboard',
                 resolve: {
                     deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                        return $ocLazyLoad.load([], {
+                        return $ocLazyLoad.load(['datepicker', 'noUiSlider', 'switchery', 'select', 'dataTables', 'autonumeric'], {
                             insertBefore: '#lazyload_placeholder'
                         })
                             .then(function () {
@@ -203,4 +203,33 @@ angular.module('jaws')
             })
             /*********End JA-113 : LS Dashboard******* */
         }
-    ]);
+    ])
+    
+    /************Start JA-127 *********** */
+    .directive('pagingControl',function(){
+        return {
+          templateUrl: _JAWS_PATH_TPL + "tpl/pagination.html", 
+     }
+    })
+    .factory("paginationChange", function() {
+        return {
+            pagesChange: function(val,currPage,totalPages) {
+                if (currPage < 6) {
+                    return (val <= 10 ? true : false);
+                }
+                if (currPage >= 6 && currPage <= totalPages) {
+                    return ((currPage - val <= 5 && val - currPage <= 5) ? true : false);
+                }
+                if (currPage > totalPages - 6) {
+                    return (val >= totalPages - 10 ? true : false);
+                }
+            },
+            pageRang: function(min,max){
+                var arr = [];
+                for (var i = min; i <= max; i++)
+                    arr.push(i);
+                return arr;
+            }
+        }
+    });
+     /************End JA-127 *********** */

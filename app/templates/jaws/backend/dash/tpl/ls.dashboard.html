@@ -19,6 +19,7 @@
 <div class="container-fluid container-fixed-lg dataTables_wrapper form-inline no-footer" >
     <div class="container search-ls-section">
         <div class="row">
+          <div class="col-md-12">
                 <div class="col-md-3">
                 <div class="form-group">
                     <label for="sel1">Lead Table </label>
@@ -46,13 +47,42 @@
              </div> 
             </div>
             <div class="col-md-3">
-                <div class="form-group">
-                    <label for="sel1">Total Count :   {{leadCount}} </label>     
-             </div> 
+              <div class="form-group">
+                  <label for="sel1">Total Count :   {{totalLeadCount}} </label>     
+           </div> 
+          </div>
+          </div>
+        </div>
+        <br>
+        <!--  Start JA-127  -->
+          <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="sel1">From Date </label>
+                <div class="input-group date ls-from-date-filter" ui-jq="datepicker" uib-datepicker-popup="dd-MMM-yyyy" is-open="popup1.opened" datepicker-options="options">
+                  <input  type="text" class="col-md-5 form-control input-sm" value="" name="new_date"  ng-model="from_date" ng-change="selectLeadStatus()" >
+                      <div  class="input-group-addon"><span  class="glyphicon glyphicon-th"></span>
+                      </div>
+              </div>
+           </div> 
+          </div>  
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="sel1">To Date </label>
+              <div class="input-group date ls-from-date-filter ls-to-date-filter" ui-jq="datepicker">
+                <input  type="text" class="col-md-5 form-control input-sm" value="" name="new_date"  ng-model="to_date" ng-change="selectLeadStatus()">
+                    <div  class="input-group-addon"><span  class="glyphicon glyphicon-th"></span>
+                    </div>
             </div>
-      </div>
+         </div>
+        </div>
+          
+      </div> 
+    </div>
     </div>    
-    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <!--  End JA-127  -->
+    <div class="table-wrapper-scroll-y my-custom-scrollbar lsDash-tableFixHead">
     <table class="table table-bordered table-striped mb-0">
         <thead>
           <tr>
@@ -73,12 +103,18 @@
             </td>
           </tr>
           <tr ng-if="leadList==0">
-            <td colspan="4">
+            <td colspan="5">
                <p class="text-center"> Total Count is: {{leadCount}} </p> 
             </td>
           </tr>   
         </tbody>
       </table>
     </div>
+    <!--  Start JA-127 -->
+    <div class="text-center">
+   <paging-control></paging-control>
+  </div>
+  <!-- Start JA-127  -->
 </div>
+
 <br/>
