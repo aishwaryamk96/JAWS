@@ -72,10 +72,7 @@ angular.module('jaws')
      $scope.pageChange = function(pageNum) {
        $scope.loadLsDashboard(pageNum);
      }
-     $scope.popup1 = { opened: false };
-     $scope.options = {
-      minDate: new Date(),
-    }
+     
    /************End JA-127 *********** */
      $scope.loadLsDashboard();
     }]);
