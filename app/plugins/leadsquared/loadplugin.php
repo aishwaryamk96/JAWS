@@ -11,9 +11,8 @@
 		load_library("url");
 
 		$leads = $leads[0];
-                
 		foreach ($leads as $lead) {
-                        
+
 			$api_url = "LeadManagement.svc/Lead.Capture";
 
 			$key_mapping = [
@@ -415,7 +414,6 @@
 			}
 
 			$payload = [];
-                        
 			foreach ($lead as $key => $value) {
 
 				if (empty(trim($value))) {
@@ -441,7 +439,6 @@
 			}
 			if (empty($response["Status"]) || $response["Status"] != "Success" || empty($response["Message"]["Id"])) {
 				//return false;
-                              //  echo "\n In COMPILED FAILURE";
                             //JA-113 there was error in LS response
                             //JA-113 - update lead status in compiled table to 4
                               updateLeadStatus($lead['compiledLeadId'],COMPILED_FAILURE, 1);
@@ -450,7 +447,6 @@
                         //JA-113 changes
                         if (isset($response["Status"]) && $response["Status"] == "Success") {
 				//return false;
-                              //  echo "\n In COMPILED SUCCESS";
                             //success LS API 
                             //update lead status in compiled table to 4
                               updateLeadStatus($lead['compiledLeadId'],COMPILED_SUCCESS, 1);
@@ -539,7 +535,6 @@
 
 		}
 
-               
 		if (($response = json_decode(ls_api($api_url, $payload, $activity["email"]), true)) === false) {
 			return false;
 		}
@@ -550,7 +545,7 @@
 		return $response["Message"]["Id"];
 
 	}
-
+/*
 	function ls_api($api_url, $data, $id, $params = [],$lead= [],$newConfig = FALSE) {
                 
                 //JA-113 - update lead status in compiled table to 2
@@ -617,7 +612,7 @@
 		return $lead;
 
 	}
-
+*/
 	function update_lead_info($email, $phone, $lead_id, $lead_data = []) {
 
 		if (!empty(find_lead($email, $lead_id))) {
@@ -888,6 +883,7 @@
 
 	}
         
+        /*
         function newLsAccountUpdates($lead, $new){
             
             $newApiurl = 'LeadManagement.svc/Lead.Capture';
@@ -938,6 +934,6 @@
                     activity_create("critical", "lead.cron.status.update", "fail", "",  "", "", "", $lead_id, "logged");
                     setting_set("leads.compile.task.is_running", "false");
                 }
-	}
+	}*/
         
 ?>
