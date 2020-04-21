@@ -935,26 +935,20 @@ function logLSApiResponse($apiResponse, $compiledLead){
     }
 }
 
-function saveLSApiResponse($apiResponse, $compiledLead){
+function saveLSApiResponse($apiResponse, $apiRequest, $compiledLead){
     
-    $content = "************************************************\n";
-    $content.= "Compiled Lead Id : ".$compiledLead[0]['lead_id']." - Date : ".date("Y-m-d H:i:s")."\n";
-    $content.= "-----------------------------------------------------\n";
-    $content.= json_encode($apiResponse);
-    $content.= "************************************************\n";
-    
-    $filename = LS_API_LOG;
-    try{
-        $fp = fopen($filename,"a+");
-        if($fp == FALSE) { return FALSE ;}
-        fwrite($fp,$content);
-        fclose($fp);
+    error_clear_last();
+    $updateFlag = db_exec(" UPDATE user_leads_basic_compiled SET ls_response = " . db_sanitize($apiResponse) . " , ls_request = ". db_sanitize(json_encode($apiRequest))." WHERE lead_id = " . db_sanitize($compiledLead[0]['lead_id']));
+
+    // if $updateFlag == false, there was db exception and is stored in $GLOBALS variable.
+    // Log the DB Error
+    if ($updateFlag == false) {
         
-        return TRUE;
-    }catch(Exception $e){
-        $errMsg = "Create Cron Start File . Datetime :" . date(" Y-m-d H:i:s");        
-        logErrors(COMPILED_LEAD_LOG, "createCronStartMarker", $errMsg, [$e->getMessage()]);
-        return FALSE;
+        $logFile = COMPILED_LEAD_LOG;
+        $errMsg = " Update Status: DB error. Datetime :" . date(" Y-m-d H:i:s");
+        $errData = $GLOBALS["jaws_db"]["error"];
+        logErrors($logFile, "updateStatus", $errMsg, [$errData]);
+
     }
 }
 /**
@@ -986,7 +980,7 @@ function getLSApi($payload, $lead){
         
         //Save the response to db table column
         // the data is dumped to response column of the user_leads_basic_compiled table;
-        saveLSApiResponse($apiResponse, $lead);
+        saveLSApiResponse($apiResponse, $payload, $lead);
         
         $response = json_decode($apiResponse, true);
         if ( $response === false) {
