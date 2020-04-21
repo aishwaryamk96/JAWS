@@ -17,9 +17,8 @@ define("LS_CORP_SecretKey", "75dfc985eefeb4c92a6eaeebb517155d049e840a");
 define("LS_AccessKey", "u\$r6daf2e31c28ab58d15cb696d4e0f6a43");
 define("LS_SecretKey", "95c34e5756021c31bc0ded96a0fafd70320cd9a2");
         
-define("LS_ACCOUNT_RETAIL_NEW_ACCESS", "");
-define("LS_ACCOUNT_RETAIL_NEW_SECRET", "");
-
+define("LS_ACCOUNT_RETAIL_NEW_ACCESS",'u$ra77415d9fb3b4476342af0bea19a6b57');
+define("LS_ACCOUNT_RETAIL_NEW_SECRET",'1b49151116bf144653207c80d7df51692847ceed');
 
 //Basic Lead error log file name with path
 define("BASIC_LEAD_LOG",'/var/log/apache2/leadcron/basiclead.log');
