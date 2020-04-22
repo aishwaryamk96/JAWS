@@ -54,6 +54,11 @@
 	if (!empty($_POST["time_to_call"])) {
 		$meta["time_to_call"] = $_POST["time_to_call"];
 	}
+        //hotfix changes - Apr 22,2020 LiveCall issue
+        if (!empty($_POST["Qualification"])) {
+		$meta["Qualification"] = $_POST["Qualification"];
+	}
+        //
 	$meta = db_sanitize(json_encode($meta));
 
 	db_exec("INSERT INTO user_leads_basic (name, email, phone, utm_source, utm_campaign, utm_medium, ip, referer, ad_url, create_date, capture_trigger, capture_type, meta) VALUES ($name, $email, $phone, $utm_source, $utm_campaign, $utm_medium, $ip, $referrer, $ad_url, CURRENT_TIMESTAMP, 'formsubmit', 'url', $meta);");
