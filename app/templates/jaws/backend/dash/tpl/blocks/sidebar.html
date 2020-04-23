@@ -44,7 +44,9 @@
 				</ul>
 			</li>
 			<!-- Start JA-113 : LS Dashboard -->
-			<li class="" ui-sref-active="active">
+                        <!-- JA-145 adding role based visibility -->
+                        <li class="" ng-if="user.roles.feature_keys.lsdashboard" ui-sref-active="active">
+                            <!-- JA-145 adding role based visibility -->
 				<a ui-sref='app.lsdashboard' class="">
 					  <span class="title">LS Dashboard</span>
 				</a>
