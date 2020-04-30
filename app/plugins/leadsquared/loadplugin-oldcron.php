@@ -545,7 +545,7 @@
 		return $response["Message"]["Id"];
 
 	}
-/*
+
 	function ls_api($api_url, $data, $id, $params = [],$lead= [],$newConfig = FALSE) {
                 
                 //JA-113 - update lead status in compiled table to 2
@@ -612,7 +612,7 @@
 		return $lead;
 
 	}
-*/
+
 	function update_lead_info($email, $phone, $lead_id, $lead_data = []) {
 
 		if (!empty(find_lead($email, $lead_id))) {
@@ -883,7 +883,6 @@
 
 	}
         
-        /*
         function newLsAccountUpdates($lead, $new){
             
             $newApiurl = 'LeadManagement.svc/Lead.Capture';
@@ -934,6 +933,6 @@
                     activity_create("critical", "lead.cron.status.update", "fail", "",  "", "", "", $lead_id, "logged");
                     setting_set("leads.compile.task.is_running", "false");
                 }
-	}*/
+	}
         
 ?>
