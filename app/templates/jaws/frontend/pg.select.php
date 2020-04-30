@@ -48,7 +48,7 @@
 
     // $GLOBALS['jaws_exec_live'] = false;
     $show_ebs = true;
-    if($pi["receipt_type"] == "pgpdm" || $pi["receipt_type"] == "ipba"){
+    if($pi["receipt_type"] == "pgpdm" || $pi["receipt_type"] == "ipba" ){
         $show_ebs = false;
     }
 
@@ -60,6 +60,19 @@
     }
 
     setlocale(LC_MONETARY, 'en_IN');
+    
+    //JA-120 changes
+    $rpayAccPlag = $GLOBALS["content"]['gateway_info']['rpay_acc_flag'];
+    if($rpayAccPlag == 1 || $rpayAccPlag == true){
+        $show_ebs = false;
+    }
+    if($rpayAccPlag == 1 || $rpayAccPlag == true){
+        $rpayKey = constant('RZPY_NEW_ACC_KEY_'.((APP_ENV == "prod") ? "LIVE" : "TEST")); 
+    }else{
+        $rpayKey = constant('JAWS_PAYMENT_GATEWAY_RZPY_KEY_'.($GLOBALS['jaws_exec_live'] ? "LIVE" : "TEST")); 
+    }
+   // echo $rpayAccPlag."---".$rpayKey;die;
+    //JA-120 ends
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -86,7 +99,7 @@
         <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
         <script>
             const razorpay_options = {
-                "key":"<?= constant('JAWS_PAYMENT_GATEWAY_RZPY_KEY_'.($GLOBALS['jaws_exec_live'] ? "LIVE" : "TEST")); ?>",
+                "key":"<?= $rpayKey ?>",
                 "name":"Jigsaw Academy",
                 "description":"<?php echo mb_strimwidth($ti['extra']['desc'], 0, 250, '...'); ?>",
                 "image":"<?php echo JAWS_PATH_WEB ?>/media/jaws/frontend/images/favicon.png",
@@ -131,7 +144,8 @@
             let data = {
                 'amount' : '<?php echo floatval($ti['sum']).'00'; ?>',
                 'currency' : '<?php echo strtoupper($currency); ?>',
-                'receipt' : '<?php echo $ti['invoice_id']; ?>'
+                'receipt' : '<?php echo $ti['invoice_id']; ?>',
+                'rpay_acc_flag' : '<?php echo $rpayAccPlag; ?>'
             };
 
             async function getOrderID(){
