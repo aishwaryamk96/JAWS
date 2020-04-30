@@ -41,6 +41,7 @@
         "amount" => $_POST['amount'],
         "currency" => $_POST['currency'],
         "receipt" => $_POST['receipt'],
+        "rpay_acc_flag" => $_POST['rpay_acc_flag'],
     );
 
     $return = createOrder($data);
