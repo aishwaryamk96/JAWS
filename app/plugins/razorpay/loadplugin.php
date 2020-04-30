@@ -66,10 +66,19 @@
     function createOrder($data = array()){
 
         // $GLOBALS['jaws_exec_live'] = false;
-
-        $api_key = constant('JAWS_PAYMENT_GATEWAY_RZPY_KEY_'.($GLOBALS['jaws_exec_live'] ? "LIVE" : "TEST"));
-		$api_secret = constant('JAWS_PAYMENT_GATEWAY_RZPY_SECRET_'.($GLOBALS['jaws_exec_live'] ? "LIVE" : "TEST"));
-
+        //JA-120 changes starts
+        
+        
+        $envFlag = ((APP_ENV == "prod") ? "LIVE" : "TEST");
+        
+        if($data['rpay_acc_flag'] == 1){
+            $api_key = constant('RZPY_NEW_ACC_KEY_'.$envFlag);
+		$api_secret = constant('RZPY_NEW_ACC_SECRET_'.$envFlag);
+        }else{
+            $api_key = constant('JAWS_PAYMENT_GATEWAY_RZPY_KEY_'.$envFlag);
+		$api_secret = constant('JAWS_PAYMENT_GATEWAY_RZPY_SECRET_'.$envFlag);
+        }
+        //JA-120 changes ends
         $api = new Api($api_key, $api_secret);
 
         try {
