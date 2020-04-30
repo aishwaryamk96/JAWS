@@ -246,5 +246,29 @@
 		}
 
 	}
+        
+        //JA-57
+        // This will exec a SQL statement
+	function db_update_exec($sql, $insertedIdFlag = 0) {
 
+		try {
+			$res = $GLOBALS["jaws_db"]["db"]->exec($sql);
+                        
+                        if($insertedIdFlag == 1){
+                            return db_get_last_insert_id();
+                        }
+                        return $res;
+		}
+		catch (PDOException $e) {
+                        
+			$GLOBALS["jaws_db"]["error"] = $e->getMessage();
+                        
+			activity_create("critical", "db.update.fail", "fail", "",  "", "", "", $sql."|".$GLOBALS["jaws_db"]["error"], "logged");
+			return false;
+		}
+
+		return true;
+
+	}
+        //JA-57 ends
 ?>

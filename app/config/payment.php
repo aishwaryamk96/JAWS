@@ -69,5 +69,12 @@
 
 	define('JAWS_PAYMENT_GATEWAY_RZPY_NEFT_KEY_LIVE', "rzp_live_1lHBXz53kDchQP");
 	define('JAWS_PAYMENT_GATEWAY_RZPY_NEFT_SECRET_LIVE', "EOvxiHXWZUFvEtQv4AOls91J");
-
+        
+        //JA-120 NEw Razorpay Gateway Integration
+        define('RZPY_NEW_ACC_KEY_LIVE', "rzp_test_J6UF87B4Neydpz");
+	define('RZPY_NEW_ACC_SECRET_LIVE', "t0N8ygzi9RLAUHus8QqF6wTI");
+        
+        define('RZPY_NEW_ACC_KEY_TEST', "rzp_test_J6UF87B4Neydpz");
+	define('RZPY_NEW_ACC_SECRET_TEST', "t0N8ygzi9RLAUHus8QqF6wTI");
+        //JA-120 ends
 ?>
