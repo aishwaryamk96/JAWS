@@ -1,8 +1,8 @@
 <?php
 
-	function program_get_all() {
+	function getSellerPrograms($sellerId) {
 
-		$bs = db_query("SELECT * FROM course_bundle AS b WHERE b.bundle_type = 'programs' AND b.status != 'disabled' AND b.combo != '' AND (b.expire_date IS NULL OR DATE(b.expire_date) >= CURRENT_DATE) AND b.seller IN (0, 1) ORDER BY b.position ASC, b.bundle_id DESC;");
+		$bs = db_query("SELECT * FROM course_bundle AS b WHERE b.bundle_type = 'programs' AND b.status != 'disabled' AND b.combo != '' AND (b.expire_date IS NULL OR DATE(b.expire_date) >= CURRENT_DATE) AND b.seller IN ($sellerId) ORDER BY b.position ASC, b.bundle_id DESC;");
 
 		if (empty($bs)) {
 			return [];

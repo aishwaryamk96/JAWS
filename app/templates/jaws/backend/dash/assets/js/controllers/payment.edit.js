@@ -4,7 +4,9 @@
 
 angular.module('jaws')
     .controller('CtrlPaymentEditt', ['$scope', '$state', 'courses', 'specializations', 'defaultSettings', 'apiSVC', '$sce', '$timeout', '$http', '$window', 'packageDetails', 'bootcampDetails', 'programDetails', 'fullstackDetails', function ($scope, $state, courses, specializations, defaultSettings, apiSVC, $sce, $timeout, $http, $window, packageDetails, bootcampDetails, programDetails, fullstackDetails) {
-
+            
+            console.log( $scope.user);
+        $scope.sellerRole = $scope.user.roles.feature_keys.seller;
         $scope.trustAsHtml = function (value) {
             return $sce.trustAsHtml(value);
         };
@@ -190,6 +192,7 @@ angular.module('jaws')
 
         // programs added
         $scope.programs = [];
+        
         programDetails.forEach(function (p, i) {
             p.selected = false;
             // COMMENT THE FOLLOWING PART IF THINGS GO SOUTH -------
@@ -210,6 +213,7 @@ angular.module('jaws')
             else {
                 $scope.programs.push(p);
             }
+            
         });
         // $scope.programs = programDetails;
         // console.log($scope.programs);
@@ -238,7 +242,7 @@ angular.module('jaws')
             $scope.noOfProgramSelected.push($scope.program_selected);
             $scope.getWorth();
         };
-
+      
          // programs added
         $scope.fullstacks = [];
         fullstackDetails.forEach(function (p, i) {
@@ -478,8 +482,8 @@ angular.module('jaws')
 
         $scope.getInstlFees = function () {
             var fees = 0, feesUSD = 0, flag = false;;
-            console.log("a"+defaultSettings.instalment_fees.inr);
-            console.log("installment Total" + $scope.instls.length);
+          //  console.log("a"+defaultSettings.instalment_fees.inr);
+          //  console.log("installment Total" + $scope.instls.length);
             $scope.instls.forEach(function (instl, i) {
                 /*if (instl.due > 15) {*/
                 if (instl.due > 7) {
@@ -580,7 +584,7 @@ angular.module('jaws')
 
         $scope.saveMode = "";
         $scope.selectMode = function (value, id) {
-            console.log(value, 'selectMode');
+         //   console.log(value, 'selectMode');
             $scope.saveMode = value;
         };
 
@@ -668,7 +672,7 @@ angular.module('jaws')
         // Load package details
         if (packageDetails) {
 
-            console.log(packageDetails);
+          //  console.log(packageDetails);
 
             $scope.package_id = packageDetails.package_id;
 
@@ -800,7 +804,7 @@ angular.module('jaws')
 
         // save package
         $scope.submitPackage = function (reload) {
-            console.log("Submit button clicked");
+           // console.log("Submit button clicked");
 
             if (typeof reload == "undefined") reload = true;
 
@@ -987,7 +991,7 @@ angular.module('jaws')
                 save['package']['course_start_date'] = '15/07/2019';
             }
 
-            console.log(save); console.log(sendUrl); console.log(reload);
+          //  console.log(save); console.log(sendUrl); console.log(reload);
             // alert('Please wait. Update in progress. Try after sometime.');
             // return false; // uncomment this line to stop package creation.
 
@@ -996,7 +1000,7 @@ angular.module('jaws')
             $http({
                 url: sendUrl, method: "POST", data: save,
             }).then(function (response) {
-                console.log(response);
+             //   console.log(response);
                 $(".modal").modal("hide");
 
                 if (response.data.status) { type = 'success'; msg = response.data.msg; timeout = 4500; }

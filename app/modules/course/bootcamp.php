@@ -12,7 +12,7 @@
 
 	function bootcamp_get_all() {
 
-		$bs = db_query("SELECT * FROM course_bundle AS b WHERE b.bundle_type = 'bootcamps' AND b.status != 'disabled' AND b.combo != '' ORDER BY b.bundle_id DESC;");
+		$bs = db_query("SELECT * FROM course_bundle AS b WHERE b.bundle_type = 'bootcamps' AND b.status != 'disabled' AND b.combo != '' AND b.seller IN (0, 1) ORDER BY b.bundle_id DESC ;");
 
 		if (empty($bs)) {
 			return [];

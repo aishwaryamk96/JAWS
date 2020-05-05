@@ -7,6 +7,9 @@ angular.module('jaws')
     .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider',
 
         function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
+            
+             var userBeforeRootScope = _JAWS_USER;
+             
             $urlRouterProvider
                 .otherwise('/app/home');
 
@@ -78,14 +81,39 @@ angular.module('jaws')
                                 });
                         }],
                         courses: function ($http) {
+                             //JA-150 starts
+                            if( userBeforeRootScope.roles.feature_keys.seller){
+                                return [];
+                               // sellerId = 3;// Value for MINDSCOOL seller
+//                                return $http.get(_JAWS_PATH_API + 'seller.programs?sellerId=3').then(function (response) {
+//                                    console.log(response.data);
+//                                    return response.data;
+//                                });
+                            }else{//JA-150 ENDS
+                                
+                            
                             return $http.get(_JAWS_PATH_API + 'course.get.all').then(function (response) {
                                 return response.data;
                             });
+                            
+                            }
                         },
                         specializations: function ($http) {
-                            return $http.get(_JAWS_PATH_API + 'specialization.get.all').then(function (response) {
-                                return response.data;
-                            });
+                             //JA-150 starts
+                            if( userBeforeRootScope.roles.feature_keys.seller){
+                                return [];
+                               // sellerId = 3;// Value for MINDSCOOL seller
+//                                return $http.get(_JAWS_PATH_API + 'seller.programs?sellerId=3').then(function (response) {
+//                                    console.log(response.data);
+//                                    return response.data;
+//                                });
+                            }else{//JA-150 ENDS
+                            
+                                return $http.get(_JAWS_PATH_API + 'specialization.get.all').then(function (response) {
+                                    return response.data;
+                                });
+                            
+                            }
                         },
                         defaultSettings: function ($http) {
                             return $http.get(_JAWS_PATH_API + 'settings.get.kform').then(function (response) {
@@ -101,13 +129,47 @@ angular.module('jaws')
                             else return false;
                         }],
                         bootcampDetails: function ($http) {
-                            return $http.get(_JAWS_PATH_API + 'bootcamps.get.all').then(function (response) { return response.data; });
+                            
+                             //JA-150 starts
+                             if( userBeforeRootScope.roles.feature_keys.seller){
+                                 return [];
+                               // sellerId = 3;// Value for MINDSCOOL seller
+//                                return $http.get(_JAWS_PATH_API + 'seller.programs?sellerId=3').then(function (response) {
+//                                    console.log(response.data);
+//                                    return response.data;
+//                                });
+                            }else{//JA-150 ENDS
+                            
+                                return $http.get(_JAWS_PATH_API + 'bootcamps.get.all').then(function (response) { return response.data; });
+                        }
                         },
                         programDetails: function ($http) {
-                            return $http.get(_JAWS_PATH_API + 'programs.get.all').then(function (response) { return response.data; });
+                            //JA-150 starts
+                            if( userBeforeRootScope.roles.feature_keys.seller){
+                               // sellerId = 3;// Value for MINDSCOOL seller
+                                return $http.get(_JAWS_PATH_API + 'seller.programs?sellerId=3').then(function (response) {
+                                    console.log(response.data);
+                                    return response.data;
+                                });
+                            }else{//JA-150 ENDS
+                      
+                            
+                               return $http.get(_JAWS_PATH_API + 'programs.get.all').then(function (response) { return response.data; });
+                           }//JA-150 
+                           
                         },
                         fullstackDetails: function ($http) {
-                            return $http.get(_JAWS_PATH_API + 'fullstack').then(function (response) { return response.data; });
+                             if( userBeforeRootScope.roles.feature_keys.seller){
+                                 return [];
+                               // sellerId = 3;// Value for MINDSCOOL seller
+//                                return $http.get(_JAWS_PATH_API + 'seller.programs?sellerId=3').then(function (response) {
+//                                    console.log(response.data);
+//                                    return response.data;
+//                                });
+                            }else{//JA-150 ENDS
+                            
+                                return $http.get(_JAWS_PATH_API + 'fullstack').then(function (response) { return response.data; });
+                            }
                         }
                     }
                 })
