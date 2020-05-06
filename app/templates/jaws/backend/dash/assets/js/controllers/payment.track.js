@@ -502,8 +502,8 @@ angular.module('jaws')
             };
         }
 
-        function packageParse(pkg, pkgIndex) {
-            try {
+        function packageParse(pkg, pkgIndex) { 
+            try { 
                 var status = $scope.statusmodels[pkg.status + 1];
                 var instl = [];
                 var crs = [];

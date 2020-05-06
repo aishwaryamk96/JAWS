@@ -39,7 +39,7 @@
 	// Needed to show upcoming as well.
 	// So copied the get_all function here.
 
-	$res_courses = db_query("SELECT * FROM course WHERE ".($all ? "1" : "sellable = true")." AND b.seller IN (0, 1) ORDER BY position DESC, course_id ASC;");
+	$res_courses = db_query("SELECT * FROM course WHERE ".($all ? "1" : "sellable = true")."  ORDER BY position DESC, course_id ASC;");
 	$courses = array();
 	foreach ($res_courses as $course) {
 

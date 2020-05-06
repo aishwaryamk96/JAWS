@@ -16,8 +16,13 @@ angular.module('jaws')
                 v = num % 100;
             return (s[(v - 20) % 10] || s[v] || s[0]);
         }
-
+        
         $scope.app.name = 'JAWS - New Payment.';
+        
+
+        /**JA-150  Start*/
+        $scope.userSellerName = ($scope.user.sellername)?$scope.user.sellername:'';
+        /**JA-150  End*/
 
         var courseIdToIndex = [];
         courses.forEach(function (course, i) {
