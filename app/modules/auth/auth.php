@@ -149,7 +149,7 @@
 
   	// This will login an user - without testing for password
   	function auth_session_login_forced($email) {
-
+            
         if (strlen($email) == 0) return false;
 
   		auth_session_init();
@@ -329,7 +329,20 @@
   	function auth_session_load_roles() {
   		$roles_str_delim = $_SESSION["user"]["roles"];
   		unset($_SESSION["user"]["roles"]);
-  		$_SESSION["user"]["roles"] = auth_get_roles($roles_str_delim);
+                $_SESSION["user"]["roles"] = auth_get_roles($roles_str_delim);
+                //JA-150
+                //Setting s3rd party seller name in session 
+                // To be used across the application
+                $_SESSION["user"]['sellername'] ='';
+                if(isset($_SESSION["user"]["roles"]['feature_keys']['seller'])){
+                    
+                    //case of mindschool seller
+                    if(isset($_SESSION["user"]["roles"]['feature_keys']['seller.mindschool'])){
+                       
+                        $_SESSION["user"]['sellername'] = "MIND School";
+                    }
+                }
+                //JA-150 ends
   	}
 
   	// This will check if a particular feature key is in the allowed list of the session feature key list but not in the deny list

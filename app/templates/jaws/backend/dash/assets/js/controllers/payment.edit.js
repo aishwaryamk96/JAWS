@@ -5,7 +5,7 @@
 angular.module('jaws')
     .controller('CtrlPaymentEditt', ['$scope', '$state', 'courses', 'specializations', 'defaultSettings', 'apiSVC', '$sce', '$timeout', '$http', '$window', 'packageDetails', 'bootcampDetails', 'programDetails', 'fullstackDetails', function ($scope, $state, courses, specializations, defaultSettings, apiSVC, $sce, $timeout, $http, $window, packageDetails, bootcampDetails, programDetails, fullstackDetails) {
             
-            console.log( $scope.user);
+           
         $scope.sellerRole = $scope.user.roles.feature_keys.seller;
         $scope.trustAsHtml = function (value) {
             return $sce.trustAsHtml(value);
@@ -236,7 +236,10 @@ angular.module('jaws')
                     $scope.program_selected.bundle_id = program.bundle_id;
                     $scope.program_selected.combo = program.combo;
                     $scope.program_selected.batch_id = program.batch_id
-                   
+                    console.log(" PRogram selected");
+                    console.log($scope.program_selected);
+                    console.log(" PRogram selected");
+                  
                 }
             })
             $scope.noOfProgramSelected.push($scope.program_selected);
