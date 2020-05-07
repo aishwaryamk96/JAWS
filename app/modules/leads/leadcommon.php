@@ -35,6 +35,9 @@ function createCronStarter($cronTracker, $logFile){
         fwrite($fp,$content);
         fclose($fp);
         
+        $errMsg = "Sucessfully Started Cron . Datetime :" . date(" Y-m-d H:i:s");
+        logErrors($logFile, "startedcron", $errMsg, [error_get_last()]);
+            
         return TRUE;
     }catch(Exception $e){
         $errMsg = "Create Cron Start File . Datetime :" . date(" Y-m-d H:i:s");        
@@ -204,7 +207,7 @@ function getCompiledLeads() {
         $errMsg = "Compiled Lead : There was some DB error. Datetime :" . date(" Y-m-d H:i:s");
         $errMsg.= "\n Query :\n ".$getCompiledLeadQry;
         $errData = $GLOBALS["jaws_db"]["error"];
-        logErrors(COMPILED_LEAD_LOG, "getCompiledLeads", $errMsg, [$errData]);
+        logErrors(COMPILED_LEAD_LOG, "getCompiledLeads", $errMsg, [$errData, error_get_last()]);
       
         return FALSE;
     }
@@ -216,7 +219,7 @@ function getCompiledLeads() {
         if ($updateFlag == FALSE) {
             $errMsg = " Failed Compiled Lead Update Status - LEAD_PROCESSING: Datetime :" . date(" Y-m-d H:i:s");
             $errData = $GLOBALS["jaws_db"]["error"];
-            logErrors(COMPILED_LEAD_LOG, "getCompiledLeads", $errMsg, [$errData]);
+            logErrors(COMPILED_LEAD_LOG, "getCompiledLeads", $errMsg, [$errData,error_get_last()]);
 
             return FALSE;
         }
@@ -233,6 +236,7 @@ function getCompiledLeads() {
  */
 function createCompiledLead($leadData) {
 
+    $parsedLead = [];
     foreach ($leadData as $lead) {
         //JA-113 changes
         updateLeadStatus($lead['lead_id'], BASIC_PROCESSED);
@@ -673,6 +677,8 @@ function createCompiledLead($leadData) {
             $errMsg = "Create Compiled data failed : DB error. Lead Id.".$lead['lead_id'] ." Datetime :" . date(" Y-m-d H:i:s");
             $errData = $GLOBALS["jaws_db"]["error"];
             logErrors(BASIC_LEAD_LOG, "createCompiledLead", $errMsg, [$errData]);
+            $stopCronFlag = stopCron('leadBasicCron.txt', BASIC_LEAD_LOG);
+            error_clear_last();
             exit();
         }
 
@@ -681,10 +687,9 @@ function createCompiledLead($leadData) {
         //JA-113 changes-prod issue
         $data['compiledLeadId'] = $compiledLeadId;
         echo "\n Compiled Lead id".$compiledLeadId."\n";
-        
+        $parsedLead = $data;
     }
-    $parsedLead = $data;
-
+    
     return $parsedLead;
 }
 
@@ -962,11 +967,11 @@ function getLSApi($payload, $lead){
         
         updateStatus($lead[0]['lead_id'], COMPILED_API, 1);
          
-        $apiResponse = ls_api(LS_CAPTURE_API, $payload, $lead[0]["email"], [], $lead);
+        $apiResponse = lsApi(LS_CAPTURE_API, $payload, $lead[0]["email"], [], $lead, TRUE);
         
         //print_r($apiResponse);
         if($apiResponse === FALSE){
-            $errMsg = "Curl Failure. Lead-Id :".$lead[0]['lead_id']." Datetime :" . date(" Y-m-d H:i:s");              logErrors(COMPILED_LEAD_LOG, "getLSApi", $errMsg);            
+            $errMsg = "Curl Failure. Lead-Id :".$lead[0]['lead_id']." Datetime :" . date(" Y-m-d H:i:s");              logErrors(COMPILED_LEAD_LOG, "getLSApi", $errMsg,[error_get_last()]);            
             stopCron("leadCompiledCron.txt", COMPILED_LEAD_LOG);
             exit();
         }
@@ -975,7 +980,7 @@ function getLSApi($payload, $lead){
         $logResp = logLSApiResponse($apiResponse, $lead);
         if($logResp == FALSE){
             $errMsg = "Failed to Log LS API Response. Lead-Id :".$lead[0]['lead_id']." Datetime :" . date(" Y-m-d H:i:s");        
-            logErrors(COMPILED_LEAD_LOG, "createCronStartMarker", $errMsg);
+            logErrors(COMPILED_LEAD_LOG, "createCronStartMarker", $errMsg, error_get_last());
         }
         
         //Save the response to db table column
@@ -1025,7 +1030,7 @@ function newLsAccountUpdates($lead, $new) {
             $payload[] = ["Attribute" => $key, "Value" => $value];
         }
     }
-    if (($response = json_decode(ls_api(LS_CAPTURE_API, $payload, $lead['email'], [], $lead, true), true)) === false) {
+    if (($response = json_decode(lsApi(LS_CAPTURE_API, $payload, $lead['email'], [], $lead, true), true)) === false) {
         //return false;
     }
     if (empty($response["Status"]) || $response["Status"] != "Success" || empty($response["Message"]["Id"])) {
@@ -1076,12 +1081,12 @@ function update_lead_info_new($email, $phone, $lead_id, $lead_data = []) {
     }
 }
 
-function ls_api($api_url, $data, $id, $params = [], $lead = [], $newConfig = FALSE) {
+function lsApi($api_url, $data, $id, $params = [], $lead = [], $newConfig = FALSE) {
 
     //JA-113 - update lead status in compiled table to 2
-    if ($newConfig == FALSE & !empty($lead)) {
-        updateLeadStatus($lead[0]['lead_id'], COMPILED_API, 1);
-    }
+//    if ($newConfig == FALSE & !empty($lead)) {
+//        updateLeadStatus($lead[0]['lead_id'], COMPILED_API, 1);
+//    }
     //JA-113 -ends
     $ch = curl_init();
 
@@ -1106,7 +1111,8 @@ function ls_api($api_url, $data, $id, $params = [], $lead = [], $newConfig = FAL
     if (curl_errno($ch)) {
         $error_msg = curl_error($ch);        
         $errMsg = "Curl Request Error. Datetime :" . date(" Y-m-d H:i:s");        
-        logErrors(COMPILED_LEAD_LOG, "ls_api", $errMsg, [$error_msg]);
+        logErrors(COMPILED_LEAD_LOG, "ls_api", $errMsg, [$error_msg], error_get_last());
+        error_clear_last();
         return FALSE;
         
     }
@@ -1125,9 +1131,9 @@ function api_url_construct($api_url, $params = [], $apiNewConfig = false) {
     if ($apiNewConfig == true) {
         $url = LS_DOMAIN . $api_url . "?accessKey=" . LS_ACCOUNT_RETAIL_NEW_ACCESS . "&secretKey=" . LS_ACCOUNT_RETAIL_NEW_SECRET;
     } else {
-        $url = LS_DOMAIN .$api_url. "?accessKey=" . LS_CORP_AccessKey . "&secretKey=" . LS_CORP_SecretKey;
+        $url = LS_DOMAIN .$api_url. "?accessKey=" . LS_ACCOUNT_RETAIL_NEW_ACCESS . "&secretKey=" . LS_ACCOUNT_RETAIL_NEW_SECRET;
     }
-
+    
     $extra_params = [];
     foreach ($params as $key => $value) {
         $extra_params[] = $key . "=" . $value;
