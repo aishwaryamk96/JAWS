@@ -153,7 +153,7 @@ function getBasicLeads() {
     // add new conditon : leadStatus must be new 
     $getBasicLeadQry = " SELECT * FROM user_leads_basic as lb ";
     $getBasicLeadQry.= " WHERE  lb.status = " . BASIC_NEW;
-    $getBasicLeadQry.= " AND (lb.user_id IS NOT NULL OR (lb.email IS NOT NULL AND lb.phone IS NOT NULL AND lb.name IS NOT NULL)) AND (lb.capture_trigger IN ('formsubmit', 'form-submit', 'reg', 'login', 'ws-gateway', 'cart', 'phoneupdate', 'reg.android', 'clickthrough')) ";
+    $getBasicLeadQry.= " AND lb.lead_id > 5661993 AND (lb.user_id IS NOT NULL OR (lb.email IS NOT NULL AND lb.phone IS NOT NULL AND lb.name IS NOT NULL)) AND (lb.capture_trigger IN ('formsubmit', 'form-submit', 'reg', 'login', 'ws-gateway', 'cart', 'phoneupdate', 'reg.android', 'clickthrough')) ";
     $getBasicLeadQry.= " ORDER BY lb.lead_id ASC LIMIT 1";
 
     
@@ -195,7 +195,7 @@ function getCompiledLeads() {
     // add new conditon : leadStatus must be new 
     $getCompiledLeadQry = " SELECT * FROM user_leads_basic_compiled as lc ";
     $getCompiledLeadQry.= " WHERE  lc.status = " . db_sanitize(COMPILED_NEW);
-    $getCompiledLeadQry.= " ORDER BY lc.lead_id ASC LIMIT 1";
+    $getCompiledLeadQry.= " AND lc.lead_id > 435688 ORDER BY lc.lead_id ASC LIMIT 1";
 
     
     $leadResult = db_query($getCompiledLeadQry);
