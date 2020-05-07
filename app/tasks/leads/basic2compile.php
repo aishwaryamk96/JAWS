@@ -57,7 +57,8 @@ try {
         $stopCronFlag = stopCron($cronTracker, BASIC_LEAD_LOG);
         if ($stopCronFlag === FALSE) {
             $errMsg = "Failed to Stop Cron . Datetime :" . date(" Y-m-d H:i:s");
-            logErrors(BASIC_LEAD_LOG, "failedStopCron", $errMsg);
+            logErrors(BASIC_LEAD_LOG, "failedStopCron", $errMsg, [error_get_last()]);
+            error_clear_last();
             return FALSE;
             exit();
         }
@@ -65,7 +66,8 @@ try {
         //For reference logging the Cron stopped time.
         if ($stopCronFlag == TRUE) {
             $errMsg = "Sucessfully Stopped Cron . Datetime :" . date(" Y-m-d H:i:s");
-            logErrors(BASIC_LEAD_LOG, "stopCron", $errMsg);
+            logErrors(BASIC_LEAD_LOG, "stopCron", $errMsg, [error_get_last()]);
+            error_clear_last();
             exit();
         }
     }
@@ -74,7 +76,8 @@ try {
     
     //register_shutdown_function("leadscronfailure",1);
     $errMsg = "Create  Cron Start Marker . Datetime :" . date(" Y-m-d H:i:s");
-    logErrors(BASIC_LEAD_LOG, "createCronStartMarker", $errMsg, [$e->getMessage()]);
+    logErrors(BASIC_LEAD_LOG, "createCronStartMarker", $errMsg, [$e->getMessage(), error_get_last()]);
+     error_clear_last();
     exit();
     return false;
 }
@@ -93,6 +96,7 @@ function basicLeadCronfailure($errorFlag = '') {
         logErrors(BASIC_LEAD_LOG, "genericPHPError", $errMsg, [error_get_last()]);
         
         $stopCronFlag = stopCron($cronTracker, BASIC_LEAD_LOG);
+         error_clear_last();
         exit();
     }
 }
