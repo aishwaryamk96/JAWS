@@ -16,7 +16,7 @@
 
 	$phone = (!empty($_POST["Phone_"]) ? db_sanitize($_POST["Phone_"]) : (!empty($_POST["Phone"]) ? db_sanitize($_POST["Phone"]) : "NULL"));
 
-	$ad_url = (!empty($_POST["page_url"])) ? db_sanitize($_POST["page_url"]) : "NULL";
+	$ad_url = (!empty($_POST["page_url"])) ? db_sanitize($_POST["page_url"]) : db_sanitize("NA");
 
 	$ip = (!empty($_POST["ip"])) ? db_sanitize($_POST["ip"]) : (!empty($_POST["ipaddress"]) ? db_sanitize($_POST["ipaddress"]) : "NULL");
 
@@ -62,6 +62,7 @@
 	$meta = db_sanitize(json_encode($meta));
 
 	db_exec("INSERT INTO user_leads_basic (name, email, phone, utm_source, utm_campaign, utm_medium, ip, referer, ad_url, create_date, capture_trigger, capture_type, meta) VALUES ($name, $email, $phone, $utm_source, $utm_campaign, $utm_medium, $ip, $referrer, $ad_url, CURRENT_TIMESTAMP, 'formsubmit', 'url', $meta);");
+
 
 	die(true);
 
