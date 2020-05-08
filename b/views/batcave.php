@@ -35,7 +35,9 @@
 	</div>
 	<nav class="navbar fixed-top navbar-light bg-white" ng-show="initialized">
 		<a class="navbar-brand" href="/">
-			<img src="https://batcave.jigsawacademy.com/media/jaws/frontend/images/favicon.png" width="30" height="30" class="d-inline-block align-top" alt="">
+		     <!-- JA-161 Start -->
+			<img src="https://batcave.jigsawacademy.com/media/jaws/frontend/images/jigsaw-logo-manipal.png" width="30" height="30" class="d-inline-block align-top" alt="">
+			 <!-- JA-161 End -->
 			Batcave
 		</a>
 		 <form class="form-inline my-2 my-lg-0 position-relative" ng-submit="search()">
