@@ -37,6 +37,10 @@
 	// header("Access-Control-Allow-Origin: *");
 
 	// Output
-	die(json_encode(bootcamp_get_all()));
+        //JA-150 starts
+        $sellerIdArr = [0,1];//Default JIGSAW Seller and common courses
+        if(isset($_GET["sellerId"])){ $sellerIdArr= (array)$_GET["sellerId"]; }
+        //
+	die(json_encode(bootcamp_get_all($sellerIdArr)));
 
 ?>

@@ -118,3 +118,20 @@ function updateLeadStatus($leadId, $status = 0, $compiledFlag = 0){
     }
 }
 //JA-113 ends
+
+
+/**
+ * Function to get logged in roles
+ * @param type $defaultRolesFlag
+ * @return boolean
+ */
+function getUserSellerId($defaultRolesFlag = 0){
+    
+    if(isset($_SESSION['user']['roles']['feature_keys']['seller']) || ($_SESSION['user']['roles']['feature_keys']['seller'] == 1)){
+        return [30,31,32];
+    }
+    
+    
+    return FALSE;
+}
+//JA-150 ends

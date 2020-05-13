@@ -5,7 +5,7 @@
 angular.module('jaws')
     .controller('CtrlPaymentEditt', ['$scope', '$state', 'courses', 'specializations', 'defaultSettings', 'apiSVC', '$sce', '$timeout', '$http', '$window', 'packageDetails', 'bootcampDetails', 'programDetails', 'fullstackDetails', function ($scope, $state, courses, specializations, defaultSettings, apiSVC, $sce, $timeout, $http, $window, packageDetails, bootcampDetails, programDetails, fullstackDetails) {
             
-           
+            console.log( $scope.user);
         $scope.sellerRole = $scope.user.roles.feature_keys.seller;
         $scope.trustAsHtml = function (value) {
             return $sce.trustAsHtml(value);

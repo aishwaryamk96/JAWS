@@ -14,7 +14,8 @@ angular.module('jaws')
             $scope.instlAction.instlList = '';
             $scope.max_due_date = (defaultSettings.max_due_date) ? defaultSettings.max_due_date : 45;
             $scope.instls = [];
-
+console.log("permission");
+console.log( $scope.filter);
             $scope.deleteInstl = function(pkg, index){
 
                 if(pkg.instl[index].added){
@@ -776,7 +777,8 @@ angular.module('jaws')
 
         $scope.filter.apply = function (alt = false) {
             $scope.filter.wait = true;
-
+            console.log($scope.filter);
+            console.log($scope.permissions);
             $http({
                 method: 'POST',
                 url: _JAWS_PATH_API + 'package.query' + (alt ? '.test' : ''),

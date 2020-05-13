@@ -34,8 +34,12 @@
 	// Prep
 	load_module('course');
 
+        //JA-150 starts
+        $sellerIdArr = [0,1];//Default JIGSAW Seller and common courses
+        if(isset($_GET["sellerId"])){ $sellerIdArr= (array)$_GET["sellerId"]; }
+        //
 	// Output
-	echo json_encode(fullstack_get_info_all_desc());
+	echo json_encode(fullstack_get_info_all_desc($sellerIdArr));
 
 	// Done
 	exit();

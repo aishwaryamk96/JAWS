@@ -33,8 +33,11 @@
 
 	load_module("course");
 
-    // $data = db_query("SELECT * FROM `course_bundle` WHERE `bundle_type` = 'programs' AND status != 'disabled' ORDER BY `bundle_id` DESC");
-    $data = program_get_all();
+        //JA-150 starts
+        $sellerIdArr = [0,1];//Default JIGSAW Seller and common courses
+        if(isset($_GET["sellerId"])){ $sellerIdArr= (array)$_GET["sellerId"]; }
+        //
+    $data = program_get_all($sellerIdArr);
 
     die(json_encode($data));
 

@@ -340,6 +340,7 @@
                     if(isset($_SESSION["user"]["roles"]['feature_keys']['seller.mindschool'])){
                        
                         $_SESSION["user"]['sellername'] = "MIND School";
+                        $_SESSION["user"]['sellerid'] = 3;
                     }
                 }
                 //JA-150 ends
