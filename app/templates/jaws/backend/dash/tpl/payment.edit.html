@@ -6,12 +6,17 @@
                 <li>
                     <a ui-sref='app.home'>JAWS</a>
                 </li>
+                <li ng-if="userSellerName!=''" >
+                    <a class="active"> {{ userSellerName}}</a>
+                </li>
                 <li>
                     <a class="active" ui-sref='app.kform'> New Payment</a>
                 </li>
             </ul>
 
-            <h3 style='display:inline-block;' class="page-title">{{ scope.user.sellername }} HElloNew Payment</h3>
+            <!--JA-150 backup -->
+<!--            <h3 style='display:inline-block;' class="page-title">{{ userSellerName }} New Payment</h3>-->
+            <h3 style='display:inline-block;' class="page-title"> New Payment</h3>
             <div style='display:inline-block;' class='pull-right'>
                 <h5 style='display:inline-block;' class="font-montserrat all-caps small no-margin hint-text bold">INR</h5>
                 &nbsp;&nbsp;
@@ -66,7 +71,7 @@
                     </li>
                     <li class="{{(programs.length>0 && sellerRole)? 'active' : ''}}">
                         <a data-toggle="tab" pg-tab="" href="#tab-programs" aria-expanded="true">
-                            <span>Programs&nbsp;
+                            <span>{{userSellerName}} Programs&nbsp;
                                 <span ng-if='noOfProgramSelected.length>0'>({{noOfProgramSelected.length | number:0}})</span>
 
                             </span>

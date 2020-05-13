@@ -290,7 +290,7 @@
         $joinQry = '';
         $role = getUserSellerId();
         if (empty($_POST["team"]) && $role !== FALSE) {
-                var_dump(getUserSellerId());die;
+                //var_dump(getUserSellerId());die;
             //JA-150 changes
             //Get logged-in user's seller-profile
             

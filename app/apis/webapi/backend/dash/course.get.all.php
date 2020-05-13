@@ -38,7 +38,7 @@
 	//echo json_encode(course_get_info_all(isset($_REQUEST['all'])));
 	// Needed to show upcoming as well.
 	// So copied the get_all function here.
-        
+
         //JA-150 starts
         $sellerIdArr = [0,1];//Default JIGSAW Seller and common courses
         if(isset($_GET["sellerId"])){ $sellerIdArr= (array)$_GET["sellerId"]; }

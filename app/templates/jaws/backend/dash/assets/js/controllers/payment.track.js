@@ -5,6 +5,10 @@
 angular.module('jaws')
     .controller('CtrlPaymentTrack', ['$scope', '$state', 'courses', 'defaultSettings', 'apiSVC', '$sce', '$timeout', '$http', '$window', 'bootcamps','$filter', function ($scope, $state, courses, defaultSettings, apiSVC, $sce, $timeout, $http, $window, bootcamps,$filter) {
 
+        /**JA-150  Start*/
+        $scope.userSellerName = ($scope.user.sellername)?$scope.user.sellername:'';
+        /**JA-150  End*/
+        
         //JA-57 starts
             //edit varaibles
             var installUpdateUrl = _JAWS_PATH + "webapi/backend/dash/edit-installment";
@@ -503,8 +507,8 @@ console.log( $scope.filter);
             };
         }
 
-        function packageParse(pkg, pkgIndex) {
-            try {
+        function packageParse(pkg, pkgIndex) { 
+            try { 
                 var status = $scope.statusmodels[pkg.status + 1];
                 var instl = [];
                 var crs = [];
