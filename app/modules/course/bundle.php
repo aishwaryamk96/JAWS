@@ -193,9 +193,9 @@
 
 	}
 
-	function specalization_get_info_all_desc() {
+	function specalization_get_info_all_desc($sellerIdArr=[0,1]) {
 
-		$res_specs = db_query("SELECT * FROM course_bundle WHERE bundle_type = 'specialization' AND status != 'disabled' AND status != 'expired' AND combo != '' ORDER BY position DESC, bundle_id DESC;");
+		$res_specs = db_query("SELECT * FROM course_bundle WHERE bundle_type = 'specialization' AND status != 'disabled' AND status != 'expired' AND combo != '' AND seller IN (".implode(",",$sellerIdArr).") ORDER BY position DESC, bundle_id DESC;");
 		$specs = array();
 		foreach ($res_specs as $spec) {
 
@@ -232,11 +232,11 @@
 
 	}
 
-	function fullstack_get_info_all_desc() {
+	function fullstack_get_info_all_desc($sellerIdArr=[0,1]) {
 
 		$today = new DateTime;
 
-		$res_specs = db_query("SELECT * FROM course_bundle WHERE bundle_type = 'specialization' AND status != 'disabled' AND status != 'expired' AND combo != '' ORDER BY position DESC, bundle_id DESC;");
+		$res_specs = db_query("SELECT * FROM course_bundle WHERE bundle_type = 'specialization' AND status != 'disabled' AND status != 'expired' AND combo != '' AND seller IN (".implode(",",$sellerIdArr).") ORDER BY position DESC, bundle_id DESC;");
 		$specs = array();
 		foreach ($res_specs as $spec) {
 

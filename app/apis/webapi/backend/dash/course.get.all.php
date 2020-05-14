@@ -39,7 +39,13 @@
 	// Needed to show upcoming as well.
 	// So copied the get_all function here.
 
-	$res_courses = db_query("SELECT * FROM course WHERE ".($all ? "1" : "sellable = true")." ORDER BY position DESC, course_id ASC;");
+        //JA-150 starts
+        $sellerIdArr = [0,1];//Default JIGSAW Seller and common courses
+        if(isset($_GET["sellerId"])){ $sellerIdArr= (array)$_GET["sellerId"]; }
+        //
+        
+	$res_courses = db_query("SELECT * FROM course WHERE ".($all ? "1" : "sellable = true")." AND  seller IN (".implode(",", $sellerIdArr)." ) ORDER BY position DESC, course_id ASC;");        
+       
 	$courses = array();
 	foreach ($res_courses as $course) {
 

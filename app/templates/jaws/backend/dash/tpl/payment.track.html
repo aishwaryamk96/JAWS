@@ -134,6 +134,9 @@
                 <li>
                     <a ui-sref='app.home'>JAWS</a>
                 </li>
+                 <li ng-if="userSellerName!=''" >
+                    <a class="active"> {{ userSellerName}}</a>
+                </li>
                 <li>
                     <a class="active" ui-sref='app.aform'>Track Payments</a>
                 </li>

@@ -7,6 +7,9 @@ angular.module('jaws')
     .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider',
 
         function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
+            
+             var userBeforeRootScope = _JAWS_USER;
+             console.log(userBeforeRootScope);
             $urlRouterProvider
                 .otherwise('/app/home');
 
@@ -30,7 +33,7 @@ angular.module('jaws')
                         activity: function ($rootScope) {
                             return true;
                         },
-                        defaultSettings: function ($http) {
+                        defaultSettings: function ($http) { 
                             return $http.get(_JAWS_PATH_API + 'settings.get.dash').then(function (response) {
                                 return response.data;
                             });
@@ -78,16 +81,46 @@ angular.module('jaws')
                                 });
                         }],
                         courses: function ($http) {
-                            return $http.get(_JAWS_PATH_API + 'course.get.all').then(function (response) {
+                             //JA-150 starts
+                             var sellerQry = '';
+                            if( userBeforeRootScope.roles.feature_keys.seller){
+                               // return [];
+                                var sellerId = userBeforeRootScope.sellerid;// Value for seller
+                                var sellerQry = '?sellerId='+sellerId;
+//                                return $http.get(_JAWS_PATH_API + 'seller.programs?sellerId=3').then(function (response) {
+//                                    console.log(response.data);
+//                                    return response.data;
+//                                });
+                            }//else{//JA-150 ENDS
+                                
+                            
+                            return $http.get(_JAWS_PATH_API + 'course.get.all'+sellerQry).then(function (response) {
                                 return response.data;
                             });
+                            
+                           //}
                         },
                         specializations: function ($http) {
-                            return $http.get(_JAWS_PATH_API + 'specialization.get.all').then(function (response) {
-                                return response.data;
-                            });
+                             //JA-150 starts
+                             var sellerQry = '';
+                            if( userBeforeRootScope.roles.feature_keys.seller){
+                               // return [];
+                               var sellerId = userBeforeRootScope.sellerid;// Value for seller
+                                var sellerQry = '?sellerId='+sellerId;
+//                                return $http.get(_JAWS_PATH_API + 'seller.programs?sellerId=3').then(function (response) {
+//                                    console.log(response.data);
+//                                    return response.data;
+//                                });
+                            }//else{//JA-150 ENDS
+                            
+                                return $http.get(_JAWS_PATH_API + 'specialization.get.all'+sellerQry).then(function (response) {
+                                    return response.data;
+                                });
+                            
+                            //}
                         },
                         defaultSettings: function ($http) {
+                            
                             return $http.get(_JAWS_PATH_API + 'settings.get.kform').then(function (response) {
                                 return response.data
                             });
@@ -101,13 +134,52 @@ angular.module('jaws')
                             else return false;
                         }],
                         bootcampDetails: function ($http) {
-                            return $http.get(_JAWS_PATH_API + 'bootcamps.get.all').then(function (response) { return response.data; });
+                             //JA-150 starts
+                             var sellerQry = '';
+                            if( userBeforeRootScope.roles.feature_keys.seller){
+                               // return [];
+                                var sellerId = userBeforeRootScope.sellerid;// Value for seller
+                                var sellerQry = '?sellerId='+sellerId;
+//                                return $http.get(_JAWS_PATH_API + 'seller.programs?sellerId=3').then(function (response) {
+//                                    console.log(response.data);
+//                                    return response.data;
+//                                });
+                            }//else{//JA-150 ENDS
+                            
+                                return $http.get(_JAWS_PATH_API + 'bootcamps.get.all'+sellerQry).then(function (response) { return response.data; });
+                       // }
                         },
                         programDetails: function ($http) {
-                            return $http.get(_JAWS_PATH_API + 'programs.get.all').then(function (response) { return response.data; });
+                             var sellerQry = '';
+                            if( userBeforeRootScope.roles.feature_keys.seller){
+                               // return [];
+                                var sellerId = userBeforeRootScope.sellerid;// Value for seller
+                                var sellerQry = '?sellerId='+sellerId;
+//                                return $http.get(_JAWS_PATH_API + 'seller.programs?sellerId=3').then(function (response) {
+//                                    console.log(response.data);
+//                                    return response.data;
+//                                });
+                            }//else{//JA-150 ENDS
+                      
+                            
+                               return $http.get(_JAWS_PATH_API + 'programs.get.all'+sellerQry).then(function (response) { return response.data; });
+                           //}//JA-150 
+                           
                         },
                         fullstackDetails: function ($http) {
-                            return $http.get(_JAWS_PATH_API + 'fullstack').then(function (response) { return response.data; });
+                             var sellerQry = '';
+                            if( userBeforeRootScope.roles.feature_keys.seller){
+                               // return [];
+                                var sellerId = userBeforeRootScope.sellerid;// Value for seller
+                                var sellerQry = '?sellerId='+sellerId;
+//                                return $http.get(_JAWS_PATH_API + 'seller.programs?sellerId=3').then(function (response) {
+//                                    console.log(response.data);
+//                                    return response.data;
+//                                });
+                            }//else{//JA-150 ENDS
+                            
+                                return $http.get(_JAWS_PATH_API + 'fullstack'+sellerQry).then(function (response) { return response.data; });
+                           // }
                         }
                     }
                 })

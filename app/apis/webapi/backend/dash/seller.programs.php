@@ -30,17 +30,13 @@
 		header("HTTP/1.1 401 Unauthorized");
 		die();
 	}
-
+       
+        $sellerId = ($_GET["sellerId"])?? 3;// Default set it to MIND SChool
+        
 	// Prep
 	load_module('course');
 
-	// header("Access-Control-Allow-Origin: *");
-
 	// Output
-        //JA-150 starts
-        $sellerIdArr = [0,1];//Default JIGSAW Seller and common courses
-        if(isset($_GET["sellerId"])){ $sellerIdArr= (array)$_GET["sellerId"]; }
-        //
-	die(json_encode(bootcamp_get_all($sellerIdArr)));
+	die(json_encode(getSellerPrograms($sellerId)));
 
 ?>

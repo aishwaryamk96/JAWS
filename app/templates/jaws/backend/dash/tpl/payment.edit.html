@@ -6,12 +6,17 @@
                 <li>
                     <a ui-sref='app.home'>JAWS</a>
                 </li>
+                <li ng-if="userSellerName!=''" >
+                    <a class="active"> {{ userSellerName}}</a>
+                </li>
                 <li>
-                    <a class="active" ui-sref='app.kform'>New Payment</a>
+                    <a class="active" ui-sref='app.kform'> New Payment</a>
                 </li>
             </ul>
 
-            <h3 style='display:inline-block;' class="page-title">New Payment</h3>
+            <!--JA-150 backup -->
+<!--            <h3 style='display:inline-block;' class="page-title">{{ userSellerName }} New Payment</h3>-->
+            <h3 style='display:inline-block;' class="page-title"> New Payment</h3>
             <div style='display:inline-block;' class='pull-right'>
                 <h5 style='display:inline-block;' class="font-montserrat all-caps small no-margin hint-text bold">INR</h5>
                 &nbsp;&nbsp;
@@ -34,39 +39,39 @@
 
         <div class="col-md-7"> 
             <div class="panel panel-transparent">
-
+                <!-- MINDSCHOOL changes -->
                 <ul class="nav nav-tabs nav-tabs-linetriangle hidden-sm hidden-xs" pg-tab-dropdownfx="">
-                    <li class="{{fullstacks.length>0 ? 'active' : ''}}">
-                        <a data-toggle="tab" pg-tab="" href="#tab-fullstacks" aria-expanded="true">
+                    <li ng-if="fullstacks.length>0" class="{{fullstacks.length>0 ? 'active' : ''}}">
+                        <a data-toggle="tab" pg-tab="" href="#tab-fullstacks" aria-expanded="false">
                             <span>Full stacks&nbsp;
                                 <span ng-if='fullstackNoOfCourseSelected.length>0'>({{fullstackNoOfCourseSelected.length | number:0}})</span>
                             </span>
                         </a>
                     </li>
-                    <li class="{{fullstacks.length==0 ? 'active' : ''}}">
+                    <li  ng-if="specializations.length>0" class="{{(fullstacks.length==0 && !sellerRole)? 'active' : ''}}">
                         <a data-toggle="tab" pg-tab="" href="#tab-specs" aria-expanded="false">
                             <span>Specializations&nbsp;
                                 <span ng-if='spec_selected.length>0'>({{spec_selected.length | number:0}})</span>
                             </span>
                         </a>
                     </li>
-                    <li class="">
+                    <li   ng-if="courses.length>0" class="">
                         <a data-toggle="tab" pg-tab="" href="#tab-courses" aria-expanded="false">
                             <span>Courses&nbsp;
                                 <span ng-if='courses_selected.length>0'>({{courses_selected.length | number:0}})</span>
                             </span>
                         </a>
                     </li>
-                    <li class=''>
+                    <li  ng-if="bootcampDetails.length>0" class=''>
                         <a data-toggle="tab" pg-tab="" href="#tab-bootcamps" aria-expanded="false">
                             <span>Bootcamps&nbsp; 
                                 <span ng-if='noOfCampSelected.length>0'>({{noOfCampSelected.length | number:0}})</span>
                             </span>
                         </a>
                     </li>
-                    <li class=''>
-                        <a data-toggle="tab" pg-tab="" href="#tab-programs" aria-expanded="false">
-                            <span>Programs&nbsp;
+                    <li class="{{(programs.length>0 && sellerRole)? 'active' : ''}}">
+                        <a data-toggle="tab" pg-tab="" href="#tab-programs" aria-expanded="true">
+                            <span>{{userSellerName}} Programs&nbsp;
                                 <span ng-if='noOfProgramSelected.length>0'>({{noOfProgramSelected.length | number:0}})</span>
 
                             </span>
@@ -77,8 +82,16 @@
                             <span>Miscellaneous</span>
                         </a>
                     </li> -->
-                </ul>
+<!--                    <li class='' ng-if="mindUser">
+                        <a data-toggle="tab" href="#tab-mindschool" aria-expanded="false">
+                            <span>MIND Courses&nbsp;
+                                <span ng-if='noOfProgramSelected.length>0'>({{noOfProgramSelected.length | number:0}})</span>
 
+                            </span>
+                        </a>
+                    </li>-->
+                </ul>
+                <!-- MINDSCHOOL changes -->
                 <div class="nav-tab-dropdown cs-wrapper full-width p-t-10 visible-xs visible-sm">
                     <div class="cs-select cs-skin-slide full-width" tabindex="0">
                         <span class="cs-placeholder">Specializations&nbsp;
@@ -106,14 +119,14 @@
                                 </li>
                                 <li data-option="" data-value="#tab-programs">
                                     <span>Programs</span>
-                                </li>
+                                </li>                                 
                                 <!-- <li data-option="" data-value="#tab-misc">
                                     <span>Miscellaneous</span>
                                 </li> -->
                             </ul>
                         </div>
                         <select class="cs-select cs-skin-slide full-width" data-init-plugin="cs-select">
-                            <option value="#tab-specs" selected="">Full stacks&nbsp;
+                            <option value="#tab-fullstacks" selected="">Full stacks&nbsp;
                                 <span ng-if='fullstack_selected.length>0'>({{fullstack_selected.length | number:0}})</span>
                             </option>
                             <option value="#tab-specs" selected="">Specializations&nbsp;
@@ -125,6 +138,7 @@
                             <option value="#tab-bootcamps">Bootcamps</option>
                             <option value="#tab-programs">Programs</option>
                             <!-- <option value="#tab-misc">Miscellaneous</option> -->
+                            <option value="#tab-minschool">MIND Courses</option>
                         </select>
                         <div class="cs-backdrop"></div>
                     </div>
@@ -171,7 +185,7 @@
                         </div>
                     </div>
 
-                    <div class="tab-pane fade in {{fullstacks.length==0 ? 'active' : ''}}" id="tab-specs">
+                    <div class="tab-pane fade in {{ (fullstacks.length==0 && !sellerRole)? 'active' : ''}}" id="tab-specs">
                         <div class="table-responsive">
                             <div id="basicTable_wrapper" class="dataTables_wrapper form-inline no-footer">
                                 <table class="table table-hover dataTable no-footer table-condensed" id="basicTable" role="grid">
@@ -321,8 +335,9 @@
                             </div>
                         </div>
                     </div>
+                    
 
-                    <div class="tab-pane fade in " id="tab-programs">
+                    <div class="tab-pane fade in {{ (sellerRole && programs.length > 0)? 'active': ''}}" id="tab-programs">
                         <div class="table-responsive">
                             <div id="basicTable_wrapper" class="dataTables_wrapper form-inline no-footer">
                                 <table class="table table-hover dataTable no-footer table-condensed" id="basicTable" role="grid">
@@ -348,9 +363,9 @@
                                                 <br>
                                                 <small title="{{program.code}}">{{program.meta.name}}</small>
                                             </td>
-                                            <td class="col-md-3 v-align-middle col-sm-height col-middle no-padding" style="overflow:unset;" rowspan="1" colspan="1">
+                                            <td class="col-md-3 v-align-middle col-sm-height col-middle no-padding" style="overflow:unset;" rowspan="1" colspan="3">
                                                 <div style="width:100px;">
-                                                    <h5 style="width:100px;" ng-class='{"bold": programs[$index].selected}' class="m-l-10 font-montserrat small all-caps hint-text">{{currencyUSD
+                                                    <h5 style="width:100px;font-size:80%!important;letter-spacing: 1px!important;" ng-class='{"bold": programs[$index].selected}' class="m-l-10 font-montserrat small all-caps hint-text">{{currencyUSD
                                                         ? "$" : "&#8377;"}}{{(currencyUSD ? program.price_usd : program.price_inr)
                                                         | number:0}}</h5>
                                                 </div>
@@ -502,9 +517,15 @@
                        <br/> 
                     </div>
 
-            <div ng-show='courses_selected.length==0 && spec_selected.length==0 && program_selected.name.length==0 &&  fullstack_selected.name.length==0 && bootcamp_selected.name.length==0' style='margin-top:-46px;'>
+            <div ng-show='courses_selected.length==0 && spec_selected.length==0 && program_selected.name.length==0 &&  fullstack_selected.name.length==0 && bootcamp_selected.name.length==0 && !mindUser' style='margin-top:-46px;'>
 
                 <span style="font-size:15px;font-weight:bold">No Program Selected</span>
+                    
+                </div>
+                   
+                <div ng-show='courses_selected.length==0 && mindUser' style='margin-top:-46px;'>
+
+                <span style="font-size:15px;font-weight:bold">No MIND Courses Selected</span>
                     
                 </div>
 

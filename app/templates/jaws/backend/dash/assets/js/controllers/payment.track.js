@@ -5,6 +5,10 @@
 angular.module('jaws')
     .controller('CtrlPaymentTrack', ['$scope', '$state', 'courses', 'defaultSettings', 'apiSVC', '$sce', '$timeout', '$http', '$window', 'bootcamps','$filter', function ($scope, $state, courses, defaultSettings, apiSVC, $sce, $timeout, $http, $window, bootcamps,$filter) {
 
+        /**JA-150  Start*/
+        $scope.userSellerName = ($scope.user.sellername)?$scope.user.sellername:'';
+        /**JA-150  End*/
+        
         //JA-57 starts
             //edit varaibles
             var installUpdateUrl = _JAWS_PATH + "webapi/backend/dash/edit-installment";
@@ -14,7 +18,8 @@ angular.module('jaws')
             $scope.instlAction.instlList = '';
             $scope.max_due_date = (defaultSettings.max_due_date) ? defaultSettings.max_due_date : 45;
             $scope.instls = [];
-
+console.log("permission");
+console.log( $scope.filter);
             $scope.deleteInstl = function(pkg, index){
 
                 if(pkg.instl[index].added){
@@ -502,8 +507,8 @@ angular.module('jaws')
             };
         }
 
-        function packageParse(pkg, pkgIndex) {
-            try {
+        function packageParse(pkg, pkgIndex) { 
+            try { 
                 var status = $scope.statusmodels[pkg.status + 1];
                 var instl = [];
                 var crs = [];
@@ -776,7 +781,8 @@ angular.module('jaws')
 
         $scope.filter.apply = function (alt = false) {
             $scope.filter.wait = true;
-
+            console.log($scope.filter);
+            console.log($scope.permissions);
             $http({
                 method: 'POST',
                 url: _JAWS_PATH_API + 'package.query' + (alt ? '.test' : ''),

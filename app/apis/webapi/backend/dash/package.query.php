@@ -280,11 +280,27 @@
 
 	// START: Where team=
 	if (!empty($_POST["team"])) {
-
+      
 		where_clause("package.creator_type", "=", db_sanitize("agent"), $where);
-		where_clause("package.creator_id", "IN", "(SELECT user_id FROM team WHERE team_id=".$_POST["team"].")", $where);
+		where_clause("package.creator_id", "IN", "(SELECT user_id FROM team  WHERE team_id=".$_POST["team"]." )", $where);
 
 	}
+        
+        //JA-150 changes starts
+        $joinQry = '';
+        $role = getUserSellerId();
+        if (empty($_POST["team"]) && $role !== FALSE) {
+                //var_dump(getUserSellerId());die;
+            //JA-150 changes
+            //Get logged-in user's seller-profile
+            
+            $roleQuery = ($role === FALSE)? '' : " INNER JOIN user ON team.team_id=user.user_id AND user.roles IN (".implode(',',$role).") ";
+        
+		where_clause("user.roles", "IN", "(".implode(",", $role).")", $where);
+                
+                $joinQry =  " LEFT JOIN user AS agentuser ON agentuser.user_id = package.creator_id ";
+	}
+        //JA-150 changes ends
 	// END: Where team=
 
 	// Initialize Query
@@ -342,6 +358,7 @@
 			LEFT JOIN
 				user AS approver_sm
 				ON approver_sm.user_id = package.approver_sm_id
+                        $joinQry
 			WHERE ";
 
 	$sort = "DESC";
