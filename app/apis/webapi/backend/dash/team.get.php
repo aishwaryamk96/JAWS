@@ -38,6 +38,6 @@
 	}
 
 	$team = team_get($_POST["team_id"]);
-	die(json_encode(["status" => ($team === false ? false : true), "code" => ($team === false ? 304 : 200), "msg" => ($team === false ? "No teams found" : "Success", "team" => $team]));
+	die(json_encode(["status" => ($team === false ? false : true), "code" => ($team === false ? 304 : 200), "msg" => ($team === false ? "No teams found" : "Success"), "team" => $team]));
 
 ?>
