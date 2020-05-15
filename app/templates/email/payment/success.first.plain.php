@@ -37,17 +37,17 @@ We have received your payment of <?php echo ((strcmp(strtolower($GLOBALS["conten
 <?php if(!empty($GLOBALS['content']['emailer']['bundle_details'])){ ?>
 <?php echo $GLOBALS['content']['emailer']['bundle_details']['name']; ?>
 <?php //JA-54 STARTS ?>
-<?php foreach($GLOBALS["content"]["emailer"]["individual_course"] as $idx => $iCourse) {  ?>  
+<?php if(!empty($GLOBALS["content"]["emailer"]["individual_course"])){ foreach($GLOBALS["content"]["emailer"]["individual_course"] as $idx => $iCourse) {  ?>  
 ----------------------------------------------
 <?php echo ucwords(strtolower($iCourse["course_name"])); ?> 
 ----------------------------------------------
-<?php } ?> 
-<?php foreach($GLOBALS["content"]["emailer"]["free_course"] as  $idx => $fCourse) {  ?>  
+<?php }} ?> 
+<?php if(!empty($GLOBALS["content"]["emailer"]["free_course"])){foreach($GLOBALS["content"]["emailer"]["free_course"] as  $idx => $fCourse) {  ?>  
 ----------------------------------------------
 <?php echo ucwords(strtolower($fCourse["course_name"])); ?> 
 ----------------------------------------------
 <?php //JA-54 ENDS ?>
-<?php } ?> 
+<?php } }?> 
 ====================================================
 <?php } else { ?>
 <?php foreach($GLOBALS["content"]["emailer"]["courses"] as $course) {  ?>  
