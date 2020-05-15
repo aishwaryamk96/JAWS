@@ -170,6 +170,26 @@
 		else {
 			$content["allow_setup"] = false;
 		}
+ 
+                
+                //QUick fix :JA-171
+                //case of invidual course
+                $mindCourseFLag = 0;
+                if(empty($content['bundle_details'])){
+                    $crsArr =[];
+                    foreach($content['individual_course'] as $idx => $crsDetails){
+                       if($crsDetails['course_id'] == 302){
+                           $mindCourseFLag = 1;
+                       }
+                    }                    
+                }elseif(count($content['bundle_details'])> 0){
+                    if(in_array($content['bundle_details']['bundle_id'],[142,144])){
+                           $mindCourseFLag = 1;
+                       }
+                }
+                $content['mindCourseFLag'] = $mindCourseFLag;
+                
+                 //QUick fix :JA-171 ends
 
 		// Send Emails
 		$template_email = "subs.init.success";
