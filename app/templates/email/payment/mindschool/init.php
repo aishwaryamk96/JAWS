@@ -83,7 +83,7 @@
                 <!-- Header Start -->
                 <table border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse; border-spacing: 0; max-width: 700px; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
                 <tr>
-                    <td bgcolor="#FFFFFF" valign="bottom" background="https://www.jigsawacademy.com/emailer/images/jigsaw-logo-header.jpg" style="-webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; background-image: url('https://www.jigsawacademy.com/emailer/images/jigsaw-logo-header.jpg'); " align="center">
+                    <td bgcolor="#FFFFFF" valign="bottom" background="https://www.jigsawacademy.com/emailer/images/banner-mage.png" style="-webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; background-image: url('https://www.jigsawacademy.com/emailer/images/banner-mage.png'); " align="center">
                         <div>
                             <table border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
                                 <tr>
@@ -156,7 +156,7 @@
                                                                             </tr><!-- JA-54 -->
                                                                             <?php if(!empty($GLOBALS['content']['emailer']['bundle_details'])){ ?>
                                                                             <tr>
-                                                                                <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 10px;" align="center">You have enrolled in :
+                                                                                <td class="p1 p1-cta" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 10px;" align="center">You have enrolled in :
 <!--<b><?php //echo $GLOBALS['content']['emailer']['bundle_details']['name']; ?></b>.-->
                                                                                     <!-- Course list -->
                                     <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
@@ -398,6 +398,7 @@
                                                                 <tr>
                                                                     <td style="padding-left: 12px; padding-right: 12px;">
                                                                         <table border="0" cellpadding="0" cellspacing="0" class="basetable" width="100%" align="left" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
+                                                                            <tr><td style="color:#e65123!important;">Happy Learning</td></tr>
                                                                             <tr>
                                                                             	<?php if (intval($GLOBALS["content"]["emailer"]["payment"]["instl_total"]) == 1) { ?>
 	                                                                                <td class="h1" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 10px;" align="center">For this enrollment you will be charged a one-time sum of <b><?php echo ((strcmp(strtolower($GLOBALS["content"]["emailer"]["currency"]), "inr") == 0) ? '&#8377;' : '&#36;' ).number_format(intval($GLOBALS["content"]["emailer"]["sum"])); ?></b></td>
