@@ -332,7 +332,7 @@
 
 		}
                 
-                print_r($receipt_data);
+               
 		// Email and SMS
 		if ($notify_user) {
                     
@@ -344,15 +344,16 @@
                 $pdf = new PDFgen($receipt_data);
                 $receipt = $pdf->create_from_subs();
                 $attachments = [$receipt];
-               print_r($attachments);die;
+              
                 if (!send_email_with_attachment($template_email, array("to" => $email), $content, $attachments)) {
-                    activity_create("critical", "subs.email", "fail", "", "", "", "", "Receipt Email Library Returned False !", "logged");
+                    activity_create("critical", "subs.email", "fail", "", "", "", "", "Receipt Email Library Returned False !". json_encode(error_get_last()), "logged");
                 }
-                die;
+                error_clear_last();
+               
                 $pdf->deleteFileFromServer();
             }
             else {
-                echo "In else mail";die;
+               
                 if (!send_email($template_email, array("to" => $email), $content)) {
                     activity_create("critical", "subs.email", "fail", "", "", "", "", "Email Library Returned False !", "logged");
                 }
