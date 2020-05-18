@@ -343,7 +343,7 @@
                 $pdf = new PDFgen($receipt_data);
                 $receipt = $pdf->create_from_subs();
                 $attachments = [$receipt];
-                print_r(send_email_with_attachment($template_email, array("to" => $email), $content, $attachments));die;
+               
                 if (!send_email_with_attachment($template_email, array("to" => $email), $content, $attachments)) {
                     activity_create("critical", "subs.email", "fail", "", "", "", "", "Receipt Email Library Returned False !", "logged");
                 }
