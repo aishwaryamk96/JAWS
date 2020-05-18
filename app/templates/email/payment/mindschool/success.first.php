@@ -195,7 +195,7 @@
                                                                                 <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 20px; padding-bottom: 20px;" align="center">Hello <?php echo ucfirst(strtolower($GLOBALS["content"]["emailer"]["fname"])); ?>, </td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td class="h1" style="color: #00A8E1; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 20px; padding-bottom: 20px;" align="center">Welcome to Jigsaw Academy! </td>
+                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 20px; padding-bottom: 20px;" align="center">Welcome to Jigsaw Academy! </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 12px;" align="center">You have successfully enrolled.
@@ -524,7 +524,7 @@
                                                                     <tr>
                                                                         <td>
                                                                     <![endif]-->
-                                                                        <table border="1" bgcolor="#E6FBFF" cellpadding="5" cellspacing="5" width="100%" align="center" style="background-color: #E6FBFF; border: 1px solid #00A8E1; border-collapse: collapse; border-spacing: 1; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
+                                                                        <table border="1" bgcolor="#E6FBFF" cellpadding="5" cellspacing="5" width="100%" align="center" style="background-color: #E6FBFF; border: 1px solid #e65123; border-collapse: collapse; border-spacing: 1; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
                                                                         <tr>
                                                                             <td>
                                                                             <!--[if (gte mso 9)|(IE)]>
@@ -534,12 +534,12 @@
                                                                             <![endif]-->
                                                                             <table border="0" cellpadding="0" cellspacing="0" class="t4of12" align="center" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
                                                                             <tr>
-                                                                                <td class="h1" style="color: #9D9FA0; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 12px; line-height: 0px; padding: 5px;" align="center">
+                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 12px; line-height: 0px; padding: 5px;" align="center">
                                                                                     <?php echo $instl_count_text_arr[$count]; ?>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td class="h1" style="color: #00A8E1; font-family: 'Montserrat-Thick', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 15px; padding: 5px;" align="center">
+                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thick', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 15px; padding: 5px;" align="center">
                                                                                     <?php echo ((strcmp(strtolower($GLOBALS["content"]["emailer"]["currency"]), "inr") == 0) ? '&#8377;' : '&#36;' ); ?><?php echo number_format(intval($GLOBALS["content"]["emailer"]["payment"]["instl"][$count]["sum"])); ?>
                                                                                 </td>
                                                                             </tr>
@@ -710,7 +710,7 @@
                                                                                 <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 15px; padding-bottom: 20px;" align="center">The only way to access the Jigsaw Learning Center is through successful setup completion. Queries or assistance? Please reach out to the Jigsaw Support Team.</td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td class="h1" style="color: #00A8E1; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 20px;" align="center">Happy Learning!</td>
+                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 20px;" align="center">Happy Learning!</td>
                                                                             </tr>
                                                                         </table>
                                                                     </td>
