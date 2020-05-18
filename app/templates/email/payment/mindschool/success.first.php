@@ -22,7 +22,7 @@
 		die();
 	}
 
-    $imgUrl = 'https://www.jigsawacademy.com/emailer/images/jigsaw-logo-header.jpg';
+    $imgUrl = 'https://www.jigsawacademy.com/emailer/images/banner-mage.png';
     if($GLOBALS["content"]['mindCourseFLag'] == 1){
         $imgUrl = 'https://www.jigsawacademy.com/emailer/images/banner-mage.png';
     }    

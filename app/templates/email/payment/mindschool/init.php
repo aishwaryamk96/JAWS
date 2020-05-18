@@ -88,7 +88,7 @@
                             <table border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
                                 <tr>
                                     <td style="padding:0;margin:0;width:100%;" align="center">
-                                        <img src="https://www.jigsawacademy.com/emailer/images/jigsaw-logo-header.jpg" width="96" height="" border="0" style="-ms-interpolation-mode: bicubic; clear: both; display: block; outline: none; text-decoration: none; width: 100%;">
+                                        <img src="https://www.jigsawacademy.com/emailer/images/banner-mage.png" width="96" height="" border="0" style="-ms-interpolation-mode: bicubic; clear: both; display: block; outline: none; text-decoration: none; width: 100%;">
                                     </td>
                                 </tr>
                             </table>
@@ -398,7 +398,7 @@
                                                                 <tr>
                                                                     <td style="padding-left: 12px; padding-right: 12px;">
                                                                         <table border="0" cellpadding="0" cellspacing="0" class="basetable" width="100%" align="left" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
-                                                                            <tr><td style="color:#e65123!important;">Happy Learning</td></tr>
+                                                                            <tr><td style="color:#e65123!important;text-align: center;">Happy Learning</td></tr>
                                                                             <tr>
                                                                             	<?php if (intval($GLOBALS["content"]["emailer"]["payment"]["instl_total"]) == 1) { ?>
 	                                                                                <td class="h1" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 10px;" align="center">For this enrollment you will be charged a one-time sum of <b><?php echo ((strcmp(strtolower($GLOBALS["content"]["emailer"]["currency"]), "inr") == 0) ? '&#8377;' : '&#36;' ).number_format(intval($GLOBALS["content"]["emailer"]["sum"])); ?></b></td>
