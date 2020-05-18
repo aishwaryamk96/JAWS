@@ -337,6 +337,7 @@
 
             load_library("email");
             if ($mail_with_receipt && !empty($receipt_data)) {
+                echo "In if mail";die;
                 // send email with receipt
                 load_plugin('mpdf');
                 $pdf = new PDFgen($receipt_data);
@@ -348,6 +349,7 @@
                 $pdf->deleteFileFromServer();
             }
             else {
+                echo "In else mail";die;
                 if (!send_email($template_email, array("to" => $email), $content)) {
                     activity_create("critical", "subs.email", "fail", "", "", "", "", "Email Library Returned False !", "logged");
                 }
