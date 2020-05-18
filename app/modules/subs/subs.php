@@ -332,9 +332,10 @@
 
 		}
                 
+                print_r($receipt_data);
 		// Email and SMS
 		if ($notify_user) {
-
+                    
             load_library("email");
             if ($mail_with_receipt && !empty($receipt_data)) {
                
@@ -343,7 +344,7 @@
                 $pdf = new PDFgen($receipt_data);
                 $receipt = $pdf->create_from_subs();
                 $attachments = [$receipt];
-               
+               print_r($attachments);die;
                 if (!send_email_with_attachment($template_email, array("to" => $email), $content, $attachments)) {
                     activity_create("critical", "subs.email", "fail", "", "", "", "", "Receipt Email Library Returned False !", "logged");
                 }
