@@ -577,12 +577,12 @@
                                                                             <![endif]-->
                                                                             <table border="0" cellpadding="0" cellspacing="0" class="t4of12" align="center" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
                                                                             <tr>
-                                                                                <td class="h1" style="color: #9D9FA0; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 12px; line-height: 0px; padding: 5px;" align="center">
+                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 12px; line-height: 0px; padding: 5px;" align="center">
                                                                                     <?php echo $instl_count_text_arr[$count]; ?>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td class="h1" style="color: #00A8E1; font-family: 'Montserrat-Thick', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 15px; padding: 5px;" align="center">
+                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thick', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 15px; padding: 5px;" align="center">
                                                                                     <?php echo "Rs ".number_format(intval($GLOBALS["content"]["emailer"]["payment"]["instl"][$count]["sum"])); ?>
                                                                                 </td>
                                                                             </tr>
