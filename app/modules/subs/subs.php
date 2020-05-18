@@ -235,7 +235,7 @@
                         
                         //JA-171 starts
                         if($content['mindCourseFLag'] ==1){
-                            $template_email = "subs.init.mindschool..success";
+                            $template_email = "subs.init.mindschool.success";
                         }
                         //JA-171 ends
             $mail_with_receipt = true; // make this true to start sending receipts with emails
@@ -332,7 +332,7 @@
 
 		}
                 
-               
+               error_clear_last();
 		// Email and SMS
 		if ($notify_user) {
                     
