@@ -190,7 +190,7 @@
 		else {
 			$content["allow_setup"] = false;
 		}
-                
+
                 //QUick fix :JA-171
                 //case of invidual course
                 $mindCourseFLag = 0;
