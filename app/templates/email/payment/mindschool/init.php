@@ -178,7 +178,7 @@
                                                                              <tr>
                                                                                 <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 26px;text-transform: none!important;" align="center">
                                                                                     <span style="letter-spacing: 0.5px; text-decoration: none;">
-                                                                                        <?php echo ucwords(strtolower($GLOBALS['content']['emailer']['bundle_details']['name'])); ?>
+                                                                                        <?php echo (($GLOBALS['content']['emailer']['bundle_details']['name'])); ?>
                                                                                     </span>
                                                                                   
                                                                                 </td>
@@ -187,7 +187,7 @@
                                                                             <tr>
                                                                                 <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 26px;text-transform: none!important;" align="center">
                                                                                     <span style="letter-spacing: 0.5px; text-decoration: none;">
-                                                                                        <?php echo ucwords(strtolower($iCourse['course_name'])); ?>
+                                                                                        <?php echo (($iCourse['course_name'])); ?>
                                                                                     </span>
                                                                                    <!--  <a href="<?php //echo $course["url"]; ?>" style="letter-spacing: 0.5px; text-decoration: none;">
                                                                                         <?php //echo $course["name"]; ?>
@@ -199,7 +199,7 @@
                                                                             <tr>
                                                                                 <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 26px;text-transform: none!important;" align="center">
                                                                                     <span style="letter-spacing: 0.5px; text-decoration: none;">
-                                                                                        <?php echo ucwords(strtolower($iCourse['course_name'])); ?>
+                                                                                        <?php echo (($iCourse['course_name'])); ?>
                                                                                     </span>
                                                                                    <!--  <a href="<?php //echo $course["url"]; ?>" style="letter-spacing: 0.5px; text-decoration: none;">
                                                                                         <?php //echo $course["name"]; ?>
@@ -316,7 +316,7 @@
                                                                             <tr>
                                                                                 <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 26px;text-transform: none!important;" align="center">
                                                                                     <span style="letter-spacing: 0.5px; text-decoration: none;">
-                                                                                        <?php echo ucwords(strtolower($course["name"])); ?>
+                                                                                        <?php echo (($course["name"])); ?>
                                                                                     </span>
                                                                                    <!--  <a href="<?php //echo $course["url"]; ?>" style="letter-spacing: 0.5px; text-decoration: none;">
                                                                                         <?php //echo $course["name"]; ?>
@@ -495,7 +495,7 @@
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td class="h1" style="color: #BCBEC0; font-family: 'Montserrat-Thick', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 15px; padding: 5px;" align="center">
+                                                                                    <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thick', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 15px; padding: 5px;" align="center">
                                                                                         <?php echo ((strcmp(strtolower($GLOBALS["content"]["emailer"]["currency"]), "inr") == 0) ? '&#8377;' : '&#36;' ).number_format(intval($GLOBALS["content"]["emailer"]["payment"]["instl"][$count]["sum"])); ?>
                                                                                     </td>
                                                                                 </tr>
