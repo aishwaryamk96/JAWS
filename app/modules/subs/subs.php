@@ -124,7 +124,7 @@
 			}
 
 			$course_content = json_decode($res_meta[0]["content"], true);
-
+                        $course[$count]["course_id"] = $res[0]["course_id"];
 			$course[$count]["name"] = $res[0]["name"];
 			$course[$count]["learn_mode"] = ((strcmp($learn_mode, "1") == 0)? "Premium" : "Regular");
 			$course[$count]["desc"] = $res_meta[0]["desc"];
@@ -190,9 +190,33 @@
 		else {
 			$content["allow_setup"] = false;
 		}
+
+                //QUick fix :JA-171
+                //case of invidual course
+                $mindCourseFLag = 0;
+                if(empty($content['bundle_details'])){
+                    
+                    foreach($content['courses'] as $idx => $crsDetails){
+                       if($crsDetails['course_id'] == 302){
+                           $mindCourseFLag = 1;
+                       }
+                    }                    
+                }elseif(count($content['bundle_details'])> 0){
+                    if(in_array($content['bundle_details']['bundle_id'],[142,144])){
+                           $mindCourseFLag = 1;
+                       }
+                }
+                $content['mindCourseFLag'] = $mindCourseFLag;
                 
+                 //QUick fix :JA-171 ends
+
 		// Send Emails
 		$template_email = "subs.init.success";
+                //JA-171 starts                
+                if($content['mindCourseFLag'] ==1){
+                            $template_email = "subs.init.mindschool";
+                }
+                //JA-171 ends
 		$mail_with_receipt = false;
 		$receipt_data = array();
 		if (strcmp($pay_info["status"], "pending") == 0) {
@@ -200,10 +224,20 @@
 			if (!empty($bundle_details["platform_id"]) && $bundle_details["platform_id"] == 2) {
 				$template_email .= ".edunxt";
 			}
+                        //JA-171 starts    
+                        if($content['mindCourseFLag'] ==1){
+                            $template_email = "subs.init.mindschool";
+                        } //JA-171 ends
 		}
 		else {
 
 			$template_email = "subs.init.success";
+                        
+                        //JA-171 starts
+                        if($content['mindCourseFLag'] ==1){
+                            $template_email = "subs.init.mindschool..success";
+                        }
+                        //JA-171 ends
             $mail_with_receipt = true; // make this true to start sending receipts with emails
             // receipt data
             $receipt_data = array(
