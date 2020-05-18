@@ -176,7 +176,7 @@
                                                                     <td style="padding-left: 12px; padding-right: 12px;">
                                                                         <table border="0" cellpadding="0" cellspacing="0" class="basetable" width="100%" align="center" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
                                                                              <tr>
-                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px;text-transform: none!important;" align="center">
+                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 26px;text-transform: none!important;" align="center">
                                                                                     <span style="letter-spacing: 0.5px; text-decoration: none;">
                                                                                         <?php echo ucwords(strtolower($GLOBALS['content']['emailer']['bundle_details']['name'])); ?>
                                                                                     </span>
@@ -185,7 +185,7 @@
                                                                             </tr>
                                                                         <?php foreach($GLOBALS["content"]["emailer"]["free_course"] as $idx => $iCourse) { ?>
                                                                             <tr>
-                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px;text-transform: none!important;" align="center">
+                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 26px;text-transform: none!important;" align="center">
                                                                                     <span style="letter-spacing: 0.5px; text-decoration: none;">
                                                                                         <?php echo ucwords(strtolower($iCourse['course_name'])); ?>
                                                                                     </span>
@@ -197,7 +197,7 @@
                                                                         <?php } ?>
                                                                              <?php foreach($GLOBALS["content"]["emailer"]["individual_course"]  as $idx => $iCourse) { ?>
                                                                             <tr>
-                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px;text-transform: none!important;" align="center">
+                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 26px;text-transform: none!important;" align="center">
                                                                                     <span style="letter-spacing: 0.5px; text-decoration: none;">
                                                                                         <?php echo ucwords(strtolower($iCourse['course_name'])); ?>
                                                                                     </span>
@@ -314,7 +314,7 @@
                                                                         <table border="0" cellpadding="0" cellspacing="0" class="basetable" width="100%" align="center" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
                                                                         <?php foreach($GLOBALS["content"]["emailer"]["courses"] as $course) { ?>
                                                                             <tr>
-                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px;text-transform: none!important;" align="center">
+                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 26px;text-transform: none!important;" align="center">
                                                                                     <span style="letter-spacing: 0.5px; text-decoration: none;">
                                                                                         <?php echo ucwords(strtolower($course["name"])); ?>
                                                                                     </span>
@@ -567,7 +567,7 @@
                                                                     <tr>
                                                                         <td>
                                                                     <![endif]-->
-                                                                        <table border="1" bgcolor="#E6FBFF" cellpadding="5" cellspacing="5" width="100%" align="center" style="background-color: #E6FBFF; border: 1px solid #00A8E1; border-collapse: collapse; border-spacing: 1; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
+                                                                        <table border="1" bgcolor="#E6FBFF" cellpadding="5" cellspacing="5" width="100%" align="center" style="background-color: #E6FBFF; border: 2px solid #e65123; border-collapse: collapse; border-spacing: 1; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
                                                                         <tr>
                                                                             <td>
                                                                             <!--[if (gte mso 9)|(IE)]>
