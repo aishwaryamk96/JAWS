@@ -29,8 +29,8 @@
 	define("JAWS_AUTH_SOCIAL_FB_SID","1277255255686445");
 	define("JAWS_AUTH_SOCIAL_FB_KEY","57c0de7b8867464f1c59604943a0de79");
 
-	define("JAWS_AUTH_SOCIAL_GP_ID","969006115058-k833h9e3n774t5jmc831uf1tldg5rvig.apps.googleusercontent.com");
-	define("JAWS_AUTH_SOCIAL_GP_KEY","ukbVdrcAM3t-KGd2__yjz9E6");
+	define("JAWS_AUTH_SOCIAL_GP_ID","618216848458-7g6euu405dj6n1ji8t33mri4pme6nh6u.apps.googleusercontent.com");
+	define("JAWS_AUTH_SOCIAL_GP_KEY","aAKqpStpvSGrP-f41_H49e3R");
 
 	define("JAWS_AUTH_SOCIAL_LI_ID","75yneg96feb8ow");
 	define("JAWS_AUTH_SOCIAL_LI_KEY","jj0vmoImtGklbsrO");

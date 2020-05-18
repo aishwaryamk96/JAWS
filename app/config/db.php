@@ -26,7 +26,7 @@
 	define("JAWS_DB_HOST", "localhost");
 	define("JAWS_DB_NAME", "jaws");
 	define("JAWS_DB_USER", "root");
-	define("JAWS_DB_PASS", "techjini");
+	define("JAWS_DB_PASS", "password");
 
 	// Set Mongo DB Creds
 	define("JAWS_MONGO_HOST", "mongodb://localhost:27017");

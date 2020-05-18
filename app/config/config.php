@@ -24,8 +24,8 @@ if(APP_ENV == "dev"){
 
 define("SERVER_PROTOCOL",$protocol);
 //@TODO check HTTP_HOST also,for safer side
-define("DOMAIN_TEXT","jigsawacademylocal.com");
-define("DOMAIN","jigsawacademylocal.com");
+define("DOMAIN_TEXT","jigsawacademydev.com");
+define("DOMAIN","jigsawacademydev.com");
 define("BASEURL",$basePrefix.DOMAIN);
 
 define("WEBSITE_URL", SERVER_PROTOCOL."://". constant("BASEURL"));

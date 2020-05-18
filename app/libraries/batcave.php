@@ -16,7 +16,7 @@
 
 		}
 
-		session_set_cookie_params(0, "/", ".jigsawacademy.com", true, true);
+		session_set_cookie_params(0, "/", ".jigsawacademydev.com", false, true);
 		auth_session_init();
 
 		load_module("batcave");

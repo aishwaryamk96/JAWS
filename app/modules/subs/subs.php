@@ -124,7 +124,7 @@
 			}
 
 			$course_content = json_decode($res_meta[0]["content"], true);
-
+                        $course[$count]["course_id"] = $res[0]["course_id"];
 			$course[$count]["name"] = $res[0]["name"];
 			$course[$count]["learn_mode"] = ((strcmp($learn_mode, "1") == 0)? "Premium" : "Regular");
 			$course[$count]["desc"] = $res_meta[0]["desc"];
@@ -191,6 +191,25 @@
 			$content["allow_setup"] = false;
 		}
                 
+                //QUick fix :JA-171
+                //case of invidual course
+                $mindCourseFLag = 0;
+                if(empty($content['bundle_details'])){
+                    $crsArr =[];
+                    foreach($content['individual_course'] as $idx => $crsDetails){
+                       if($crsDetails['course_id'] == 302){
+                           $mindCourseFLag = 1;
+                       }
+                    }                    
+                }elseif(count($content['bundle_details'])> 0){
+                    if(in_array($content['bundle_details']['bundle_id'],[142,144])){
+                           $mindCourseFLag = 1;
+                       }
+                }
+                $content['mindCourseFLag'] = $mindCourseFLag;
+                 print_r($content);die;
+                 //QUick fix :JA-171 ends
+
 		// Send Emails
 		$template_email = "subs.init.success";
 		$mail_with_receipt = false;
@@ -227,10 +246,10 @@
             	$content['application_number'] = getApplicationNumber($subs["subs_id"], $application_number_format);
 
             }else{
-							if (!empty($bundle_details["platform_id"]) && $bundle_details["platform_id"] == 2) {
-								$template_email .= ".edunxt";
-							}
-						}
+                    if (!empty($bundle_details["platform_id"]) && $bundle_details["platform_id"] == 2) {
+                            $template_email .= ".edunxt";
+                    }
+            }
 
 	        /*if (in_array("others", $category)) {
 

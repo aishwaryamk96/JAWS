@@ -22,6 +22,10 @@
 		die();
 	}
 
+    $imgUrl = 'https://www.jigsawacademy.com/emailer/images/jigsaw-logo-header.jpg';
+    if($GLOBALS["content"]['mindCourseFLag'] == 1){
+        $imgUrl = 'https://www.jigsawacademy.com/emailer/images/banner-mage.png';
+    }    
 ?>
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -79,7 +83,7 @@
                 <!-- Header Start -->
                 <table border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse; border-spacing: 0; max-width: 700px; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
                 <tr>
-                    <td bgcolor="#FFFFFF" valign="bottom" background="https://www.jigsawacademy.com/emailer/images/jigsaw-logo-header.jpg" style="-webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; background-image: url('https://www.jigsawacademy.com/emailer/images/jigsaw-logo-header.jpg'); " align="center">
+                    <td bgcolor="#FFFFFF" valign="bottom" background="<?php echo $imgUrl; ?>" style="-webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; background-image: url('<?php echo $imgUrl; ?>'); " align="center">
                         <!--[if gte mso 9]>
                         <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:700px;height:300px;">
                             <v:fill type="tile" src="jigsaw-logo-header.jpg" color="#FFFFFF" />
@@ -89,7 +93,7 @@
                                 <table border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
                                     <tr>
                                         <td style="padding:0;margin:0;width:100%;" align="center">
-                                            <img src="https://www.jigsawacademy.com/emailer/images/jigsaw-logo-header.jpg" width="96" height="" border="0" style="-ms-interpolation-mode: bicubic; clear: both; display: block; outline: none; text-decoration: none; width: 100%;">
+                                            <img src="<?php echo $imgUrl?>" width="96" height="" border="0" style="-ms-interpolation-mode: bicubic; clear: both; display: block; outline: none; text-decoration: none; width: 100%;">
                                         </td>
                                     </tr>
                                 </table>
