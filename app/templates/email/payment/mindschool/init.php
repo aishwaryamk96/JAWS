@@ -156,7 +156,7 @@
                                                                             </tr><!-- JA-54 -->
                                                                             <?php if(!empty($GLOBALS['content']['emailer']['bundle_details'])){ ?>
                                                                             <tr>
-                                                                                <td class="p1 p1-cta" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 10px;" align="center">You have enrolled in :
+                                                                                <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 10px;" align="center">You have enrolled in :
 <!--<b><?php //echo $GLOBALS['content']['emailer']['bundle_details']['name']; ?></b>.-->
                                                                                     <!-- Course list -->
                                     <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
@@ -176,7 +176,7 @@
                                                                     <td style="padding-left: 12px; padding-right: 12px;">
                                                                         <table border="0" cellpadding="0" cellspacing="0" class="basetable" width="100%" align="center" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
                                                                              <tr>
-                                                                                <td class="h1" style="color: #00A8E1; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px;" align="center">
+                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px;" align="center">
                                                                                     <span style="letter-spacing: 0.5px; text-decoration: none;">
                                                                                         <?php echo ucwords(strtolower($GLOBALS['content']['emailer']['bundle_details']['name'])); ?>
                                                                                     </span>
@@ -185,7 +185,7 @@
                                                                             </tr>
                                                                         <?php foreach($GLOBALS["content"]["emailer"]["free_course"] as $idx => $iCourse) { ?>
                                                                             <tr>
-                                                                                <td class="h1" style="color: #00A8E1; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px;" align="center">
+                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px;" align="center">
                                                                                     <span style="letter-spacing: 0.5px; text-decoration: none;">
                                                                                         <?php echo ucwords(strtolower($iCourse['course_name'])); ?>
                                                                                     </span>
@@ -197,7 +197,7 @@
                                                                         <?php } ?>
                                                                              <?php foreach($GLOBALS["content"]["emailer"]["individual_course"]  as $idx => $iCourse) { ?>
                                                                             <tr>
-                                                                                <td class="h1" style="color: #00A8E1; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px;" align="center">
+                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px;" align="center">
                                                                                     <span style="letter-spacing: 0.5px; text-decoration: none;">
                                                                                         <?php echo ucwords(strtolower($iCourse['course_name'])); ?>
                                                                                     </span>
@@ -314,7 +314,7 @@
                                                                         <table border="0" cellpadding="0" cellspacing="0" class="basetable" width="100%" align="center" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
                                                                         <?php foreach($GLOBALS["content"]["emailer"]["courses"] as $course) { ?>
                                                                             <tr>
-                                                                                <td class="h1" style="color: #00A8E1; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px;" align="center">
+                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px;" align="center">
                                                                                     <span style="letter-spacing: 0.5px; text-decoration: none;">
                                                                                         <?php echo ucwords(strtolower($course["name"])); ?>
                                                                                     </span>
