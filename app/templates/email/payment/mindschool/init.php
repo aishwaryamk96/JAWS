@@ -398,7 +398,7 @@
                                                                 <tr>
                                                                     <td style="padding-left: 12px; padding-right: 12px;">
                                                                         <table border="0" cellpadding="0" cellspacing="0" class="basetable" width="100%" align="left" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
-                                                                            <tr><td style="color:#e65123!important;text-align: center;">Happy Learning</td></tr>
+                                                                            
                                                                             <tr>
                                                                             	<?php if (intval($GLOBALS["content"]["emailer"]["payment"]["instl_total"]) == 1) { ?>
 	                                                                                <td class="h1" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 10px;" align="center">For this enrollment you will be charged a one-time sum of <b><?php echo ((strcmp(strtolower($GLOBALS["content"]["emailer"]["currency"]), "inr") == 0) ? '&#8377;' : '&#36;' ).number_format(intval($GLOBALS["content"]["emailer"]["sum"])); ?></b></td>
@@ -746,7 +746,7 @@
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td class="h1" style="color: #00A8E1; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 20px;padding-bottom: 20px;" align="center">Happy Learning!</td>
+                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 20px;padding-bottom: 20px;" align="center">Happy Learning!</td>
                                                                             </tr>
                                                                         </table>
                                                                     </td>
