@@ -176,8 +176,8 @@
                 //case of invidual course
                 $mindCourseFLag = 0;
                 if(empty($content['bundle_details'])){
-                    $crsArr =[];
-                    foreach($content['individual_course'] as $idx => $crsDetails){
+                    
+                    foreach($content['courses'] as $idx => $crsDetails){
                        if($crsDetails['course_id'] == 302){
                            $mindCourseFLag = 1;
                        }
@@ -193,6 +193,11 @@
 
 		// Send Emails
 		$template_email = "subs.init.success";
+                //JA-171 starts                
+                if($content['mindCourseFLag'] ==1){
+                            $template_email = "subs.init.mindschool";
+                }
+                //JA-171 ends
 		$mail_with_receipt = false;
 		$receipt_data = array();
 		if (strcmp($pay_info["status"], "pending") == 0) {
@@ -200,10 +205,20 @@
 			if (!empty($bundle_details["platform_id"]) && $bundle_details["platform_id"] == 2) {
 				$template_email .= ".edunxt";
 			}
+                        //JA-171 starts    
+                        if($content['mindCourseFLag'] ==1){
+                            $template_email = "subs.init.mindschool";
+                        } //JA-171 ends
 		}
 		else {
 
 			$template_email = "subs.init.success";
+                        
+                        //JA-171 starts
+                        if($content['mindCourseFLag'] ==1){
+                            $template_email = "subs.init.mindschool.success";
+                        }
+                        //JA-171 ends
             $mail_with_receipt = true; // make this true to start sending receipts with emails
             // receipt data
             $receipt_data = array(
