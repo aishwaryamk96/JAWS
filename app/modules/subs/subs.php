@@ -120,7 +120,7 @@
 			}
 
 			$course_content = json_decode($res_meta[0]["content"], true);
-
+                        $course[$count]["course_id"] = $res[0]["course_id"];
 			$course[$count]["name"] = $res[0]["name"];
 			$course[$count]["learn_mode"] = ((strcmp($learn_mode, "1") == 0)? "Premium" : "Regular");
 			$course[$count]["desc"] = $res_meta[0]["desc"];
