@@ -137,7 +137,16 @@
 							db_query("UPDATE `payment_instl` SET status='enabled', due_date = ".db_sanitize($now->format("Y-m-d H:i:s"))."WHERE `instl_id` = '".$instalment['instl_id']."'");
 							db_query("UPDATE `payment_link` SET `status` = 'enabled' , expire_date = ".db_sanitize($now->format("Y-m-d H:i:s"))." WHERE `payment_link`.`paylink_id` = '".$instalment['paylink_id']."';");
 
-						}
+						}//JA-164 changes starts
+                                                else if ($instalment['instl_count'] > $instl_num && $_POST['disable_date_update'] == true ) {
+
+							$interval = "P".$instalment["due_days"]."D";
+							$now->add(new DateInterval($interval));
+
+							db_query("UPDATE `payment_instl` SET status='enabled' WHERE `instl_id` = '".$instalment['instl_id']."'");
+							db_query("UPDATE `payment_link` SET `status` = 'enabled' , expire_date = ".db_sanitize($now->format("Y-m-d H:i:s"))." WHERE `payment_link`.`paylink_id` = '".$instalment['paylink_id']."';");
+
+						}//JA-164 changes ends
 					}
 
 					$subs_id = $payment_details_d["subs_id"];
