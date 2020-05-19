@@ -71,9 +71,11 @@ function getLeadData($leadTable, $leadStatus, $leadList, $dateFilter =[], $pageR
     $arrLeadList = [];
     $datePeriodQuery = " DATE(l.create_date) BETWEEN ( NOW() - INTERVAL 30 DAY) AND NOW() ";
     if(!empty($dateFilter['from']) && !empty($dateFilter['to']) ){
+        //LA-127 START
         //need to change the date format to "YY:MM:DD HH:MM:SS"
         $dateFilter['from'] = date('Y-m-d H:i:s', strtotime($dateFilter['from']));
         $dateFilter['to'] = date('Y-m-d H:i:s', strtotime('+1 day',strtotime($dateFilter['to'])));
+        //LA-127 END
         $datePeriodQuery = " DATE(l.create_date) BETWEEN '".$dateFilter['from']."' AND '".$dateFilter['to']."'";
     }
     $leadListGetQuery = "SELECT l.lead_id as leadId, l.user_id as userId,l.email as leadEmail, l.name as leadName ";
