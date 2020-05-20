@@ -307,7 +307,7 @@
 
                 
                 $subsData = db_query("SELECT * FROM subs WHERE subs_id =". db_sanitize($sub_id));
-                print_r($subsData);
+                
                 $comboCourseArr =array_keys(course_get_combo_arr($subsData[0]['combo']));
                 
                 //MindCourse
