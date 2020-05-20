@@ -14,9 +14,16 @@
 
 		$response = $_POST;
 
-		$api_key = constant('JAWS_PAYMENT_GATEWAY_RZPY_KEY_'.($GLOBALS['jaws_exec_live'] ? "LIVE" : "TEST"));
+                
+                //get paylink info
+                $envFlag = ((APP_ENV == "prod") ? "LIVE" : "TEST");
+                if(isset($paylink_info['razorPayFlag'])){
+                    $api_key = constant('RZPY_NEW_ACC_KEY_'.$envFlag);
+                    $api_secret = constant('RZPY_NEW_ACC_SECRET_'.$envFlag);
+                }else{
+                    $api_key = constant('JAWS_PAYMENT_GATEWAY_RZPY_KEY_'.($GLOBALS['jaws_exec_live'] ? "LIVE" : "TEST"));
 		$api_secret = constant('JAWS_PAYMENT_GATEWAY_RZPY_SECRET_'.($GLOBALS['jaws_exec_live'] ? "LIVE" : "TEST"));
-
+                }
 		$api = new Api($api_key, $api_secret);
 		
 		$payment = $api->payment->fetch($response['razorpay_payment_id']);
@@ -86,7 +93,8 @@
                 array(
                     'receipt' => $data['receipt'], 
                     'amount' => $data['amount'], 
-                    'currency' => $data['currency']
+                    'currency' => $data['currency'],
+                    //
                 )
             ); 
         }
@@ -99,7 +107,7 @@
         }
 
         $order = $order->toArray();
-
+        $order['rpay_acc_flag'] = $data['rpay_acc_flag'];
         return $order;
     }
 
