@@ -410,7 +410,7 @@
 				// Send Emails
 				$template_email = "subs.init.success";
                                 if($content['mindCourseFLag'] ==1){
-                                            $template_email = "subs.init.mindschool";
+                                            $template_email = "subs.init.mindschool.success";
                                 }
                 if(!empty($receipt_data) ){
 
