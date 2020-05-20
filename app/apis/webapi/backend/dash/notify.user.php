@@ -305,6 +305,21 @@
 
 		$user = user_get_by_email_all($email);
 
+                
+                $subsData = db_query("SELECT * FROM subs WHERE subs_id =". db_sanitize($sub_id));
+                print_r($subsData);
+                $comboCourseArr =array_keys(course_get_combo_arr($subsData[0]['combo']));
+                
+                //MindCourse
+                $content['mindCourseFLag'] = 0;
+                if(in_array(302, $comboCourseArr)){
+                    $content['mindCourseFLag'] = 1;
+                }else if(in_array(142, $comboCourseArr)){
+                    $content['mindCourseFLag'] = 1;
+                }else if(in_array(144, $comboCourseArr)){
+                    $content['mindCourseFLag'] = 1;
+                }
+                
 		// Prep email content
 		$content["user_webid"] = $user["web_id"];
 		$content["fname"] = substr($user["name"], 0, ((strpos($user["name"], " ") !== false) ? strpos($user["name"], " ") : strlen($user["name"])));
@@ -323,6 +338,9 @@
 				if( empty($due_date) && $instl_num == 1 ){
 					// no due date means first instalment not paid, so mail being sent for first installment
 					$context = "subs.init";
+                                        if($content['mindCourseFLag'] ==1){
+                                                    $template_email = "subs.init.mindschool";
+                                        }
 				} else {
 					$days = floor((strtotime($due_date) - time())/(60*60*24));
 					if( $days >= 7 ){
@@ -340,8 +358,14 @@
 
 			if( $disable == "paid" && $instl_num != 1 ){
 				$context = "subs.instl.success";
+                                if($content['mindCourseFLag'] ==1){
+                                            $template_email = "subs.instl.mindschool.success";
+                                }
 			} else if( $disable == "paid" && $instl_num == 1 ) {
 				$context = "subs.init.success";
+                                if($content['mindCourseFLag'] ==1){
+                                    $template_email = "subs.init.mindschool.success";
+                                }
 			} else {
                 $context = "none";
                 $message = "Successfully Disabled";
@@ -373,6 +397,8 @@
 		switch($context){
 
 			case "subs.init.success":
+                        case "subs.init.mindschool.success":
+                            
 			// sent to user for first instalment successfully paid. this will have link to setup lms
 
 				if ((!isset($user["lms_soc"])) || (strlen($user["lms_soc"]) == 0)){
@@ -383,7 +409,9 @@
 
 				// Send Emails
 				$template_email = "subs.init.success";
-
+                                if($content['mindCourseFLag'] ==1){
+                                            $template_email = "subs.init.mindschool";
+                                }
                 if(!empty($receipt_data) ){
 
                     $pdf = new PDFgen($receipt_data);
@@ -423,6 +451,7 @@
 			break;
 
 			case "subs.instl.success":
+                        case "subs.instl.mindschool.success":
 			// Sent on successful payment of installment other than first!
 
 				// instl_count > 1
@@ -430,7 +459,10 @@
 
 				// Send Emails
 				$template_email = "subs.instl.success";
-				
+				if($content['mindCourseFLag'] ==1){
+                                            $template_email = "subs.instl.mindschool.success";
+                                }
+                                
 				log_activity("payment.email", $bundle_details);
     			if (!empty($bundle_details["platform_id"]) && $bundle_details["platform_id"] == 2) {
 				 $template_email .= ".edunxt";
@@ -461,6 +493,7 @@
 
 
 			case "subs.init":
+                        case "subs.init.mindschool":
 				// Sent to users requesting subscription coming by the way of offline subscription AKA custom link. or for first payment link
 
 				if ((!isset($user["lms_soc"])) || (strlen($user["lms_soc"]) == 0)){
@@ -473,7 +506,9 @@
 
 				// Send Emails
 				$template_email = "subs.init";
-
+                                if($content['mindCourseFLag'] ==1){
+                                    $template_email = "subs.init.mindschool";
+                                }
 				send_email($template_email, array("to" => $email), $content);
 
 				$sent_mail = true;
