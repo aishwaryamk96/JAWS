@@ -6,6 +6,7 @@
  * and open the template in the editor.
  */
 //constants
+define("DEBUG_LOG",'/var/log/genriclead.log');
 define("ITEMS_PER_PAGE", 100);
 define("BATCHES_PERIOD", 30);
 
@@ -77,6 +78,7 @@ $lsNewKeyMapping = [
     "mx_City" => "mx_Location",
     //"mx_Location" => "mx_Location",
     "course" => "mx_Course",
+	"Experience" => "mx_Total_Experience",
     "mx_Preferred_date" => "mx_Preferred_date"
 ];
 

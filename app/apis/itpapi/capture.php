@@ -1,4 +1,8 @@
-<?php
+<?php 
+
+//New Error Logging library
+load_library("errormanager");
+ logErrors(DEBUG_LOG, "itpapi", "DATA:",$_POST);
 
 	// db_exec("INSERT INTO system_log (source, data) VALUES ('instapage.ping', CURRENT_TIMESTAMP);");
 
@@ -59,11 +63,17 @@
 		$meta["Qualification"] = $_POST["Qualification"];
 	}
         //
+	//hotfix changes - May 19,2020 added more fields in Instapage forms
+        if (!empty($_POST["Experience"])) {
+		$meta["Experience"] = $_POST["Experience"];
+	}
+	    if (!empty($_POST["Course"])) {
+		$meta["course"] = $_POST["Course"];
+	}
+    //
 	$meta = db_sanitize(json_encode($meta));
 
 	db_exec("INSERT INTO user_leads_basic (name, email, phone, utm_source, utm_campaign, utm_medium, ip, referer, ad_url, create_date, capture_trigger, capture_type, meta) VALUES ($name, $email, $phone, $utm_source, $utm_campaign, $utm_medium, $ip, $referrer, $ad_url, CURRENT_TIMESTAMP, 'formsubmit', 'url', $meta);");
 
-
 	die(true);
-
 ?>

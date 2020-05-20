@@ -161,7 +161,15 @@
 
 		}
 		else {
+			//where_clause("package.creator_id", "=", $_POST["agent"], $where);
+                    //JA-168 fix 
+                    if(empty($_POST["team"])){
+                    where_clause("package.creator_id", "IN", "(SELECT user_id FROM team WHERE team_id=".$_POST["agent"].")", $where);
+                    
+                    }else{
 			where_clause("package.creator_id", "=", $_POST["agent"], $where);
+                    }
+                    //JA-168 fix 
 		}
 
 	}
