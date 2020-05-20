@@ -309,10 +309,10 @@
                 $subsData = db_query("SELECT * FROM subs WHERE subs_id =". db_sanitize($sub_id));
                 
                 $comboCourseArr =array_keys(course_get_combo_arr($subsData[0]['combo']));
-                
+               
                 //MindCourse
                 $content['mindCourseFLag'] = 0;
-                if(in_array(302, $comboCourseArr)){
+                if(in_array(302, $comboCourseArr)){ 
                     $content['mindCourseFLag'] = 1;
                 }else if(in_array(142, $comboCourseArr)){
                     $content['mindCourseFLag'] = 1;
@@ -331,7 +331,13 @@
 				// for only single instalment from k form or to resume pay from website.
 				// payment_done_through = user i.e. from kform
 				// payment_done_through = system i.e. from website
-				if( $payment_done_through == "user" ) $context = "subs.init";
+                                if( $payment_done_through == "user" ){
+                                    $context = "subs.init";
+                                    if($content['mindCourseFLag'] ==1){
+                                                    $context = "subs.init.mindschool";
+                                        }
+                                
+                                }
 				else if ( $payment_done_through == "system" ) $context = "subs.init.re";
 			} else {
 				// payment using instalment, only possible through kform. for 2nd instalment onwards, check due date. based on due date template changes.
@@ -339,7 +345,7 @@
 					// no due date means first instalment not paid, so mail being sent for first installment
 					$context = "subs.init";
                                         if($content['mindCourseFLag'] ==1){
-                                                    $template_email = "subs.init.mindschool";
+                                                    $context = "subs.init.mindschool";
                                         }
 				} else {
 					$days = floor((strtotime($due_date) - time())/(60*60*24));
@@ -355,20 +361,20 @@
 				}
 			}
 		} else if( !empty($instl_num) && $context == "disable_package" ){
-
+                        
 			if( $disable == "paid" && $instl_num != 1 ){
 				$context = "subs.instl.success";
                                 if($content['mindCourseFLag'] ==1){
-                                            $template_email = "subs.instl.mindschool.success";
+                                            $context = "subs.instl.mindschool.success";
                                 }
 			} else if( $disable == "paid" && $instl_num == 1 ) {
 				$context = "subs.init.success";
                                 if($content['mindCourseFLag'] ==1){
-                                    $template_email = "subs.init.mindschool.success";
+                                    $context = "subs.init.mindschool.success";
                                 }
 			} else {
-                $context = "none";
-                $message = "Successfully Disabled";
+                                $context = "none";
+                                $message = "Successfully Disabled";
 			}
         }
 
