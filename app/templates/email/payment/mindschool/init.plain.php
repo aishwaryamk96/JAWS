@@ -39,16 +39,16 @@ Thank you for signing up for the Creative Leader's Program at MIND.
 You have enrolled in :
 
 <?php echo $GLOBALS['content']['emailer']['bundle_details']['name']; ?>
-<?php foreach($GLOBALS['content']['emailer']['free_course'] as $idx => $fCourse){ ?>
+<?php if(!empty($GLOBALS['content']['emailer']['individual_course'])){foreach($GLOBALS['content']['emailer']['free_course'] as $idx => $fCourse){ ?>
 
 ----------------------------------------------
 <?php echo $fCourse['course_name'];?>
-<?php } ?>
-<?php foreach($GLOBALS['content']['emailer']['individual_course'] as $idx => $iCourse){ ?>
+<?php }} ?>
+<?php if(!empty($GLOBALS['content']['emailer']['individual_course'])){foreach($GLOBALS['content']['emailer']['individual_course'] as $idx => $iCourse){ ?>
 
 ----------------------------------------------
 <?php echo $iCourse['course_name'];?>
-<?php } ?>
+<?php } } ?>
 <?php } else { ?>
 Below is your list of courses:
 
