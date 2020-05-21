@@ -7,31 +7,30 @@ if (!defined("JAWS")) {
 }
 load_library("email");
 
-const  LEADBASICCOMPILEDFAILURESTATUS =4;
-const  LEADBASICFAILURESTATUS =2;
-
-$csvHeaders= "LEAD_ID LEAD_NAME LEAD_EMAIL LEAD_PHONE LEAD_DATE \r\n";
 $todaysDate = date('Y-m-d H:i:s');
 $fromDate = date('Y-m-d H:i:s', strtotime('-1 day',strtotime($todaysDate)));//from date can be vary according to the requirement
 
+$fileHandler = fopen(FLR_FILE_NAME,"w+");
+fputcsv($fileHandler, FLR_CSV_HEADERS);
 
-$filename = "failed_leads".date('Y-m-d').".csv";
-$fileHandler = fopen($filename,"w+");
-fwrite($fileHandler, $csvHeaders);
+$basic_lead_failed_count = processTheLeadToCsv($fileHandler,"user_leads_basic",BASIC_FAILURE,$fromDate,$todaysDate);
+$compiled_lead_failed_count = processTheLeadToCsv($fileHandler,'user_leads_basic_compiled',COMPILED_FAILURE,$fromDate,$todaysDate);
+$totalCount = $basic_lead_failed_count + $compiled_lead_failed_count;
 
-$count = processTheLeadToCsv($fileHandler,"user_leads_basic",LEADBASICFAILURESTATUS,$fromDate,$todaysDate);
-$count += processTheLeadToCsv($fileHandler,'user_leads_basic_compiled',LEADBASICCOMPILEDFAILURESTATUS,$fromDate,$todaysDate);
 fclose($fileHandler);
 
 $content["todate"] = date('d-M-Y H:i');
 $content["fromdate"] = date('d-M-Y H:i', strtotime('-1 day',strtotime($todaysDate)));
-$content["leadCount"] = $count;
+if($totalCount>0)
+    $content["leadCountMessage"] = "Number of leads failed:".$totalCount.".";
+else
+    $content["leadCountMessage"] = "There is no failed leads";
 
 //need to add an attachment in mail only when leads present
-$attachment = $count>0?$filename:"";
-send_email_with_attachment("lead.fail.re",array(),$content,$filename);
+$attachment = $totalCount>0?FLR_FILE_NAME:"";
+send_email_with_attachment("lead.fail.re",array(),$content,$attachment);
 //delete the file
-unlink($filename);
+unlink(FLR_FILE_NAME);
 exit(0);
 
 function processTheLeadToCsv($fileHandler,$table,$status,$fromDate,$todaysDate){
@@ -42,13 +41,12 @@ function processTheLeadToCsv($fileHandler,$table,$status,$fromDate,$todaysDate){
     $leadQuery .= " ORDER BY l.create_date DESC";
     $leeds = db_query($leadQuery);
     $count = db_count($leadQuery);
-    $line="";
     foreach ($leeds as $leed) {
+        $line =array();
         foreach ($leed as $key=>$val) {
-            $line .=preg_replace('/\s+/','',$val)." ";
+            $line[] = ($val!=NULL)?$val:"NA";
         }
-        $line .="\r\n";
-        fwrite($fileHandler,$line);
+        fputcsv($fileHandler,$line);
     }
     return $count;
 }

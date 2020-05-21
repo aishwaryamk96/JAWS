@@ -181,7 +181,7 @@ if (!defined("JAWS")) {
                                                                                                                                 <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 5px;">Report has leads captured between: <?php echo $GLOBALS["content"]["emailer"]["fromdate"]; ?> - <?php echo $GLOBALS["content"]["emailer"]["todate"]; ?></td>
                                                                                                                             </tr>
                                                                                                                             <tr>
-                                                                                                                                <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 15px;">Number of leads failed: <?php echo $GLOBALS["content"]["emailer"]["leadCount"]; ?></td>
+                                                                                                                                <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 15px;"> <?php echo $GLOBALS["content"]["emailer"]["leadCountMessage"]; ?></td>
                                                                                                                             </tr>
 
                                                                                                                             <tr>
