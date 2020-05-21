@@ -1,5 +1,8 @@
 /external/
 /media/
-app/config/db.php
-app/config/config.php
-app/config/social.php
+/app/config/db.php
+/app/config/config.php
+/app/config/social.php
+/app/libraries/batcave.php
+/app/libraries/loader.php
+/.htaccess
