@@ -1,0 +1,2 @@
+INSERT INTO `system_email` (`template_id`, `template_path`, `desc`, `subject`, `sender`, `recipient`, `copied`, `copied_blind`) VALUES
+('lead.fail.re', 'lead/failed-report', 'sending a link to download report which contains lead list were not sent to the CRM from JAWS due to some issue', ' Failed Leads Report', 'info@jigsawacademy.com,Jigsaw Academy', 'programoffice@jigsawacademy.com', '', 'medini.m@digital.datamatics.com,k.aishwarya@digital.datamatics.com');

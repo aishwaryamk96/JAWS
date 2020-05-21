@@ -5,7 +5,6 @@ if (!defined("JAWS")) {
     header('Location: '.WEBSITE_URL);
     die();
 }
-
 load_library("email");
 
 const  LEADBASICCOMPILEDFAILURESTATUS =4;
@@ -13,10 +12,9 @@ const  LEADBASICFAILURESTATUS =2;
 
 $csvHeaders= "LEAD_ID LEAD_NAME LEAD_EMAIL LEAD_PHONE LEAD_DATE \r\n";
 $todaysDate = date('Y-m-d H:i:s');
-//from date can be vary according to the requirement
-$fromDate = date('Y-m-d H:i:s', strtotime('-3 day',strtotime($todaysDate)));
+$fromDate = date('Y-m-d H:i:s', strtotime('-1 day',strtotime($todaysDate)));//from date can be vary according to the requirement
 
-//file handler
+
 $filename = "failed_leads".date('Y-m-d').".csv";
 $fileHandler = fopen($filename,"w+");
 fwrite($fileHandler, $csvHeaders);
@@ -24,17 +22,14 @@ fwrite($fileHandler, $csvHeaders);
 $count = processTheLeadToCsv($fileHandler,"user_leads_basic",LEADBASICFAILURESTATUS,$fromDate,$todaysDate);
 $count += processTheLeadToCsv($fileHandler,'user_leads_basic_compiled',LEADBASICCOMPILEDFAILURESTATUS,$fromDate,$todaysDate);
 fclose($fileHandler);
+
 $content["todate"] = date('d-M-Y H:i');
-$content["fromdate"] = date('d-M-Y H:i', strtotime('-3 day',strtotime($todaysDate)));
+$content["fromdate"] = date('d-M-Y H:i', strtotime('-1 day',strtotime($todaysDate)));
 $content["leadCount"] = $count;
 
-$emailInfo =array();
-//send an email
-if($count >0)
-    send_email_with_attachment("lead.fail.re",$emailInfo,$content,$filename);
-else
-    send_email("lead.fail.re",$emailInfo,$content);
-
+//need to add an attachment in mail only when leads present
+$attachment = $count>0?$filename:"";
+send_email_with_attachment("lead.fail.re",array(),$content,$filename);
 //delete the file
 unlink($filename);
 exit(0);
