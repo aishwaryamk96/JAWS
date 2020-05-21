@@ -8,7 +8,7 @@ if (!defined("JAWS")) {
 load_library("email");
 
 $todaysDate = date('Y-m-d H:i:s');
-$fromDate = date('Y-m-d H:i:s', strtotime('-1 day',strtotime($todaysDate)));//from date can be vary according to the requirement
+$fromDate = date('Y-m-d H:i:s', strtotime('-5 day',strtotime($todaysDate)));//from date can be vary according to the requirement
 
 $fileHandler = fopen(FLR_FILE_NAME,"w+");
 fputcsv($fileHandler, FLR_CSV_HEADERS);
@@ -22,7 +22,7 @@ fclose($fileHandler);
 $content["todate"] = date('d-M-Y H:i');
 $content["fromdate"] = date('d-M-Y H:i', strtotime('-1 day',strtotime($todaysDate)));
 if($totalCount>0)
-    $content["leadCountMessage"] = "Number of leads failed:".$totalCount.".";
+    $content["leadCountMessage"] = "Number of leads failed : ".$totalCount.".";
 else
     $content["leadCountMessage"] = "There is no failed leads";
 
