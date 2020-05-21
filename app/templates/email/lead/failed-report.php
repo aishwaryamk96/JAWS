@@ -1,5 +1,21 @@
 <?php
 
+/*
+           8 8888       .8. `8.`888b                 ,8' d888888o.
+           8 8888      .888. `8.`888b               ,8'.`8888:' `88.
+           8 8888     :88888. `8.`888b             ,8' 8.`8888.   Y8
+           8 8888    . `88888. `8.`888b     .b    ,8'  `8.`8888.
+           8 8888   .8. `88888. `8.`888b    88b  ,8'    `8.`8888.
+           8 8888  .8`8. `88888. `8.`888b .`888b,8'      `8.`8888.
+88.        8 8888 .8' `8. `88888. `8.`888b8.`8888'        `8.`8888.
+`88.       8 888'.8'   `8. `88888. `8.`888`8.`88'     8b   `8.`8888.
+  `88o.    8 88'.888888888. `88888. `8.`8' `8,`'      `8b.  ;8.`8888
+    `Y888888 ' .8'       `8. `88888. `8.`   `8'        `Y8888P ,88P'
+
+    JIGSAW ACADEMY WORKFLOW SYSTEM v1
+    ---------------------------------
+*/
+
 // Prevent exclusive access
 if (!defined("JAWS")) {
     header('Location: https://www.jigsawacademy.com');
@@ -187,153 +203,72 @@ if (!defined("JAWS")) {
                                                                                                                             <tr>
                                                                                                                                 <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 15px;">Kindly verify and upload the leads manually to the CRM.</td>
                                                                                                                             </tr>
-                                                                                                                            </td>
-                                                                                                                            </tr>
                                                                                                                         </table>
-                                                                                                                        <!--[if (gte mso 9)|(IE)]>
-                                                                                                                        </td>
-                                                                                                                        </tr>
-                                                                                                                        </table>
-                                                                                                                        <![endif]-->
-                                                                                                                        <!--[if mso]></td>
-                                                                                                                        <td>
-                                                                                                                        <![endif]-->
                                                                                                                     </td>
                                                                                                                 </tr>
                                                                                                             </table>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </table>
-                                                                                                <!-- close intro -->
-                                                                                                <!-- welcome text -->
-                                                                                                <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
-                                                                                                    <tr>
-                                                                                                        <td class="outsidegutter" align="left" style="padding: 0 14px 0 14px;">
-                                                                                                            <table border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;"
-                                                                                                                   class="">
-                                                                                                                <tr>
-                                                                                                                    <td>
-                                                                                                                        <!--[if (gte mso 9)|(IE)]>
-                                                                                                                        <table width="672" align="left" cellpadding="0" cellspacing="0" border="0">
-                                                                                                                            <tr>
-                                                                                                                                <td>
-                                                                                                                        <![endif]-->
-                                                                                                                        <table border="0" cellpadding="0" cellspacing="0" class="t10of12 basetable" align="left" style="border: none; border-collapse: collapse; border-spacing: 0; max-width: 672px; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
-                                                                                                                            <tr>
-                                                                                                                                <td style="padding-left: 12px; padding-right: 12px;">
-                                                                                                                                    <table border="0" cellpadding="0" cellspacing="0" class="basetable" width="100%" align="center" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
-                                                                                                                                        <tr>
-                                                                                                                                            <td class="h1" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; text-align: center;" align="center">
-                                                                                                                                                <?php echo $GLOBALS["content"]["emailer"]["text"]; ?>
-                                                                                                                                            </td>
-                                                                                                                                        </tr>
-                                                                                                                                    </table>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                        </table>
-                                                                                                                        <!--[if (gte mso 9)|(IE)]>
-                                                                                                                        </td>
-                                                                                                                        </tr>
-                                                                                                                        </table>
-                                                                                                                        <![endif]-->
-                                                                                                                        <!--[if mso]></td>
-                                                                                                                        <td>
-                                                                                                                        <![endif]-->
-                                                                                                                    </td>
-                                                                                                                </tr>
+                                                                                                            <!--[if (gte mso 9)|(IE)]>
+                                                                                                            </td>
+                                                                                                            </tr>
                                                                                                             </table>
+                                                                                                            <![endif]-->
+                                                                                                            <!--[if mso]></td>
+                                                                                                            <td>
+                                                                                                            <![endif]-->
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 </table>
-                                                                                                <!-- close  lcome text -->
-
-                                                                                                <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
-                                                                                                    <tr>
-                                                                                                        <td class="outsidegutter" align="left" style="padding: 0 14px 0 14px;">
-                                                                                                            <table border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;"
-                                                                                                                   class="">
-                                                                                                                <tr>
-                                                                                                                    <td>
-                                                                                                                        <!--[if (gte mso 9)|(IE)]>
-                                                                                                                        <table width="672" align="left" cellpadding="0" cellspacing="0" border="0">
-                                                                                                                            <tr>
-                                                                                                                                <td>
-                                                                                                                        <![endif]-->
-                                                                                                                        <table border="0" cellpadding="0" cellspacing="0" class="t10of12 basetable" align="left" style="border: none; border-collapse: collapse; border-spacing: 0; max-width: 672px; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
-                                                                                                                            <tr>
-                                                                                                                                <td style="padding-left: 12px; padding-right: 12px;">
-                                                                                                                                    <table border="0" cellpadding="0" cellspacing="0" class="basetable" width="100%" align="left" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
-                                                                                                                                        <tr>
-                                                                                                                                            <td class="h1" style="color: #00A8E1; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 20px;" align="center">Happy Learning!</td>
-                                                                                                                                        </tr>
-                                                                                                                                    </table>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                        </table>
-                                                                                                                        <!--[if (gte mso 9)|(IE)]>
-                                                                                                                        </td>
-                                                                                                                        </tr>
-                                                                                                                        </table>
-                                                                                                                        <![endif]-->
-                                                                                                                        <!--[if mso]></td>
-                                                                                                                        <td>
-                                                                                                                        <![endif]-->
-                                                                                                                    </td>
-                                                                                                                </tr>
-                                                                                                            </table>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </table>
-                                                                                                <!-- close end -->
-                                                                                                <!-- Spacer -->
-                                                                                                <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
-                                                                                                    <tr>
-                                                                                                        <td class="outsidegutter" align="left" style="padding: 0 14px 0 14px;">
-                                                                                                            <table border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;"
-                                                                                                                   class="">
-                                                                                                                <tr>
-                                                                                                                    <td>
-                                                                                                                        <!--[if (gte mso 9)|(IE)]>
-                                                                                                                        <table width="672" cellpadding="0" cellspacing="0" border="0">
-                                                                                                                            <tr>
-                                                                                                                                <td height="50">
-                                                                                                                        <![endif]-->
-                                                                                                                        <table border="0" cellpadding="0" cellspacing="0" class="t12of12" style="border: none; border-collapse: collapse; border-spacing: 0; max-width: 672px; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
-                                                                                                                            <tr>
-                                                                                                                                <td class="hr-h1" style="padding-left: 12px; padding-right: 12px;">
-                                                                                                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
-                                                                                                                                        <tr>
-                                                                                                                                            <td height="30" style="font-size: 1px; line-height: 1px;">&nbsp;</td>
-                                                                                                                                        </tr>
-                                                                                                                                    </table>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                        </table>
-                                                                                                                        <!--[if (gte mso 9)|(IE)]>
-                                                                                                                        </td>
-                                                                                                                        </tr>
-                                                                                                                        </table>
-                                                                                                                        <![endif]-->
-                                                                                                                    </td>
-                                                                                                                </tr>
-                                                                                                            </table>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </table>
-                                                                                                <!-- close Spacer -->
-                                                                                                <!--[if (gte mso 9)|(IE)]>
-                                                                                                </td>
-                                                                                                </tr>
-                                                                                                </table>
-                                                                                                <![endif]-->
                                                                                             </td>
                                                                                         </tr>
                                                                                     </table>
                                                                                     <!-- close intro -->
-
-
+                                                                                    <!-- Spacer -->
+                                                                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
+                                                                                        <tr>
+                                                                                            <td class="outsidegutter" align="left" style="padding: 0 14px 0 14px;">
+                                                                                                <table border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;"
+                                                                                                       class="">
+                                                                                                    <tr>
+                                                                                                        <td>
+                                                                                                            <!--[if (gte mso 9)|(IE)]>
+                                                                                                            <table width="672" cellpadding="0" cellspacing="0" border="0">
+                                                                                                                <tr>
+                                                                                                                    <td height="50">
+                                                                                                            <![endif]-->
+                                                                                                            <table border="0" cellpadding="0" cellspacing="0" class="t12of12" style="border: none; border-collapse: collapse; border-spacing: 0; max-width: 672px; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
+                                                                                                                <tr>
+                                                                                                                    <td class="hr-h1" style="padding-left: 12px; padding-right: 12px;">
+                                                                                                                        <table border="0" cellpadding="0" cellspacing="0" width="100%" align="left" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
+                                                                                                                            <tr>
+                                                                                                                                <td height="30" style="font-size: 1px; line-height: 1px;">&nbsp;</td>
+                                                                                                                            </tr>
+                                                                                                                        </table>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                            </table>
+                                                                                                            <!--[if (gte mso 9)|(IE)]>
+                                                                                                            </td>
+                                                                                                            </tr>
+                                                                                                            </table>
+                                                                                                            <![endif]-->
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                    <!-- close Spacer -->
+                                                                                    <!--[if (gte mso 9)|(IE)]>
+                                                                                    </td>
+                                                                                    </tr>
+                                                                                    </table>
+                                                                                    <![endif]-->
                                                                                 </td>
                                                                             </tr>
+                                                                        </table>
+                                                                        <!--[if (gte mso 9)|(IE)]>
+                                                                        </td>
+                                                                        </tr>
                                                                         </table>
                                                                         <![endif]-->
                                                                     </td>
