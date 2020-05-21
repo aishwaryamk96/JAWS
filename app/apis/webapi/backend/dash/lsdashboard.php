@@ -10,10 +10,12 @@
 //auth_session_init();
 //
 //// Auth Check - Expecting Session Only !
-//if ((!auth_session_is_logged()) || (!auth_session_is_allowed("dash"))) {
-//        header("HTTP/1.1 401 Unauthorized");
-//        die();
-//}
+// LA- 127 START
+if ((!auth_session_is_logged()) || (!auth_session_is_allowed("lsdashboard"))) {
+    header("HTTP/1.1 401 Unauthorized");
+    die();
+}
+// LA -127 END
 
 $leadStatus = $_GET['leadStatus'];
 $leadTable = $_GET['leadTable'];
