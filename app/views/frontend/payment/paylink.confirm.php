@@ -54,8 +54,9 @@
         'pg' => $_GET["pg"] ?? "default",
         'ty' => $_GET["ty"] ?? ""
     );
+    
     $transaction_response = payment_response_parse($payment_gateway_details,$paylink_info);
-
+   
     // save user state if available
     if( !empty($_POST['state']) ){
         db_query("UPDATE `user_meta` SET `state` = " . db_sanitize($_POST['state']) . "  WHERE `user_meta`.`user_id` = '".$paylink_info["user_id"]."';");
@@ -147,6 +148,7 @@
     $sc_str = "";
     $price_str = "";
 
+    
     $course;
 	$feed_course;
     $count = 0;
@@ -216,6 +218,23 @@
     if ((!isset($user["lms_soc"])) || (strlen($user["lms_soc"]) == 0)) $content["allow_setup"] = true;
     else $content["allow_setup"] = false;
 
+    //case of invidual course
+    $mindCourseFLag = 0;
+    if(empty($content['bundle_details'])){
+
+        foreach($content['courses'] as $idx => $crsDetails){
+           if($crsDetails['course_id'] == 302){
+               $mindCourseFLag = 1;
+           }
+        }                    
+    }elseif(count($content['bundle_details'])> 0){
+        if(in_array($content['bundle_details']['bundle_id'],[142,144])){
+               $mindCourseFLag = 1;
+           }
+    }
+    $content['mindCourseFLag'] = $mindCourseFLag;
+
+     //QUick fix :JA-171 ends
     // Check response
     if (!$transaction_response["status"]) {
 
@@ -299,9 +318,16 @@
 
     // Done! Send an email
     $template = "subs.init.success";
+    //JA-171 starts                
+    if($content['mindCourseFLag'] ==1){
+        $template_email = "subs.init.mindschool.success";
+    }
     $email_info['to'] = $user["email"];
     if (intval($paylink_info["instl_count"]) > 1) {
         $template = "subs.instl.success";
+        if($content['mindCourseFLag'] ==1){
+            $template_email = "subs.instl.mindschool.success";
+        }
         $content["instl_count"] = $paylink_info["instl_count"];
         $user_id = db_sanitize($user["user_id"]);
         db_exec("INSERT INTO user_logs (user_id, category, created_by, status) VALUES ($user_id, 'access.grant', $user_id, 'pending');");
@@ -450,11 +476,12 @@
 
     }
     else {
-        header("Location: ".JAWS_PATH_WEB."/setupaccess");
+        header("Location: ".JAWS_PATH_WEB."/setupaccess?m=".$mindCourseFLag);
     }
 
 
     function fuckyouAwesomeName($subs, $user, $paylink_info, $template, $email_info, $content) {
+        
         $receipt_data = array();
         // receipt data
         $receipt_data = array(

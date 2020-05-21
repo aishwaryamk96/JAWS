@@ -417,7 +417,11 @@ $(document).ready(function(){
     $("#btn-website").click(function() {
     	$(location).attr('href', 'https://www.jigsawacademy.com');
     });
-
+    
+    $("#btn-mind-website").click(function() {
+    	$(location).attr('href', 'https://mind-global.com/');
+    });
+    
     $("#btn-iot").click(function() {
     	$(location).attr('href', 'https://www.jigsawacademy.com/iot/home');
     });
