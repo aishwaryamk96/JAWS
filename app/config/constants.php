@@ -87,6 +87,7 @@ define('LS_KEY_MAPPING', $lsNewKeyMapping);
 define('LEAD_PROCESSING', 11);
 define('BASIC_NEW', 0);
 define('BASIC_PROCESSED', 1);
+define('BASIC_FAILURE', 2);
 define('COMPILED_NEW', 1);
 define('COMPILED_API', 2);
 define('COMPILED_SUCCESS', 3);

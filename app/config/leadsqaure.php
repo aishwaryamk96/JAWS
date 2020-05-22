@@ -26,3 +26,8 @@ define("LEAD_LOG",'/var/log/apache2/leadcron/genriclead.log');
 //Compiled Lead error log file name with path
 define("COMPILED_LEAD_LOG",'/var/log/apache2/leadcron/compiledlead.log');
 define("LS_API_LOG",'/var/log/apache2/leadcron/lsapi.log');
+
+//failed lead report csv headers
+define("FLR_CSV_HEADERS",array("LEAD_ID","LEAD_NAME","LEAD_EMAIL","LEAD_PHONE","LEAD_DATE"));
+//filename in mail
+define("FLR_FILE_NAME","failed_leads".date('Y-m-d').".csv");
