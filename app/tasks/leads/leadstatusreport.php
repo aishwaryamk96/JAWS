@@ -38,7 +38,7 @@ function processTheLeadToCsv($fileHandler,$table,$status,$fromDate,$todaysDate){
     $leadQuery = "SELECT  l.lead_id as id, l.name as name, l.email as email,l.phone as phone ,l.create_date as createDate";
     $leadQuery .= " FROM ".$table." as l ";
     $leadQuery .= " WHERE l.status = ".$status." AND  ";
-    $leadQuery .= " DATE(l.create_date) BETWEEN '".$fromDate."' AND '".$todaysDate."'";
+    $leadQuery .= "( l.create_date >= '".$fromDate."' AND l.create_date <= '".$todaysDate."') ";
     $leadQuery .= " ORDER BY l.create_date DESC";
     $leeds = db_query($leadQuery);
     $count = db_count($leadQuery);
