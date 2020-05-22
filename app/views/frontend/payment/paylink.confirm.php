@@ -219,6 +219,7 @@
     else $content["allow_setup"] = false;
 
     //case of invidual course
+  // echo "<pre>"; print_r($content);
     $mindCourseFLag = 0;
     if(empty($content['bundle_details'])){
 
@@ -233,7 +234,7 @@
            }
     }
     $content['mindCourseFLag'] = $mindCourseFLag;
-
+//echo "<pre>"; print_r($content);print_r($transaction_response);
      //QUick fix :JA-171 ends
     // Check response
     if (!$transaction_response["status"]) {
@@ -320,13 +321,13 @@
     $template = "subs.init.success";
     //JA-171 starts                
     if($content['mindCourseFLag'] ==1){
-        $template_email = "subs.init.mindschool.success";
+        $template = "subs.init.mindschool.success";
     }
     $email_info['to'] = $user["email"];
     if (intval($paylink_info["instl_count"]) > 1) {
         $template = "subs.instl.success";
         if($content['mindCourseFLag'] ==1){
-            $template_email = "subs.instl.mindschool.success";
+            $template = "subs.instl.mindschool.success";
         }
         $content["instl_count"] = $paylink_info["instl_count"];
         $user_id = db_sanitize($user["user_id"]);
@@ -339,7 +340,7 @@
     if (!empty($bundle_details["platform_id"]) && $bundle_details["platform_id"] == 2) {
       $template .= ".edunxt";
     }
-
+   // echo "after sales";print_r($after_sales);
     if (!empty($after_sales)) {
 
         if (isset($after_sales["jlc"]) && $after_sales["jlc"] == false) {
@@ -362,7 +363,7 @@
 
         }
 
-        if(!$mail_with_receipt) {
+        if(!$mail_with_receipt) {// echo "in llll";die;
             send_email($template, $email_info, $content);
         } else {
             fuckyouAwesomeName($subs, $user, $paylink_info, $template, $email_info, $content);
@@ -499,6 +500,7 @@
         $attachments = array(
             0 => $receipt, // file attached
         );
+        //echo "template".$template;die;
         if (!send_email_with_attachment($template, $email_info, $content, $attachments)) {
             activity_create("critical", "subs.email", "fail", "", "", "", "", "Receipt Email Library Returned False !", "logged");
         }
