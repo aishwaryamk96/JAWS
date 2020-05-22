@@ -253,9 +253,12 @@
 
 		// load instl info
 		$res = db_query("SELECT * FROM payment_instl WHERE instl_id=".$instl_id." LIMIT 1;");
+                
 		if (!isset($res[0])) return false;
 		if ((strcmp($res[0]["status"], "paid") == 0) || (strcmp($res[0]["status"], "disabled") == 0)) return false;
 
+                $metaData = json_decode($res[0]['meta'],true);
+                $razorPayFlag = (isset($metaData['rpay_acc_flag']))?$metaData['rpay_acc_flag'] : 0;
 		$instl = $res[0];
 		$sum = intval($instl["sum"]);
 		$currency = $instl["currency"];
@@ -295,6 +298,7 @@
 			"web_id" => $web_id,
             /*"create_entity_type" => $paylink["create_entity_type"],*/
             "receipt_type" => $pay["type"],
+                    'razorPayFlag'=>$razorPayFlag
 		);
 
 	}
