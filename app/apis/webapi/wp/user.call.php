@@ -55,8 +55,12 @@
 		$phone = db_sanitize($phone);
 		$meta = db_sanitize(json_encode(["form_name" => $_POST["form"]]));
 		$__tr = db_sanitize($_POST["__tr"]);
-
-		db_exec("INSERT INTO user_leads_basic (name, email, phone, capture_trigger, meta, __tr) VALUES ($name, $email, $phone, 'formsubmit', $meta, $__tr);");
+        //JA-127 START
+        $status = 0;
+        if(empty($name) && empty($email) && empty($phone))
+            $status = 6;
+		db_exec("INSERT INTO user_leads_basic (name, email, phone, capture_trigger, meta, __tr,status) VALUES ($name, $email, $phone, 'formsubmit', $meta, $__tr,$status);");
+		//JA-127
 	}
 
 	die(json_encode(["status" => true]));

@@ -51,7 +51,10 @@
 		}
 		if ($flag) continue;
 		$count_missed++;
-
+//JA-127 START
+		$status = 0;
+		if(empty($ress['name'])&&empty($ress['email'])&&empty($ress['phone']))
+            $status = 6;
 		$q = "INSERT INTO user_leads_basic (
 					name, 
 					email, 
@@ -71,7 +74,8 @@
 					ad_url, 
 					create_date,
 					capture_trigger, 
-					capture_type
+					capture_type,
+					status
 				) VALUES (".
 					db_sanitize($ress['name'] ?? '').", ".
 					db_sanitize($ress['email'] ?? '').", ".
@@ -91,8 +95,9 @@
 					db_sanitize($ress['location'] ?? '').", ".
 					db_sanitize($ress['date'] ?? '').", ".
 					"'formsubmit'".", ".
-					"'url'".");";
-
+					"'url'".",".
+                    $status.");";
+//JA-127 END
 		db_exec($q);
 	}
 

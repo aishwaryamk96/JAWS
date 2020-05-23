@@ -281,8 +281,12 @@
 		}
 
 		//Exec
-		db_exec("INSERT INTO user_leads_basic (user_id, utm_source, utm_campaign, utm_term, utm_medium, utm_content, utm_segment, utm_numvisits, gcl_id, global_id_perm, global_id_session, referer, ip, ad_lp, ad_url, create_date, assoc_token, capture_trigger, capture_type, name, email, phone, meta, __tr) VALUES (".((strcmp($mode, "id") == 0) ? $id_or_token : "NULL" ).", ".$lead_params["utm_source"].", ".$lead_params["utm_campaign"].", ".$lead_params["utm_term"].", ".$lead_params["utm_medium"].", ".$lead_params["utm_content"].", ".$lead_params["utm_segment"].", ".$lead_params["utm_numvisits"].", ".$lead_params["gcl_id"].", ".$lead_params["global_id_perm"].", ".$lead_params["global_id_session"].", ".$lead_params["referer"].", ".$lead_params["ip"].", ".$lead_params["ad_lp"].", ".$lead_params["ad_url"].", ".db_sanitize($date).", ".((strcmp($mode, "token") == 0) ? db_sanitize($token) : "NULL" ).", ".$lead_params["trigger"].", ".$lead_params["type"].", ".$post_data["name"].", ".$post_data["email"].", ".$post_data["phone"].", ".(isset($post_data["meta"]) ? db_sanitize(json_encode($post_data["meta"])) : 'NULL').", ".$__tr.");");
-
+		//JA-127 START
+		$status = 0;
+  		if(empty($post_data["name"]) && empty($post_data["email"]) && empty($post_data["phone"]))
+		    $status = 6;
+		db_exec("INSERT INTO user_leads_basic (user_id, utm_source, utm_campaign, utm_term, utm_medium, utm_content, utm_segment, utm_numvisits, gcl_id, global_id_perm, global_id_session, referer, ip, ad_lp, ad_url, create_date, assoc_token, capture_trigger, capture_type, name, email, phone, meta, __tr, status) VALUES (".((strcmp($mode, "id") == 0) ? $id_or_token : "NULL" ).", ".$lead_params["utm_source"].", ".$lead_params["utm_campaign"].", ".$lead_params["utm_term"].", ".$lead_params["utm_medium"].", ".$lead_params["utm_content"].", ".$lead_params["utm_segment"].", ".$lead_params["utm_numvisits"].", ".$lead_params["gcl_id"].", ".$lead_params["global_id_perm"].", ".$lead_params["global_id_session"].", ".$lead_params["referer"].", ".$lead_params["ip"].", ".$lead_params["ad_lp"].", ".$lead_params["ad_url"].", ".db_sanitize($date).", ".((strcmp($mode, "token") == 0) ? db_sanitize($token) : "NULL" ).", ".$lead_params["trigger"].", ".$lead_params["type"].", ".$post_data["name"].", ".$post_data["email"].", ".$post_data["phone"].", ".(isset($post_data["meta"]) ? db_sanitize(json_encode($post_data["meta"])) : 'NULL').", ".$__tr.", ".$status.");");
+        //JA-127 END
 		//All done - return appropriate value
 		if ($mode == "token") {
 			if (strlen($id_or_token) == 0) return $token;
