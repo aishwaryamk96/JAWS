@@ -243,7 +243,14 @@
         activity_create("high", "paylink.confirm", "fail", "paylink_id", $paylink_info["paylink_id"], "user_id", $paylink_info["user_id"], "Gateway Cancelled/Failed", "logged");
 
         // Send email to student allowing them to resume the checkout - if it is a subs initiation from frontend
-        if ((intval($paylink_info["instl_count"]) == 1) && (strcmp($paylink_info["create_entity_type"], "system") == 0)) send_email("subs.init.re", array("to" => $user["email"]), $content);
+        if ((intval($paylink_info["instl_count"]) == 1) && (strcmp($paylink_info["create_entity_type"], "system") == 0)) { 
+            
+            send_email("subs.init.re", array("to" => $user["email"]), $content);
+               if($mindCourseFLag == 1){
+                  send_email("subs.init.re.mindschool", array("to" => $user["email"]), $content); 
+               }     
+                    
+        }
 
         // Show Error UI
         ui_render_msg_front(array(
@@ -500,7 +507,10 @@
         $attachments = array(
             0 => $receipt, // file attached
         );
-        if (!send_email_with_attachment($template, $email_info, $content, $attachments)) {
+        if($content['mindCourseFLag'] == 1){
+            if(!send_email($template, $email_info, $content)) {
+            activity_create("critical", $template, "fail", "", "", "", "", "Receipt Email Library Returned False !", "logged");
+        }else if(!send_email_with_attachment($template, $email_info, $content, $attachments)) {
             activity_create("critical", "subs.email", "fail", "", "", "", "", "Receipt Email Library Returned False !", "logged");
         }
         $pdf->deleteFileFromServer();
