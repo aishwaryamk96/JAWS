@@ -36,6 +36,8 @@
 	$user;
 	$login_params["return_url"] = JAWS_PATH_WEB."/setupaccess";
 
+        $mFlag = $_GET["m"];
+        
 	// Check Auth
 	if (isset($_GET["user"])) {
 
@@ -212,25 +214,26 @@
 
 	// Alternate displayed msgs for first payment/instl/setup-complete - get setup status
 	$flag_navigate = true;
-	if (!isset($user["lms_soc"]) || (strlen($user["lms_soc"]) == 0)) $flag_navigate = true;
-	else {
+        if($mFlag != 1){
+            if (!isset($user["lms_soc"]) || (strlen($user["lms_soc"]) == 0)) $flag_navigate = true;
+            else {
 
-		// display message for lms setup already done
-		if (!$flag_paid) {
+                    // display message for lms setup already done
+                    if (!$flag_paid) {
 
-			ui_render_msg_front(array(
-				"type" => "error",
-				"title" => "Setup Your Access",
-				"header" => "Setup Complete !",
-				"text" => "You have already setup your access to the Learning Center. If you are unable to login, please contact our support team.<br /><br />Note that it takes upto 24 hours for us to enable your access once the setup is complete."
-				));
+                            ui_render_msg_front(array(
+                                    "type" => "error",
+                                    "title" => "Setup Your Access",
+                                    "header" => "Setup Complete !",
+                                    "text" => "You have already setup your access to the Learning Center. If you are unable to login, please contact our support team.<br /><br />Note that it takes upto 24 hours for us to enable your access once the setup is complete."
+                                    ));
 
-			exit();
-		}
-		else $flag_navigate = false;
+                            exit();
+                    }
+                    else $flag_navigate = false;
 
-	}
-
+            }
+        }
 	// Proceed with rendering the UI
 	ui_render_head_front(array(
 		"title" => ($flag_paid ? "Payment Successful" : "Setup Your Access"),
@@ -245,18 +248,25 @@
 
 		<div class="modal">
 
-		 <div class="page bkg active">               
-				<div class="header"><?php echo ($flag_paid ? (($instl_count == 1) ? "Congratulations" : "Payment Successfull") : "Setup Your Access"); ?></div>
-					
+		 <div class="page bkg active">  
+                     
+                                <?php if($mFlag == 1){  ?>
+                     <div class="header"><?php echo "ACKNOWLEDGEMENT";?></div>
+                                <?php }else{ ?>
+                                <div class="header"><?php echo ($flag_paid ? (($instl_count == 1) ? "Congratulations" : "Payment Successfull") : "Setup Your Access"); ?></div>
+				<?php	} ?>
 				<div class="text">
 					<br/>
-
-					<?php if ($flag_paid) {
+                                        <?php if($mFlag == 1){ ?>
+                                            Congratulations on you enrollment! Please check you email for confirmation of payment. Our Admissions team will get in touch with you shortly.
+                                            
+                                       
+					<?php }else if ($flag_paid) {
 
 						if ($instl_count > 1) {
 
 							?>
-							We have recieved your payment for this installment.<br />
+							We have received your payment for this installment.<br />
 							<?php if (!$flag_navigate) { ?> Thank you!<br /> <?php }
 							
 						}
@@ -894,11 +904,17 @@
 			<?php } ?>
 
 			<div class="nav">
+                                <?php if($mFlag == 1){ ?>
+                                    
+                                    <div class="panel left">					
+					<div class="link-button active" id="btn-mind-website">Back to website</div>
+                                    </div>
+                                <?php }else{ ?>
 				<div class="panel left">
 					<?php if (($flag_navigate) && ($flag_paid)) { ?><div class="link-button red active" id="btn-later">I'll do this later on</div> <?php } ?>
 					<div class="link-button <?php echo ((!$flag_navigate) ? 'active' : ''); ?>" id="btn-website">Back to website</div>
 				</div>
-
+                                <?php } ?>
 				<?php if ($flag_navigate) { ?>
 
 				<div class="panel right" >
