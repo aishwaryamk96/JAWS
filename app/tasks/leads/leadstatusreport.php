@@ -16,7 +16,7 @@ $fileHandler = fopen(FLR_FILE_NAME,"w+");
 
 //$basic_lead_failed_count = processTheLeadToCsv($fileHandler,"user_leads_basic",LEAD_PROCESSING,$fromDate,$todaysDate);
 $compiled_lead_failed_count = processTheLeadToCsv($fileHandler,'user_leads_basic_compiled',COMPILED_FAILURE,$fromDate,$todaysDate);
-$totalCount = $basic_lead_failed_count + $compiled_lead_failed_count;
+$totalCount = $compiled_lead_failed_count;
 
 fclose($fileHandler);
 
