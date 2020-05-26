@@ -39,7 +39,13 @@
 
 		try {
 			$old = db_query('SELECT * FROM user_leads_basic WHERE name='.db_sanitize($kue['v'][$i]['d']["name"] ?? $kue['v'][$i]['d']["fname"] ?? $kue['v'][$i]['d']["firstname"] ?? $kue['v'][$i]['d']["fullname"] ?? $kue['v'][$i]['d']["lname"]).' AND email='.db_sanitize($kue['v'][$i]['d']["email"] ?? $kue['v'][$i]['d']["e-mail"] ?? $kue['v'][$i]['d']["username"] ?? $kue['v'][$i]['d']["emailid"]).' AND phone='.db_sanitize($kue['v'][$i]['d']["phone"] ?? $kue['v'][$i]['d']["mobile"] ?? $kue['v'][$i]['d']["contact"] ?? $kue['v'][$i]['d']["mobileno"]?? $kue['v'][$i]['d']["telephone"] ?? $kue['v'][$i]['d']["contactno"]).' AND create_date='.db_sanitize(strval(date("Y-m-d H:i:s"))).' LIMIT 1;');
-
+            //JA-127 START
+			$name = $kue['v'][$i]['d']["name"] ?? $kue['v'][$i]['d']["fname"] ?? $kue['v'][$i]['d']["firstname"] ?? $kue['v'][$i]['d']["fullname"] ?? $kue['v'][$i]['d']["lname"];
+			$email = $kue['v'][$i]['d']["email"] ?? $kue['v'][$i]['d']["e-mail"] ?? $kue['v'][$i]['d']["username"] ?? $kue['v'][$i]['d']["emailid"];
+			$phone = $kue['v'][$i]['d']["phone"] ?? $kue['v'][$i]['d']["mobile"] ?? $kue['v'][$i]['d']["contact"] ?? $kue['v'][$i]['d']["mobileno"]?? $kue['v'][$i]['d']["telephone"] ?? $kue['v'][$i]['d']["contactno"];
+			$status = 0;
+            if(!isset($ress['name'])&&!isset($ress['email'])&&!isset($ress['phone']))
+                $status = 6;
 			if (isset($old[0])) return;
 			else db_exec("INSERT INTO user_leads_basic (
 					name, 
@@ -61,11 +67,12 @@
 					ad_url, 
 					create_date,
 					capture_trigger, 
-					capture_type
+					capture_type,
+					status
 				) VALUES (".
-					db_sanitize($kue['v'][$i]['d']["name"] ?? $kue['v'][$i]['d']["fname"] ?? $kue['v'][$i]['d']["firstname"] ?? $kue['v'][$i]['d']["fullname"] ?? $kue['v'][$i]['d']["lname"]).", ".
-					db_sanitize($kue['v'][$i]['d']["email"] ?? $kue['v'][$i]['d']["e-mail"] ?? $kue['v'][$i]['d']["username"] ?? $kue['v'][$i]['d']["emailid"]).", ".
-					db_sanitize($kue['v'][$i]['d']["phone"] ?? $kue['v'][$i]['d']["mobile"] ?? $kue['v'][$i]['d']["contact"] ?? $kue['v'][$i]['d']["mobileno"]?? $kue['v'][$i]['d']["telephone"] ?? $kue['v'][$i]['d']["contactno"]).", ".
+					db_sanitize($name).", ".
+					db_sanitize($email).", ".
+					db_sanitize($phone).", ".
 					db_sanitize($kue['v'][$i]['d']["source"] ?? $kue['url']['params']['utm_source'] ?? '').", ".
 					db_sanitize($kue['v'][$i]['d']["campaign"] ?? $kue['url']['params']['utm_campaign'] ?? '').", ".
 					db_sanitize($kue['v'][$i]['d']["term"] ?? $kue['url']['params']['utm_term'] ?? '').", ".
@@ -82,7 +89,9 @@
 					db_sanitize(url_template_to_string($kue["url"])).", ".
 					db_sanitize(strval(date("Y-m-d H:i:s"))).", ".
 					"'formsubmit'".", ".
-					"'url'".");");
+					"'url'".",".
+                    db_sanitize($status).");");
+			    //JA-127 END
 		}
 		catch (Exception $e) {
 			activity_create('critical','shuriken.event.form','form.submit.to.jaws.fail','','','','',json_encode($kue['v'][$i]));
