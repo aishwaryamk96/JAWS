@@ -190,7 +190,7 @@
                                                                     <td style="padding-left: 12px; padding-right: 12px;">
                                                                         <table border="0" cellpadding="0" cellspacing="0" class="basetable" width="100%" align="center" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
                                                                             <tr>
-                                                                                <td class="h1" style="color: #00A8E1; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 20px; padding-bottom: 20px;" align="center">Hello <?php echo ucfirst(strtolower($GLOBALS["content"]["emailer"]["fname"])); ?>, </td>
+                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 20px; padding-bottom: 20px;" align="center">Hello <?php echo ucfirst(strtolower($GLOBALS["content"]["emailer"]["fname"])); ?>, </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 15px;" align="center">Don't stall your learning curve just yet!</td>

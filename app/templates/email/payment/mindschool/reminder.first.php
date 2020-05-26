@@ -406,7 +406,7 @@
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td class="h1" style="color: #00A8E1; font-family: 'Montserrat-Thick', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 15px; padding: 5px;" align="center">
+                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thick', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 15px; padding: 5px;" align="center">
                                                                                     <?php echo ((strcmp(strtolower($GLOBALS["content"]["emailer"]["currency"]), "inr") == 0) ? '&#8377;' : '&#36;' ); ?><?php echo number_format(intval($GLOBALS["content"]["emailer"]["payment"]["instl"][$count]["sum"])); ?>
                                                                                 </td>
                                                                             </tr>
@@ -563,7 +563,7 @@
                                                                                 <td class="h1" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 12px; line-height: 17px; padding-top: 12px;" align="center">If the link above is not working, you could also copy and paste the link below in your browser window.</td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td class="p1 p1-cta" style="color: #00A8E1; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 12px; line-height: 20px; padding-bottom: 10px;" align="center"> <?php echo JAWS_PATH_WEB.'/pay?pay='.$GLOBALS["content"]["emailer"]["paylink_id"]; ?>
+                                                                                <td class="p1 p1-cta" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 12px; line-height: 20px; padding-bottom: 10px;" align="center"> <?php echo JAWS_PATH_WEB.'/pay?pay='.$GLOBALS["content"]["emailer"]["paylink_id"]; ?>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
