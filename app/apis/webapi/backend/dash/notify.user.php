@@ -432,6 +432,11 @@
                                 if($content['mindCourseFLag'] ==1){
                                             $template_email = "subs.init.mindschool.success";
                                 }
+                            
+                if($content['mindCourseFLag'] ==1){
+                           $receipt_data = FALSE;
+                }
+                                
                 if(!empty($receipt_data) ){
 
                     $pdf = new PDFgen($receipt_data);
