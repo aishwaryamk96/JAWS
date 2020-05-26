@@ -338,7 +338,12 @@
                                         }
                                 
                                 }
-				else if ( $payment_done_through == "system" ) $context = "subs.init.re";
+				else if ( $payment_done_through == "system" ) {
+                                    $context = "subs.init.re";
+                                    if($content['mindCourseFLag'] ==1){
+                                                    $context = "subs.init.re.mindschool";
+                                            }
+                                }
 			} else {
 				// payment using instalment, only possible through kform. for 2nd instalment onwards, check due date. based on due date template changes.
 				if( empty($due_date) && $instl_num == 1 ){
@@ -350,14 +355,23 @@
 				} else {
 					$days = floor((strtotime($due_date) - time())/(60*60*24));
 					if( $days >= 7 ){
-                        $context = "subs.instl.notify.due";
-                    } else if( $days < 7 && $days >= 2 ){
-                        $context = "subs.instl.notify.remind";
-                    } else if( $days < 2/*  && $days >= 0  */){
-                        $context = "subs.instl.notify.warn";
-                    } else{
-                        $context = "none";
-                    }
+                                            $context = "subs.instl.notify.due";
+                                            if($content['mindCourseFLag'] ==1){
+                                                    $context = "subs.instl.notify.due.mindschool";
+                                            }
+                                        } else if( $days < 7 && $days >= 2 ){
+                                            $context = "subs.instl.notify.remind";
+                                            if($content['mindCourseFLag'] ==1){
+                                                    $context = "subs.instl.notify.remind.mindschool";
+                                            }
+                                        } else if( $days < 2/*  && $days >= 0  */){
+                                            $context = "subs.instl.notify.warn";
+                                             if($content['mindCourseFLag'] ==1){
+                                                    $context = "subs.instl.notify.warn.mindschool";
+                                            }
+                                        } else{
+                                            $context = "none";
+                                        }
 				}
 			}
 		} else if( !empty($instl_num) && $context == "disable_package" ){
@@ -522,6 +536,7 @@
 			break;
 
 			case "subs.init.re":
+                        case "subs.init.re.mindschool":
 				// Sent to users requesting subscription coming from website.
 
 				if ((!isset($user["lms_soc"])) || (strlen($user["lms_soc"]) == 0)){
@@ -532,7 +547,9 @@
 
 				// Send Emails
 				$template_email = "subs.init.re";
-
+                                if($content['mindCourseFLag'] ==1){
+                                    $template_email = "subs.init.re.mindschool";
+                                }
 				send_email($template_email, array("to" => $email), $content);
 
 				$sent_mail = true;
@@ -542,6 +559,9 @@
 			case "subs.instl.notify.warn":
 			case "subs.instl.notify.remind":
 			case "subs.instl.notify.due":
+                        case "subs.instl.notify.warn.mindschool":
+			case "subs.instl.notify.remind.mindschool":
+			case "subs.instl.notify.due.mindschool":
 			// First email notification for installment due.
 
 				// Prep email Content
