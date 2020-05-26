@@ -493,6 +493,9 @@
 				 $template_email .= ".edunxt";
 				}
 
+                                if($content['mindCourseFLag'] ==1){
+                           $receipt_data = FALSE;
+                }
                 if(!empty($receipt_data) ){
 
                     $pdf = new PDFgen($receipt_data);
