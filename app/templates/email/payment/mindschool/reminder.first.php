@@ -391,7 +391,7 @@
                                                                     <tr>
                                                                         <td>
                                                                     <![endif]-->
-                                                                        <table border="1" bgcolor="#E6FBFF" cellpadding="5" cellspacing="5" width="100%" align="center" style="background-color: #E6FBFF; border: 1px solid #00A8E1; border-collapse: collapse; border-spacing: 1; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
+                                                                        <table border="1" bgcolor="#e65123" cellpadding="5" cellspacing="5" width="100%" align="center" style="background-color: #ffcc; border: 2px solid #e65123; border-collapse: collapse; border-spacing: 1; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
                                                                         <tr>
                                                                             <td>
                                                                             <!--[if (gte mso 9)|(IE)]>
