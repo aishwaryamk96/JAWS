@@ -510,6 +510,7 @@
         if($content['mindCourseFLag'] == 1){
             if(!send_email($template, $email_info, $content)) {
             activity_create("critical", $template, "fail", "", "", "", "", "Receipt Email Library Returned False !", "logged");
+            }
         }else if(!send_email_with_attachment($template, $email_info, $content, $attachments)) {
             activity_create("critical", "subs.email", "fail", "", "", "", "", "Receipt Email Library Returned False !", "logged");
         }
