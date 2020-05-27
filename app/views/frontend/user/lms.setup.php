@@ -251,14 +251,14 @@
 		 <div class="page bkg active">  
                      
                                 <?php if($mFlag == 1){  ?>
-                     <div class="header"><?php echo "ACKNOWLEDGMENT";?></div>
+                     <div class="header"><?php echo "ACKNOWLEDGEMENT";?></div>
                                 <?php }else{ ?>
                                 <div class="header"><?php echo ($flag_paid ? (($instl_count == 1) ? "Congratulations" : "Payment Successfull") : "Setup Your Access"); ?></div>
 				<?php	} ?>
 				<div class="text">
 					<br/>
                                         <?php if($mFlag == 1){ ?>
-                                            Congratulations on you enrollment! Please check you email for confirmation of payment. Our Admissions team will get in touch with you shortly.
+                                            Congratulations on your enrollment! Please check your email for confirmation of payment. Our Admissions team will get in touch with you shortly.
                                             
                                        
 					<?php }else if ($flag_paid) {

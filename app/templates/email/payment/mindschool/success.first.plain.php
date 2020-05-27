@@ -29,7 +29,7 @@
 
 Hello <?php echo ucfirst(strtolower($GLOBALS["content"]["emailer"]["fname"])); ?>,
 
-Welcome to Jigsaw Academy!
+Welcome to Manipal Innovation and Design!
 
 We have received your payment of <?php echo ((strcmp(strtolower($GLOBALS["content"]["emailer"]["currency"]), "inr") == 0) ? 'INR ' : 'USD ' ).number_format(intval($GLOBALS["content"]["emailer"]["sum"])); ?> for the course(s) listed below:
 
@@ -92,12 +92,12 @@ Since you have opted to finance your enrolment in instalments an email reminder 
 
 <?php $count ++; }  } ?>
 <?php if ($GLOBALS["content"]["emailer"]["allow_setup"]) { ?>
-What's next?
+<!--What's next?
 Get access to the Jigsaw Learning Center (JLC).
 Please copy and paste this link in your browser window.
 <?php echo JAWS_PATH_WEB.'/setupaccess?user='.$GLOBALS["content"]["emailer"]["user_webid"]; ?>
 
-The only way to access the Jigsaw Learning Center is through successful setup completion. Queries or assistance? Please reach out to the Jigsaw Support Team.
+The only way to access the Jigsaw Learning Center is through successful setup completion. Queries or assistance? Please reach out to the Jigsaw Support Team.-->
 
 Happy Learning!
 <?php } else { ?>

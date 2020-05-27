@@ -193,7 +193,7 @@
                                                                                 <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 20px; padding-bottom: 20px;" align="center">Hello <?php echo ucfirst(strtolower($GLOBALS["content"]["emailer"]["fname"])); ?>, </td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 20px; padding-bottom: 20px;" align="center">Welcome to Jigsaw Academy! </td>
+                                                                                <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 20px; padding-bottom: 20px;" align="center">Welcome to Manipal Innovation and Design! </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-bottom: 12px;" align="center">You have successfully enrolled.
@@ -610,12 +610,12 @@
                                                                             <tr>
                                                                                 <td class="h1" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 20px; padding-top: 15px;" align="center"><b>What's next?</b></td>
                                                                             </tr>
-                                                                            <tr>
+<!--                                                                            <tr>
                                                                                 <td class="h1" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px;" align="center">Get access to the <a style="color: #00A8E1;text-decoration: none;" href="<?php echo JAWS_PATH_WEB.'/setupaccess?user='.$GLOBALS["content"]["emailer"]["user_webid"]; ?>">Jigsaw Learning Center (JLC).</a></td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="h1" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 15px; padding-bottom: 20px;" align="center">Use your own social ID to login.</td>
-                                                                            </tr>
+                                                                            </tr>-->
                                                                         </table>
                                                                     </td>
                                                                 </tr>
@@ -654,11 +654,11 @@
                                                                             <tr>
                                                                                 <td align="center">
                                                                                     <!-- CTA -->
-                                                                                    <div class="btn cta" lang="x-btn" style="font-family: 'Montserrat-Thick', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 15px; text-transform: uppercase;">
-                                                                                        <a href="<?php echo JAWS_PATH_WEB.'/setupaccess?user='.$GLOBALS["content"]["emailer"]["user_webid"]; ?>" style="background-color: #F7941D; border-color: #F7941D; border-radius: 0px; border-style: solid; border-width: 13px 16px; color: #ffffff; display: inline-block; letter-spacing: 1px; max-width: 300px; min-width: 110px; text-align: center; text-decoration: none; text-transform: uppercase; transition: all 0.2s ease-in;">
+<!--                                                                                    <div class="btn cta" lang="x-btn" style="font-family: 'Montserrat-Thick', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 15px; text-transform: uppercase;">
+                                                                                        <a href="<?php //echo JAWS_PATH_WEB.'/setupaccess?user='.$GLOBALS["content"]["emailer"]["user_webid"]; ?>" style="background-color: #F7941D; border-color: #F7941D; border-radius: 0px; border-style: solid; border-width: 13px 16px; color: #ffffff; display: inline-block; letter-spacing: 1px; max-width: 300px; min-width: 110px; text-align: center; text-decoration: none; text-transform: uppercase; transition: all 0.2s ease-in;">
                                                                                             <span style="float:left;text-align:left;">jlc access > </span>
                                                                                         </a>
-                                                                                    </div>
+                                                                                    </div>-->
                                                                                     <!-- END CTA -->
                                                                                 </td>
                                                                             </tr>
@@ -697,16 +697,16 @@
                                                                 <tr>
                                                                     <td style="padding-left: 12px; padding-right: 12px;">
                                                                         <table border="0" cellpadding="0" cellspacing="0" class="basetable" width="100%" align="left" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; table-layout: fixed; width: 100%;">
-                                                                            <tr>
+<!--                                                                            <tr>
                                                                                 <td class="h1" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 12px; line-height: 17px; padding-top: 12px;" align="center">If you are unable to click on the button, please copy and paste the link below in your browser window: </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="p1 p1-cta" style="color: #00A8E1; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 12px; line-height: 20px; padding-bottom: 10px;" align="center"> <?php echo JAWS_PATH_WEB.'/setupaccess?user='.$GLOBALS["content"]["emailer"]["user_webid"]; ?>
                                                                                 </td>
-                                                                            </tr>
-                                                                            <tr>
+                                                                            </tr>-->
+<!--                                                                            <tr>
                                                                                 <td class="p1 p1-cta" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 15px; padding-bottom: 20px;" align="center">The only way to access the Jigsaw Learning Center is through successful setup completion. Queries or assistance? Please reach out to the Jigsaw Support Team.</td>
-                                                                            </tr>
+                                                                            </tr>-->
                                                                             <tr>
                                                                                 <td class="h1" style="color: #e65123; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 20px; line-height: 20px;" align="center">Happy Learning!</td>
                                                                             </tr>
