@@ -424,12 +424,13 @@
 				LEFT JOIN
 					payment_link AS link
 						ON link.instl_id = instl.instl_id
-				WHERE
-					instl.pay_id = ".$package["pay_id"]." AND instl.instl_edited != 2 
+				WHERE				
+					instl.pay_id = ".$package["pay_id"]."
 				ORDER BY
 					instl.instl_id ASC";
-                        
-                        //JA-57 changes ends - added " AND instl.instl_edited != 2"
+			
+//JA-57 REVERTED BACK THE query                         -
+//JA-57 changes ends - added " AND instl.instl_edited != 2"
                         
 			$res_instl = db_query($query);
 			$package["instl"] = $res_instl;
