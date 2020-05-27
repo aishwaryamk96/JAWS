@@ -80,7 +80,7 @@ function updateData($instlData) {
     //UPDATING INSTALLMENT STARTS
     $updateInstlQuery = " UPDATE payment_instl SET ";
 
-    $instlEditedCol .= " instl_edited = ( CASE ";
+    $instlEditedCol = " instl_edited = ( CASE ";
     $instlEditedCase = '';
     //For install amount
     $amntCol = " ,sum = ( CASE ";
@@ -138,13 +138,13 @@ function updateData($instlData) {
                 break;
             case 2:// installment is deleted
                 if ($oldInstl['status'] != 'paid') {
-                    $instlIdList[] = $delDiscInstlList = $oldInstl['instl_id'];
+                    $instlIdList[] = $delDiscInstlList[] = $oldInstl['instl_id'];
                     $instlEditedCase .= " WHEN instl_id = " . $oldInstl['instl_id'] . " THEN " . db_sanitize($instlActionId);
                 }
                 break;
             case 3:// installment is discounted
                 if ($oldInstl['status'] != 'paid') {
-                    $instlIdList[] = $delDiscInstlList = $oldInstl['instl_id'];
+                    $instlIdList[] = $delDiscInstlList[] = $oldInstl['instl_id'];
                     $instlEditedCase .= " WHEN instl_id = " . $oldInstl['instl_id'] . " THEN " . db_sanitize($instlActionId);
                 }
                 break;
@@ -180,7 +180,6 @@ function updateData($instlData) {
             $disableLinkStatus = '';
             if (!empty($delDiscInstlList) && count($delDiscInstlList) > 0) {
                 $disableLinkStatus = db_update_exec("UPDATE payment_link set status = 'disabled' WHERE instl_id IN (" . implode(",", $delDiscInstlList) . ") ");
-
                 //If existing payment-links were not disabled
                 if ($disableLinkStatus === false) {
                     $errorMsg[] = "Package Installments updated but Payment Links update failed!.";
@@ -256,7 +255,7 @@ function creatInstallments($newInstlData, $errorMsg = []) {
             $newInstlArr[$newCnt]['instl_total'] = db_sanitize($latestTotalInstallments);
             $newInstlArr[$newCnt]['sum'] = db_sanitize($instlData['new_amnt']);
             $newInstlArr[$newCnt]['currency'] = db_sanitize('inr');
-            $newInstlArr[$newCnt]['due_days'] = db_sanitize($instlData['new_duedays']);
+            $newInstlArr[$newCnt]['due_days'] = $instlData['new_duedays']?db_sanitize($instlData['new_duedays']):'null';
             $newInstlArr[$newCnt]['due_date'] = db_sanitize((new DateTime(($instlData['new_date'])))->format('Y-m-d H:i:s'));
             $newInstlArr[$newCnt]['pay_mode'] = db_sanitize($payMode);
             $newInstlArr[$newCnt]['status'] = db_sanitize($status);
