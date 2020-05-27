@@ -25,7 +25,7 @@ try {
     //Check the eny lead basic cron running
     
     $cronFlag = checkCronStatus($cronTracker);
-
+	
     if ($cronFlag == TRUE) {
 
         $errMsg = "Already Cron is running . Datetime :" . date(" Y-m-d H:i:s");
@@ -53,6 +53,12 @@ try {
             echo "\nLead is " . $compiledLead[0]['lead_id'];
             $apiPayload = newLsCRMActivity($compiledLead);
             
+			// Corporate lead send email
+			$is_corporate_lead = $compiledLead[0]['referer'];
+			if (strpos($is_corporate_lead, 'corporate') !== false) {
+				sendCorporateLeadEmail($compiledLead[0]);
+			}
+			
             //Trigger LS API
             $lsApiResult = getLSApi($apiPayload, $compiledLead);
         }
@@ -101,4 +107,18 @@ function compiledLeadCronfailure($errorFlag = '', $cronTracker) {
         error_clear_last();
         exit();
     }
+}
+
+/*
+* This function is called for corporate lead email
+*/
+function sendCorporateLeadEmail($compiledLead)
+{
+	$content = [
+		"name" => $compiledLead['name'],
+		"email" => $compiledLead["email"],
+		"phone" => $compiledLead["phone"],
+		"title" => 'Corporate Lead',
+	];
+	send_email("corporate.email.lead", '', $content);	
 }
