@@ -45,9 +45,14 @@
 
 	// Clause Creater
 	$where = "";
-	function where_clause($name, $operator, $value, &$where) {
+	function where_clause($name, $operator, $value, &$where, $joiner="") {
 
-		$where .= strlen($where) > 0 ? "AND " : "";
+//		$where .= strlen($where) > 0 ? "AND " : "";
+if(!empty($joiner)){
+                    $where .= strlen($where) > 0 ?  $joiner : "";                
+                }else{
+                     $where .= strlen($where) > 0 ? "AND " : "";
+                }
 		$where .= $name." ".$operator." ".$value." ";
 
 	}
@@ -161,14 +166,14 @@
 
 		}
 		else {
-			//where_clause("package.creator_id", "=", $_POST["agent"], $where);
+			where_clause("package.creator_id", "=", $_POST["agent"], $where);
                     //JA-168 fix 
-                    if(empty($_POST["team"])){
+            /*        if(empty($_POST["team"])){
                     where_clause("package.creator_id", "IN", "(SELECT user_id FROM team WHERE team_id=".$_POST["agent"].")", $where);
                     
                     }else{
 			where_clause("package.creator_id", "=", $_POST["agent"], $where);
-                    }
+                    }*/
                     //JA-168 fix 
 		}
 
@@ -291,6 +296,8 @@
 
 		where_clause("package.creator_type", "=", db_sanitize("agent"), $where);
 		where_clause("package.creator_id", "IN", "(SELECT user_id FROM team WHERE team_id=".$_POST["team"].")", $where);
+if( empty($_POST["agent"]) && empty($_POST["lead"]) ){                 
+where_clause(" package.creator_id ", "=", db_sanitize($_SESSION["user"]["user_id"]), $where, "OR");}
 
 	}
 	// END: Where team=
@@ -356,8 +363,8 @@
 	}
 	$query .= ((strlen($where) > 0) ? $where : '1')." ORDER BY package.package_id ".$sort." LIMIT 1000;";
 
-	//echo $query." ------ ".$where." ***************** ".json_encode($_POST);
-	//die();
+//	echo $query." ------ ".$where." ***************** ".json_encode($_POST);
+//	die();
 
 	$res = db_query($query);
 	if (!isset($res[0])) {
