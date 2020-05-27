@@ -28,7 +28,9 @@ $currentInstlDataArr = [];
 $validationStatus = validateEditInstallment($_POST);
 
 if (count($validationStatus) > 1 && $validationStatus['status'] === TRUE) {
-
+    //JA-57 START
+    updatePaymentHistory($validationStatus);
+    //JA-57 END
     updateData($validationStatus);
 } else {
     die(json_encode(array("status" => false, "message" => "There was error processing data. Please try again after sometime!")));
@@ -65,7 +67,24 @@ function validateEditInstallment($apiInput) {
     //case of successfull db record found , return data
     return ['status' => TRUE, 'dbInstlData' => $currentInstlDataArr, 'apiInput' => $apiInput];
 }
+//JA-57 START
+function  updatePaymentHistory($instlData){
+    $apiInput = $instlData['apiInput'];
+    $newInstlData = $apiInput['newInst'];
+    unset($newInstlData[0]);
+    $createpayHistQuery = " INSERT INTO payment_history ( package_id, subs_id, pay_id, payment_history, created_by) VALUES (";
+    $createpayHistQuery .= $apiInput["package_id"]. " , ";
+    $createpayHistQuery .= $apiInput["subs_id"]. " , ";
+    $createpayHistQuery .= $apiInput["pay_id"]. " , ";
+    $createpayHistQuery .= "'".json_encode($newInstlData). "' , ";
+    $createpayHistQuery .= $apiInput["user_id"];
+    $createpayHistQuery .= " );";
+    $status = db_update_exec($createpayHistQuery, true);
+    if($status === false)
+        die(json_encode(array("status" => FALSE, "message" => " creating history failed !.")));
 
+}
+//JA-57 END
 function updateData($instlData) {
 
     $dbInstlData = $instlData['dbInstlData'];
