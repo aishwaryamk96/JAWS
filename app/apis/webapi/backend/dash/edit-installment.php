@@ -102,12 +102,13 @@ function updateData($instlData) {
         switch ($instlActionId) {
             case 1: // installment is updated
                 if ($oldInstl['status'] != 'paid') {
-                    $instlIdList[] = $oldInstl['instl_id'];
-                    $instlEditedCase .= " WHEN instl_id = " . $oldInstl['instl_id'] . " THEN " . db_sanitize($instlActionId);
+                    
                     //For install amount
                     // $amntCol = " sum CASE ";
                     //$amntCase = '';
+                     $updateInstlIdFlag = 0;
                     if ($newInstlData[$instlIdx]['new_amnt'] >= 0 && $newInstlData[$instlIdx]['new_amnt'] != "") {
+                        $updateInstlIdFlag = 1;
                         $amntCase .= " WHEN instl_id = " . $oldInstl['instl_id'] . " THEN " . db_sanitize($newInstlData[$instlIdx]['new_amnt']);
                     }
 //                            if($amntCase != '' ){
@@ -118,6 +119,7 @@ function updateData($instlData) {
 //                            $dateCol = " due_date CASE ";
 //                            $dateCase = '';
                     if ($newInstlData[$instlIdx]['new_date'] != '') {
+                        $updateInstlIdFlag = 1;
                         $newDueDate = date("Y-m-d H:i:s", strtotime($newInstlData[$instlIdx]['new_date']));
                         $dateCase .= " WHEN instl_id = " . $oldInstl['instl_id'] . " THEN " . db_sanitize($newDueDate);
                     }
@@ -132,7 +134,13 @@ function updateData($instlData) {
 //                            $dueDaysCol = " due_days CASE ";
 //                            $dueDaysCase = '';
                     if ($newInstlData[$instlIdx]['new_duedays'] != '') {
+                        $updateInstlIdFlag = 1;
                         $dueDaysCase .= " WHEN instl_id = " . $oldInstl['instl_id'] . " THEN " . db_sanitize($newInstlData[$instlIdx]['new_duedays']);
+                    }
+                    if($updateInstlIdFlag == 1){
+                        $instlIdList[] = $oldInstl['instl_id'];
+                    
+                       $instlEditedCase .= " WHEN instl_id = " . $oldInstl['instl_id'] . " THEN " . db_sanitize($instlActionId); 
                     }
                 }
                 break;
@@ -170,6 +178,7 @@ function updateData($instlData) {
         //Prepare the complete UPDATE query
         $updateAllInstlQuery = " WHERE instl_id IN (" . implode(",", $instlIdList) . ") ";
         $updateInstlQuery .= $updateAllInstlQuery;
+       // echo $updateInstlQuery;die;
         //execute the UPDATE query
         $updateStatus = db_update_exec($updateInstlQuery);
 
@@ -214,6 +223,10 @@ function updateData($instlData) {
         die(json_encode(array("status" => false, "message" => $updateError)));
     }
 
+    //Update pkg total
+    if(!empty($instlIdList) && count($instlIdList)> 0 && empty($delDiscInstlList)){
+    $updateTotalSumQuery = db_update_exec(" UPDATE package SET sum_total = " . db_sanitize($apiInput['new_pkg_sum']) . ", instl_total =".db_sanitize($newInstlCntr)." WHERE package_id=" . db_sanitize($apiInput['package_id']));
+    }
     //@TODO send email function
     $mailStatus = true; //sendUpdatedInstallmentEmail();
     if ($mailStatus == true) {
