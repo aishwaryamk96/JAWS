@@ -253,6 +253,7 @@
 				$course_content = json_decode($res_meta[0]["content"], true);
 
 				$course[$count]["name"] = $res[0]["name"];
+                                $course[$count]["id"] = $res[0]["course_id"];
 				$course[$count]["learn_mode"] = ((strcmp($learn_mode, "1") == 0)? "Premium" : "Regular");
 				$course[$count]["desc"] = $res_meta[0]["desc"];
 				$course[$count]["img"] = $course_content["img_main_small"];
@@ -311,14 +312,29 @@
                 $comboCourseArr =array_keys(course_get_combo_arr($subsData[0]['combo']));
                
                 //MindCourse
-                $content['mindCourseFLag'] = 0;
-                if(in_array(302, $comboCourseArr)){ 
-                    $content['mindCourseFLag'] = 1;
-                }else if(in_array(142, $comboCourseArr)){
-                    $content['mindCourseFLag'] = 1;
-                }else if(in_array(144, $comboCourseArr)){
-                    $content['mindCourseFLag'] = 1;
+                $content['mindCourseFLag'] = $mindCourseFLag = 0;
+                               
+                $mindCourseFLag = 0;
+                if(empty($content['bundle_details'])){
+                    
+                    foreach($content['courses'] as $idx => $crsDetails){
+                       if($crsDetails['course_id'] == 302){
+                           $mindCourseFLag = 1;
+                       }
+                    }                    
+                }elseif(count($content['bundle_details'])> 0){
+                    if(in_array($content['bundle_details']['bundle_id'],[142,144])){
+                           $mindCourseFLag = 1;
+                       }
                 }
+                $content['mindCourseFLag'] = $mindCourseFLag;
+//                if(in_array(302, $comboCourseArr)){ 
+//                    $content['mindCourseFLag'] = 1;
+//                }else if(in_array(142, $comboCourseArr)){
+//                    $content['mindCourseFLag'] = 1;
+//                }else if(in_array(144, $comboCourseArr)){
+//                    $content['mindCourseFLag'] = 1;
+//                }
                 
 		// Prep email content
 		$content["user_webid"] = $user["web_id"];
@@ -338,7 +354,12 @@
                                         }
                                 
                                 }
-				else if ( $payment_done_through == "system" ) $context = "subs.init.re";
+				else if ( $payment_done_through == "system" ) {
+                                    $context = "subs.init.re";
+                                    if($content['mindCourseFLag'] ==1){
+                                                    $context = "subs.init.re.mindschool";
+                                            }
+                                }
 			} else {
 				// payment using instalment, only possible through kform. for 2nd instalment onwards, check due date. based on due date template changes.
 				if( empty($due_date) && $instl_num == 1 ){
@@ -350,14 +371,23 @@
 				} else {
 					$days = floor((strtotime($due_date) - time())/(60*60*24));
 					if( $days >= 7 ){
-                        $context = "subs.instl.notify.due";
-                    } else if( $days < 7 && $days >= 2 ){
-                        $context = "subs.instl.notify.remind";
-                    } else if( $days < 2/*  && $days >= 0  */){
-                        $context = "subs.instl.notify.warn";
-                    } else{
-                        $context = "none";
-                    }
+                                            $context = "subs.instl.notify.due";
+                                            if($content['mindCourseFLag'] ==1){
+                                                    $context = "subs.instl.notify.due.mindschool";
+                                            }
+                                        } else if( $days < 7 && $days >= 2 ){
+                                            $context = "subs.instl.notify.remind";
+                                            if($content['mindCourseFLag'] ==1){
+                                                    $context = "subs.instl.notify.remind.mindschool";
+                                            }
+                                        } else if( $days < 2/*  && $days >= 0  */){
+                                            $context = "subs.instl.notify.warn";
+                                             if($content['mindCourseFLag'] ==1){
+                                                    $context = "subs.instl.notify.warn.mindschool";
+                                            }
+                                        } else{
+                                            $context = "none";
+                                        }
 				}
 			}
 		} else if( !empty($instl_num) && $context == "disable_package" ){
@@ -418,6 +448,11 @@
                                 if($content['mindCourseFLag'] ==1){
                                             $template_email = "subs.init.mindschool.success";
                                 }
+                            
+                if($content['mindCourseFLag'] ==1){
+                           $receipt_data = FALSE;
+                }
+                                
                 if(!empty($receipt_data) ){
 
                     $pdf = new PDFgen($receipt_data);
@@ -474,6 +509,9 @@
 				 $template_email .= ".edunxt";
 				}
 
+                                if($content['mindCourseFLag'] ==1){
+                           $receipt_data = FALSE;
+                }
                 if(!empty($receipt_data) ){
 
                     $pdf = new PDFgen($receipt_data);
@@ -522,6 +560,7 @@
 			break;
 
 			case "subs.init.re":
+                        case "subs.init.re.mindschool":
 				// Sent to users requesting subscription coming from website.
 
 				if ((!isset($user["lms_soc"])) || (strlen($user["lms_soc"]) == 0)){
@@ -532,7 +571,9 @@
 
 				// Send Emails
 				$template_email = "subs.init.re";
-
+                                if($content['mindCourseFLag'] ==1){
+                                    $template_email = "subs.init.re.mindschool";
+                                }
 				send_email($template_email, array("to" => $email), $content);
 
 				$sent_mail = true;
@@ -542,6 +583,9 @@
 			case "subs.instl.notify.warn":
 			case "subs.instl.notify.remind":
 			case "subs.instl.notify.due":
+                        case "subs.instl.notify.warn.mindschool":
+			case "subs.instl.notify.remind.mindschool":
+			case "subs.instl.notify.due.mindschool":
 			// First email notification for installment due.
 
 				// Prep email Content
