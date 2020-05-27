@@ -251,7 +251,7 @@
 		 <div class="page bkg active">  
                      
                                 <?php if($mFlag == 1){  ?>
-                     <div class="header"><?php echo "ACKNOWLEDGEMENT";?></div>
+                     <div class="header"><?php echo "ACKNOWLEDGMENT";?></div>
                                 <?php }else{ ?>
                                 <div class="header"><?php echo ($flag_paid ? (($instl_count == 1) ? "Congratulations" : "Payment Successfull") : "Setup Your Access"); ?></div>
 				<?php	} ?>
@@ -906,7 +906,7 @@
                                 <?php if($mFlag == 1){ ?>
                                     
                                     <div class="panel left">					
-					<div class="link-button active" id="btn-mind-website">Back to website</div>
+					<div class="link-button active" id="btn-mind-website">GO TO MIND WEBSITE</div>
                                     </div>
                                 <?php }else{ ?>
 				<div class="panel left">
