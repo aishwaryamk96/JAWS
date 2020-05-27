@@ -101,16 +101,16 @@ The only way to access the Jigsaw Learning Center is through successful setup co
 
 Happy Learning!
 <?php } else { ?>
-We require a little time (upto 24hrs) to get your course materials on the Learning Center ready. Keep checking your email for the access details - it should be with you very soon!
+We require a little time to get your course materials on the Learning Center ready. Keep checking your email for the access details - it should be with you very soon!
 
-If you’d like to get started though, we recommend reading up on the latest in the world of analytics and Big Data on the official Jigsaw blog at http://analyticstraining.com
+<!--If you’d like to get started though, we recommend reading up on the latest in the world of analytics and Big Data on the official Jigsaw blog at http://analyticstraining.com-->
 
 Happy Learning!
 <?php } ?>
 
-Contact: <?php echo $GLOBALS['content']['footer']['phone'] ?? '+91-90192-17000'; ?>
-Email: support@jigsawacademy.com
+Contact: <?php echo $GLOBALS['content']['footer']['phone'] ?? '+91-90193-17000'; ?>
+Email: know@mind-global.com
 Jigsaw Academy Pvt. Ltd. <?php echo date("Y"); ?>
 
 =================================================
-By proceeding you have accepted our Terms and Conditions [ https://www.jigsawacademy.com/terms-conditions/ ].This e-mail and any attachments with it, are for the sole use of the intended recipient(s) and may contain confidential and privileged information. Unauthorized access to this e-mail (or attachments) and disclosure or copying of its contents or any action taken in reliance on this e-mail is strictly prohibited and may be unlawful. Unintended recipients must notify the sender immediately by e-mail/phone & delete it from their system without making any copies or disclosing it to a third person. Before opening any attachments please check them for viruses and defects.
+By proceeding you have accepted our Terms and Conditions [ https://mind-global.com/terms-and-conditions/ ].This e-mail and any attachments with it, are for the sole use of the intended recipient(s) and may contain confidential and privileged information. Unauthorized access to this e-mail (or attachments) and disclosure or copying of its contents or any action taken in reliance on this e-mail is strictly prohibited and may be unlawful. Unintended recipients must notify the sender immediately by e-mail/phone & delete it from their system without making any copies or disclosing it to a third person. Before opening any attachments please check them for viruses and defects.

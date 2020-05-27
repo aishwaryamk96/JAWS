@@ -54,9 +54,9 @@ Please reach out to Jigsaw Support team in case you have any queries or require 
 
 Happy Learning!
 
-Contact: <?php echo $GLOBALS['content']['footer']['phone'] ?? '+91-90192-17000'; ?>
-Email: support@jigsawacademy.com
+Contact: <?php echo $GLOBALS['content']['footer']['phone'] ?? '+91-90193-17000'; ?>
+Email: know@mind-global.com
 Jigsaw Academy Pvt. Ltd. <?php echo date("Y"); ?>
 
 =================================================
-By proceeding you have accepted our Terms and Conditions [ https://www.jigsawacademy.com/terms-conditions/ ].This e-mail and any attachments with it, are for the sole use of the intended recipient(s) and may contain confidential and privileged information. Unauthorized access to this e-mail (or attachments) and disclosure or copying of its contents or any action taken in reliance on this e-mail is strictly prohibited and may be unlawful. Unintended recipients must notify the sender immediately by e-mail/phone & delete it from their system without making any copies or disclosing it to a third person. Before opening any attachments please check them for viruses and defects.
+By proceeding you have accepted our Terms and Conditions [ https://mind-global.com/terms-and-conditions/ ].This e-mail and any attachments with it, are for the sole use of the intended recipient(s) and may contain confidential and privileged information. Unauthorized access to this e-mail (or attachments) and disclosure or copying of its contents or any action taken in reliance on this e-mail is strictly prohibited and may be unlawful. Unintended recipients must notify the sender immediately by e-mail/phone & delete it from their system without making any copies or disclosing it to a third person. Before opening any attachments please check them for viruses and defects.

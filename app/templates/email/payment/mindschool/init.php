@@ -839,7 +839,7 @@
                                                                                          <tr>
                                                                                              <td style="font-family: 'Montserrat-Thick', Helvetica, Arial, sans-serif; font-size: 14px; color: #FFFFFF;">
                                                                                                  <img src="https://www.jigsawacademy.com/emailer/images/phone-icon.jpg" height="18" width="25" />
-                                                                                                 <?php echo $GLOBALS['content']['footer']['phone'] ?? '+91-90192-17000'; ?>
+                                                                                                 <?php echo $GLOBALS['content']['footer']['phone'] ?? '+91-90193-17000'; ?>
                                                                                              </td>
                                                                                          </tr>
                                                                                      </table>
@@ -896,7 +896,7 @@
                                                                                  <td style="padding-top:10px;">
                                                                                      <table border="0" cellpadding="0" cellspacing="0" class="basetable" width="100%" align="left" style="border: none; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;">
                                                                                          <tr>
-                                                                                         <td valign="bottom" style="font-family: 'Montserrat-Thick', Helvetica, Arial, sans-serif; font-size: 12px; color: #FFFFFF;  padding-top: 7px; text-align: center;">&copy; Jigsaw Academy Education Pvt. Ltd.</td>
+                                                                                         <td valign="bottom" style="font-family: 'Montserrat-Thick', Helvetica, Arial, sans-serif; font-size: 12px; color: #FFFFFF;  padding-top: 7px; text-align: center;">&copy; Manipal Innovation and Design.</td>
                                                                                          </tr>
                                                                                      </table>
                                                                                  </td>
@@ -951,7 +951,7 @@
                                  <td align="center">
                                      <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: none; border-collapse: collapse; border-spacing: 0; max-width: 700px; mso-table-lspace: 0; mso-table-rspace: 0; width: 100%;" >
                                          <tr>
-                                             <td class="h1" style="color: #717172; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 8px; line-height: 10px;text-align: justify;" align="left">By proceeding you have accepted our <a href="https://www.jigsawacademy.com/terms-conditions/">Terms and Conditions</a>.This e-mail and any attachments with it, are for the sole use of the intended recipient(s) and may contain confidential and privileged information. Unauthorized access to this e-mail (or attachments) and disclosure or copying of its contents or any action taken in reliance on this e-mail is strictly prohibited and may be unlawful. Unintended recipients must notify the sender immediately by e-mail/phone &amp; delete it from their system without making any copies or disclosing it to a third person. Before opening any attachments please check them for viruses and defects.</td>
+                                             <td class="h1" style="color: #717172; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 8px; line-height: 10px;text-align: justify;" align="left">By proceeding you have accepted our <a href="https://mind-global.com/terms-and-conditions/">Terms and Conditions</a>.This e-mail and any attachments with it, are for the sole use of the intended recipient(s) and may contain confidential and privileged information. Unauthorized access to this e-mail (or attachments) and disclosure or copying of its contents or any action taken in reliance on this e-mail is strictly prohibited and may be unlawful. Unintended recipients must notify the sender immediately by e-mail/phone &amp; delete it from their system without making any copies or disclosing it to a third person. Before opening any attachments please check them for viruses and defects.</td>
                                          </tr>
                                      </table>
                                  </td>
