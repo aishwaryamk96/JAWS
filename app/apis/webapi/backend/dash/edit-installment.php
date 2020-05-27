@@ -179,6 +179,13 @@ function updateData($instlData) {
             //disable payment links for all DELETED/DISCOUNTED installments
             $disableLinkStatus = '';
             if (!empty($delDiscInstlList) && count($delDiscInstlList) > 0) {
+                //JA-57 START
+                // perform on delete instalment
+                $updateDeletedAt = db_update_exec("UPDATE payment_instl set status = 'disabled',deleted_at = '". date('Y-m-d H:i:s')."'  WHERE instl_id IN (" . implode(",", $delDiscInstlList) . ") ");
+                if($updateDeletedAt === false){
+                    $errorMsg[] = "Package Installment update failed for deleted instalment!.";
+                }
+                //JA-57 END
                 $disableLinkStatus = db_update_exec("UPDATE payment_link set status = 'disabled' WHERE instl_id IN (" . implode(",", $delDiscInstlList) . ") ");
                 //If existing payment-links were not disabled
                 if ($disableLinkStatus === false) {
