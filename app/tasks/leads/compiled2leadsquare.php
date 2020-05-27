@@ -56,7 +56,7 @@ try {
 			// Corporate lead send email
 			$is_corporate_lead = $compiledLead[0]['referer'];
 			if (strpos($is_corporate_lead, 'corporate') !== false) {
-				send_corporate_lead_email($compiledLead[0]);
+				sendCorporateLeadEmail($compiledLead[0]);
 			}
 			
             //Trigger LS API
@@ -110,13 +110,10 @@ function compiledLeadCronfailure($errorFlag = '', $cronTracker) {
 }
 
 /*
-*
+* This function is called for corporate lead email
 */
-function send_corporate_lead_email($compiledLead)
+function sendCorporateLeadEmail($compiledLead)
 {
-	//echo 'test locally corporate email called.=>';
-	//require_once('testemail.php');
-	
 	$content = [
 		"name" => $compiledLead['name'],
 		"email" => $compiledLead["email"],
