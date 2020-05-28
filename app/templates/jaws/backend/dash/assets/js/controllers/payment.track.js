@@ -28,12 +28,14 @@ console.log( $scope.filter);
                     if(pkg.instl[index].deleted){
                         pkg.instl[index].discounted = false;
                         pkg.instl[index].edited = 2;
-
+                        $scope.editButtonDisabled = false;
                     }else{
 
                         pkg.instl[index].edited = 1;
                     }
                 }
+                
+                
             };
 
             $scope.discountInstl = function(pkg, index){
@@ -105,6 +107,7 @@ console.log( $scope.filter);
                         }
                     });
                     pkg.instlSum = 0;
+                    pkg.instlNewSum = 0;
                     var remaingInstlLength = (pkg.instl.length - 1) - index;
                     var priceDiff = totalPrice - instlPriceTotal;
                     if(priceDiff < 0){
@@ -123,10 +126,12 @@ console.log( $scope.filter);
                                 inst.amntAdjst = 1;
                             }
                         }
-                        if(inst.pay_date){
+                        if(!inst.new_amnt){
                             pkg.instlSum+= Number(inst.sum);
+                            pkg.instlNewSum+= Number(inst.sum)
                         }else{
                             pkg.instlSum+=Number(inst.new_amnt);
+                            pkg.instlNewSum+= Number(inst.new_amnt);
                         }
                     });
                     $scope.editButtonDisabled = false;
@@ -139,7 +144,7 @@ console.log( $scope.filter);
                 var err = 0;
                 var errIndx = '';
             $scope.saveInstallmentAction = function (pkg) {
-
+                $scope.editButtonDisabled = true;
                 err= 0; errIndx = '';
                 var updatedInstallment = {};
 
@@ -180,6 +185,7 @@ console.log( $scope.filter);
                     updatedInstallment.subs_id = pkg.subs_id;
                     updatedInstallment.pay_id = pkg.pay_id;
                     updatedInstallment.user_id = pkg.user_id;
+                    updatedInstallment.new_pkg_sum = pkg.instlNewSum;
 
                     $http({
                         url: installUpdateUrl, method: "POST", data: updatedInstallment,
@@ -636,6 +642,7 @@ console.log( $scope.filter);
                     //JA-57 changes
                     user_id:pkg.user_id,
                     instlSum:instlSum,
+                    instlNewSum:'',
                     subsStart:pkg.start_date,
                     subsEnd:pkg.end_date,
                     endDueDays:Number(pkg.access_duration),

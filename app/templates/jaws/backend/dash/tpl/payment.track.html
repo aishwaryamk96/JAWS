@@ -474,10 +474,12 @@
                              </div>
                             <div class="col-md-2 instlEditData">
                                 <div class="col-md-12">
-                                     <div ng-if="!instl.pay_date && ($index == (pkg.instl.length - 1))" class="col-md-6 checkbox alt check-success" style='margin-left: -7px' >
-                                        <input type="checkbox" value="" id="instl-discount-{{$index}}" ng-model="instl.discounted"   ng-change="discountInstl(pkg,$index);" class="instlDiscount ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched">
-                                        <label class="instlDiscount" for="instl-discount-{{$index}}" >Discount</label>
-                                        </div>
+                                    <!--JA-57 START-->
+                                     <!--<div ng-if="!instl.pay_date && ($index == (pkg.instl.length - 1))" class="col-md-6 checkbox alt check-success" style='margin-left: -7px' >-->
+                                        <!--<input type="checkbox" value="" id="instl-discount-{{$index}}" ng-model="instl.discounted"   ng-change="discountInstl(pkg,$index);" class="instlDiscount ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched">-->
+                                        <!--<label class="instlDiscount" for="instl-discount-{{$index}}" >Discount</label>-->
+                                        <!--</div>-->
+                                    <!--JA-57 END-->
                                     <div ng-if="!instl.pay_date" class="col-md-6 checkbox alt check-success" style='margin-left: 5px' >
                                         <input type="checkbox" ng-value="" id="instl-deleted-{{$index}}" ng-model="instl.deleted"  ng-change="deleteInstl(pkg,$index);" class="instlDiscount ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched">
                                         <label class="instlDiscount" for="instl-deleted-{{$index}}" >Delete</label>
@@ -489,8 +491,9 @@
                             <div class="col-md-1 instlEditData"></div>
                                     
                             <div class="col-md-5 instlEditData">
-                                <span class="col-md-5"> Installment Total:  <span class="bold">{{pkg.instlSum}}</span></span>
-                                <span class="col-md-5"> Package Total : <span class="bold">{{pkg.pricing.total}}</span></span>
+                               
+                                <span class="col-md-5"> Package Total : <span class="bold">{{ pkg.pricing.total}}</span></span>
+                                 <span class="col-md-7" style="color:red!important"> New Package Total:  <span class="bold">{{pkg.instlNewSum}}</span></span>
 <!--                                <span> Difference : </span><span>{{pkg.diffAmnt}}</span>
                                 <span> Extra : </span><span>{{pkg.extraAmnt}}</span>-->
                                 

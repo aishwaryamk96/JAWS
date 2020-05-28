@@ -28,7 +28,9 @@ $currentInstlDataArr = [];
 $validationStatus = validateEditInstallment($_POST);
 
 if (count($validationStatus) > 1 && $validationStatus['status'] === TRUE) {
-
+    //JA-57 START
+    updatePaymentHistory($validationStatus);
+    //JA-57 END
     updateData($validationStatus);
 } else {
     die(json_encode(array("status" => false, "message" => "There was error processing data. Please try again after sometime!")));
@@ -65,7 +67,24 @@ function validateEditInstallment($apiInput) {
     //case of successfull db record found , return data
     return ['status' => TRUE, 'dbInstlData' => $currentInstlDataArr, 'apiInput' => $apiInput];
 }
+//JA-57 START
+function  updatePaymentHistory($instlData){
+    $apiInput = $instlData['apiInput'];
+    $newInstlData = $apiInput['newInst'];
+    unset($newInstlData[0]);
+    $createpayHistQuery = " INSERT INTO payment_history ( package_id, subs_id, pay_id, payment_history, created_by) VALUES (";
+    $createpayHistQuery .= $apiInput["package_id"]. " , ";
+    $createpayHistQuery .= $apiInput["subs_id"]. " , ";
+    $createpayHistQuery .= $apiInput["pay_id"]. " , ";
+    $createpayHistQuery .= "'".json_encode($newInstlData). "' , ";
+    $createpayHistQuery .= $apiInput["user_id"];
+    $createpayHistQuery .= " );";
+    $status = db_update_exec($createpayHistQuery, true);
+    if($status === false)
+        die(json_encode(array("status" => FALSE, "message" => " creating history failed !.")));
 
+}
+//JA-57 END
 function updateData($instlData) {
 
     $dbInstlData = $instlData['dbInstlData'];
@@ -80,7 +99,7 @@ function updateData($instlData) {
     //UPDATING INSTALLMENT STARTS
     $updateInstlQuery = " UPDATE payment_instl SET ";
 
-    $instlEditedCol .= " instl_edited = ( CASE ";
+    $instlEditedCol = " instl_edited = ( CASE ";
     $instlEditedCase = '';
     //For install amount
     $amntCol = " ,sum = ( CASE ";
@@ -102,12 +121,13 @@ function updateData($instlData) {
         switch ($instlActionId) {
             case 1: // installment is updated
                 if ($oldInstl['status'] != 'paid') {
-                    $instlIdList[] = $oldInstl['instl_id'];
-                    $instlEditedCase .= " WHEN instl_id = " . $oldInstl['instl_id'] . " THEN " . db_sanitize($instlActionId);
+                    
                     //For install amount
                     // $amntCol = " sum CASE ";
                     //$amntCase = '';
+                     $updateInstlIdFlag = 0;
                     if ($newInstlData[$instlIdx]['new_amnt'] >= 0 && $newInstlData[$instlIdx]['new_amnt'] != "") {
+                        $updateInstlIdFlag = 1;
                         $amntCase .= " WHEN instl_id = " . $oldInstl['instl_id'] . " THEN " . db_sanitize($newInstlData[$instlIdx]['new_amnt']);
                     }
 //                            if($amntCase != '' ){
@@ -118,6 +138,7 @@ function updateData($instlData) {
 //                            $dateCol = " due_date CASE ";
 //                            $dateCase = '';
                     if ($newInstlData[$instlIdx]['new_date'] != '') {
+                        $updateInstlIdFlag = 1;
                         $newDueDate = date("Y-m-d H:i:s", strtotime($newInstlData[$instlIdx]['new_date']));
                         $dateCase .= " WHEN instl_id = " . $oldInstl['instl_id'] . " THEN " . db_sanitize($newDueDate);
                     }
@@ -132,19 +153,25 @@ function updateData($instlData) {
 //                            $dueDaysCol = " due_days CASE ";
 //                            $dueDaysCase = '';
                     if ($newInstlData[$instlIdx]['new_duedays'] != '') {
+                        $updateInstlIdFlag = 1;
                         $dueDaysCase .= " WHEN instl_id = " . $oldInstl['instl_id'] . " THEN " . db_sanitize($newInstlData[$instlIdx]['new_duedays']);
+                    }
+                    if($updateInstlIdFlag == 1){
+                        $instlIdList[] = $oldInstl['instl_id'];
+                    
+                       $instlEditedCase .= " WHEN instl_id = " . $oldInstl['instl_id'] . " THEN " . db_sanitize($instlActionId); 
                     }
                 }
                 break;
             case 2:// installment is deleted
                 if ($oldInstl['status'] != 'paid') {
-                    $instlIdList[] = $delDiscInstlList = $oldInstl['instl_id'];
+                    $instlIdList[] = $delDiscInstlList[] = $oldInstl['instl_id'];
                     $instlEditedCase .= " WHEN instl_id = " . $oldInstl['instl_id'] . " THEN " . db_sanitize($instlActionId);
                 }
                 break;
             case 3:// installment is discounted
                 if ($oldInstl['status'] != 'paid') {
-                    $instlIdList[] = $delDiscInstlList = $oldInstl['instl_id'];
+                    $instlIdList[] = $delDiscInstlList[] = $oldInstl['instl_id'];
                     $instlEditedCase .= " WHEN instl_id = " . $oldInstl['instl_id'] . " THEN " . db_sanitize($instlActionId);
                 }
                 break;
@@ -170,6 +197,7 @@ function updateData($instlData) {
         //Prepare the complete UPDATE query
         $updateAllInstlQuery = " WHERE instl_id IN (" . implode(",", $instlIdList) . ") ";
         $updateInstlQuery .= $updateAllInstlQuery;
+       // echo $updateInstlQuery;die;
         //execute the UPDATE query
         $updateStatus = db_update_exec($updateInstlQuery);
 
@@ -179,8 +207,14 @@ function updateData($instlData) {
             //disable payment links for all DELETED/DISCOUNTED installments
             $disableLinkStatus = '';
             if (!empty($delDiscInstlList) && count($delDiscInstlList) > 0) {
+                //JA-57 START
+                // perform on delete instalment
+                $updateDeletedAt = db_update_exec("UPDATE payment_instl set status = 'disabled',deleted_at = '". date('Y-m-d H:i:s')."'  WHERE instl_id IN (" . implode(",", $delDiscInstlList) . ") ");
+                if($updateDeletedAt === false){
+                    $errorMsg[] = "Package Installment update failed for deleted instalment!.";
+                }
+                //JA-57 END
                 $disableLinkStatus = db_update_exec("UPDATE payment_link set status = 'disabled' WHERE instl_id IN (" . implode(",", $delDiscInstlList) . ") ");
-
                 //If existing payment-links were not disabled
                 if ($disableLinkStatus === false) {
                     $errorMsg[] = "Package Installments updated but Payment Links update failed!.";
@@ -208,6 +242,10 @@ function updateData($instlData) {
         die(json_encode(array("status" => false, "message" => $updateError)));
     }
 
+    //Update pkg total
+    if(!empty($instlIdList) && count($instlIdList)> 0 && empty($delDiscInstlList)){
+    $updateTotalSumQuery = db_update_exec(" UPDATE package SET sum_total = " . db_sanitize($apiInput['new_pkg_sum']) . ", instl_total =".db_sanitize($newInstlCntr)." WHERE package_id=" . db_sanitize($apiInput['package_id']));
+    }
     //@TODO send email function
     $mailStatus = true; //sendUpdatedInstallmentEmail();
     if ($mailStatus == true) {
@@ -256,7 +294,7 @@ function creatInstallments($newInstlData, $errorMsg = []) {
             $newInstlArr[$newCnt]['instl_total'] = db_sanitize($latestTotalInstallments);
             $newInstlArr[$newCnt]['sum'] = db_sanitize($instlData['new_amnt']);
             $newInstlArr[$newCnt]['currency'] = db_sanitize('inr');
-            $newInstlArr[$newCnt]['due_days'] = db_sanitize($instlData['new_duedays']);
+            $newInstlArr[$newCnt]['due_days'] = $instlData['new_duedays']?db_sanitize($instlData['new_duedays']):'null';
             $newInstlArr[$newCnt]['due_date'] = db_sanitize((new DateTime(($instlData['new_date'])))->format('Y-m-d H:i:s'));
             $newInstlArr[$newCnt]['pay_mode'] = db_sanitize($payMode);
             $newInstlArr[$newCnt]['status'] = db_sanitize($status);
