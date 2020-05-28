@@ -17,6 +17,9 @@ register_shutdown_function("compiledLeadCronfailure", 1,$cronTracker);
 
 //Nload leads module
 load_module("leads");
+// TK064
+load_library("email"); 
+// TK064
 //cronstatustracker file name
 $cronTracker = "leadCompiledCron.txt";
 
@@ -51,13 +54,14 @@ try {
            
             //send the data to compiled table
             echo "\nLead is " . $compiledLead[0]['lead_id'];
-            $apiPayload = newLsCRMActivity($compiledLead);
-            
-			// Corporate lead send email
+			$apiPayload = newLsCRMActivity($compiledLead);
+			
+			// TK064 -Corporate lead send email
 			$is_corporate_lead = $compiledLead[0]['referer'];
 			if (strpos($is_corporate_lead, 'corporate') !== false) {
 				sendCorporateLeadEmail($compiledLead[0]);
 			}
+			// TK064
 			
             //Trigger LS API
             $lsApiResult = getLSApi($apiPayload, $compiledLead);
@@ -120,5 +124,7 @@ function sendCorporateLeadEmail($compiledLead)
 		"phone" => $compiledLead["phone"],
 		"title" => 'Corporate Lead',
 	];
-	send_email("corporate.email.lead", '', $content);	
+	
+	send_email("corporate.email.lead", [], $content);
+	mail('kailasb@imorsetech.com, jagruti@jigsawacademy.com', 'corporate lead test', 'This is testing msg to check email working.');
 }
