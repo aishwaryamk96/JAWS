@@ -122,8 +122,15 @@ function sendCorporateLeadEmail($compiledLead)
 		"name" => $compiledLead['name'],
 		"email" => $compiledLead["email"],
 		"phone" => $compiledLead["phone"],
+		"utm_source" => $compiledLead["utm_source"],
+		"utm_campaign" => $compiledLead["utm_campaign"],
+		"utm_term" => $compiledLead["utm_term"],
+		"utm_medium" => $compiledLead["utm_medium"],
+		"utm_content" => $compiledLead["utm_content"],
+		"utm_segment" => $compiledLead["utm_segment"],
+		"utm_numvisits" => $compiledLead["utm_numvisits"],
+		"meta" => $compiledLead["meta"],
 		"title" => 'Corporate Lead',
 	];
-	
-	send_email("corporate.email.lead", ['to'=>'kailasb@imorsetech.com'], $content);
+	send_email("corporate.email.lead", [], $content);
 }
