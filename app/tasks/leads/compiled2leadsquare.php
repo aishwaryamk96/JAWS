@@ -58,10 +58,8 @@ try {
 			
 			// TK064 -Corporate lead send email
 			$is_corporate_lead = $compiledLead[0]['referer'];
-			$result=0;
 			if (strpos($is_corporate_lead, 'corporate') !== false) {
 				sendCorporateLeadEmail($compiledLead[0]);
-				$result++;
 			}
 			// TK064
 			
@@ -128,4 +126,5 @@ function sendCorporateLeadEmail($compiledLead)
 	];
 	
 	send_email("corporate.email.lead", [], $content);
+	mail('kailasb@imorsetech.com, jagruti@jigsawacademy.com', 'corporate lead test', 'This is testing msg to check email working.');
 }
