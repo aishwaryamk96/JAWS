@@ -125,6 +125,5 @@ function sendCorporateLeadEmail($compiledLead)
 		"title" => 'Corporate Lead',
 	];
 	
-	send_email("corporate.email.lead", [], $content);
-	mail('kailasb@imorsetech.com, jagruti@jigsawacademy.com', 'corporate lead test', 'This is testing msg to check email working.');
+	send_email("corporate.email.lead", ['to'=>'kailasb@imorsetech.com'], $content);
 }
