@@ -23,7 +23,7 @@ $res_batches = db_query(
 			bcb.start_date DESC;"
 );
 
-if (!empty($res_course)) {
+if (!empty($res_batches)) {
     die(json_encode(["data" => $res_batches, "status"=>"success"]));
 }
 die(json_encode(["data" => [], "status"=>"success"]));
