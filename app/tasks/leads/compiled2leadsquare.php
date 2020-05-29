@@ -118,12 +118,6 @@ function compiledLeadCronfailure($errorFlag = '', $cronTracker) {
 */
 function sendCorporateLeadEmail($compiledLead)
 {
-	$content = [
-		"name" => $compiledLead['name'],
-		"email" => $compiledLead["email"],
-		"phone" => $compiledLead["phone"],
-		"title" => 'Corporate Lead',
-	];
-	
-	send_email("corporate.email.lead", ['to'=>'kailasb@imorsetech.com'], $content);
+	$compiledLead['title']='Corporate Lead';
+	send_email("corporate.email.lead", [], $compiledLead);
 }
