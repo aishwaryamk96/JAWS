@@ -56,19 +56,16 @@
 	$bundle_jaws['price_inr'] = db_sanitize($bundle['price']);
 	$bundle_jaws['price_usd'] = db_sanitize($bundle['price_usd']);
 	//$bundle_jaws['bundle_type'] = $type;
-	$bundle_jaws['visible']=1;
+	$bundle_jaws['visible']=1;// by default set it to 1
 	$bundle_jaws['meta']=db_sanitize(json_encode($bundle_jaws));
 	$bundal_all["batches"] = $bundle_jaws;
 	activity_debug_start();
 	$return = bootcamp_add_batch_batcave($bundle['bundle_id'], $bundal_all["batches"]);
-	if($return==1){
-		$data['message']= "Batch Details added sucessfully";
-		echo json_encode($data);
-	}else{
-		$data['message']= "Something went wrong.";
-		echo json_encode($data);
-	}
 
-	// echo json_encode(true);
+	if($return == false)
+		die(json_encode(["message"=>"Something went wrong."]));
+	else
+		die(json_encode(["message"=>"Batch Details added sucessfully."]));
+
 
 ?>
