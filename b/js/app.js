@@ -1677,7 +1677,8 @@ angular.module("batcave", ["ngRoute"])
 				};
 				
 				$http.post(API+"/course.bundle.import", {bundle})
-				.then(function(response) { console.log(response.data.message);
+				.then(function(response) {  
+					$scope.getbatch();
 				    $.snackbar({content: response.data.message});
 					 angular.element("#showAddBatches").modal("hide");
 				});
@@ -1685,11 +1686,13 @@ angular.module("batcave", ["ngRoute"])
 	   /*****End Add Batches *******/
 	   
 	   /*****Start List Batches *******/
-		$http.get(API + "/bcBatch.list?bundle_id="+$scope.program.bundle_id)
+	   $scope.getbatch = function(){ console.log("Htrd");
+			$http.get(API + "/bcBatch.list?bundle_id="+$scope.program.bundle_id)
 			.then(function(response) {
 				$scope.batchDetails = response.data.data;
 			}, function(response) {
-		});
+			});
+	   $scope.getbatch();
 	  /*****End List Batches *******/
 	})
 	.controller("settingsCtrl", function($rootScope, $scope, $http, $window, AuthService) {
