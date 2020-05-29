@@ -3,10 +3,8 @@
 /* Controllers */
 
 angular.module('jaws')
-    .controller('CtrlPaymentEditt', ['$scope', '$state', 'courses', 'specializations', 'defaultSettings', 'apiSVC', '$sce', '$timeout', '$http', '$window', 'packageDetails', 'bootcampDetails', 'programDetails', 'fullstackDetails', function ($scope, $state, courses, specializations, defaultSettings, apiSVC, $sce, $timeout, $http, $window, packageDetails, bootcampDetails, programDetails, fullstackDetails) {
-            
-            console.log( $scope.user);
-        $scope.sellerRole = $scope.user.roles.feature_keys.seller;
+    .controller('CtrlPaymentEditt', ['$scope', '$state', 'courses', 'specializations', 'defaultSettings', 'apiSVC', '$sce', '$timeout', '$http', '$window', 'packageDetails', 'bootcampDetails', 'programDetails', 'fullstackDetails','$filter','sliderDateChange', function ($scope, $state, courses, specializations, defaultSettings, apiSVC, $sce, $timeout, $http, $window, packageDetails, bootcampDetails, programDetails, fullstackDetails,$filter,sliderDateChange) {
+
         $scope.trustAsHtml = function (value) {
             return $sce.trustAsHtml(value);
         };
@@ -546,8 +544,6 @@ angular.module('jaws')
             }
                 
       }
-
-
         $scope.instlFees = function() {
             // $scope.instl_fees = $scope.instl_fees_amt;
             defaultSettings.instalment_fees.inr = $scope.instl_fees_amt;
@@ -555,11 +551,17 @@ angular.module('jaws')
             $scope.getInstlFees();
         }
 
-        $scope.addInstl = function () {
+        $scope.addInstl = function () { 
+            /* Start JA:92 */
+            var formatedDate = new Date();
+            formatedDate.setDate(formatedDate.getDate() + parseInt(defaultSettings.instalment_date));
+            var updatedDate = $filter('date')(formatedDate, "MM-dd-yyyy");
+            /* End JA:92*/
             $scope.instls.push({
                 due: defaultSettings.instalment_date,
                 sum: 0,
-                sumUSD: 0
+                sumUSD: 0,
+                due_date: updatedDate // JA:92 
             });
 
             watchers.push($scope.$watch('instls[' + ($scope.instls.length - 1) + '].due', function (newVal, oldVal, scope) {
@@ -1022,4 +1024,10 @@ angular.module('jaws')
             });
         };
 
-    }]);
+     /* Start JA:92 */
+      $scope.setSliderDate=function(index,due){ 
+            $scope.instls[index].due_date = sliderDateChange.setSliderDate(due);
+        }
+    /* End JA:92 */
+
+}]);
