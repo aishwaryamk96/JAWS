@@ -272,6 +272,8 @@ angular.module('jaws')
             else {
                 $scope.fullstacks.push(p);
             }
+            
+            console.log( $scope.fullstacks);
         });
         // $scope.fullstacks = fullstackDetails;
         $scope.fullstack_selected = {
@@ -998,7 +1000,7 @@ angular.module('jaws')
             }
 
             if(save['package']['bundle_id'] == '129'){
-                save['package']['course_start_date'] = '15/07/2019';
+                save['package']['course_start_date'] = '';
             }
 
           //  console.log(save); console.log(sendUrl); console.log(reload);
