@@ -281,6 +281,7 @@ $template_content = $GLOBALS["content"]['emailer'];
 																					$meta_arr=array('form','MXCProspectId','action','jigkey');
 																					foreach($lead_meta as $meta_key=>$meta_value){
 																						if(!in_array($meta_key,$meta_arr)){
+																							$meta_key = ucwords(str_replace('_',' ',$meta_key));
 																			?>
 																							<tr>
 																								<td class="h1" style="color: #000000; font-family: 'Montserrat-Thin', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; padding-left: 30px;">
