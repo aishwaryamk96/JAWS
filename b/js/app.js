@@ -1680,8 +1680,17 @@ angular.module("batcave", ["ngRoute"])
 					 angular.element("#showAddBatches").modal("hide");
 				});
 		}
-       /*****End Add Batches *******/
-
+	   /*****End Add Batches *******/
+	   
+	   /*****Start List Batches *******/
+	   $scope.getbatch = function(){ console.log("Htrd");
+			$http.get(API + "/bcBatch.list?bundle_id="+$scope.program.bundle_id)
+			.then(function(response) {
+				console.log(JSON.stringify(response));
+			}, function(response) {
+			});
+	   }
+	   $scope.getbatch();
 	})
 	.controller("settingsCtrl", function($rootScope, $scope, $http, $window, AuthService) {
 		$rootScope.title = "Settings";
