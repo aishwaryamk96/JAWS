@@ -1612,7 +1612,7 @@ angular.module("batcave", ["ngRoute"])
 	})
 	.controller("programCtrl", function($rootScope, $scope, $http, response,$filter) {
 		$scope.program = response.data.program;
-		console.log(JSON.stringify($scope.program));
+		//console.log(JSON.stringify($scope.program));
 		$scope.edit = false;
 		$rootScope.title = $scope.program.name;
 		/*****Start Add Batches *******/
@@ -1622,6 +1622,8 @@ angular.module("batcave", ["ngRoute"])
 		$scope.batch_end_date='';
 		$scope.price_inr='';
 		$scope.price_usd='';
+
+		$scope.batchDetails='';
 		/*****End Add Batches   *****/
 		$http.get(API + "/catalogue/courses?components=true")
 			.then(function(response) {
@@ -1683,14 +1685,12 @@ angular.module("batcave", ["ngRoute"])
 	   /*****End Add Batches *******/
 	   
 	   /*****Start List Batches *******/
-	   $scope.getbatch = function(){ console.log("Htrd");
-			$http.get(API + "/bcBatch.list?bundle_id="+$scope.program.bundle_id)
+		$http.get(API + "/bcBatch.list?bundle_id="+$scope.program.bundle_id)
 			.then(function(response) {
-				console.log(JSON.stringify(response));
+				$scope.batchDetails = response.data.data;
 			}, function(response) {
-			});
-	   }
-	   $scope.getbatch();
+		});
+	  /*****End List Batches *******/
 	})
 	.controller("settingsCtrl", function($rootScope, $scope, $http, $window, AuthService) {
 		$rootScope.title = "Settings";

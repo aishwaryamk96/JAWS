@@ -89,7 +89,7 @@
 				  </div>	
 				<!-- End Batches Popop Button -->
 				</div>
-				<div class="rows-loader show w-100" id="batchLoader" ng-show="!batches">
+				<!-- <div class="rows-loader show w-100" id="batchLoader" ng-show="!batches">
 					<ul class="list-group bmd-list-group-sm">
 						<li class="list-group-item"></li>
 						<li class="list-group-item"></li>
@@ -97,8 +97,8 @@
 						<li class="list-group-item"></li>
 						<li class="list-group-item"></li>
 					</ul>
-				</div>
-				<table class="table table-striped" ng-show="courses">
+				</div> -->
+				<!-- <table class="table table-striped" ng-show="courses">
 					<thead ng-show="program.bundle_type=='bootcamps'">
 						<tr>
 							<th>#</th>
@@ -124,6 +124,48 @@
 							<td class="text-muted">{{b.enr_count}}</td>
 						</tr>
 					</tbody>
+				</table> -->
+
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Code</th>
+							<!-- <th>Code</th> -->
+							<th>Start Date</th>
+							<th>End Date</th>
+							<th>Visible</th>
+						</tr>
+					</thead>
+					<tbody >
+						<tr ng-repeat="b in batchDetails" ng-show="batchDetails.length>0">
+						<td class="text-muted">{{$index+1}}</td>
+						<td class="text-muted">{{b.code}}</td>
+						<td class="text-muted">{{b.start_date}}</td>
+						<td class="text-muted">{{b.end_date}}</td>
+						<td class="text-muted">
+							<p ng-if="b.visible==0">NO</p>
+							<p ng-if="b.visible==1">Yes</p>
+						</td>
+						</tr>
+						<tr  ng-show="batchDetails.length==0">
+							<td class="text-muted text-center" colspan="5">No Record</td>
+						</tr>
+
+						<!-- <tr ng-show="batches.length==0">
+							<td colspan="4" class="text-center">No batches yet for the program</td>
+						</tr>
+						<tr ng-repeat="b in batches" class="{{c.removed ? 'bg-secondary' : ''}}">
+							<th class="text-muted">{{$index+1}}</th>
+							<td class="text-muted text-capitalize">
+								<a href="/{{program.bundle_type=='bootcamps' ? 'bootcamp_' : ''}}batches/{{b.id}}" target="_blank">{{b.meta.name}}</a>
+							</td>
+							<td class="text-muted">{{b.code}}</td>
+							<td class="text-muted">{{b.start_date}}</td>
+							<td class="text-muted">{{b.end_date}}</td>
+							<td class="text-muted">{{b.enr_count}}</td>
+						</tr> -->
+					</tbody >
 				</table>
 			</div>
 		</div>
