@@ -1610,10 +1610,19 @@ angular.module("batcave", ["ngRoute"])
 				});
 		}
 	})
-	.controller("programCtrl", function($rootScope, $scope, $http, response) {
+	.controller("programCtrl", function($rootScope, $scope, $http, response,$filter) {
 		$scope.program = response.data.program;
+		console.log(JSON.stringify($scope.program));
 		$scope.edit = false;
 		$rootScope.title = $scope.program.name;
+		/*****Start Add Batches *******/
+		$scope.batch_name='';
+		$scope.batch_code='';
+		$scope.batch_start_date='';
+		$scope.batch_end_date='';
+		$scope.price_inr='';
+		$scope.price_usd='';
+		/*****End Add Batches   *****/
 		$http.get(API + "/catalogue/courses?components=true")
 			.then(function(response) {
 				$scope.courses = response.data.courses;
@@ -1641,6 +1650,38 @@ angular.module("batcave", ["ngRoute"])
 					$scope.edit = false;
 				});
 		}
+
+		/*****Start Add Batches *******/
+		$scope.showAddBatches =  function() {
+		  
+			angular.element('#showAddBatches').modal('show');
+		}
+		$scope.saveBatches =  function() { 
+				  var formatedDate = $scope.batch_start_date;
+				  formatedDate.setDate(formatedDate.getDate());
+				  var startDate = $filter('date')(formatedDate, "yyyy-MM-dd");
+				  var formatedEndDate = $scope.batch_end_date;
+				  formatedEndDate.setDate(formatedEndDate.getDate());
+				  var endDate = $filter('date')(formatedEndDate, "yyyy-MM-dd");
+			      var bundle = {};
+				   bundle = {
+					'name':$scope.batch_name,
+					'code':$scope.batch_code,
+					'price':$scope.price_inr,
+					'price_usd':$scope.price_usd,
+					'batch_start_date':startDate,
+					'batch_end_date':endDate,
+					'bundle_id':$scope.program.bundle_id,
+				};
+				
+				$http.post(API+"/course.bundle.import", {bundle})
+				.then(function(response) { console.log(response.data.message);
+				    $.snackbar({content: response.data.message});
+					 angular.element("#showAddBatches").modal("hide");
+				});
+		}
+       /*****End Add Batches *******/
+
 	})
 	.controller("settingsCtrl", function($rootScope, $scope, $http, $window, AuthService) {
 		$rootScope.title = "Settings";
