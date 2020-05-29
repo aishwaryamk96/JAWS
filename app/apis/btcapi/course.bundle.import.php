@@ -56,7 +56,7 @@
 	$bundle_jaws['price_inr'] = db_sanitize($bundle['price']);
 	$bundle_jaws['price_usd'] = db_sanitize($bundle['price_usd']);
 	//$bundle_jaws['bundle_type'] = $type;
-	$bundle_jaws['visible']='';
+	$bundle_jaws['visible']=1;
 	$bundle_jaws['meta']=db_sanitize(json_encode($bundle_jaws));
 	$bundal_all["batches"] = $bundle_jaws;
 	activity_debug_start();
