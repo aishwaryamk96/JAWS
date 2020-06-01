@@ -321,7 +321,7 @@ angular.module('jaws')
                         var formatedDate = new Date();
                     }
                     formatedDate.setDate(formatedDate.getDate() + parseInt(days));
-                    var updatedDate = $filter('date')(formatedDate, "MM-dd-yyyy");
+                    var updatedDate = $filter('date')(formatedDate, "MM/dd/yyyy");
                     return updatedDate;
                 }
             }
