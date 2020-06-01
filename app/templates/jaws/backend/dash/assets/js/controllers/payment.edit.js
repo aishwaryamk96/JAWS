@@ -549,11 +549,12 @@ angular.module('jaws')
             }else{
                 $scope.instls[index].due = defaultSettings.instalment_date; 
             }
-          
+            /* Start JA:92 */
             if($scope.dateUpdateIndex==index){
                 $scope.instls[index].due_date = $scope.dateUpdate;
             }
-            $scope.dateUpdateIndex='';         
+            $scope.dateUpdateIndex='';
+            /* End JA:92 */         
         }
         $scope.instlFees = function() {
             // $scope.instl_fees = $scope.instl_fees_amt;
