@@ -242,14 +242,15 @@ angular.module('jaws')
             if (p.batches) {
                 p.batches.forEach(function (batch, j) {
                     if (!batch.no_show) {
-                        batch.price = p.price_inr;
+                        
+                        batch.price = batch.price;
                         batch.batch_id = batch.id;
                         batch.bundle_id = p.bundle_id;
                         batch.name = p.name;
                         batch.combo = p.combo;
                         batch.selected = false;
-                        batch.price_usd = p.price_usd;
-                        batch.price_inr = p.price_inr;
+                        batch.price_usd = batch.price_usd;
+                        batch.price_inr = batch.price;
                         $scope.fullstacks.push(batch);
                     }
                 })
@@ -969,7 +970,7 @@ angular.module('jaws')
             }
 
             if(save['package']['bundle_id'] == '129'){
-                save['package']['course_start_date'] = '15/07/2019';
+                save['package']['course_start_date'] = '';
             }
 
             console.log(save); console.log(sendUrl); console.log(reload);

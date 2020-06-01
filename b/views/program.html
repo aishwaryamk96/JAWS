@@ -82,8 +82,14 @@
 						</tr>
 					</tbody>
 				</table>
-				<div class="bg-light text-uppercase text-primary text-center py-2 rounded mb-3">batches</div>
-				<div class="rows-loader show w-100" id="batchLoader" ng-show="!batches">
+				<div class="bg-light text-uppercase text-primary text-center py-2 rounded mb-3">batches 
+				 <!-- Add Batches Popop Button -->
+					<div class="float-right">
+					<button class="btn btn-info btn-raised" ng-click="showAddBatches()">Add</button>
+				  </div>	
+				<!-- End Batches Popop Button -->
+				</div>
+				<!-- <div class="rows-loader show w-100" id="batchLoader" ng-show="!batches">
 					<ul class="list-group bmd-list-group-sm">
 						<li class="list-group-item"></li>
 						<li class="list-group-item"></li>
@@ -91,8 +97,8 @@
 						<li class="list-group-item"></li>
 						<li class="list-group-item"></li>
 					</ul>
-				</div>
-				<table class="table table-striped" ng-show="courses">
+				</div> -->
+				<!-- <table class="table table-striped" ng-show="courses">
 					<thead ng-show="program.bundle_type=='bootcamps'">
 						<tr>
 							<th>#</th>
@@ -118,6 +124,48 @@
 							<td class="text-muted">{{b.enr_count}}</td>
 						</tr>
 					</tbody>
+				</table> -->
+
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Code</th>
+							<!-- <th>Code</th> -->
+							<th>Start Date</th>
+							<th>End Date</th>
+							<th>Visible</th>
+						</tr>
+					</thead>
+					<tbody >
+						<tr ng-repeat="b in batchDetails" ng-show="batchDetails.length>0">
+						<td class="text-muted">{{$index+1}}</td>
+						<td class="text-muted">{{b.code}}</td>
+						<td class="text-muted">{{b.start_date}}</td>
+						<td class="text-muted">{{b.end_date}}</td>
+						<td class="text-muted">
+							<p ng-if="b.visible==0">NO</p>
+							<p ng-if="b.visible==1">Yes</p>
+						</td>
+						</tr>
+						<tr  ng-show="batchDetails.length==0">
+							<td class="text-muted text-center" colspan="5">No Record</td>
+						</tr>
+
+						<!-- <tr ng-show="batches.length==0">
+							<td colspan="4" class="text-center">No batches yet for the program</td>
+						</tr>
+						<tr ng-repeat="b in batches" class="{{c.removed ? 'bg-secondary' : ''}}">
+							<th class="text-muted">{{$index+1}}</th>
+							<td class="text-muted text-capitalize">
+								<a href="/{{program.bundle_type=='bootcamps' ? 'bootcamp_' : ''}}batches/{{b.id}}" target="_blank">{{b.meta.name}}</a>
+							</td>
+							<td class="text-muted">{{b.code}}</td>
+							<td class="text-muted">{{b.start_date}}</td>
+							<td class="text-muted">{{b.end_date}}</td>
+							<td class="text-muted">{{b.enr_count}}</td>
+						</tr> -->
+					</tbody >
 				</table>
 			</div>
 		</div>
@@ -227,6 +275,55 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				<button type="button" class="btn btn-primary" ng-click="saveProgram()">Save</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Add Batches Popop -->
+<div class="modal fade" id="showAddBatches" tabindex="-1" role="dialog" aria-labelledby="showAddBatches" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Save Batches</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" tabindex="-1">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				
+				<form role="form">
+                    <div class="form-group">
+                        <label for="inputName">Batch name</label>
+                        <input type="text" class="form-control" id="inputName" placeholder="Enter Batch name" ng-model="batch_name"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail">Batch code</label>
+                        <input type="text" class="form-control" id="inputEmail" placeholder="Enter Batch code" ng-model="batch_code"/>
+                    </div>
+                    <div class="form-group">
+						<label for="inputMessage">Start date</label>
+						
+						<input type="date" class="form-control" id="inputEmail" placeholder="Start date"  ng-model="batch_start_date"/>
+						
+					</div>
+					<div class="form-group">
+                        <label for="inputMessage">End date</label>
+						<input type="date" class="form-control" id="inputEmail" placeholder="Enter Batch code" ng-model="batch_end_date"/>
+					</div>
+					<div class="form-group">
+                        <label for="inputMessage">Price in INR</label>
+						<input type="text" class="form-control" id="inputEmail" placeholder="Price in INR" ng-model="price_inr" />
+					</div>
+					<div class="form-group">
+                        <label for="inputMessage">Price in USD</label>
+						<input type="text" class="form-control" id="inputEmail" placeholder="Price in USD" ng-model="price_usd"/>
+                    </div>
+                </form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" ng-click="saveBatches()">Save</button>
 			</div>
 		</div>
 	</div>
