@@ -167,5 +167,18 @@
 		return $batch_new;
 
 	}
+/*********Add Batch Deatils From Batcave******/
+function bootcamp_add_batch_batcave($bundle_id,$batch) {
+    $insetFlag = db_exec("INSERT INTO bootcamp_batches (bundle_id, code, start_date, end_date, price, price_usd,visible,meta) VALUES (".
+				db_sanitize($bundle_id).",".
+				db_sanitize($batch['code']).",".
+				$batch["start_date"].",".
+				$batch["end_date"].",".
+				$batch["price_inr"].",".
+				$batch["price_usd"].",".
+                $batch["visible"].",".
+                $batch["meta"].")");
+    	return $insetFlag;
+	}
 
 ?>
