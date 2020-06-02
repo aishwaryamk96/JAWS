@@ -538,7 +538,6 @@ angular.module('jaws')
         $scope.dateUpdateIndex = '';
         /* End JA:92*/
         $scope.getInstallmentDate = function(index){ 
-            
             var today = new Date();
             var date1 = new Date($scope.instls[index].due_date);
             if(date1 >= today){ 
@@ -554,7 +553,17 @@ angular.module('jaws')
                 $scope.instls[index].due_date = $scope.dateUpdate;
             }
             $scope.dateUpdateIndex='';
-            /* End JA:92 */         
+            if($scope.instls.length>=2){ 
+                $scope.instls.forEach(function (inst, i) {
+                    if(index<i){ 
+                                var formatedDate = new Date($scope.instls[i-1].due_date); 
+                                formatedDate.setDate(formatedDate.getDate() + parseInt(defaultSettings.instalment_date));            
+                                updatedDate = $filter('date')(formatedDate, "MM/dd/yyyy");
+                                $scope.instls[i].due_date = updatedDate;
+                        }
+                });
+            }
+            /* End JA:92 */ 
         }
         $scope.instlFees = function() {
             // $scope.instl_fees = $scope.instl_fees_amt;
@@ -583,16 +592,12 @@ angular.module('jaws')
                 sumUSD: 0,
                 due_date: updatedDate // JA:92 
             });
-
             watchers.push($scope.$watch('instls[' + ($scope.instls.length - 1) + '].due', function (newVal, oldVal, scope) {
                 $scope.getInstlFees();
-            }));
-
+            }));            
             $scope.getInstlFees();
-            /* Start JA:92 */
-            $scope.instalmentDateIncrement = defaultSettings.instalment_date + defaultSettings.instalment_date;
-            dueDate=parseInt(dueDate)+parseInt(defaultSettings.instalment_date);
-            /* End JA:92*/
+            $scope.instalmentDateIncrement = defaultSettings.instalment_date + defaultSettings.instalment_date; // JA:92 
+            
         };
 
         $scope.remInstl = function (index) {
@@ -1049,10 +1054,27 @@ angular.module('jaws')
         };
 
      /* Start JA:92 */
-      $scope.setSliderDate=function(index,due){   
-            $scope.instls[index].due_date = sliderDateChange.setSliderDate(due);
+      $scope.setSliderDate=function(index,due,previousDate){  
+            var formatedDate = new Date(previousDate); 
+            formatedDate.setDate(formatedDate.getDate() + parseInt(due));            
+            updatedDate = $filter('date')(formatedDate, "MM/dd/yyyy");
+            if(previousDate==undefined){
+                $scope.instls[index].due_date = sliderDateChange.setSliderDate(due);
+            }else{
+                $scope.instls[index].due_date = updatedDate;
+            }
             $scope.dateUpdate =  $scope.instls[index].due_date;
             $scope.dateUpdateIndex = index;
+            if($scope.instls.length>=2){ 
+                $scope.instls.forEach(function (inst, i) {
+                    if(index<i){ 
+                                var formatedDate = new Date($scope.instls[i-1].due_date); 
+                                formatedDate.setDate(formatedDate.getDate() + parseInt(defaultSettings.instalment_date));            
+                                updatedDate = $filter('date')(formatedDate, "MM/dd/yyyy");
+                                $scope.instls[i].due_date = updatedDate;
+                        }
+                });
+        }
       }
     /* End JA:92 */
 

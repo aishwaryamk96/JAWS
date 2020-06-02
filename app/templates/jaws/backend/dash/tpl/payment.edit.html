@@ -698,7 +698,7 @@
                         <div class="col-sm-3 col-sm-height col-middle sm-padding-15 " style='text-align: center!important;'>
                             <h5 class="font-montserrat all-caps small no-margin hint-text bold" style='margin-bottom: 5px!important'>{{instls[$index+1].due
                                 | number}} Days</h5>
-                            <div slider class="m-b-10 bg-master" ng-model='instls[$index+1].due' start=1 end={{max_due_date}} step=1 ng-click="setSliderDate($index+1,instls[$index+1].due)"></div>
+                            <div slider class="m-b-10 bg-master" ng-model='instls[$index+1].due' start=1 end={{max_due_date}} step=1 ng-click="setSliderDate($index+1,instls[$index+1].due,instls[$index].due_date)"></div>
                             <div class="input-group date" ui-jq="datepicker">
                               <input type="text" class="form-control input-sm datepickerinput"  name="due_date" ng-model="instls[$index+1].due_date" ng-change="getInstallmentDate($index+1)" style="width:85px">
                                 <div class="input-group-addon">
