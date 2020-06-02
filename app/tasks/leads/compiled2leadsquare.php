@@ -10,10 +10,12 @@ if (!defined("JAWS")) {
     header('Location: ' . WEBSITE_URL);
     die();
 }
+
 //cronstatustracker file name
 $cronTracker = "leadCompiledCron.txt";
 
-register_shutdown_function("compiledLeadCronfailure", 1,$cronTracker);
+
+register_shutdown_function("compiledLeadCronfailure", $cronTracker);
 
 //Nload leads module
 load_module("leads");
@@ -28,7 +30,7 @@ try {
     //Check the eny lead basic cron running
     
     $cronFlag = checkCronStatus($cronTracker);
-	
+
     if ($cronFlag == TRUE) {
 
         $errMsg = "Already Cron is running . Datetime :" . date(" Y-m-d H:i:s");
@@ -53,9 +55,9 @@ try {
         while (($compiledLead = getCompiledLeads()) != FALSE) {
            
             //send the data to compiled table
-            echo "\nLead is " . $compiledLead[0]['lead_id'];
-			$apiPayload = newLsCRMActivity($compiledLead);
-			
+            echo "\nCompiled Lead is " . $compiledLead[0]['lead_id'];
+            $apiPayload = newLsCRMActivity($compiledLead);
+            
 			// TK064 -Corporate lead send email
 			$is_corporate_lead = $compiledLead[0]['referer'];
 			if (strpos($is_corporate_lead, 'corporate') !== false) {
@@ -71,7 +73,8 @@ try {
         $stopCronFlag = stopCron($cronTracker, COMPILED_LEAD_LOG);
         if ($stopCronFlag === FALSE) {
             $errMsg = "Failed to Stop Cron . Datetime :" . date(" Y-m-d H:i:s");
-            logErrors(COMPILED_LEAD_LOG, "failedStopCron", $errMsg);
+            logErrors(COMPILED_LEAD_LOG, "failedStopCron", $errMsg,[error_get_last()]);
+             error_clear_last();
             return FALSE;
             exit();
         }
@@ -79,7 +82,8 @@ try {
         //For reference logging the Cron stopped time.
         if ($stopCronFlag == TRUE) {
             $errMsg = "Sucessfully Stopped Cron . Datetime :" . date(" Y-m-d H:i:s");
-            logErrors(COMPILED_LEAD_LOG, "stopCron", $errMsg);
+            logErrors(COMPILED_LEAD_LOG, "stopCron", $errMsg, [error_get_last()]);
+             error_clear_last();
             exit();
         }
     }
@@ -88,7 +92,8 @@ try {
     
     //register_shutdown_function("leadscronfailure",1);
     $errMsg = "Create  Cron Start Marker . Datetime :" . date(" Y-m-d H:i:s");
-    logErrors(COMPILED_LEAD_LOG, "createCronStartMarker", $errMsg, [$e->getMessage()]);
+    logErrors(COMPILED_LEAD_LOG, "createCronStartMarker", $errMsg, [$e->getMessage(), error_get_last()]);
+     error_clear_last();
     exit();
     return false;
 }
@@ -99,7 +104,7 @@ try {
  * @param type $errorFlag
  * @return boolean
  */
-function compiledLeadCronfailure($errorFlag = '', $cronTracker) {
+function compiledLeadCronfailure($cronTracker) {
     
     if (!empty(error_get_last())) {
         
