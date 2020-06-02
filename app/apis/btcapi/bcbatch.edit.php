@@ -1,9 +1,19 @@
 <?php
 // get a batch details to edit.
+
+// Init Session
+auth_session_init();
+
+// Auth Check - Expecting Session Only !
+if ((!auth_session_is_logged()) || (!auth_session_is_allowed("batcave"))) {
+    header("HTTP/1.1 401 Unauthorized");
+    die();
+}
 $batch_id = db_sanitize($_GET["batch_id"]);
 
-$res_batches = db_query(
-    "SELECT
+if(isset($batch_id)) {
+    $res_batches = db_query(
+        "SELECT
             bcb.id as id,
             bcb.bundle_id as bundle_id,
             bcb.code as code,
@@ -15,12 +25,12 @@ $res_batches = db_query(
 		FROM
 			bootcamp_batches as bcb		
 		WHERE
-			bcb.id = ".$batch_id);
-
-
-if (!empty($res_batches)) {
-    $res_batches = $res_batches[0];
-    die(json_encode(["data" => $res_batches, "status"=>"success"] ));
+			bcb.id = " . $batch_id);
+    if (!empty($res_batches)) {
+        $res_batches = $res_batches[0];
+        die(json_encode(["data" => $res_batches, "status" => "success"]));
+    }
+    die(json_encode(["data" => "No Record found", "status"=>"error"]));
 }
-die(json_encode(["data" => "No Record found", "status"=>"success"]));
+die(json_encode(["data" => "Batch Id is required", "status"=>"error"]));
 ?>

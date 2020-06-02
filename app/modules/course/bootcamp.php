@@ -168,17 +168,32 @@
 
 	}
 /*********Add Batch Deatils From Batcave******/
-function bootcamp_add_batch_batcave($bundle_id,$batch) {
-    $insetFlag = db_exec("INSERT INTO bootcamp_batches (bundle_id, code, start_date, end_date, price, price_usd,visible,meta) VALUES (".
-				db_sanitize($bundle_id).",".
-				db_sanitize($batch['code']).",".
-				$batch["start_date"].",".
-				$batch["end_date"].",".
-				$batch["price_inr"].",".
-				$batch["price_usd"].",".
-                $batch["visible"].",".
-                $batch["meta"].")");
-    	return $insetFlag;
+	function bootcamp_add_batch_batcave($bundle_id, $batch, $batchId)
+	{
+	    if (!isset($batchId)) {
+	        return db_exec("INSERT INTO bootcamp_batches (bundle_id, code, start_date, end_date, price, price_usd,visible,meta) VALUES (" .
+	            db_sanitize($bundle_id) . "," .
+	            db_sanitize($batch['code']) . "," .
+	            db_sanitize($batch["start_date"]) . "," .
+	            db_sanitize($batch["end_date"]) . "," .
+	            db_sanitize($batch["price_inr"]) . "," .
+	            db_sanitize($batch["price_usd"]) . "," .
+	            db_sanitize($batch["visible"]) . "," .
+	            db_sanitize($batch["meta"]) . ")");
+	        
+	    }else{
+	        return db_exec("UPDATE `bootcamp_batches`".
+	            " SET `bundle_id` = " . db_sanitize($bundle_id) . "," .
+	            " `code` = " .db_sanitize($batch['code']) . "," .
+	            " `start_date` = ".db_sanitize($batch["start_date"]) . "," .
+	            " `end_date` = ".db_sanitize($batch["end_date"]) . "," .
+	            " `price` = ".db_sanitize($batch["price_inr"]) . "," .
+	            " `price_usd` = ".db_sanitize($batch["price_usd"]) . "," .
+	            " `visible` = ".db_sanitize($batch["visible"]) . "," .
+	            " `meta` = ".db_sanitize($batch["meta"]) .
+	            " where `id` = ".$batch["id"]
+	            );
+	    }
 	}
 
 ?>

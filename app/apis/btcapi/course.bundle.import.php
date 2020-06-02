@@ -29,43 +29,60 @@
 	// if (!auth_api("course.bundle.import"))
 	// 	die ("You do not have the required priviledges to use this feature.");
 
-	load_module ("course");
-	load_library("persistence");
-	 
-	/*
-	 * A bundle can be of 3 types:
-	 * 1. Specialization: These are pre-defined bundles of courses which do not have any date of expiry.
-	 * 2. Offers: Offers have a date of expiry.
-	 * 3. Combo: They do not seem to have any date of expiry.
-	*/
+	// Auth Check - Expecting Session Only !
+	if ((!auth_session_is_logged()) || (!auth_session_is_allowed("batcave"))) {
+		header("HTTP/1.1 401 Unauthorized");
+		die();
+	}
 
 	if (!isset($_POST["bundle"]))
 	{
 		echo json_encode(false);
 		exit();
 	}
-
-	// Get the type of the bundle
-	$type = $_POST["bundle"]["type"];
 	$bundle = $_POST["bundle"];
-	
-	$bundle_jaws['name'] = $bundle['name'];
-	$bundle_jaws['code'] = $bundle['code'];
-	$bundle_jaws['start_date'] = db_sanitize($bundle['batch_start_date']);
-	$bundle_jaws['end_date'] = db_sanitize($bundle['batch_end_date']);
-	$bundle_jaws['price_inr'] = db_sanitize($bundle['price']);
-	$bundle_jaws['price_usd'] = db_sanitize($bundle['price_usd']);
-	//$bundle_jaws['bundle_type'] = $type;
-	$bundle_jaws['visible']=1;// by default set it to 1
+	$method = $_POST["method"]? $_POST["method"]:"ADD";//IT SHOULD BE ADD OR UPDATE by default add
+
+	$bundle_jaws = validateBatchDetails($bundle,$method);
 	$bundle_jaws['meta']=db_sanitize(json_encode($bundle_jaws));
-	$bundal_all["batches"] = $bundle_jaws;
+
 	activity_debug_start();
-	$return = bootcamp_add_batch_batcave($bundle['bundle_id'], $bundal_all["batches"]);
 
-	if($return == false)
-		die(json_encode(["message"=>"Something went wrong."]));
-	else
-		die(json_encode(["message"=>"Batch Details added sucessfully."]));
+	$return = bootcamp_add_batch_batcave($bundle['bundle_id'],$bundle_jaws,$method);
 
+	if($return != false) {
+		if($method == "ADD")
+			die(json_encode(["message" => "Batch Details added successfully."]));
+		else
+			die(json_encode(["message" => "Batch Details updated successfully."]));
+	}
+	die(json_encode(["message"=>"Something went wrong."]));
+
+
+	//functions
+	function validateBatchDetails($batch_info,$method){
+		$batch_data =array();
+		if(($method == "ADD")||($method == "UPDATE")) {
+			if($method =="UPDATE")
+				$batch_data["id"] =checkIspresent("Bathch Id",$batch_info["bacth_id"]);
+			$batch_data['name'] = checkIspresent('Name',$batch_info['name']);
+			$batch_data['code'] = checkIspresent('Code',$batch_info['code']);
+			$batch_data['start_date'] = checkIspresent('Start Date',$batch_info['batch_start_date']);
+			$batch_data['end_date'] = checkIspresent('End Date',$batch_info['batch_end_date']);
+			$batch_data['price_inr'] = checkIspresent('Price',$batch_info['price']);
+			$batch_data['price_usd'] = checkIspresent('Price in Usd',$batch_info['price_usd']);
+			$batch_data['visible'] = $batch_info['visible']?$batch_info['visible']:1;// by default set it to 1
+		}else{
+			die(json_encode(["message"=>"invalid method."]));
+		}
+		return $batch_data;
+	}
+	function checkIspresent($key,$value){
+		if(isset($value))
+			return $value;
+		else
+			die(json_encode(["message"=>"$key is required."]));
+
+	}
 
 ?>

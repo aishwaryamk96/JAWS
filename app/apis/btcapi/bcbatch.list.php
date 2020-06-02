@@ -2,10 +2,19 @@
 
 //get the list of the bootcamp_batches for a specific user
 
-load_module ("course");
+// Init Session
+auth_session_init();
 
+// Auth Check - Expecting Session Only !
+if ((!auth_session_is_logged()) || (!auth_session_is_allowed("batcave"))) {
+    header("HTTP/1.1 401 Unauthorized");
+    die();
+}
 
 $bundle_id = db_sanitize($_GET["bundle_id"]);
+
+if(!isset($bundle_id))
+    die(json_encode(["data" =>"Bundle Id is required", "status"=>"error"]));
 
 $res_batches = db_query(
     "SELECT
