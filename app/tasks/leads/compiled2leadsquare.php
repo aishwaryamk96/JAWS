@@ -10,15 +10,16 @@ if (!defined("JAWS")) {
     header('Location: ' . WEBSITE_URL);
     die();
 }
-
 //cronstatustracker file name
 $cronTracker = "leadCompiledCron.txt";
 
-
-register_shutdown_function("compiledLeadCronfailure", $cronTracker);
+register_shutdown_function("compiledLeadCronfailure", 1,$cronTracker);
 
 //Nload leads module
 load_module("leads");
+// TK064
+load_library("email"); 
+// TK064
 //cronstatustracker file name
 $cronTracker = "leadCompiledCron.txt";
 
@@ -27,7 +28,7 @@ try {
     //Check the eny lead basic cron running
     
     $cronFlag = checkCronStatus($cronTracker);
-
+	
     if ($cronFlag == TRUE) {
 
         $errMsg = "Already Cron is running . Datetime :" . date(" Y-m-d H:i:s");
@@ -52,9 +53,16 @@ try {
         while (($compiledLead = getCompiledLeads()) != FALSE) {
            
             //send the data to compiled table
-            echo "\nCompiled Lead is " . $compiledLead[0]['lead_id'];
-            $apiPayload = newLsCRMActivity($compiledLead);
-            
+            echo "\nLead is " . $compiledLead[0]['lead_id'];
+			$apiPayload = newLsCRMActivity($compiledLead);
+			
+			// TK064 -Corporate lead send email
+			$is_corporate_lead = $compiledLead[0]['referer'];
+			if (strpos($is_corporate_lead, 'corporate') !== false) {
+				sendCorporateLeadEmail($compiledLead[0]);
+			}
+			// TK064
+			
             //Trigger LS API
             $lsApiResult = getLSApi($apiPayload, $compiledLead);
         }
@@ -63,8 +71,7 @@ try {
         $stopCronFlag = stopCron($cronTracker, COMPILED_LEAD_LOG);
         if ($stopCronFlag === FALSE) {
             $errMsg = "Failed to Stop Cron . Datetime :" . date(" Y-m-d H:i:s");
-            logErrors(COMPILED_LEAD_LOG, "failedStopCron", $errMsg,[error_get_last()]);
-             error_clear_last();
+            logErrors(COMPILED_LEAD_LOG, "failedStopCron", $errMsg);
             return FALSE;
             exit();
         }
@@ -72,8 +79,7 @@ try {
         //For reference logging the Cron stopped time.
         if ($stopCronFlag == TRUE) {
             $errMsg = "Sucessfully Stopped Cron . Datetime :" . date(" Y-m-d H:i:s");
-            logErrors(COMPILED_LEAD_LOG, "stopCron", $errMsg, [error_get_last()]);
-             error_clear_last();
+            logErrors(COMPILED_LEAD_LOG, "stopCron", $errMsg);
             exit();
         }
     }
@@ -82,8 +88,7 @@ try {
     
     //register_shutdown_function("leadscronfailure",1);
     $errMsg = "Create  Cron Start Marker . Datetime :" . date(" Y-m-d H:i:s");
-    logErrors(COMPILED_LEAD_LOG, "createCronStartMarker", $errMsg, [$e->getMessage(), error_get_last()]);
-     error_clear_last();
+    logErrors(COMPILED_LEAD_LOG, "createCronStartMarker", $errMsg, [$e->getMessage()]);
     exit();
     return false;
 }
@@ -94,7 +99,7 @@ try {
  * @param type $errorFlag
  * @return boolean
  */
-function compiledLeadCronfailure($cronTracker) {
+function compiledLeadCronfailure($errorFlag = '', $cronTracker) {
     
     if (!empty(error_get_last())) {
         
@@ -106,4 +111,13 @@ function compiledLeadCronfailure($cronTracker) {
         error_clear_last();
         exit();
     }
+}
+
+/*
+* This function is called for corporate lead email
+*/
+function sendCorporateLeadEmail($compiledLead)
+{
+	$compiledLead['title']='Corporate Lead';
+	send_email("corporate.email.lead", [], $compiledLead);
 }
