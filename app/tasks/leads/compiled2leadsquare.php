@@ -19,6 +19,9 @@ register_shutdown_function("compiledLeadCronfailure", $cronTracker);
 
 //Nload leads module
 load_module("leads");
+// TK064
+load_library("email"); 
+// TK064
 //cronstatustracker file name
 $cronTracker = "leadCompiledCron.txt";
 
@@ -55,6 +58,13 @@ try {
             echo "\nCompiled Lead is " . $compiledLead[0]['lead_id'];
             $apiPayload = newLsCRMActivity($compiledLead);
             
+			// TK064 -Corporate lead send email
+			$is_corporate_lead = $compiledLead[0]['referer'];
+			if (strpos($is_corporate_lead, 'corporate') !== false) {
+				sendCorporateLeadEmail($compiledLead[0]);
+			}
+			// TK064
+			
             //Trigger LS API
             $lsApiResult = getLSApi($apiPayload, $compiledLead);
         }
@@ -106,4 +116,13 @@ function compiledLeadCronfailure($cronTracker) {
         error_clear_last();
         exit();
     }
+}
+
+/*
+* This function is called for corporate lead email
+*/
+function sendCorporateLeadEmail($compiledLead)
+{
+	$compiledLead['title']='Corporate Lead';
+	send_email("corporate.email.lead", [], $compiledLead);
 }
