@@ -711,7 +711,7 @@ function newLsCRMActivity($leads) {
 
         $api_url = "LeadManagement.svc/Lead.Capture";
 
-        $key_mapping = LS_OLD_KEY_MAPPING;
+        $key_mapping = LS_KEY_MAPPING;
         
         
         if (isset($lead["phone"]) && strlen($lead["phone"]) < 10) {
