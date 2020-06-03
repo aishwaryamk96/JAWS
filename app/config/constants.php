@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -47,7 +47,8 @@ $lsOldKeyMapping = [
             "mx_City" => "mx_City",
             "mx_Location" => "mx_Location",
             "course" => "Course",
-            "mx_Preferred_date" => "mx_Preferred_date"
+            "mx_Preferred_date" => "mx_Preferred_date",
+            "Qualification" => "mx_Qualification"
 ];
 define('LS_OLD_KEY_MAPPING', $lsOldKeyMapping);
 
