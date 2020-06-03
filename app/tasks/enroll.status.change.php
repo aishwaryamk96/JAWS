@@ -51,7 +51,7 @@
 //JA-73 START
     $particularDate =db_sanitize(date("Y-m-d 00:00:00"));
 // Pick those to set to alumni
-    $res_to_alumni = "SELECT subs_id , end_date FROM subs WHERE end_date < ".$particularDate." and status !='active' order by subs_id desc";
+    $res_to_alumni = "SELECT subs_id , end_date FROM subs WHERE end_date < ".$particularDate." and status ='active' order by subs_id desc";
     if ($res_to_alumni)
     {
         foreach ($res_to_alumni as $each_subs)
