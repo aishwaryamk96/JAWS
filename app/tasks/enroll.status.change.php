@@ -48,21 +48,22 @@
 //    		db_exec("UPDATE user_enrollment SET sis_status='na' WHERE subs_id=".$each_subs["subs_id"]);
 //    	}
 //    }
-
-    // Pick those to set to alumni
-    $res_to_alumni = db_query("SELECT subs_id , end_date_ext FROM subs WHERE end_date_ext<=CURDATE() order by subs_id desc");
-    
-    
+//JA-73 START
+    $particularDate =db_sanitize(date("Y-m-d 00:00:00"));
+// Pick those to set to alumni
+    $res_to_alumni = "SELECT subs_id , end_date FROM subs WHERE end_date < ".$particularDate." and status !='active' order by subs_id desc";
     if ($res_to_alumni)
     {
-    	foreach ($res_to_alumni as $each_subs)
-    	{
-    		subs_update_status($each_subs["subs_id"], "alumni");
-    		db_exec("UPDATE user_enrollment SET sis_status='na' WHERE subs_id=".$each_subs["subs_id"]);
-    	}
+        foreach ($res_to_alumni as $each_subs)
+        {
+            subs_update_status($each_subs["subs_id"], "alumni");
+            db_exec("UPDATE user_enrollment SET sis_status='na' WHERE subs_id=".$each_subs["subs_id"]);
+            sis_import($each_subs["subs_id"]);
+        }
     }
+//JA-73 END
 
-    // Pick those to expire today
+// Pick those to expire today
 //    $res_to_expire = db_query("SELECT subs_id FROM subs WHERE CURDATE()=DATE_ADD(end_date_ext,INTERVAL 1 YEAR;)");
 //    if ($res_to_expire)
 //    {
