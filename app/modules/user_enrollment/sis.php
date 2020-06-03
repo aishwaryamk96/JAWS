@@ -272,7 +272,9 @@
 		}
 		else if ($subs["status"] == "frozen" || $subs["status"] == "blocked") {
 			$status = "inactive";
-		}
+		}else if($subs["status"]== "alumni"){
+            $status= "alumni";
+        }
 
 		// Complete the line and return
 		$user_line .= $status;

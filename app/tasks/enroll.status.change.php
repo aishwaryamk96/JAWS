@@ -26,6 +26,7 @@
     // This task checks if a subscription is supposed to switch from frozen to active, or active to alumni, or alumni to expired,
     // or if the freeze period is approaching, etc.
     load_module("subs");
+    load_module("user_enrollment");
 
     // Start with subscriptions for which the freeze period is approaching
 //    $res_to_freeze = db_query("SELECT subs_id FRom subs WHERE freeze_date=CURDATE();");
@@ -52,7 +53,9 @@
     $particularDate =db_sanitize(date("Y-m-d 00:00:00"));
 // Pick those to set to alumni
     $res_to_alumni = "SELECT subs_id , end_date FROM subs WHERE end_date < ".$particularDate." and status ='active' order by subs_id desc";
-    if ($res_to_alumni)
+    $res_to_alumni =db_query($res_to_alumni);
+    
+    if (!empty($res_to_alumni))
     {
         foreach ($res_to_alumni as $each_subs)
         {
