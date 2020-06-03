@@ -214,13 +214,14 @@
 
 			$batch_date = db_sanitize(section_get_date_from_number(substr($batch, 1)));
 			$batch_clause = "";
+			//JA- 159 START
 			if (!empty($course)) {
-				$batch_clause = "cs.course_id = ".db_sanitize($course)." AND cs.start_date = ".$batch_date;
+				$batch_clause = "cs.course_id = ".db_sanitize($course)." AND cs.start_date like ".$batch_date;
 			}
 			else if (!empty($program)) {
-				$batch_clause = "cs.course_id = ".db_sanitize($programs_first_course[$program])." AND cs.start_date = ".$batch_date;
+				$batch_clause = "cs.course_id = ".db_sanitize($programs_first_course[$program])." AND cs.start_date like ".$batch_date;
 			}
-
+            //JA-159 END
 			if (!empty($batch_clause)) {
 				$where[] = $batch_clause;
 			}

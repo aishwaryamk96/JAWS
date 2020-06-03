@@ -23,7 +23,10 @@
 			$month = "0".$month;
 		}
 
-		return $year."-".$month."-".$month_start." 00:00:00";
+		//ja-159 START
+		//return $year."-".$month."-".$month_start." 00:00:00";
+		return $year."-".$month."%";
+		//JA-159 END
 
 	}
 
