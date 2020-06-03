@@ -68,12 +68,12 @@
     if($rpayAccPlag == 1 || $rpayAccPlag == true){
         $show_ebs = false;
     }
-    if($rpayAccPlag == 1 || $rpayAccPlag == true){
+    if($rpayAccPlag == 1 || $rpayAccPlag == true){ 
         $rpayKey = constant('RZPY_NEW_ACC_KEY_'.((APP_ENV == "prod") ? "LIVE" : "TEST")); 
     }else{
-        $rpayKey = constant('JAWS_PAYMENT_GATEWAY_RZPY_KEY_'.($GLOBALS['jaws_exec_live'] ? "LIVE" : "TEST")); 
+        $rpayKey = constant('JAWS_PAYMENT_GATEWAY_RZPY_KEY_'.((APP_ENV == "prod") ? "LIVE" : "TEST")); 
     }
-   // echo $rpayAccPlag."---".$rpayKey;die;
+    //echo $rpayAccPlag."---".$rpayKey."--";
     //JA-120 ends
 ?>
 <!DOCTYPE html>
