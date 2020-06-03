@@ -533,12 +533,15 @@ angular.module('jaws')
             });
         };
 
-
-        $scope.getInstallmentDate = function(index){
+        /* Start JA:92 */
+        $scope.dateUpdate = '';
+        $scope.dateUpdateIndex = '';
+        /* End JA:92*/
+        $scope.getInstallmentDate = function(index){ 
             
             var today = new Date();
             var date1 = new Date($scope.instls[index].due_date);
-            if(date1 >= today){
+            if(date1 >= today){ 
                 var date2 = new Date(today);
                 var timeDiff = Math.abs(date2.getTime() - date1.getTime());
                 var dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
@@ -546,23 +549,36 @@ angular.module('jaws')
             }else{
                 $scope.instls[index].due = defaultSettings.instalment_date; 
             }
-                
-      }
+            /* Start JA:92 */
+            if($scope.dateUpdateIndex==index){
+                $scope.instls[index].due_date = $scope.dateUpdate;
+            }
+            $scope.dateUpdateIndex='';
+            /* End JA:92 */         
+        }
         $scope.instlFees = function() {
             // $scope.instl_fees = $scope.instl_fees_amt;
             defaultSettings.instalment_fees.inr = $scope.instl_fees_amt;
             defaultSettings.instalment_fees.usd = $scope.instl_fees_amt;
             $scope.getInstlFees();
         }
-
+        /* Start JA:92 */
+        $scope.instalmentDateIncrement = defaultSettings.instalment_date;   
+        var updatedDate = '' 
+        var dueDate = defaultSettings.instalment_date;
+        /* End JA:92*/
         $scope.addInstl = function () { 
             /* Start JA:92 */
-            var formatedDate = new Date();
-            formatedDate.setDate(formatedDate.getDate() + parseInt(defaultSettings.instalment_date));
-            var updatedDate = $filter('date')(formatedDate, "MM-dd-yyyy");
+            if(updatedDate==''){
+                var formatedDate = new Date(); 
+            }else{
+                var formatedDate = new Date(updatedDate); 
+            }
+            formatedDate.setDate(formatedDate.getDate() + parseInt(defaultSettings.instalment_date));            
+            updatedDate = $filter('date')(formatedDate, "MM/dd/yyyy");
             /* End JA:92*/
             $scope.instls.push({
-                due: defaultSettings.instalment_date,
+                due: dueDate,
                 sum: 0,
                 sumUSD: 0,
                 due_date: updatedDate // JA:92 
@@ -573,6 +589,10 @@ angular.module('jaws')
             }));
 
             $scope.getInstlFees();
+            /* Start JA:92 */
+            $scope.instalmentDateIncrement = defaultSettings.instalment_date + defaultSettings.instalment_date;
+            dueDate=parseInt(dueDate)+parseInt(defaultSettings.instalment_date);
+            /* End JA:92*/
         };
 
         $scope.remInstl = function (index) {
@@ -1029,9 +1049,11 @@ angular.module('jaws')
         };
 
      /* Start JA:92 */
-      $scope.setSliderDate=function(index,due){ 
+      $scope.setSliderDate=function(index,due){   
             $scope.instls[index].due_date = sliderDateChange.setSliderDate(due);
-        }
+            $scope.dateUpdate =  $scope.instls[index].due_date;
+            $scope.dateUpdateIndex = index;
+      }
     /* End JA:92 */
 
 }]);
