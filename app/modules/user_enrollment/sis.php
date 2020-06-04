@@ -167,26 +167,43 @@
 		$users_done = [];
 		// Start processing them one by one
 		foreach ($res_enrs as $enr) {
+			// TK070 : Check access setup & first payment is done
+			// payment: user_id & subs_id & status: paid
+			// user_meta: survey_date & survey_data not null
+			/*$payment_sql = 'SELECT status FROM payment WHERE user_id='.$enr['user_id'].' AND subs_id='.$enr['subs_id'];
+			$is_paid = db_query($payment_sql);
+			$is_paid = $is_paid[0]['status'];*/
+			
+			$user_meta_sql = 'SELECT survey_date, survey_data FROM user_meta WHERE user_id='.$enr['user_id'];
+			$is_survey_data = db_query($user_meta_sql);
+			$is_survey_filled=0;
+			if(!empty($is_survey_data) && isset($is_survey_data[0]['survey_date']) && isset($is_survey_data[0]['survey_date']) && !empty($is_survey_data[0]['survey_date']) && strtotime($is_survey_data[0]['survey_date'])>0 && !empty($is_survey_data[0]['survey_data']) ){
+				$is_survey_filled=1;
+			}			
+			//$is_setup_done=(strtolower($is_paid)=='paid') && $is_survey_filled==1)?1:0;			
+			$is_setup_done=($is_survey_filled==1)?1:0;			
+			// TK070 : Check access setup is done
+			
+			if($is_setup_done){
+				if (!in_array($enr["section_id"], $sections_done) && $enr["status"] == 'active') {
 
-			if (!in_array($enr["section_id"], $sections_done) && $enr["status"] == 'active') {
+					$section_lines .= section_line_get($enr["section_id"]).EOL;
+					$batch[] = $enr["section_id"];
+					$sections_done[] = $enr["section_id"];
 
-				$section_lines .= section_line_get($enr["section_id"]).EOL;
-				$batch[] = $enr["section_id"];
-				$sections_done[] = $enr["section_id"];
+				}
 
+				if (!in_array($enr["user_id"], $users_done)) {
+
+					$user_lines .= user_line_get($enr["user_id"], $enr["subs_id"], $enr["sis_id"], $enr["lms_pass"]).EOL;
+					$users_done[] = $enr["user_id"];
+
+				}
+
+				$enroll_lines .= enroll_line_get($enr["user_id"], $enr["course_id"], $enr["sis_id"], $enr["section_id"], $enr["subs_id"], $enr["status"]).EOL;
+
+				db_exec("UPDATE user_enrollment SET sis_status='dl', sis_file=".db_sanitize($filename_timestamp)." WHERE enr_id=".$enr["enr_id"]);
 			}
-
-			if (!in_array($enr["user_id"], $users_done)) {
-
-				$user_lines .= user_line_get($enr["user_id"], $enr["subs_id"], $enr["sis_id"], $enr["lms_pass"]).EOL;
-				$users_done[] = $enr["user_id"];
-
-			}
-
-			$enroll_lines .= enroll_line_get($enr["user_id"], $enr["course_id"], $enr["sis_id"], $enr["section_id"], $enr["subs_id"], $enr["status"]).EOL;
-
-			db_exec("UPDATE user_enrollment SET sis_status='dl', sis_file=".db_sanitize($filename_timestamp)." WHERE enr_id=".$enr["enr_id"]);
-
 		}
 
 		if (($write_status = file_write($filename_timestamp, $user_lines, $enroll_lines, $section_lines, $subs_id)) !== true) {
