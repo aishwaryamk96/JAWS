@@ -15,6 +15,7 @@ if(isset($batch_id)) {
     $res_batches = db_query(
         "SELECT
             bcb.id as id,
+            bcb.meta as meta,
             bcb.bundle_id as bundle_id,
             bcb.code as code,
             bcb.start_date as start_date,
