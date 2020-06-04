@@ -537,7 +537,7 @@
 				// Sanitize
 				$due_date = db_sanitize($due_date);
 
-				$query = "UPDATE payment_instl SET status='enabled', ".(empty($instl["due_date"]) ? "due_date=$due_date" : "")." WHERE instl_id=".db_sanitize($instl["instl_id"]).";";
+				$query = "UPDATE payment_instl SET status='enabled' ".(empty($instl["due_date"]) ? ", due_date=$due_date" : "")." WHERE instl_id=".db_sanitize($instl["instl_id"]).";";
 
 				// Update instl table
 				db_exec($query);
