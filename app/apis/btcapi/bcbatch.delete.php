@@ -16,8 +16,9 @@ if(isset($batch_id)) {
                       FROM bootcamp_batches as bcb 
                       WHERE bcb.id = " . $batch_id);
 
+    //visible 0 means inactive
     if (!empty($isPresent)) {
-        db_exec("DELETE bcb FROM bootcamp_batches as bcb WHERE bcb.id = " . $batch_id);
+        db_exec("UPDATE `bootcamp_batches` SET `visible` = 0  where `id` = ". $batch_id);
         die(json_encode(["message" => "Batch deleted successfully", "status" => "success"]));
     }
 }
