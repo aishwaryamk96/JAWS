@@ -82,8 +82,9 @@ $lsNewKeyMapping = [
     "mx_City" => "mx_Location",
     //"mx_Location" => "mx_Location",
     "course" => "mx_Course",
-	"Experience" => "mx_Total_Experience",
-    "mx_Preferred_date" => "mx_Preferred_date"
+    "Experience" => "mx_Total_Experience",
+    "mx_Preferred_date" => "mx_Preferred_date",
+    "Qualification" => "mx_Qualification"
 ];
 
 define('LS_KEY_MAPPING', $lsNewKeyMapping);

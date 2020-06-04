@@ -771,6 +771,16 @@ function newLsCRMActivity($leads) {
             $lead["mx_Preferred_date"] = $meta["time_to_call"];
         }
 
+        //JA-172
+        if (!empty($meta["Qualification"])) {
+            
+            $lead["mx_Qualification"] = $meta["Qualification"];
+        }
+        
+        if (!empty($meta["Experience"])) {
+            $lead["mx_Total_Experience"] = $meta["Experience"];
+        }
+        //JA-172
         $page_url = trim($lead["page_url"], "/");
         if ($page_url == "wp-admin/admin-ajax.php") {
             $page_url = trim($lead["referer"], "/");
