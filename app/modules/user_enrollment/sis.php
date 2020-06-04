@@ -168,7 +168,7 @@
 		// Start processing them one by one
 		foreach ($res_enrs as $enr) {
 
-			if (!in_array($enr["section_id"], $sections_done) && $enr["status"] == 'active') {
+			if (!in_array($enr["section_id"], $sections_done) && ($enr["status"] == 'active' || $enr["status"] == 'alumni')) {
 
 				$section_lines .= section_line_get($enr["section_id"]).EOL;
 				$batch[] = $enr["section_id"];
